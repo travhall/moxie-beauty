@@ -1,95 +1,76 @@
+"use client";
+
 import Image from "next/image";
-import styles from "./page.module.css";
+import HeroImg from "../public/images/hero-img.jpg";
+import Button from "@/components/button";
+import Testimonials from "@/components/testimonials";
+import About from "@/components/about";
+import Services from "@/components/services";
+import Appointments from "@/components/appointments";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main>
+      <section
+        className="min-h-screen md:min-h-[70vh] w-full grid place-items-center lg:place-items-start p-4"
+        id="hero"
+      >
+        <div className="content backdrop-blur relative max-w-[72ch] rounded-tr-4xl md:rounded-tr-full lg:left-56 z-20">
+          <h1 className="font-nyght text-(--foreground) text-4xl sm:text-5xl md:text-6xl my-8 text-balance">
+            Welcome to{" "}
+            <span className="inline-block bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pr-2 pb-2">
+              Moxie Beauty Studio
+            </span>
+          </h1>
+          <p className="text-base text-balance mb-6">
+            Where artistry meets individuality. Specializing in bespoke lash and
+            brow transformations, we craft personalized enhancements to
+            highlight your natural beauty. Let your confidence shine with
+            treatments designed for real life &mdash; and those extraordinary
+            moments.
+          </p>
+          <ul
+            className="flex flex-col-reverse md:flex-row gap-4 md:gap-8 mb-4 space-y-4 md:space-y-0"
+            id="contact-hero"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+            <li>
+              <Button className="w-full md:w-auto" variant="default" size="lg">
+                Make an Appointment
+              </Button>
+            </li>
+            <li className="text-base flex md:flex-col gap-2 md:gap-0">
+              <span className="font-nyght-bold text-(--accent)">Phone</span>
+              <a
+                href="tel:2623326072"
+                className="font-semibold no-underline text-nowrap lg:hover:underline underline-offset-2 decoration-2 decoration-rose-gold dark:decoration-ivory-rose transition-all"
+              >
+                (262) 332-6072
+              </a>
+            </li>
+            <li className="text-base flex md:flex-col gap-2 md:gap-0">
+              <span className="font-nyght-bold text-(--accent)">Email</span>
+              <a
+                href="mailto:hello@moxiebeautystudiowi.com"
+                className="font-semibold no-underline text-nowrap lg:hover:underline underline-offset-2 decoration-2 decoration-rose-gold dark:decoration-ivory-rose transition-all"
+              >
+                hello@moxiebeautystudiowi.com
+              </a>
+            </li>
+          </ul>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <Image
+          src={HeroImg}
+          alt="Close up of a woman's face. She has amazing lashes."
+          className="absolute top-0 right-0 w-60 md:w-1/3 2xl:w-[32vw] h-96 md:h-[48vh] lg:h-[64vh] xl:h-[80vh] 2xl:h-[88vh] rounded-bl-full rounded-tl-[15%] border-l-[1rem] border-(--accent) object-cover z-0"
+        />
+      </section>
+
+      <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
+
+      <Appointments />
+      <Services />
+      <About />
+      <Testimonials />
+    </main>
   );
 }
