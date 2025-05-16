@@ -30,6 +30,7 @@ const About = () => {
               alt="Jackie Schult, owner and operator of Moxie Beauty Studio"
               className="h-96 w-64 -mb-4 mr-4 md:mr-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) object-cover z-0"
               priority={false}
+              loading="lazy"
             />
             <div
               className="about-content px-4 text-pretty"
@@ -54,6 +55,7 @@ const About = () => {
                 alt="A picture of Jackie working on another satisfied client."
                 className="h-96 w-full max-w-[36rem] mb-8 mr-8 md:mr-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) object-cover object-top z-0"
                 priority={false}
+                loading="lazy"
               />
             </div>
           </div>
