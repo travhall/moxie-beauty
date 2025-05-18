@@ -17,7 +17,7 @@ const About = () => {
   return (
     <>
       <section
-        className="min-h-screen w-full grid place-items-center p-4 md:py-24"
+        className="min-h-screen w-full grid place-items-center p-4 md:pt-24"
         id="About"
       >
         <div className="max-w-5xl">
@@ -59,8 +59,8 @@ const About = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-8 place-items-start">
-            <blockquote className="text-3xl font-nyght-italic bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent ps-2 max-w-[56ch] text-balance">
+          <div className="flex flex-col gap-4 place-items-end">
+            <blockquote className="text-3xl font-nyght-italic bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent max-w-[56ch] text-balance p-6">
               Jackie is committed to fostering strong relationships with her
               clients, ensuring each appointment is a personalized &amp;
               enjoyable experience.

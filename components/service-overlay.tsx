@@ -30,7 +30,7 @@ const ServiceOverlay = ({
     if (!isOpen) {
       setIsVisible(false);
     }
-  }, [isOpen]);
+  }, [isOpen, isVisible]);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -66,7 +66,7 @@ const ServiceOverlay = ({
       window.removeEventListener("keydown", handleEscKey);
       document.body.style.overflow = "auto";
     };
-  }, [isOpen, onClose]);
+  }, [handleClose, isOpen, onClose]);
 
   if (!isOpen && !isClosing) return null;
 

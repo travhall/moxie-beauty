@@ -72,8 +72,8 @@ const TestimonialsCarousel = () => {
       className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-gradient-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-10 overflow-visible"
       data-animate="testimonials"
     >
-      <div className="mx-auto max-w-7xl overflow-visible p-6">
-        <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
+      <div className="mx-auto max-w-7xl overflow-visible p-6 pb-0">
+        <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-3xl sm:text-4xl md:text-5xl my-8 pb-2 text-balance">
           What our clients are saying about Moxie
         </h2>
       </div>
