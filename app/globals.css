@@ -98,3 +98,70 @@ body {
   box-shadow: inset 0.2em 0.2em 0.2em 0 hsla(0, 0%, 88%, 0.25),
     inset -0.2em -0.2em 0.2em 0 hsla(0, 0%, 32%, 0.15);
 }
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  grid-template-areas:
+    "content"
+    "card1"
+    "card2"
+    "card3"
+    "card4"
+    "card5";
+}
+.services-content {
+  grid-area: content;
+}
+.service-card-1 {
+  grid-area: card1;
+}
+.service-card-2 {
+  grid-area: card2;
+}
+.service-card-3 {
+  grid-area: card3;
+}
+.service-card-4 {
+  grid-area: card4;
+}
+.service-card-5 {
+  grid-area: card5;
+}
+
+@media (min-width: 640px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "content content"
+      "card1 card2"
+      "card3 card4"
+      "card5 .";
+  }
+}
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+    grid-template-areas:
+      "content content content content card1 card1"
+      "content content content content card1 card1"
+      "content content content content card2 card2"
+      ". . card3 card3 card2 card2"
+      ". . card3 card3 card5 card5"
+      ". . card4 card4 card5 card5"
+      ". . card4 card4 . .";
+
+    /* grid-template-areas:
+      "content content content content card1 card1"
+      "content content content content card1 card1"
+      "content content content content card2 card2"
+      "card3 card3 card4 card4 card2 card2"
+      "card3 card3 card4 card4 card5 card5"
+      ". . . . card5 card5"; */
+  }
+}

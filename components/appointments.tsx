@@ -1,6 +1,9 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import apptImage from "@/public/images/moxie-lobby.jpg";
+import Button from "./button";
 
 const appointmentSections = [
   {
@@ -123,26 +126,44 @@ export default function Appointments() {
       className="min-h-screen w-full p-4 md:pt-24 relative"
       id="Appointments"
     >
-      <div className="container mx-auto px-4 mb-12 sticky top-28">
-        <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-center text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
-          Your Moxie Beauty Journey
-        </h2>
+      <div className="container flex flex-col md:flex-row gap-8 justify-start mx-auto px-4 mb-12 sticky top-32 min-h-screen">
+        <Image
+          src={apptImage}
+          alt="Moxie's waiting room."
+          className="w-full max-w-1/2 h-3/4 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) object-cover z-0"
+        />
+        <div className="content relative max-w-2xl text-balance">
+          <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
+            Your Moxie Beauty Journey
+          </h2>
+          <p className="text-xl mb-4">
+            Discover the perfect service for your beauty goals by exploring our
+            menu of lash and brow enhancements.
+          </p>
+          <p className="text-base mb-12">
+            If you&rsquo;re considering microblading, we recommend starting with
+            a <a href="">complimentary consultation</a> where we&rsquo;ll
+            discuss your desired shape, ideal pigment, and what to expect during
+            the healing process.
+          </p>
+          <Button>Book Now</Button>
+        </div>
       </div>
 
       <div
-        className="relative"
+        className="relative backdrop-blur-sm"
         style={{ height: `${appointmentSections.length * 100}vh` }}
       >
         {appointmentSections.map((section, index) => (
           <div
             key={section.id}
             id={section.id}
-            className="sticky top-0 h-auto lg:h-screen w-full flex flex-col lg:flex-row items-start lg:items-center"
+            className="sticky top-0 h-screen w-full flex flex-col lg:flex-row items-start lg:items-center"
             style={{ zIndex: index + 1 }}
           >
             {/* Content Panel */}
             <div
-              className={`w-full lg:w-1/2 bg-(--background)/5 backdrop-blur-lg py-8 px-4 lg:p-0 lg:h-full ${
+              className={`w-full lg:w-1/2 bg-(--background)/85 backdrop-blur-lg py-8 px-4 lg:pt-32 h-full ${
                 section.position === "left"
                   ? "lg:justify-end order-1"
                   : "lg:ml-auto lg:justify-start order-1 lg:order-1"
