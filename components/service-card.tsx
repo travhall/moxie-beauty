@@ -18,7 +18,7 @@ const ServiceCard = ({
     <div
       className={`service-card service-card-${
         cardIndex + 1
-      } rounded-lg border border-(--accent)/20 p-6 transition-all hover:shadow-md cursor-pointer`}
+      } rounded-lg rounded-tl rounded-tr-[1rem] rounded-br rounded-bl-[1rem] border border-(--accent)/20 p-6 transition-all hover:shadow-[-8px_8px_0_0_var(--accent)] hover:translate-x-2 hover:-translate-y-2 cursor-pointer`}
       onClick={onOpenOverlay}
     >
       <h3 className="font-nyght text-2xl mb-3 bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-balance">

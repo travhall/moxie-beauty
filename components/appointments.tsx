@@ -126,11 +126,11 @@ export default function Appointments() {
       className="min-h-screen w-full p-4 md:pt-24 relative"
       id="Appointments"
     >
-      <div className="container flex flex-col md:flex-row gap-8 justify-start mx-auto px-4 mb-12 sticky top-32 min-h-screen">
+      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-12 sticky top-32 min-h-screen">
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
-          className="w-full max-w-1/2 h-3/4 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) object-cover z-0"
+          className="w-full lg:max-w-1/2 max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) object-cover z-0"
         />
         <div className="content relative max-w-2xl text-balance">
           <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
