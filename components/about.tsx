@@ -18,8 +18,10 @@ const About = () => {
       <section
         className="min-h-screen w-full grid place-items-center p-4 md:pt-24"
         id="About"
+        tabIndex={-1}
+        aria-label="About section"
       >
-        <div className="max-w-5xl">
+        <div className="max-w-5xl w-full">
           <div
             className="about-container flex flex-col md:flex-row justify-center pt-8"
             data-animate="about"
@@ -27,7 +29,7 @@ const About = () => {
             <Image
               src={profileImage}
               alt="Jackie Schult, owner and operator of Moxie Beauty Studio"
-              className="h-96 w-64 -mb-4 mr-4 md:mr-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) object-cover z-0"
+              className="h-96 w-64 -mb-4 mr-4 md:mr-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover z-0"
               priority={false}
               loading="lazy"
             />
@@ -52,7 +54,7 @@ const About = () => {
               <Image
                 src={workImage}
                 alt="A picture of Jackie working on another satisfied client."
-                className="h-96 w-full max-w-[36rem] mb-8 mr-8 md:mr-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) object-cover object-top z-0"
+                className="h-96 w-full max-w-xl mb-8 mr-8 md:mr-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover object-top z-0"
                 priority={false}
                 loading="lazy"
               />

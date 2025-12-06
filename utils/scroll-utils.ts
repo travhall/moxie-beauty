@@ -1,6 +1,6 @@
 export const scrollToSection = (
   sectionId: string,
-  offset: number = 100
+  offset: number = 0
 ): void => {
   const section = document.getElementById(sectionId);
 
@@ -13,4 +13,25 @@ export const scrollToSection = (
       behavior: "smooth",
     });
   }
+};
+
+export const scrollToSectionWithFocus = (
+  sectionId: string,
+  offset: number = 0
+): void => {
+  scrollToSection(sectionId, offset);
+
+  // Focus the section after scroll completes
+  setTimeout(() => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.focus({ preventScroll: true });
+    }
+  }, 1000);
+};
+
+export const getScrollProgress = (): number => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  return docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 };

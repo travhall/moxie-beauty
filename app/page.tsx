@@ -14,6 +14,8 @@ export default function Home() {
       <section
         className="min-h-screen md:min-h-[70vh] w-full grid place-items-center lg:place-items-start p-4"
         id="hero"
+        tabIndex={-1}
+        aria-label="Hero section"
       >
         <div className="content backdrop-blur relative max-w-[72ch] rounded-tr-4xl md:rounded-tr-full lg:left-56 z-20">
           <h1 className="font-nyght text-(--foreground) text-4xl sm:text-5xl md:text-6xl my-8 text-balance">

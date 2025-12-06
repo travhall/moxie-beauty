@@ -69,6 +69,8 @@ const Services = () => {
     <section
       className="min-h-screen w-full grid place-items-center p-4 md:py-24"
       id="Services"
+      tabIndex={-1}
+      aria-label="Services section"
     >
       <div className="max-w-[1180px] w-full mx-auto xl:mx-48">
         <div className="grid grid-cols-1 gap-6 services-grid">
