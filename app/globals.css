@@ -77,8 +77,6 @@
   --background: var(--midnite-900);
   --foreground: var(--midnite-50);
   --accent: var(--rose-gold-300);
-
-  --button: var(--accent);
 }
 
 body {
@@ -155,13 +153,17 @@ body {
       ". . card3 card3 card5 card5"
       ". . card4 card4 card5 card5"
       ". . card4 card4 . .";
+  }
+}
 
-    /* grid-template-areas:
-      "content content content content card1 card1"
-      "content content content content card1 card1"
-      "content content content content card2 card2"
-      "card3 card3 card4 card4 card2 card2"
-      "card3 card3 card4 card4 card5 card5"
-      ". . . . card5 card5"; */
+/* Appointments Section Responsive */
+@media (max-width: 1023px) {
+  div[style*="height:"] {
+    height: auto !important;
+  }
+
+  div[style*="zIndex:"] {
+    position: relative !important;
+    top: auto !important;
   }
 }

@@ -197,19 +197,6 @@ export default function Appointments() {
           </div>
         ))}
       </div>
-
-      <style jsx>{`
-        @media (max-width: 1023px) {
-          div[style*="height:"] {
-            height: auto !important;
-          }
-
-          div[style*="zIndex:"] {
-            position: relative !important;
-            top: auto !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
