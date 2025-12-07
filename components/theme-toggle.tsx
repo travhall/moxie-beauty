@@ -26,13 +26,13 @@ export default function ThemeSwitch() {
     >
       <span
         className={`
-          relative inline-block h-7 w-8 transform rounded-xs rounded-tr-xl rounded-bl-xl
+          relative grid h-7 w-8 transform rounded-xs rounded-tr-xl rounded-bl-xl
           bg-(--background) shadow-lg ring-0 transition duration-200 ease-in-out
-          ${theme === "dark" ? "translate-x-5.5" : "translate-x-0.5"}
+          ${theme === "dark" ? "translate-x-5.5" : "translate-x-0.75"}
         `}
       >
-        <Sun className="h-4 w-4 m-1.5 text-(--accent) dark:hidden" />
-        <Moon className="h-4 w-4 m-1.5 text-(--accent) hidden dark:block" />
+        <Sun className="h-4.5 w-4.5 place-self-center text-(--accent) dark:hidden" />
+        <Moon className="h-4.5 w-4.5 place-self-center text-(--accent) hidden dark:block" />
       </span>
     </button>
   );

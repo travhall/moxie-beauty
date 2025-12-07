@@ -14,27 +14,36 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-col-reverse md:flex-row justify-between gap-8">
-        <div className="flex flex-col-reverse md:flex-row md:flex-wrap gap-4">
-          <small className="text-base md:text-xs">
+        <div className="flex flex-col-reverse md:flex-row md:flex-wrap gap-6">
+          <small className="text-base md:text-xs p-1">
             &copy;{currentYear} Moxie Beauty Studio, all rights reserved
           </small>
-          <Link className="md:text-xs hover:underline self-start" href="/">
+          <Link
+            className="text-base md:text-xs p-1 hover:underline self-start"
+            href="/"
+          >
             Appointment Policy
           </Link>
-          <Link className="md:text-xs hover:underline self-start" href="/">
+          <Link
+            className="text-base md:text-xs p-1 hover:underline self-start"
+            href="/"
+          >
             Terms &amp; Conditions
           </Link>
-          <Link className="md:text-xs hover:underline self-start" href="/">
+          <Link
+            className="text-base md:text-xs p-1 hover:underline self-start"
+            href="/"
+          >
             FAQs
           </Link>
           <Link
-            className="md:text-xs hover:underline self-start"
+            className="text-base md:text-xs p-1 hover:underline self-start"
             href="mailto:hello@moxiebeautystudiowi.com"
           >
             hello@moxiebeautystudiowi.com
           </Link>
           <Link
-            className="md:text-xs hover:underline self-start"
+            className="text-base md:text-xs p-1 hover:underline self-start"
             href="tel:(262) 332-6072"
           >
             (262) 332-6072

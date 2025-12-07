@@ -29,7 +29,7 @@ const About = () => {
             <Image
               src={profileImage}
               alt="Jackie Schult, owner and operator of Moxie Beauty Studio"
-              className="h-96 w-64 -mb-4 mr-4 md:mr-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover z-0"
+              className="h-96 w-64 -mb-4 mr-4 md:mr-8 lg:mr-10 ml-4 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover z-0"
               priority={false}
               loading="lazy"
             />

@@ -83,7 +83,7 @@ const Services = () => {
               Discover Moxie&rsquo;s premium beauty treatments and services,
               meticulously crafted to enhance your natural allure.
             </p>
-            <p className="text-base mb-6 text-pretty max-w-[72ch]">
+            <p className="text-base mb-10 text-pretty max-w-[72ch]">
               From special occasions to everyday self-care, Moxie is here to
               help you look and feel your best. Our expert team provides
               personalized services, including lashes, brows, microblading, and
@@ -91,9 +91,11 @@ const Services = () => {
               balance of artistry and precision, we&rsquo;re dedicated to making
               every visit unforgettable.
             </p>
-            <div className="flex flex-row flex-wrap gap-4">
-              <Button>Make an Appointment</Button>
-              <Button variant="outline">Schedule a Consultation</Button>
+            <div className="flex flex-row flex-wrap gap-4 mb-4">
+              <Button size="lg">Make an Appointment</Button>
+              <Button size="lg" variant="outline">
+                Schedule a Consultation
+              </Button>
             </div>
           </div>
 

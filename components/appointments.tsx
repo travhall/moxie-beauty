@@ -123,12 +123,12 @@ const appointmentSections = [
 export default function Appointments() {
   return (
     <section
-      className="min-h-screen w-full p-4 md:pt-24 relative"
+      className="min-h-screen w-full max-w-7xl mx-auto p-4 md:pt-24 relative"
       id="Appointments"
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-12 sticky top-32 min-h-screen">
+      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-10 sticky top-32 min-h-screen">
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
@@ -142,13 +142,18 @@ export default function Appointments() {
             Discover the perfect service for your beauty goals by exploring our
             menu of lash and brow enhancements.
           </p>
-          <p className="text-base mb-12">
+          <p className="text-base mb-10">
             If you&rsquo;re considering microblading, we recommend starting with
             a <a href="">complimentary consultation</a> where we&rsquo;ll
             discuss your desired shape, ideal pigment, and what to expect during
             the healing process.
           </p>
-          <Button>Book Now</Button>
+          <div className="flex gap-4">
+            <Button size="lg">Make an Appointment</Button>
+            <Button size="lg" variant="outline">
+              Plan Your Visit
+            </Button>
+          </div>
         </div>
       </div>
 

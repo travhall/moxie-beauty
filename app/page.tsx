@@ -24,7 +24,7 @@ export default function Home() {
               Moxie Beauty Studio
             </span>
           </h1>
-          <p className="text-base text-balance mb-6">
+          <p className="text-base text-balance mb-10">
             Where artistry meets individuality. Specializing in bespoke lash and
             brow transformations, we craft personalized enhancements to
             highlight your natural beauty. Let your confidence shine with
