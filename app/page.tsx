@@ -44,7 +44,7 @@ export default function Home() {
               <span className="font-nyght-bold text-(--accent)">Phone</span>
               <a
                 href="tel:2623326072"
-                className="font-semibold no-underline text-nowrap lg:hover:underline underline-offset-2 decoration-2 decoration-rose-gold dark:decoration-ivory-rose transition-all"
+                className="font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative"
               >
                 (262) 332-6072
               </a>
@@ -53,7 +53,7 @@ export default function Home() {
               <span className="font-nyght-bold text-(--accent)">Email</span>
               <a
                 href="mailto:hello@moxiebeautystudiowi.com"
-                className="font-semibold no-underline text-nowrap lg:hover:underline underline-offset-2 decoration-2 decoration-rose-gold dark:decoration-ivory-rose transition-all"
+                className="font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative"
               >
                 hello@moxiebeautystudiowi.com
               </a>

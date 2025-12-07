@@ -5,7 +5,7 @@ export type ButtonVariant = "default" | "outline" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "style"> {
   children?: React.ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -14,6 +14,7 @@ export interface ButtonProps
   iconOnly?: boolean;
   className?: string;
   isLoading?: boolean;
+  style?: Record<string, any>;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

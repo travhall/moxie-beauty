@@ -186,7 +186,7 @@ export default function Appointments() {
                         block: "start",
                       });
                     }}
-                    className="inline-flex items-center gap-2 text-rose-gold mt-6 group"
+                    className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 group before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative"
                   >
                     Next{" "}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

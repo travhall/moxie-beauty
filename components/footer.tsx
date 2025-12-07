@@ -40,7 +40,7 @@ export default function Footer() {
             (262) 332-6072
           </Link>
         </div>
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row items-center gap-2">
           <Button
             variant="default"
             size="sm"

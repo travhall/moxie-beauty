@@ -69,7 +69,7 @@ const TestimonialsCarousel = () => {
 
   return (
     <section
-      className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-gradient-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-10 overflow-visible"
+      className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-10 overflow-visible"
       data-animate="testimonials"
     >
       <div className="mx-auto max-w-7xl overflow-visible p-6 pb-0">
@@ -94,7 +94,7 @@ const TestimonialsCarousel = () => {
             {testimonials.map((testimonial, index) => (
               <li
                 key={index}
-                className="flex-shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-[1rem] rounded-br rounded-bl-[1rem] border border-l-[.5rem] border-t-[.5rem] border-(--accent) text-balance"
+                className="shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-l-8 border-t-8 border-(--accent) text-balance"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
