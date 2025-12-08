@@ -55,7 +55,7 @@ export default function Navigation() {
 
   // Handle intersection changes
   const handleIntersection = useCallback((activeId: string | null) => {
-    console.log("Navigation received intersection:", activeId); // Debug log
+    // console.log("Navigation received intersection:", activeId);
     if (activeId) {
       setActiveSection(activeId);
     }
@@ -83,11 +83,11 @@ export default function Navigation() {
 
   // Update indicator position - more robust approach
   useEffect(() => {
-    console.log("Active section changed to:", activeSection); // Debug log
+    // console.log("Active section changed to:", activeSection); // Debug log
 
     // Skip if hero section or no container
     if (activeSection === "hero" || !navContainerRef.current) {
-      console.log("Hiding indicator - hero section or no container"); // Debug log
+      // console.log("Hiding indicator - hero section or no container"); // Debug log
       setIndicatorStyle({ width: 0, left: 0, opacity: 0 });
       return;
     }
@@ -96,12 +96,12 @@ export default function Navigation() {
       const activeNav = navRefs.current[activeSection];
       const navContainer = navContainerRef.current;
 
-      console.log(
-        "Updating indicator - nav:",
-        !!activeNav,
-        "container:",
-        !!navContainer
-      ); // Debug log
+      // console.log(
+      //   "Updating indicator - nav:",
+      //   !!activeNav,
+      //   "container:",
+      //   !!navContainer
+      // ); // Debug log
 
       if (activeNav && navContainer) {
         const navRect = activeNav.getBoundingClientRect();
@@ -113,10 +113,10 @@ export default function Navigation() {
           opacity: 1,
         };
 
-        console.log("New indicator style:", newStyle); // Debug log
+        // console.log("New indicator style:", newStyle); // Debug log
         setIndicatorStyle(newStyle);
       } else {
-        console.log("Failed to update indicator - missing elements"); // Debug log
+        // console.log("Failed to update indicator - missing elements"); // Debug log
         setIndicatorStyle({ width: 0, left: 0, opacity: 0 });
       }
     };
@@ -186,7 +186,7 @@ export default function Navigation() {
             href={`#${item.section}`}
             ref={(el) => {
               navRefs.current[item.section] = el;
-              console.log(`Nav ref set for ${item.section}:`, !!el); // Debug log
+              // console.log(`Nav ref set for ${item.section}:`, !!el); // Debug log
             }}
             className={`text-base font-bold rounded-full py-1 px-3 transition-all relative z-10 border border-transparent hover:border-(--accent)/20 hover:bg-(--accent)/20 focus:outline-none focus:ring-2 focus:ring-(--accent)/50 focus:border-(--accent)/40 ${
               activeSection === item.section ? "text-(--background)" : ""

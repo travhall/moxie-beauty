@@ -7,7 +7,7 @@ import workImage from "@/public/images/jackie-working.jpg";
 const About = () => {
   useEffect(() => {
     const initSectionAnimations = () => {
-      console.log("Animations initialized");
+      // console.log("Animations initialized");
     };
 
     initSectionAnimations();

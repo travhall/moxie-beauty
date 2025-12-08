@@ -55,7 +55,7 @@ const TestimonialsCarousel = () => {
   // Initialize animations after component mounts
   useEffect(() => {
     const initSectionAnimations = () => {
-      console.log("Animations initialized");
+      // console.log("Animations initialized");
 
       // Optional: Add smooth scrolling behavior for browsers that don't support it natively
       const container = scrollContainerRef.current;
