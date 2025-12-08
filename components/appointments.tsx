@@ -125,7 +125,30 @@ export default function Appointments() {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
   const [isSliding, setIsSliding] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
   const prevIndexRef = useRef(0);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  // Track when the entire Appointments section enters viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isSectionVisible) {
+          setIsSectionVisible(true);
+          // Trigger first panel animation when section becomes visible
+          setTimeout(() => setIsSliding(true), 100);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isSectionVisible]);
 
   useEffect(() => {
     const wrapper = scrollWrapperRef.current;
@@ -156,32 +179,38 @@ export default function Appointments() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Trigger initial slide-in for the first panel on mount
+  // Handle panel transitions with enter/exit animations
   useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      setIsSliding(true);
-    });
-    return () => cancelAnimationFrame(id);
-  }, []);
+    if (!isSectionVisible) return;
 
-  // Replay slide-in animation whenever the active section changes
-  useEffect(() => {
     if (activeSectionIndex === prevIndexRef.current) return;
-    prevIndexRef.current = activeSectionIndex;
 
+    // Trigger exit animation
+    setIsExiting(true);
     setIsSliding(false);
-    const id = requestAnimationFrame(() => {
-      setIsSliding(true);
-    });
 
-    return () => cancelAnimationFrame(id);
-  }, [activeSectionIndex]);
+    // After exit animation completes, trigger enter animation
+    const exitTimer = setTimeout(() => {
+      prevIndexRef.current = activeSectionIndex;
+      setIsExiting(false);
+
+      // Trigger enter animation
+      const enterTimer = setTimeout(() => {
+        setIsSliding(true);
+      }, 50);
+
+      return () => clearTimeout(enterTimer);
+    }, 350); // Half of transition duration
+
+    return () => clearTimeout(exitTimer);
+  }, [activeSectionIndex, isSectionVisible]);
 
   const currentSection =
     appointmentSections[activeSectionIndex] ?? appointmentSections[0];
 
   return (
     <section
+      ref={sectionRef}
       className="min-h-screen w-full max-w-7xl mx-auto p-4 md:pt-24 relative z-10"
       id="Appointments"
       tabIndex={-1}
@@ -226,8 +255,8 @@ export default function Appointments() {
           <div
             key={currentSection.id}
             className={`sticky-panel sticky-panel-${currentSection.position} ${
-              isSliding ? "slide-in" : ""
-            }`}
+              isSliding && !isExiting ? "slide-in" : ""
+            } ${isExiting ? "fade-out" : ""}`}
           >
             <div className="sticky-panel-content">
               <div className="max-w-xl p-8 lg:p-12">

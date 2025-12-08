@@ -197,7 +197,9 @@ body {
   width: 50%;
   height: 100vh;
   top: 0;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s ease-in-out;
+  opacity: 1;
 }
 
 .sticky-panel-left {
@@ -219,7 +221,12 @@ body {
 }
 
 .sticky-panel.fade-out {
-  opacity: 0.3;
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.sticky-panel-right.fade-out {
+  transform: translateX(100%);
 }
 
 .sticky-panel-content {
