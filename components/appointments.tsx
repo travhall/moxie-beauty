@@ -124,6 +124,8 @@ const appointmentSections = [
 export default function Appointments() {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
+  const [isSliding, setIsSliding] = useState(false);
+  const prevIndexRef = useRef(0);
 
   useEffect(() => {
     const wrapper = scrollWrapperRef.current;
@@ -153,6 +155,27 @@ export default function Appointments() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Trigger initial slide-in for the first panel on mount
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      setIsSliding(true);
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  // Replay slide-in animation whenever the active section changes
+  useEffect(() => {
+    if (activeSectionIndex === prevIndexRef.current) return;
+    prevIndexRef.current = activeSectionIndex;
+
+    setIsSliding(false);
+    const id = requestAnimationFrame(() => {
+      setIsSliding(true);
+    });
+
+    return () => cancelAnimationFrame(id);
+  }, [activeSectionIndex]);
 
   const currentSection =
     appointmentSections[activeSectionIndex] ?? appointmentSections[0];
@@ -201,7 +224,10 @@ export default function Appointments() {
         {/* Single pinned visual panel that changes with active section */}
         <div className="sticky-scroll-container relative backdrop-blur-lg bg-(--background)/75 z-50">
           <div
-            className={`sticky-panel sticky-panel-${currentSection.position} slide-in`}
+            key={currentSection.id}
+            className={`sticky-panel sticky-panel-${currentSection.position} ${
+              isSliding ? "slide-in" : ""
+            }`}
           >
             <div className="sticky-panel-content">
               <div className="max-w-xl p-8 lg:p-12">
