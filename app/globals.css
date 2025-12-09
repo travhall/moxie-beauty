@@ -177,12 +177,18 @@ body {
 }
 
 /* Sticky Scroll Animation Classes */
+.appointments-scroll-wrapper {
+  scroll-snap-type: y proximity;
+}
+
 .sticky-scroll-container {
   position: sticky;
   top: 0;
   height: 100vh;
   width: 100%;
   overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .sticky-scroll-section {
@@ -276,14 +282,53 @@ body {
 
 /* Mobile responsive adjustments */
 @media (max-width: 1023px) {
+  /* Disable scroll snap on mobile for natural scrolling */
+  .appointments-scroll-wrapper {
+    scroll-snap-type: none;
+  }
+
   .sticky-scroll-section {
     height: auto;
     min-height: 100vh;
     position: relative;
   }
 
+  /* Change sticky container to relative for natural stacking */
+  .sticky-scroll-container {
+    position: relative;
+    height: auto;
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+
+  /* Stack panels naturally with no animations */
   .sticky-panel {
+    position: relative;
     width: 100%;
+    height: auto;
+    min-height: 100vh;
+    opacity: 1;
+    transform: none;
+    animation: none;
+    margin-bottom: 0;
+  }
+
+  /* Ensure both left and right panels display normally */
+  .sticky-panel-left,
+  .sticky-panel-right {
+    position: relative;
+    left: auto;
+    right: auto;
+    transform: none;
+    opacity: 1;
+  }
+
+  /* Disable all animations on mobile */
+  .sticky-panel-left.slide-in:not(.fade-out),
+  .sticky-panel-right.slide-in:not(.fade-out),
+  .sticky-panel-left.slide-in.fade-out,
+  .sticky-panel-right.slide-in.fade-out {
+    animation: none;
   }
 
   .sticky-panel-content {
