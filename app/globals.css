@@ -192,41 +192,72 @@ body {
   overflow: hidden;
 }
 
+/* Keyframe animations */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .sticky-panel {
   position: absolute;
   width: 50%;
   height: 100vh;
   top: 0;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.35s ease-in-out;
-  opacity: 1;
+  z-index: 10;
 }
 
 .sticky-panel-left {
   left: 0;
   transform: translateX(-100%);
+  opacity: 0;
 }
 
 .sticky-panel-right {
   right: 0;
   transform: translateX(100%);
-}
-
-.sticky-panel-left.slide-in {
-  transform: translateX(0);
-}
-
-.sticky-panel-right.slide-in {
-  transform: translateX(0);
-}
-
-.sticky-panel.fade-out {
   opacity: 0;
-  transform: translateX(-100%);
 }
 
-.sticky-panel-right.fade-out {
-  transform: translateX(100%);
+/* Slide in animations */
+.sticky-panel-left.slide-in:not(.fade-out) {
+  animation: slideInFromLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.sticky-panel-right.slide-in:not(.fade-out) {
+  animation: slideInFromRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Fade out animation - must come after slide-in and have higher specificity */
+.sticky-panel-left.slide-in.fade-out,
+.sticky-panel-right.slide-in.fade-out {
+  animation: fadeOut 0.35s ease-out forwards;
+  transform: translateX(0);
 }
 
 .sticky-panel-content {
@@ -252,12 +283,7 @@ body {
   }
 
   .sticky-panel {
-    position: relative;
     width: 100%;
-    height: auto;
-    min-height: 100vh;
-    transform: none !important;
-    opacity: 1 !important;
   }
 
   .sticky-panel-content {

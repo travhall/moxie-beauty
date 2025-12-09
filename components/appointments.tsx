@@ -122,33 +122,14 @@ const appointmentSections = [
 ];
 
 export default function Appointments() {
-  const [activeSectionIndex, setActiveSectionIndex] = useState(0);
+  const [activeSectionIndex, setActiveSectionIndex] = useState(-1);
+  const [prevSectionIndex, setPrevSectionIndex] = useState(-1);
+  const [isSlideInComplete, setIsSlideInComplete] = useState(false);
+  const [showPrevPanel, setShowPrevPanel] = useState(false);
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
-  const [isSliding, setIsSliding] = useState(false);
-  const [isExiting, setIsExiting] = useState(false);
-  const [isSectionVisible, setIsSectionVisible] = useState(false);
-  const prevIndexRef = useRef(0);
   const sectionRef = useRef<HTMLElement | null>(null);
-
-  // Track when the entire Appointments section enters viewport
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isSectionVisible) {
-          setIsSectionVisible(true);
-          // Trigger first panel animation when section becomes visible
-          setTimeout(() => setIsSliding(true), 100);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [isSectionVisible]);
+  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const fadeOutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const wrapper = scrollWrapperRef.current;
@@ -156,57 +137,82 @@ export default function Appointments() {
 
     const handleScroll = () => {
       const rect = wrapper.getBoundingClientRect();
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight;
+      const viewportHeight = window.innerHeight;
 
-      // How far the top of the wrapper has moved into the viewport
-      const offset = -rect.top;
-      const totalScrollable = wrapper.offsetHeight - viewportHeight;
-
-      if (totalScrollable <= 0) {
-        setActiveSectionIndex(0);
+      // Before wrapper enters viewport
+      if (rect.top > 0) {
+        setActiveSectionIndex(-1);
         return;
       }
 
-      const rawProgress = offset / totalScrollable;
-      const clamped = Math.min(Math.max(rawProgress, 0), 0.999);
-      const index = Math.floor(clamped * appointmentSections.length);
-      setActiveSectionIndex(index);
+      // Calculate progress through the wrapper
+      const scrolledIntoWrapper = Math.max(0, -rect.top);
+      const wrapperHeight = wrapper.offsetHeight;
+      const progress = Math.min(scrolledIntoWrapper / wrapperHeight, 1);
+
+      // After wrapper leaves viewport completely
+      if (progress >= 1 && rect.bottom < 0) {
+        setActiveSectionIndex(-1);
+        return;
+      }
+
+      const index = Math.min(
+        Math.floor(progress * appointmentSections.length),
+        appointmentSections.length - 1
+      );
+
+      setActiveSectionIndex((currentIndex) => {
+        if (index !== currentIndex) {
+          console.log(`Switching from panel ${currentIndex} to ${index}`);
+
+          // Clear any existing timeouts
+          if (animationTimeoutRef.current) {
+            clearTimeout(animationTimeoutRef.current);
+          }
+          if (fadeOutTimeoutRef.current) {
+            clearTimeout(fadeOutTimeoutRef.current);
+          }
+
+          // Set up the previous panel to show and fade out
+          if (currentIndex >= 0) {
+            setPrevSectionIndex(currentIndex);
+            setShowPrevPanel(true);
+
+            // Remove the previous panel after fade-out completes (350ms) + buffer
+            fadeOutTimeoutRef.current = setTimeout(() => {
+              setShowPrevPanel(false);
+            }, 800);
+          }
+
+          // Reset slide-in state for new panel
+          setIsSlideInComplete(false);
+
+          // Use double RAF to ensure initial render is painted before animation starts
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              console.log(`Starting slide-in animation for panel ${index}`);
+              setIsSlideInComplete(true);
+            });
+          });
+
+          return index;
+        }
+        return currentIndex;
+      });
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      if (fadeOutTimeoutRef.current) {
+        clearTimeout(fadeOutTimeoutRef.current);
+      }
+    };
   }, []);
-
-  // Handle panel transitions with enter/exit animations
-  useEffect(() => {
-    if (!isSectionVisible) return;
-
-    if (activeSectionIndex === prevIndexRef.current) return;
-
-    // Trigger exit animation
-    setIsExiting(true);
-    setIsSliding(false);
-
-    // After exit animation completes, trigger enter animation
-    const exitTimer = setTimeout(() => {
-      prevIndexRef.current = activeSectionIndex;
-      setIsExiting(false);
-
-      // Trigger enter animation
-      const enterTimer = setTimeout(() => {
-        setIsSliding(true);
-      }, 50);
-
-      return () => clearTimeout(enterTimer);
-    }, 350); // Half of transition duration
-
-    return () => clearTimeout(exitTimer);
-  }, [activeSectionIndex, isSectionVisible]);
-
-  const currentSection =
-    appointmentSections[activeSectionIndex] ?? appointmentSections[0];
 
   return (
     <section
@@ -216,11 +222,11 @@ export default function Appointments() {
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-10 sticky top-32 min-h-screen">
+      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-10 sticky top-32 min-h-screen z-0">
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
-          className="w-full lg:max-w-1/2 max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover z-0"
+          className="w-full lg:max-w-1/2 max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover"
         />
         <div className="content relative max-w-2xl text-balance">
           <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
@@ -245,45 +251,59 @@ export default function Appointments() {
         </div>
       </div>
 
-      {/* Scroll height wrapper drives how long the pinned panel stays */}
-      <div
-        ref={scrollWrapperRef}
-        style={{ height: `${appointmentSections.length * 100}vh` }}
-      >
-        {/* Single pinned visual panel that changes with active section */}
-        <div className="sticky-scroll-container relative backdrop-blur-lg bg-(--background)/75 z-50">
-          <div
-            key={currentSection.id}
-            className={`sticky-panel sticky-panel-${currentSection.position} ${
-              isSliding && !isExiting ? "slide-in" : ""
-            } ${isExiting ? "fade-out" : ""}`}
-          >
-            <div className="sticky-panel-content">
-              <div className="max-w-xl p-8 lg:p-12">
-                <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                  {currentSection.title}
-                </h3>
-                <div className="prose max-w-none">{currentSection.content}</div>
-
-                {activeSectionIndex < appointmentSections.length - 1 && (
-                  <button
-                    onClick={() => {
-                      const nextSection =
-                        appointmentSections[activeSectionIndex + 1].id;
-                      document.getElementById(nextSection)?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      });
-                    }}
-                    className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 group before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative"
-                  >
-                    Next{" "}
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </button>
-                )}
+      <div ref={scrollWrapperRef} style={{ height: `${appointmentSections.length * 100}vh` }}>
+        <div className="sticky-scroll-container backdrop-blur-lg bg-(--background)/75 z-50">
+          {(() => {
+            console.log(`Rendering: active=${activeSectionIndex}, prev=${prevSectionIndex}, slideIn=${isSlideInComplete}, showPrev=${showPrevPanel}`);
+            return null;
+          })()}
+          {showPrevPanel && prevSectionIndex >= 0 && prevSectionIndex !== activeSectionIndex && (() => {
+            const classes = `sticky-panel sticky-panel-${appointmentSections[prevSectionIndex].position} slide-in fade-out`;
+            console.log(`PREVIOUS panel ${prevSectionIndex} classes: "${classes}"`);
+            return (
+              <div
+                className={classes}
+                style={{ zIndex: 1 }}
+              >
+                <div className="sticky-panel-content">
+                  <div className="max-w-xl p-8 lg:p-12">
+                    <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                      {appointmentSections[prevSectionIndex].title}
+                    </h3>
+                    <div className="prose max-w-none">{appointmentSections[prevSectionIndex].content}</div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+          {activeSectionIndex >= 0 && (() => {
+            const shouldSlideIn = isSlideInComplete ? 'slide-in' : '';
+            const classes = `sticky-panel sticky-panel-${appointmentSections[activeSectionIndex].position} ${shouldSlideIn}`;
+            console.log(`ACTIVE panel ${activeSectionIndex} classes: "${classes}" (slideComplete=${isSlideInComplete})`);
+            return (
+              <div
+                className={classes}
+                style={{ zIndex: 2 }}
+              >
+              <div className="sticky-panel-content">
+                <div className="max-w-xl p-8 lg:p-12">
+                  <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                    {appointmentSections[activeSectionIndex].title}
+                  </h3>
+                  <div className="prose max-w-none">{appointmentSections[activeSectionIndex].content}</div>
+                  {activeSectionIndex < appointmentSections.length - 1 && (
+                    <button
+                      onClick={() => window.scrollBy({ top: window.innerHeight, behavior: "smooth" })}
+                      className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 group"
+                    >
+                      Next <ArrowRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+            );
+          })()}
         </div>
       </div>
     </section>

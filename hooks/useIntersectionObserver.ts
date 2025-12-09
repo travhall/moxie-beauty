@@ -22,7 +22,7 @@ export function useIntersectionObserver({
 
       for (const entry of entries) {
         const visibility = entry.intersectionRatio;
-        console.log(`Section ${entry.target.id}: visibility=${visibility}`); // Debug log
+        // console.log(`Section ${entry.target.id}: visibility=${visibility}`); // Debug log
 
         if (visibility > maxVisibility) {
           maxVisibility = visibility;
@@ -34,9 +34,9 @@ export function useIntersectionObserver({
         const targetElement = mostVisibleEntry.target as HTMLElement;
         const newActiveId = targetElement.id;
 
-        console.log(
-          `Setting active section: ${newActiveId} (visibility: ${mostVisibleEntry.intersectionRatio})`
-        ); // Debug log
+        // console.log(
+        //   `Setting active section: ${newActiveId} (visibility: ${mostVisibleEntry.intersectionRatio})`
+        // ); // Debug log
         setActiveId(newActiveId);
         onIntersection?.(newActiveId);
       }
@@ -47,7 +47,7 @@ export function useIntersectionObserver({
   useEffect(() => {
     if (elementIds.length === 0) return;
 
-    console.log("Setting up intersection observer for:", elementIds); // Debug log
+    // console.log("Setting up intersection observer for:", elementIds); // Debug log
 
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
@@ -59,10 +59,10 @@ export function useIntersectionObserver({
     elementIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
-        console.log(`Observing element: ${id}`, element); // Debug log
+        // console.log(`Observing element: ${id}`, element); // Debug log
         observer.observe(element);
       } else {
-        console.warn(`Element with id "${id}" not found`); // Debug log
+        // console.warn(`Element with id "${id}" not found`); // Debug log
       }
     });
 
