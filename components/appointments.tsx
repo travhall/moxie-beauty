@@ -244,7 +244,42 @@ export default function Appointments() {
           </p>
           <div className="flex gap-4">
             <Button size="lg">Make an Appointment</Button>
-            <Button size="lg" variant="outline">
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => {
+                const wrapper = scrollWrapperRef.current;
+                const mobileStack = document.querySelector('.appointments-mobile-stack');
+                const target = wrapper || mobileStack;
+
+                if (target) {
+                  // For desktop: scroll to where rect.top will be at or just above 0
+                  // We need to account for the sticky intro section
+                  const rect = target.getBoundingClientRect();
+                  const currentScrollY = window.scrollY;
+
+                  // Calculate the exact position where rect.top will be 0
+                  // rect.top is the distance from viewport top, so we need to scroll
+                  // by that amount to bring it to the top
+                  // Add a small buffer to ensure we trigger the first panel
+                  const buffer = 10; // 10px buffer to ensure rect.top becomes negative
+                  const targetScrollY = currentScrollY + rect.top + buffer;
+
+                  console.log('Plan button clicked:', {
+                    currentScrollY,
+                    rectTop: rect.top,
+                    buffer,
+                    targetScrollY,
+                    scrollAmount: rect.top + buffer
+                  });
+
+                  window.scrollTo({
+                    top: targetScrollY,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+            >
               Plan Your Visit
             </Button>
           </div>
@@ -311,12 +346,41 @@ export default function Appointments() {
                     </div>
                     {activeSectionIndex < appointmentSections.length - 1 && (
                       <button
-                        onClick={() =>
-                          window.scrollBy({
-                            top: window.innerHeight,
+                        onClick={() => {
+                          const wrapper = scrollWrapperRef.current;
+                          if (!wrapper) return;
+
+                          // Calculate the target panel's position
+                          // Each panel represents 1/4 of the wrapper height
+                          const nextPanelIndex = activeSectionIndex + 1;
+                          const wrapperHeight = wrapper.offsetHeight;
+                          const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
+
+                          // Progress needed for next panel: (nextPanelIndex / totalPanels)
+                          // Add a small buffer (2%) to ensure we're solidly within the target panel
+                          const progressNeeded = nextPanelIndex / appointmentSections.length;
+                          const bufferProgress = 0.02; // 2% buffer to avoid threshold issues
+                          const scrollNeeded = (progressNeeded + bufferProgress) * wrapperHeight;
+
+                          // Target scroll position is wrapper top + scroll needed
+                          const targetScrollY = wrapperTop + scrollNeeded;
+
+                          console.log('Next button clicked:', {
+                            currentPanel: activeSectionIndex,
+                            nextPanel: nextPanelIndex,
+                            wrapperTop,
+                            wrapperHeight,
+                            progressNeeded,
+                            scrollNeeded,
+                            targetScrollY,
+                            currentScrollY: window.scrollY
+                          });
+
+                          window.scrollTo({
+                            top: targetScrollY,
                             behavior: "smooth",
-                          })
-                        }
+                          });
+                        }}
                         className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 group"
                       >
                         Next <ArrowRight className="w-4 h-4" />
