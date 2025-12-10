@@ -136,8 +136,8 @@ export default function Appointments() {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
@@ -231,7 +231,7 @@ export default function Appointments() {
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-10 sticky top-32 min-h-screen z-0">
+      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-10 lg:sticky lg:top-32 min-h-screen z-0">
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
@@ -260,24 +260,73 @@ export default function Appointments() {
         </div>
       </div>
 
-      <div ref={scrollWrapperRef} className="appointments-scroll-wrapper" style={{ height: isMobile ? 'auto' : `${appointmentSections.length * 100}vh` }}>
-        <div className="sticky-scroll-container backdrop-blur-lg bg-(--background)/75 z-50">
-          {isMobile ? (
-            // Mobile: Render all panels stacked
-            appointmentSections.map((section, index) => (
+      {isMobile ? (
+        // Mobile: Simple stacked content sections
+        <div className="appointments-mobile-stack w-full">
+          {appointmentSections.map((section, index) => (
+            <div
+              key={section.id}
+              className="appointment-mobile-panel bg-(--background) border-b border-(--foreground)/10 last-of-type:border-b-0 relative z-100"
+            >
+              <div className="max-w-xl mx-auto py-10">
+                <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                  {section.title}
+                </h3>
+                <div className="prose max-w-none">{section.content}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        // Desktop: Animated scroll-driven panels
+        <div
+          ref={scrollWrapperRef}
+          className="appointments-scroll-wrapper snap-y snap-proximity hidden lg:block"
+          style={{ height: `${appointmentSections.length * 100}vh` }}
+        >
+          <div className="sticky-scroll-container min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
+            {showPrevPanel &&
+              prevSectionIndex >= 0 &&
+              prevSectionIndex !== activeSectionIndex && (
+                <div
+                  className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${appointmentSections[prevSectionIndex].position} slide-in fade-out`}
+                  style={{ zIndex: 1 }}
+                >
+                  <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90">
+                    <div className="max-w-xl p-8 lg:p-12">
+                      <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                        {appointmentSections[prevSectionIndex].title}
+                      </h3>
+                      <div className="prose max-w-none">
+                        {appointmentSections[prevSectionIndex].content}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            {activeSectionIndex >= 0 && (
               <div
-                key={section.id}
-                className={`sticky-panel sticky-panel-${section.position}`}
+                className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${
+                  appointmentSections[activeSectionIndex].position
+                } ${isSlideInComplete ? "slide-in" : ""}`}
+                style={{ zIndex: 2 }}
               >
-                <div className="sticky-panel-content">
+                <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90">
                   <div className="max-w-xl p-8 lg:p-12">
                     <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                      {section.title}
+                      {appointmentSections[activeSectionIndex].title}
                     </h3>
-                    <div className="prose max-w-none">{section.content}</div>
-                    {index < appointmentSections.length - 1 && (
+                    <div className="prose max-w-none">
+                      {appointmentSections[activeSectionIndex].content}
+                    </div>
+                    {activeSectionIndex < appointmentSections.length - 1 && (
                       <button
-                        onClick={() => window.scrollBy({ top: window.innerHeight, behavior: "smooth" })}
+                        onClick={() =>
+                          window.scrollBy({
+                            top: window.innerHeight,
+                            behavior: "smooth",
+                          })
+                        }
                         className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 group"
                       >
                         Next <ArrowRight className="w-4 h-4" />
@@ -286,52 +335,10 @@ export default function Appointments() {
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            // Desktop: Animated scroll-driven panels
-            <>
-              {showPrevPanel && prevSectionIndex >= 0 && prevSectionIndex !== activeSectionIndex && (
-                <div
-                  className={`sticky-panel sticky-panel-${appointmentSections[prevSectionIndex].position} slide-in fade-out`}
-                  style={{ zIndex: 1 }}
-                >
-                  <div className="sticky-panel-content">
-                    <div className="max-w-xl p-8 lg:p-12">
-                      <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                        {appointmentSections[prevSectionIndex].title}
-                      </h3>
-                      <div className="prose max-w-none">{appointmentSections[prevSectionIndex].content}</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {activeSectionIndex >= 0 && (
-                <div
-                  className={`sticky-panel sticky-panel-${appointmentSections[activeSectionIndex].position} ${isSlideInComplete ? 'slide-in' : ''}`}
-                  style={{ zIndex: 2 }}
-                >
-                  <div className="sticky-panel-content">
-                    <div className="max-w-xl p-8 lg:p-12">
-                      <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                        {appointmentSections[activeSectionIndex].title}
-                      </h3>
-                      <div className="prose max-w-none">{appointmentSections[activeSectionIndex].content}</div>
-                      {activeSectionIndex < appointmentSections.length - 1 && (
-                        <button
-                          onClick={() => window.scrollBy({ top: window.innerHeight, behavior: "smooth" })}
-                          className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 group"
-                        >
-                          Next <ArrowRight className="w-4 h-4" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

@@ -164,40 +164,6 @@ body {
   }
 }
 
-/* Appointments Section Responsive */
-@media (max-width: 1023px) {
-  div[style*="height:"] {
-    height: auto !important;
-  }
-
-  div[style*="zIndex:"] {
-    position: relative !important;
-    top: auto !important;
-  }
-}
-
-/* Sticky Scroll Animation Classes */
-.appointments-scroll-wrapper {
-  scroll-snap-type: y proximity;
-}
-
-.sticky-scroll-container {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-.sticky-scroll-section {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-}
-
 /* Keyframe animations */
 @keyframes slideInFromLeft {
   from {
@@ -224,18 +190,12 @@ body {
 @keyframes fadeOut {
   from {
     opacity: 1;
+    filter: blur(0);
   }
   to {
     opacity: 0;
+    filter: blur(12px);
   }
-}
-
-.sticky-panel {
-  position: absolute;
-  width: 50%;
-  height: 100vh;
-  top: 0;
-  z-index: 10;
 }
 
 .sticky-panel-left {
@@ -264,75 +224,4 @@ body {
 .sticky-panel-right.slide-in.fade-out {
   animation: fadeOut 0.35s ease-out forwards;
   transform: translateX(0);
-}
-
-.sticky-panel-content {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background: rgba(var(--background-rgb, 255, 255, 255), 0.85);
-  backdrop-filter: blur(12px);
-}
-
-.dark .sticky-panel-content {
-  background: rgba(var(--background-rgb, 0, 0, 0), 0.85);
-}
-
-/* Mobile responsive adjustments */
-@media (max-width: 1023px) {
-  /* Disable scroll snap on mobile for natural scrolling */
-  .appointments-scroll-wrapper {
-    scroll-snap-type: none;
-  }
-
-  .sticky-scroll-section {
-    height: auto;
-    min-height: 100vh;
-    position: relative;
-  }
-
-  /* Change sticky container to relative for natural stacking */
-  .sticky-scroll-container {
-    position: relative;
-    height: auto;
-    scroll-snap-align: none;
-    scroll-snap-stop: normal;
-  }
-
-  /* Stack panels naturally with no animations */
-  .sticky-panel {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 100vh;
-    opacity: 1;
-    transform: none;
-    animation: none;
-    margin-bottom: 0;
-  }
-
-  /* Ensure both left and right panels display normally */
-  .sticky-panel-left,
-  .sticky-panel-right {
-    position: relative;
-    left: auto;
-    right: auto;
-    transform: none;
-    opacity: 1;
-  }
-
-  /* Disable all animations on mobile */
-  .sticky-panel-left.slide-in:not(.fade-out),
-  .sticky-panel-right.slide-in:not(.fade-out),
-  .sticky-panel-left.slide-in.fade-out,
-  .sticky-panel-right.slide-in.fade-out {
-    animation: none;
-  }
-
-  .sticky-panel-content {
-    height: auto;
-    min-height: 100vh;
-  }
 }
