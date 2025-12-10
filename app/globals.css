@@ -194,7 +194,7 @@ body {
   }
   to {
     opacity: 0;
-    filter: blur(12px);
+    filter: blur(32px);
   }
 }
 

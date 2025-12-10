@@ -126,23 +126,14 @@ export default function Appointments() {
   const [prevSectionIndex, setPrevSectionIndex] = useState(-1);
   const [isSlideInComplete, setIsSlideInComplete] = useState(false);
   const [showPrevPanel, setShowPrevPanel] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const fadeOutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Detect mobile viewport
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
   useEffect(() => {
     const wrapper = scrollWrapperRef.current;
-    if (!wrapper || isMobile) return; // Skip scroll-driven animation on mobile
+    if (!wrapper) return;
 
     const handleScroll = () => {
       const rect = wrapper.getBoundingClientRect();
@@ -221,7 +212,7 @@ export default function Appointments() {
         clearTimeout(fadeOutTimeoutRef.current);
       }
     };
-  }, [isMobile]);
+  }, []);
 
   return (
     <section
@@ -260,30 +251,29 @@ export default function Appointments() {
         </div>
       </div>
 
-      {isMobile ? (
-        // Mobile: Simple stacked content sections
-        <div className="appointments-mobile-stack w-full">
-          {appointmentSections.map((section, index) => (
-            <div
-              key={section.id}
-              className="appointment-mobile-panel bg-(--background) border-b border-(--foreground)/10 last-of-type:border-b-0 relative z-100"
-            >
-              <div className="max-w-xl mx-auto py-10">
-                <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                  {section.title}
-                </h3>
-                <div className="prose max-w-none">{section.content}</div>
-              </div>
+      {/* Mobile: Simple stacked content sections */}
+      <div className="lg:hidden appointments-mobile-stack w-full">
+        {appointmentSections.map((section, index) => (
+          <div
+            key={section.id}
+            className="appointment-mobile-panel bg-(--background) border-b border-(--foreground)/10 last-of-type:border-b-0 relative z-100"
+          >
+            <div className="max-w-xl mx-auto py-10">
+              <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                {section.title}
+              </h3>
+              <div className="prose max-w-none">{section.content}</div>
             </div>
-          ))}
-        </div>
-      ) : (
-        // Desktop: Animated scroll-driven panels
-        <div
-          ref={scrollWrapperRef}
-          className="appointments-scroll-wrapper snap-y snap-proximity hidden lg:block"
-          style={{ height: `${appointmentSections.length * 100}vh` }}
-        >
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: Animated scroll-driven panels */}
+      <div
+        ref={scrollWrapperRef}
+        className="hidden lg:block appointments-scroll-wrapper"
+        style={{ height: `${appointmentSections.length * 100}vh` }}
+      >
           <div className="sticky-scroll-container min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
             {showPrevPanel &&
               prevSectionIndex >= 0 &&
@@ -337,8 +327,7 @@ export default function Appointments() {
               </div>
             )}
           </div>
-        </div>
-      )}
+      </div>
     </section>
   );
 }
