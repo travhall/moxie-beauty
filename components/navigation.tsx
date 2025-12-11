@@ -30,14 +30,14 @@ export default function Navigation() {
   const navItems = useMemo<NavItem[]>(
     () => [
       {
-        name: "Appointments",
-        section: "Appointments",
-        description: "Book your appointment",
-      },
-      {
         name: "Our Services",
         section: "Services",
         description: "Explore our services",
+      },
+      {
+        name: "Appointments",
+        section: "Appointments",
+        description: "Book your appointment",
       },
       {
         name: "About Moxie",

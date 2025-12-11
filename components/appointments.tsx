@@ -116,6 +116,10 @@ const appointmentSections = [
           <li>Expect some flaking as part of the normal healing process</li>
           <li>Complete your required 6-week touch-up for perfected results</li>
         </ul>
+
+        <div className="mt-12">
+          <Button size="lg">Make an Appointment</Button>
+        </div>
       </>
     ),
   },
@@ -249,7 +253,9 @@ export default function Appointments() {
               variant="outline"
               onClick={() => {
                 const wrapper = scrollWrapperRef.current;
-                const mobileStack = document.querySelector('.appointments-mobile-stack');
+                const mobileStack = document.querySelector(
+                  ".appointments-mobile-stack"
+                );
                 const target = wrapper || mobileStack;
 
                 if (target) {
@@ -265,17 +271,17 @@ export default function Appointments() {
                   const buffer = 10; // 10px buffer to ensure rect.top becomes negative
                   const targetScrollY = currentScrollY + rect.top + buffer;
 
-                  console.log('Plan button clicked:', {
+                  console.log("Plan button clicked:", {
                     currentScrollY,
                     rectTop: rect.top,
                     buffer,
                     targetScrollY,
-                    scrollAmount: rect.top + buffer
+                    scrollAmount: rect.top + buffer,
                   });
 
                   window.scrollTo({
                     top: targetScrollY,
-                    behavior: 'smooth'
+                    behavior: "smooth",
                   });
                 }
               }}
@@ -306,91 +312,95 @@ export default function Appointments() {
       {/* Desktop: Animated scroll-driven panels */}
       <div
         ref={scrollWrapperRef}
-        className="hidden lg:block appointments-scroll-wrapper"
+        className="hidden lg:block appointments-scroll-wrapper sticky top-0"
         style={{ height: `${appointmentSections.length * 100}vh` }}
       >
-          <div className="sticky-scroll-container min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
-            {showPrevPanel &&
-              prevSectionIndex >= 0 &&
-              prevSectionIndex !== activeSectionIndex && (
-                <div
-                  className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${appointmentSections[prevSectionIndex].position} slide-in fade-out`}
-                  style={{ zIndex: 1 }}
-                >
-                  <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90">
-                    <div className="max-w-xl p-8 lg:p-12">
-                      <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                        {appointmentSections[prevSectionIndex].title}
-                      </h3>
-                      <div className="prose max-w-none">
-                        {appointmentSections[prevSectionIndex].content}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            {activeSectionIndex >= 0 && (
+        <div className="sticky-scroll-container min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
+          {showPrevPanel &&
+            prevSectionIndex >= 0 &&
+            prevSectionIndex !== activeSectionIndex && (
               <div
-                className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${
-                  appointmentSections[activeSectionIndex].position
-                } ${isSlideInComplete ? "slide-in" : ""}`}
-                style={{ zIndex: 2 }}
+                className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${appointmentSections[prevSectionIndex].position} slide-in fade-out`}
+                style={{ zIndex: 1 }}
               >
                 <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90">
                   <div className="max-w-xl p-8 lg:p-12">
                     <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                      {appointmentSections[activeSectionIndex].title}
+                      {appointmentSections[prevSectionIndex].title}
                     </h3>
                     <div className="prose max-w-none">
-                      {appointmentSections[activeSectionIndex].content}
+                      {appointmentSections[prevSectionIndex].content}
                     </div>
-                    {activeSectionIndex < appointmentSections.length - 1 && (
-                      <button
-                        onClick={() => {
-                          const wrapper = scrollWrapperRef.current;
-                          if (!wrapper) return;
-
-                          // Calculate the target panel's position
-                          // Each panel represents 1/4 of the wrapper height
-                          const nextPanelIndex = activeSectionIndex + 1;
-                          const wrapperHeight = wrapper.offsetHeight;
-                          const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
-
-                          // Progress needed for next panel: (nextPanelIndex / totalPanels)
-                          // Add a small buffer (2%) to ensure we're solidly within the target panel
-                          const progressNeeded = nextPanelIndex / appointmentSections.length;
-                          const bufferProgress = 0.02; // 2% buffer to avoid threshold issues
-                          const scrollNeeded = (progressNeeded + bufferProgress) * wrapperHeight;
-
-                          // Target scroll position is wrapper top + scroll needed
-                          const targetScrollY = wrapperTop + scrollNeeded;
-
-                          console.log('Next button clicked:', {
-                            currentPanel: activeSectionIndex,
-                            nextPanel: nextPanelIndex,
-                            wrapperTop,
-                            wrapperHeight,
-                            progressNeeded,
-                            scrollNeeded,
-                            targetScrollY,
-                            currentScrollY: window.scrollY
-                          });
-
-                          window.scrollTo({
-                            top: targetScrollY,
-                            behavior: "smooth",
-                          });
-                        }}
-                        className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 group"
-                      >
-                        Next <ArrowRight className="w-4 h-4" />
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
             )}
-          </div>
+          {activeSectionIndex >= 0 && (
+            <div
+              className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${
+                appointmentSections[activeSectionIndex].position
+              } ${isSlideInComplete ? "slide-in" : ""}`}
+              style={{ zIndex: 2 }}
+            >
+              <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90">
+                <div className="max-w-xl p-8 lg:p-12">
+                  <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                    {appointmentSections[activeSectionIndex].title}
+                  </h3>
+                  <div className="prose max-w-none">
+                    {appointmentSections[activeSectionIndex].content}
+                  </div>
+                  {activeSectionIndex < appointmentSections.length - 1 && (
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        const wrapper = scrollWrapperRef.current;
+                        if (!wrapper) return;
+
+                        // Calculate the target panel's position
+                        // Each panel represents 1/4 of the wrapper height
+                        const nextPanelIndex = activeSectionIndex + 1;
+                        const wrapperHeight = wrapper.offsetHeight;
+                        const wrapperTop =
+                          wrapper.getBoundingClientRect().top + window.scrollY;
+
+                        // Progress needed for next panel: (nextPanelIndex / totalPanels)
+                        // Add a small buffer (2%) to ensure we're solidly within the target panel
+                        const progressNeeded =
+                          nextPanelIndex / appointmentSections.length;
+                        const bufferProgress = 0.02; // 2% buffer to avoid threshold issues
+                        const scrollNeeded =
+                          (progressNeeded + bufferProgress) * wrapperHeight;
+
+                        // Target scroll position is wrapper top + scroll needed
+                        const targetScrollY = wrapperTop + scrollNeeded;
+
+                        console.log("Next button clicked:", {
+                          currentPanel: activeSectionIndex,
+                          nextPanel: nextPanelIndex,
+                          wrapperTop,
+                          wrapperHeight,
+                          progressNeeded,
+                          scrollNeeded,
+                          targetScrollY,
+                          currentScrollY: window.scrollY,
+                        });
+
+                        window.scrollTo({
+                          top: targetScrollY,
+                          behavior: "smooth",
+                        });
+                      }}
+                      className="inline-flex self-start items-center gap-2 mt-6 group"
+                    >
+                      Next <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

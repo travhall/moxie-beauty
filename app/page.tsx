@@ -75,10 +75,12 @@ export default function Home() {
 
       <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
 
-      <Appointments />
       <Services />
+      <Appointments />
       <About />
       <Testimonials />
+
+      <div className="w-full h-32 bg-linear-to-t from-(--background) sticky bottom-0 z-20" />
     </main>
   );
 }
