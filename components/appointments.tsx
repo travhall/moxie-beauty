@@ -7,7 +7,11 @@ import apptImage from "@/public/images/moxie-lobby.jpg";
 import Button from "./button";
 import { useEffect, useRef, useState } from "react";
 
-const appointmentSections = [
+interface AppointmentsProps {
+  onBookingClick: () => void;
+}
+
+const getAppointmentSections = (onBookingClick: () => void) => [
   {
     id: "section-planning",
     title: "Planning Your Visit",
@@ -119,14 +123,17 @@ const appointmentSections = [
         </ul>
 
         <div className="mt-12">
-          <Button size="lg">Make an Appointment</Button>
+          <Button size="lg" onClick={onBookingClick}>
+            Make an Appointment
+          </Button>
         </div>
       </>
     ),
   },
 ];
 
-export default function Appointments() {
+export default function Appointments({ onBookingClick }: AppointmentsProps) {
+  const appointmentSections = getAppointmentSections(onBookingClick);
   const [activeSectionIndex, setActiveSectionIndex] = useState(-1);
   const [prevSectionIndex, setPrevSectionIndex] = useState(-1);
   const [isSlideInComplete, setIsSlideInComplete] = useState(false);
@@ -247,7 +254,9 @@ export default function Appointments() {
             shape, ideal pigment, and what to expect during the healing process.
           </p>
           <div className="flex flex-col lg:flex-row items-start gap-4">
-            <Button size="lg">Make an Appointment</Button>
+            <Button size="lg" onClick={onBookingClick}>
+              Make an Appointment
+            </Button>
             <Button
               size="lg"
               variant="outline"
@@ -316,7 +325,7 @@ export default function Appointments() {
         style={{ height: `${appointmentSections.length * 100}vh` }}
       >
         <div className="sticky-scroll-container grid place-content-center min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
-          <Logo placement="footer" className="" />
+          <Logo placement="footer" />
 
           {showPrevPanel &&
             prevSectionIndex >= 0 &&

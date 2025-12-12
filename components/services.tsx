@@ -54,7 +54,11 @@ const servicesData: ServiceData[] = [
   },
 ];
 
-const Services = () => {
+interface ServicesProps {
+  onBookingClick: () => void;
+}
+
+const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
   const [activeService, setActiveService] = useState<number | null>(null);
 
   const openOverlay = (index: number) => {
@@ -72,7 +76,7 @@ const Services = () => {
       tabIndex={-1}
       aria-label="Services section"
     >
-      <div className="max-w-[1180px] w-full mx-auto xl:mx-48">
+      <div className="max-w-295 w-full mx-auto xl:mx-48">
         <div className="grid grid-cols-1 gap-6 services-grid">
           {/* Content Block */}
           <div className="services-content p-4  lg:place-self-end lg:pl-8 lg:pb-0">
@@ -92,8 +96,10 @@ const Services = () => {
               every visit unforgettable.
             </p>
             <div className="flex flex-row flex-wrap gap-4 mb-4">
-              <Button size="lg">Make an Appointment</Button>
-              <Button size="lg" variant="outline">
+              <Button size="lg" onClick={onBookingClick}>
+                Make an Appointment
+              </Button>
+              <Button size="lg" variant="outline" onClick={onBookingClick}>
                 Schedule a Consultation
               </Button>
             </div>

@@ -178,7 +178,7 @@ export default function Navigation() {
       {/* Navigation */}
       <nav
         ref={navContainerRef}
-        className="bevel flex md:inline-flex flex-row justify-between gap-4 fixed md:sticky bottom-2 md:bottom-auto md:top-6 right-2 md:right-auto left-2 md:left-56 lg:mt-44 z-50 bg-(--background)/60 backdrop-blur inset-shadow-sm inset-shadow-midnite/50 rounded-full border-[.5px] border-(--accent)/50 p-4"
+        className="bevel flex md:inline-flex flex-row justify-between gap-4 fixed md:sticky bottom-2 md:bottom-auto md:top-6 right-2 md:right-auto left-2 md:left-56 lg:mt-44 z-50 bg-(--background)/60 backdrop-blur inset-shadow-sm inset-shadow-midnite/50 rounded-full border-[.5px] border-(--accent)/50 p-4 group"
         role="navigation"
         aria-label="Main navigation"
       >

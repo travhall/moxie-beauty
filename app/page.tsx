@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import HeroImg from "../public/images/hero-img.jpg";
 import Button from "@/components/button";
@@ -7,8 +8,11 @@ import Testimonials from "@/components/testimonials";
 import About from "@/components/about";
 import Services from "@/components/services";
 import Appointments from "@/components/appointments";
+import BookingOverlay from "@/components/booking-overlay";
 
 export default function Home() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
     <main>
       <section
@@ -36,7 +40,12 @@ export default function Home() {
             id="contact-hero"
           >
             <li>
-              <Button className="w-full md:w-auto" variant="default" size="lg">
+              <Button
+                className="w-full md:w-auto"
+                variant="default"
+                size="lg"
+                onClick={() => setIsBookingOpen(true)}
+              >
                 Make an Appointment
               </Button>
             </li>
@@ -75,11 +84,16 @@ export default function Home() {
 
       <div className="w-full h-16 bg-linear-to-b from-(--background) sticky top-0 z-20" />
 
-      <Services />
-      <Appointments />
-      <About />
+      <Services onBookingClick={() => setIsBookingOpen(true)} />
+      <Appointments onBookingClick={() => setIsBookingOpen(true)} />
+      <About onBookingClick={() => setIsBookingOpen(true)} />
       <div className="w-full h-16 bg-linear-to-t from-(--background) sticky bottom-0 -mt-16 z-20" />
       <Testimonials />
+
+      <BookingOverlay
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+      />
     </main>
   );
 }
