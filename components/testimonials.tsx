@@ -1,5 +1,5 @@
 // TestimonialsCarousel.tsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Testimonial {
   quote: string;
@@ -8,6 +8,7 @@ interface Testimonial {
 
 const TestimonialsCarousel = () => {
   const scrollContainerRef = useRef<HTMLUListElement>(null);
+  const [focusedIndex, setFocusedIndex] = useState<number>(0);
 
   const testimonials: Testimonial[] = [
     {
@@ -52,6 +53,50 @@ const TestimonialsCarousel = () => {
     },
   ];
 
+  // Scroll to focused testimonial
+  const scrollToTestimonial = (index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const testimonialCards = container.children;
+    if (testimonialCards[index]) {
+      testimonialCards[index].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  };
+
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const totalTestimonials = testimonials.length;
+
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      const nextIndex = (index + 1) % totalTestimonials;
+      setFocusedIndex(nextIndex);
+      scrollToTestimonial(nextIndex);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      const prevIndex = (index - 1 + totalTestimonials) % totalTestimonials;
+      setFocusedIndex(prevIndex);
+      scrollToTestimonial(prevIndex);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setFocusedIndex(0);
+      scrollToTestimonial(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      const lastIndex = totalTestimonials - 1;
+      setFocusedIndex(lastIndex);
+      scrollToTestimonial(lastIndex);
+    }
+  };
+
   // Initialize animations after component mounts
   useEffect(() => {
     const initSectionAnimations = () => {
@@ -69,7 +114,7 @@ const TestimonialsCarousel = () => {
 
   return (
     <section
-      className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-10 overflow-visible"
+      className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-12 overflow-visible"
       data-animate="testimonials"
     >
       <div className="mx-auto max-w-7xl overflow-visible p-6 pb-0">
@@ -85,6 +130,8 @@ const TestimonialsCarousel = () => {
           <ul
             ref={scrollContainerRef}
             className="flex snap-x snap-mandatory gap-6 py-6 overflow-x-auto"
+            role="list"
+            aria-label="Client testimonials"
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
@@ -94,13 +141,17 @@ const TestimonialsCarousel = () => {
             {testimonials.map((testimonial, index) => (
               <li
                 key={index}
-                className="shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-l-8 border-t-8 border-(--accent) text-balance"
+                className="shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-l-8 border-t-8 border-(--accent) text-balance focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2"
+                tabIndex={index === focusedIndex ? 0 : -1}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                aria-label={`Testimonial from ${testimonial.author}`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="hsl(var(--background))"
                   viewBox="0 0 50 60"
                   className="w-12 h-auto -mb-2 fill-(--accent)"
+                  aria-hidden="true"
                 >
                   <path d="M36.7282 29.0497C30.6329 30.4594 23.5969 35.5518 23.5283 42.1787C23.5283 42.3961 23.4724 42.5942 23.3617 42.7732C23.1657 43.0993 23.051 43.0737 23.0187 42.6965C22.2641 35.1586 16.3844 30.1334 9.0348 28.9346C9.00246 28.9282 8.99266 28.941 9.0054 28.9729C9.0054 28.9794 9.0054 28.989 9.0054 29.0017C9.01226 29.0209 9.02206 29.0273 9.0348 29.0209C17.2144 27.6335 21.9574 22.9663 23.2637 15.0192C23.2637 15.0141 23.2656 15.0092 23.2695 15.0057C23.2735 15.002 23.2784 15 23.2833 15C23.2882 15 23.293 15.002 23.297 15.0057C23.3009 15.0092 23.3029 15.0141 23.3029 15.0192C24.322 22.0009 29.3001 27.8892 36.7184 28.8483C37.0907 28.893 37.0937 28.9602 36.7282 29.0497Z" />
                   <path d="M34.1553 7.97163C37.6383 7.16605 41.6589 4.2561 41.6981 0.46934C41.6981 0.345106 41.7301 0.231887 41.7933 0.129573C41.9053 -0.0567509 41.9709 -0.042118 41.9893 0.173415C42.4205 4.48079 45.7803 7.35237 49.9801 8.03739C49.9986 8.04106 50.0042 8.03371 49.9969 8.01546C49.9969 8.01179 49.9969 8.00631 49.9969 7.99903C49.993 7.98807 49.9874 7.98439 49.9801 7.98806C45.306 8.78087 42.5958 11.4478 41.8493 15.989C41.8493 15.9919 41.8482 15.9947 41.846 15.9968C41.8437 15.9989 41.8409 16 41.8381 16C41.8353 16 41.8325 15.9989 41.8303 15.9968C41.8281 15.9947 41.8269 15.9919 41.8269 15.989C41.2446 11.9995 38.3999 8.63472 34.1609 8.08671C33.9481 8.06112 33.9465 8.02276 34.1553 7.97163Z" />

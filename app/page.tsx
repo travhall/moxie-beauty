@@ -17,7 +17,7 @@ export default function Home() {
         tabIndex={-1}
         aria-label="Hero section"
       >
-        <div className="content backdrop-blur relative max-w-[72ch] rounded-tr-4xl md:rounded-tr-full lg:left-56 z-20">
+        <div className="content backdrop-blur relative p-4 lg:p-0 w-full max-w-[72ch] rounded-tr-4xl md:rounded-tr-full lg:left-56 z-20">
           <h1 className="font-nyght text-(--foreground) text-4xl sm:text-5xl md:text-6xl my-8 text-balance">
             Welcome to{" "}
             <span className="inline-block bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pr-2 pb-2">
@@ -73,14 +73,13 @@ export default function Home() {
         />
       </section>
 
-      <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
+      <div className="w-full h-16 bg-linear-to-b from-(--background) sticky top-0 z-20" />
 
       <Services />
       <Appointments />
       <About />
+      <div className="w-full h-16 bg-linear-to-t from-(--background) sticky bottom-0 -mt-16 z-20" />
       <Testimonials />
-
-      <div className="w-full h-32 bg-linear-to-t from-(--background) sticky bottom-0 z-20" />
     </main>
   );
 }

@@ -13,6 +13,7 @@ interface NavItem {
   name: string;
   section: string;
   description?: string;
+  mobileLabel?: string;
 }
 
 export default function Navigation() {
@@ -33,6 +34,7 @@ export default function Navigation() {
         name: "Our Services",
         section: "Services",
         description: "Explore our services",
+        mobileLabel: "Services",
       },
       {
         name: "Appointments",
@@ -43,6 +45,7 @@ export default function Navigation() {
         name: "About Moxie",
         section: "About",
         description: "Learn about us",
+        mobileLabel: "About",
       },
     ],
     []
@@ -175,7 +178,7 @@ export default function Navigation() {
       {/* Navigation */}
       <nav
         ref={navContainerRef}
-        className="bevel flex md:inline-flex flex-row justify-evenly md:gap-4 fixed md:sticky bottom-2 md:bottom-auto md:top-6 right-2 md:right-auto left-2 md:left-56 lg:mt-44 z-50 bg-(--background)/60 backdrop-blur inset-shadow-sm inset-shadow-midnite/50 rounded-full border-[.5px] border-(--accent)/50 p-4"
+        className="bevel flex md:inline-flex flex-row justify-between gap-4 fixed md:sticky bottom-2 md:bottom-auto md:top-6 right-2 md:right-auto left-2 md:left-56 lg:mt-44 z-50 bg-(--background)/60 backdrop-blur inset-shadow-sm inset-shadow-midnite/50 rounded-full border-[.5px] border-(--accent)/50 p-4"
         role="navigation"
         aria-label="Main navigation"
       >
@@ -188,7 +191,7 @@ export default function Navigation() {
               navRefs.current[item.section] = el;
               // console.log(`Nav ref set for ${item.section}:`, !!el); // Debug log
             }}
-            className={`text-base font-bold rounded-full py-1 px-3 transition-all relative z-10 border border-transparent hover:border-(--accent)/20 hover:bg-(--accent)/20 focus:outline-none focus:ring-2 focus:ring-(--accent)/50 focus:border-(--accent)/40 ${
+            className={`text-base font-bold rounded-full py-1 px-4 transition-all relative z-10 border border-transparent hover:border-(--accent)/20 hover:bg-(--accent)/20 focus:outline-none focus:ring-2 focus:ring-(--accent)/50 focus:border-(--accent)/40 ${
               activeSection === item.section ? "text-(--background)" : ""
             }`}
             onClick={(e) => scrollToSection(item.section, e)}
@@ -196,7 +199,10 @@ export default function Navigation() {
             aria-label={item.description}
             aria-current={activeSection === item.section ? "true" : "false"}
           >
-            <span className="relative z-10">{item.name}</span>
+            <span className="relative z-10">
+              <span className="md:hidden">{item.mobileLabel || item.name}</span>
+              <span className="hidden md:inline">{item.name}</span>
+            </span>
             {activeSection === item.section && (
               <motion.span
                 className="absolute inset-0 rounded-full bg-(--accent)"

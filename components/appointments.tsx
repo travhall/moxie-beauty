@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Logo from "./logo";
 import apptImage from "@/public/images/moxie-lobby.jpg";
 import Button from "./button";
 import { useEffect, useRef, useState } from "react";
@@ -221,16 +222,16 @@ export default function Appointments() {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen w-full max-w-7xl mx-auto p-4 md:pt-24 relative z-10"
+      className="min-h-screen w-full md:pt-24 relative z-10"
       id="Appointments"
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      <div className="container flex flex-col md:flex-row gap-8 items-start mx-auto px-4 mb-10 lg:sticky lg:top-32 min-h-screen z-0">
+      <div className="container flex flex-col md:flex-row lg:gap-8 items-start mx-auto p-8 mb-10 lg:sticky lg:top-24 min-h-screen z-0">
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
-          className="w-full lg:max-w-1/2 max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover"
+          className="w-full lg:max-w-1/2 max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0"
         />
         <div className="content relative max-w-2xl text-balance">
           <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
@@ -242,11 +243,10 @@ export default function Appointments() {
           </p>
           <p className="text-base mb-10">
             If you&rsquo;re considering microblading, we recommend starting with
-            a <a href="">complimentary consultation</a> where we&rsquo;ll
-            discuss your desired shape, ideal pigment, and what to expect during
-            the healing process.
+            a complimentary consultation where we&rsquo;ll discuss your desired
+            shape, ideal pigment, and what to expect during the healing process.
           </p>
-          <div className="flex gap-4">
+          <div className="flex flex-col lg:flex-row items-start gap-4">
             <Button size="lg">Make an Appointment</Button>
             <Button
               size="lg"
@@ -297,7 +297,7 @@ export default function Appointments() {
         {appointmentSections.map((section, index) => (
           <div
             key={section.id}
-            className="appointment-mobile-panel bg-(--background) border-b border-(--foreground)/10 last-of-type:border-b-0 relative z-100"
+            className="appointment-mobile-panel p-4 m-4 bg-(--background) border-b border-(--foreground)/10 last-of-type:border-b-0 relative z-100"
           >
             <div className="max-w-xl mx-auto py-10">
               <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
@@ -312,10 +312,12 @@ export default function Appointments() {
       {/* Desktop: Animated scroll-driven panels */}
       <div
         ref={scrollWrapperRef}
-        className="hidden lg:block appointments-scroll-wrapper sticky top-0"
+        className="hidden lg:block appointments-scroll-wrapper sticky top-0 border-t border-(--accent)/50"
         style={{ height: `${appointmentSections.length * 100}vh` }}
       >
-        <div className="sticky-scroll-container min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
+        <div className="sticky-scroll-container grid place-content-center min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
+          <Logo placement="footer" className="" />
+
           {showPrevPanel &&
             prevSectionIndex >= 0 &&
             prevSectionIndex !== activeSectionIndex && (
@@ -323,7 +325,7 @@ export default function Appointments() {
                 className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${appointmentSections[prevSectionIndex].position} slide-in fade-out`}
                 style={{ zIndex: 1 }}
               >
-                <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90">
+                <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90 backdrop-blur-lg">
                   <div className="max-w-xl p-8 lg:p-12">
                     <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
                       {appointmentSections[prevSectionIndex].title}
@@ -342,7 +344,7 @@ export default function Appointments() {
               } ${isSlideInComplete ? "slide-in" : ""}`}
               style={{ zIndex: 2 }}
             >
-              <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90">
+              <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90 backdrop-blur-lg">
                 <div className="max-w-xl p-8 lg:p-12">
                   <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
                     {appointmentSections[activeSectionIndex].title}
@@ -393,7 +395,8 @@ export default function Appointments() {
                       }}
                       className="inline-flex self-start items-center gap-2 mt-6 group"
                     >
-                      Next <ArrowRight className="w-4 h-4" />
+                      Next{" "}
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   )}
                 </div>

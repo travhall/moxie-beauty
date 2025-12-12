@@ -146,6 +146,7 @@ body {
     grid-template-columns: repeat(6, 1fr);
     gap: 1.5rem;
     /* grid-template-areas:
+      "content content content content . ."
       "content content content content card1 card1"
       "content content content content card1 card1"
       "content content content content card2 card2"
@@ -155,6 +156,7 @@ body {
       ". . card4 card4 . ."; */
 
     grid-template-areas:
+      "content content content content . ."
       "content content content content card1 card1"
       "content content content content card1 card1"
       "content content content content card2 card2"
