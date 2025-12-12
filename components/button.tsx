@@ -58,7 +58,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Variant styles
       const variantStyles = {
         default:
-          "bg-(--button) text-(--button-foreground) hover:bg-(--button)/90 focus-visible:ring-(--button)/80 disabled:bg-(--button)/50",
+          "bg-(--button) text-(--button-foreground) hover:bg-(--button)/90 focus-visible:ring-(--button)/80 disabled:bg-(--button)/50 text-shadow-lg text-shadow-(--foreground)",
         outline:
           "border border-(--foreground) bg-transparent hover:bg-(--foreground)/15 focus-visible:ring-(--foreground)/20 disabled:border-(--foreground)/30 disabled:text-(--foreground)/50 text-shadow-lg text-shadow-(--background)",
         ghost:

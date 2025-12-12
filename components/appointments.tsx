@@ -199,12 +199,10 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
           // Reset slide-in state for new panel
           setIsSlideInComplete(false);
 
-          // Use double RAF to ensure initial render is painted before animation starts
+          // Use single RAF to ensure initial render is painted before animation starts
           requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              console.log(`Starting slide-in animation for panel ${index}`);
-              setIsSlideInComplete(true);
-            });
+            console.log(`Starting slide-in animation for panel ${index}`);
+            setIsSlideInComplete(true);
           });
 
           return index;
@@ -377,9 +375,11 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
 
                         // Progress needed for next panel: (nextPanelIndex / totalPanels)
                         // Add a small buffer (2%) to ensure we're solidly within the target panel
+                        // For the last panel, use a smaller buffer to prevent over-scrolling
+                        const isLastPanel = nextPanelIndex === appointmentSections.length - 1;
                         const progressNeeded =
                           nextPanelIndex / appointmentSections.length;
-                        const bufferProgress = 0.02; // 2% buffer to avoid threshold issues
+                        const bufferProgress = isLastPanel ? 0.01 : 0.02; // Smaller buffer for last panel
                         const scrollNeeded =
                           (progressNeeded + bufferProgress) * wrapperHeight;
 
