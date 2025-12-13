@@ -32,7 +32,7 @@ const ServiceCard = ({
       onKeyDown={handleKeyDown}
       aria-label={`${title} - ${preview}`}
     >
-      <h3 className="font-nyght text-2xl mb-3 bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-balance">
+      <h3 className="font-nyght text-3xl mb-3 bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-balance">
         {title}
       </h3>
       <p className="text-base mb-4 text-pretty">{preview}</p>

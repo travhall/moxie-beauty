@@ -81,8 +81,9 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
               enjoyable experience.
             </blockquote>
             <Button
-              className="w-full lg:w-auto mt-8 lg:mt-0"
+              className="w-full md:w-auto mt-8 lg:mt-0"
               onClick={onBookingClick}
+              size="lg"
             >
               Make an Appointment
             </Button>

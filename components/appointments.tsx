@@ -132,7 +132,9 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
   const [prevSectionIndex, setPrevSectionIndex] = useState(-1);
   const [isSlideInComplete, setIsSlideInComplete] = useState(false);
   const [showPrevPanel, setShowPrevPanel] = useState(false);
-  const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(0);
+  const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(
+    0
+  );
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -237,11 +239,11 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      <div className="container flex flex-col md:flex-row lg:gap-14 items-start mx-auto p-8 mb-10 lg:sticky lg:top-24 min-h-screen z-0">
+      <div className="container flex flex-col md:flex-row lg:gap-14 items-start mx-auto p-8 lg:mb-10 lg:sticky lg:top-24 min-h-screen z-0">
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
-          className="w-full lg:max-w-1/2 max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0"
+          className="w-full lg:max-w-1/2 h-96 lg:h-auto max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0"
         />
         <div className="content relative max-w-2xl text-balance">
           <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
@@ -257,12 +259,17 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
             shape, ideal pigment, and what to expect during the healing process.
           </p>
           <div className="flex flex-col lg:flex-row items-start gap-4">
-            <Button size="lg" onClick={onBookingClick}>
+            <Button
+              size="lg"
+              onClick={onBookingClick}
+              className="w-full md:w-auto"
+            >
               Make an Appointment
             </Button>
             <Button
               size="lg"
               variant="outline"
+              className="w-full md:w-auto hidden! lg:inline-flex"
               onClick={() => {
                 const wrapper = scrollWrapperRef.current;
                 const mobileStack = document.querySelector(
@@ -305,7 +312,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       </div>
 
       {/* Mobile: Accordion panels */}
-      <div className="lg:hidden appointments-mobile-stack w-full max-w-3xl mx-auto px-4 py-8">
+      <div className="lg:hidden appointments-mobile-stack w-full max-w-3xl mx-auto p-8">
         {appointmentSections.map((section, index) => {
           const isOpen = openAccordionIndex === index;
           const accordionId = `accordion-${section.id}`;
@@ -323,11 +330,11 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   onClick={() => setOpenAccordionIndex(isOpen ? null : index)}
-                  className="flex justify-between items-center w-full py-6 text-left font-nyght text-xl transition-colors hover:text-(--accent)"
+                  className="flex justify-between items-center w-full py-6 text-left font-nyght text-3xl transition-colors hover:text-(--accent)"
                 >
                   <span>{section.title}</span>
                   <ChevronDown
-                    className={`w-5 h-5 transition-transform duration-300 flex-shrink-0 ml-4 ${
+                    className={`w-5 h-5 transition-transform duration-300 shrink-0 ml-4 ${
                       isOpen ? "rotate-180" : ""
                     }`}
                     aria-hidden="true"
@@ -339,7 +346,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                 role="region"
                 aria-labelledby={accordionId}
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+                  isOpen ? "max-h-500 opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
                 <div className="pb-6 prose max-w-none">{section.content}</div>
@@ -367,7 +374,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
               >
                 <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90 backdrop-blur-lg">
                   <div className="max-w-xl p-8 lg:p-12">
-                    <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                    <h3 className="text-3xl lg:text-4xl font-nyght mb-5 lg:mb-6">
                       {appointmentSections[prevSectionIndex].title}
                     </h3>
                     <div className="prose max-w-none">

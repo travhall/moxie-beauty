@@ -203,7 +203,7 @@ const ServiceOverlay = ({
           )}
 
           <div
-            className="flex flex-row flex-wrap items-end gap-4 mt-8"
+            className="flex flex-row flex-wrap justify-end gap-4 mt-8"
             style={{
               opacity: isClosing ? 0 : isVisible ? 1 : 0,
               transform: isClosing
@@ -216,7 +216,11 @@ const ServiceOverlay = ({
               transitionDelay: "0.15s",
             }}
           >
-            <Button size="lg" onClick={onBookingClick}>
+            <Button
+              size="lg"
+              onClick={onBookingClick}
+              className="w-full md:w-auto"
+            >
               Book Now
             </Button>
           </div>

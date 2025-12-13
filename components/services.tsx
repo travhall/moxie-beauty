@@ -71,7 +71,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
 
   return (
     <section
-      className="min-h-screen w-full grid place-items-center p-4 md:py-24"
+      className="min-h-screen w-full grid place-items-center p-4 md:py-24 mb-48 md:mb-0"
       id="Services"
       tabIndex={-1}
       aria-label="Services section"
@@ -96,10 +96,19 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
               every visit unforgettable.
             </p>
             <div className="flex flex-row flex-wrap gap-4 mb-4">
-              <Button size="lg" onClick={onBookingClick}>
+              <Button
+                size="lg"
+                onClick={onBookingClick}
+                className="w-full md:w-auto"
+              >
                 Make an Appointment
               </Button>
-              <Button size="lg" variant="outline" onClick={onBookingClick}>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={onBookingClick}
+                className="w-full md:w-auto"
+              >
                 Schedule a Consultation
               </Button>
             </div>
