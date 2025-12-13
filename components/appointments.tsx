@@ -365,7 +365,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   </div>
                   <div className="flex flex-row items-center gap-4 mt-8">
                     <Button onClick={onBookingClick}>Book Now</Button>
-                    {activeSectionIndex < appointmentSections.length - 1 && (
+                    {activeSectionIndex < appointmentSections.length - 1 ? (
                       <Button
                         variant="ghost"
                         onClick={() => {
@@ -411,6 +411,22 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                       >
                         Next{" "}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const aboutSection = document.getElementById("About");
+                          if (aboutSection) {
+                            aboutSection.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          }
+                        }}
+                        className="inline-flex self-start items-center gap-2 group"
+                      >
+                        Get To Know Us
                       </Button>
                     )}
                   </div>
