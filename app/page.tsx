@@ -86,8 +86,8 @@ export default function Home() {
 
       <Services onBookingClick={() => setIsBookingOpen(true)} />
       <Appointments onBookingClick={() => setIsBookingOpen(true)} />
-      <About onBookingClick={() => setIsBookingOpen(true)} />
       <div className="w-full h-16 bg-linear-to-t from-(--background) sticky bottom-0 -mt-16 z-20" />
+      <About onBookingClick={() => setIsBookingOpen(true)} />
       <Testimonials />
 
       <BookingOverlay

@@ -157,17 +157,27 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         return;
       }
 
-      // Calculate progress through the wrapper
-      const scrolledIntoWrapper = Math.max(0, -rect.top);
-      const wrapperHeight = wrapper.offsetHeight;
-      const progress = Math.min(scrolledIntoWrapper / wrapperHeight, 1);
-
       // After wrapper leaves viewport completely
-      if (progress >= 1 && rect.bottom < 0) {
+      if (rect.bottom < 0) {
         setActiveSectionIndex(-1);
         return;
       }
 
+      // Calculate how far we've scrolled into the wrapper
+      const wrapperHeight = wrapper.offsetHeight;
+      const scrolledIntoWrapper = Math.max(0, -rect.top);
+
+      // Define the usable scroll range (0 to 80% of wrapper height)
+      // This ensures the last panel appears before we'd scroll past the section
+      const usableScrollRange = wrapperHeight * 0.8;
+
+      // Cap scroll at the usable range
+      const cappedScroll = Math.min(scrolledIntoWrapper, usableScrollRange);
+
+      // Calculate progress (0 to 1) based on usable range
+      const progress = cappedScroll / usableScrollRange;
+
+      // Map progress to panel index
       const index = Math.min(
         Math.floor(progress * appointmentSections.length),
         appointmentSections.length - 1
@@ -320,7 +330,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       <div
         ref={scrollWrapperRef}
         className="hidden lg:block appointments-scroll-wrapper sticky top-0 border-t border-(--accent)/50"
-        style={{ height: `${appointmentSections.length * 100}vh` }}
+        style={{ height: `300vh` }}
       >
         <div className="sticky-scroll-container grid place-content-center min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
           <Logo placement="footer" />
@@ -366,24 +376,20 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                         const wrapper = scrollWrapperRef.current;
                         if (!wrapper) return;
 
-                        // Calculate the target panel's position
-                        // Each panel represents 1/4 of the wrapper height
                         const nextPanelIndex = activeSectionIndex + 1;
                         const wrapperHeight = wrapper.offsetHeight;
                         const wrapperTop =
                           wrapper.getBoundingClientRect().top + window.scrollY;
 
-                        // Progress needed for next panel: (nextPanelIndex / totalPanels)
-                        // Add a small buffer (2%) to ensure we're solidly within the target panel
-                        // For the last panel, use a smaller buffer to prevent over-scrolling
-                        const isLastPanel = nextPanelIndex === appointmentSections.length - 1;
-                        const progressNeeded =
-                          nextPanelIndex / appointmentSections.length;
-                        const bufferProgress = isLastPanel ? 0.01 : 0.02; // Smaller buffer for last panel
-                        const scrollNeeded =
-                          (progressNeeded + bufferProgress) * wrapperHeight;
+                        // Use same usable range as handleScroll (80% of wrapper)
+                        const usableScrollRange = wrapperHeight * 0.8;
 
-                        // Target scroll position is wrapper top + scroll needed
+                        // Calculate target progress for next panel
+                        const targetProgress =
+                          nextPanelIndex / appointmentSections.length + 0.01;
+
+                        // Calculate scroll needed within the usable range
+                        const scrollNeeded = targetProgress * usableScrollRange;
                         const targetScrollY = wrapperTop + scrollNeeded;
 
                         console.log("Next button clicked:", {
@@ -391,7 +397,8 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                           nextPanel: nextPanelIndex,
                           wrapperTop,
                           wrapperHeight,
-                          progressNeeded,
+                          usableScrollRange,
+                          targetProgress,
                           scrollNeeded,
                           targetScrollY,
                           currentScrollY: window.scrollY,
