@@ -200,8 +200,8 @@ export default function Navigation() {
             aria-current={activeSection === item.section ? "true" : "false"}
           >
             <span className="relative z-10">
-              <span className="md:hidden">{item.mobileLabel || item.name}</span>
-              <span className="hidden md:inline">{item.name}</span>
+              <span className="sm:hidden">{item.mobileLabel || item.name}</span>
+              <span className="hidden sm:inline">{item.name}</span>
             </span>
             {activeSection === item.section && (
               <motion.span

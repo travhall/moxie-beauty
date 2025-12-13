@@ -269,7 +269,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
             <Button
               size="lg"
               variant="outline"
-              className="w-full md:w-auto hidden! lg:inline-flex"
+              className="w-full md:w-auto hidden! lg:inline-flex!"
               onClick={() => {
                 const wrapper = scrollWrapperRef.current;
                 const mobileStack = document.querySelector(
@@ -393,7 +393,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
             >
               <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90 backdrop-blur-lg">
                 <div className="max-w-xl p-8 lg:p-12">
-                  <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
+                  <h3 className="text-3xl lg:text-4xl font-nyght mb-5 lg:mb-6">
                     {appointmentSections[activeSectionIndex].title}
                   </h3>
                   <div className="prose max-w-none">

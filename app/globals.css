@@ -74,8 +74,8 @@
 }
 
 .dark {
-  --background: var(--midnite-900);
-  --foreground: var(--midnite-50);
+  --background: var(--ivory-rose-900);
+  --foreground: var(--ivory-rose-50);
   --accent: var(--rose-gold-300);
 }
 
@@ -156,7 +156,7 @@ body {
       ". . card4 card4 . ."; */
 
     grid-template-areas:
-      "content content content content . ."
+      /* "content content content content . ." */
       "content content content content card1 card1"
       "content content content content card1 card1"
       "content content content content card2 card2"

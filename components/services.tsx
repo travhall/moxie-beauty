@@ -71,7 +71,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
 
   return (
     <section
-      className="min-h-screen w-full grid place-items-center p-4 md:py-24 mb-48 md:mb-0"
+      className="min-h-screen w-full grid place-items-center p-4 md:py-24 mb-48"
       id="Services"
       tabIndex={-1}
       aria-label="Services section"
