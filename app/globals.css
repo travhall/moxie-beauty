@@ -74,8 +74,8 @@
 }
 
 .dark {
-  --background: var(--midnite-900);
-  --foreground: var(--midnite-50);
+  --background: var(--rose-gold-900);
+  --foreground: var(--rose-gold-50);
   --accent: var(--rose-gold-300);
 }
 

@@ -81,7 +81,6 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
               enjoyable experience.
             </blockquote>
             <Button
-              size="lg"
               className="w-full lg:w-auto mt-8 lg:mt-0"
               onClick={onBookingClick}
             >

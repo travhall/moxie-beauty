@@ -55,14 +55,14 @@ export default function Footer() {
             size="sm"
             icon={Facebook}
             iconOnly
-            aria-label="Menu"
+            aria-label="Visit us on Facebook"
           />
           <Button
             variant="default"
             size="sm"
             icon={Instagram}
             iconOnly
-            aria-label="Menu"
+            aria-label="Follow us on Instagram"
           />
           <ThemeSwitch />
         </div>

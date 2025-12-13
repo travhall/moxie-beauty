@@ -205,7 +205,6 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({ isOpen, onClose }) => {
           icon={X}
           onClick={onClose}
           ariaLabel="Close booking overlay"
-          className="bg-(--background) hover:bg-(--foreground)/10"
         >
           Close
         </Button>
@@ -221,9 +220,17 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({ isOpen, onClose }) => {
       >
         {/* Loading indicator */}
         {isLoading && !hasError && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-(--background) z-10 rounded-lg m-4 mt-20">
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center bg-(--background) z-10 rounded-lg m-4 mt-20"
+            role="status"
+            aria-live="polite"
+            aria-label="Loading booking page"
+          >
             <div className="flex flex-col items-center gap-4">
-              <div className="w-12 h-12 border-4 border-(--accent)/30 border-t-(--accent) rounded-full animate-spin" />
+              <div
+                className="w-12 h-12 border-4 border-(--accent)/30 border-t-(--accent) rounded-full animate-spin"
+                aria-hidden="true"
+              />
               <p className="text-lg font-medium">Loading booking page...</p>
             </div>
           </div>

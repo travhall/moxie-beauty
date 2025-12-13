@@ -82,11 +82,11 @@ export default function Home() {
         />
       </section>
 
-      <div className="w-full h-16 bg-linear-to-b from-(--background) sticky top-0 z-20" />
+      <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
 
       <Services onBookingClick={() => setIsBookingOpen(true)} />
       <Appointments onBookingClick={() => setIsBookingOpen(true)} />
-      <div className="w-full h-16 bg-linear-to-t from-(--background) sticky bottom-0 -mt-16 z-20" />
+      <div className="w-full h-32 bg-linear-to-t from-(--background) sticky bottom-0 z-20" />
       <About onBookingClick={() => setIsBookingOpen(true)} />
       <Testimonials />
 

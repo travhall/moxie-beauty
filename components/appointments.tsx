@@ -333,7 +333,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         style={{ height: `300vh` }}
       >
         <div className="sticky-scroll-container grid place-content-center min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
-          <Logo placement="footer" />
+          <Logo placement="background" />
 
           {showPrevPanel &&
             prevSectionIndex >= 0 &&
@@ -371,7 +371,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   </div>
                   {activeSectionIndex < appointmentSections.length - 1 && (
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       onClick={() => {
                         const wrapper = scrollWrapperRef.current;
                         if (!wrapper) return;

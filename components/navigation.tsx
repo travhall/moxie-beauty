@@ -191,7 +191,7 @@ export default function Navigation() {
               navRefs.current[item.section] = el;
               // console.log(`Nav ref set for ${item.section}:`, !!el); // Debug log
             }}
-            className={`text-base font-bold rounded-full py-1 px-4 transition-all relative z-10 border border-transparent hover:border-(--accent)/20 hover:bg-(--accent)/20 focus:outline-none focus:ring-2 focus:ring-(--accent)/50 focus:border-(--accent)/40 ${
+            className={`text-base font-bold rounded-full py-1 px-4 transition-all relative z-10 text-shadow-(--foreground) border border-transparent hover:border-(--accent)/20 hover:bg-(--accent)/20 focus:outline-none focus:ring-2 focus:ring-(--accent)/50 focus:border-(--accent)/40 ${
               activeSection === item.section ? "text-(--background)" : ""
             }`}
             onClick={(e) => scrollToSection(item.section, e)}
@@ -205,7 +205,7 @@ export default function Navigation() {
             </span>
             {activeSection === item.section && (
               <motion.span
-                className="absolute inset-0 rounded-full bg-(--accent)"
+                className="absolute inset-0 rounded-full bg-(--accent) bevel"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}

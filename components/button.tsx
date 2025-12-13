@@ -39,7 +39,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const styles = useMemo(() => {
       // Base button styles
       const baseStyles =
-        "inline-flex items-center justify-center text-nowrap font-bold transition-all hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--button) disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed bevel";
+        "inline-flex items-center justify-center text-nowrap font-bold transition-all hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--button) disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed";
 
       // Size styles
       const sizeStyles = {
@@ -58,11 +58,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Variant styles
       const variantStyles = {
         default:
-          "bg-(--button) text-(--button-foreground) hover:bg-(--button)/90 focus-visible:ring-(--button)/80 disabled:bg-(--button)/50 text-shadow-lg text-shadow-(--foreground)",
+          "bg-(--button) text-(--button-foreground) hover:bg-(--button)/90 focus-visible:ring-(--button)/80 disabled:bg-(--button)/50 text-shadow-(--foreground) bevel",
         outline:
-          "border border-(--foreground) bg-transparent hover:bg-(--foreground)/15 focus-visible:ring-(--foreground)/20 disabled:border-(--foreground)/30 disabled:text-(--foreground)/50 text-shadow-lg text-shadow-(--background)",
+          "border border-(--foreground) bg-transparent hover:bg-(--accent)/10 focus-visible:ring-(--foreground)/20 disabled:border-(--foreground)/30 disabled:text-(--foreground)/50 text-shadow-(--background) bevel",
         ghost:
-          "bg-transparent hover:bg-(--foreground)/15 focus-visible:ring-(--foreground)/20 disabled:hover:bg-transparent",
+          "bg-transparent hover:bg-(--accent)/10 focus-visible:ring-(--foreground)/20 disabled:hover:bg-transparent",
       };
 
       // Icon spacing
