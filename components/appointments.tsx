@@ -121,12 +121,6 @@ const getAppointmentSections = (onBookingClick: () => void) => [
           <li>Expect some flaking as part of the normal healing process</li>
           <li>Complete your required 6-week touch-up for perfected results</li>
         </ul>
-
-        <div className="mt-12">
-          <Button size="lg" onClick={onBookingClick}>
-            Make an Appointment
-          </Button>
-        </div>
       </>
     ),
   },
@@ -242,7 +236,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      <div className="container flex flex-col md:flex-row lg:gap-8 items-start mx-auto p-8 mb-10 lg:sticky lg:top-24 min-h-screen z-0">
+      <div className="container flex flex-col md:flex-row lg:gap-14 items-start mx-auto p-8 mb-10 lg:sticky lg:top-24 min-h-screen z-0">
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
@@ -369,52 +363,57 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   <div className="prose max-w-none">
                     {appointmentSections[activeSectionIndex].content}
                   </div>
-                  {activeSectionIndex < appointmentSections.length - 1 && (
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        const wrapper = scrollWrapperRef.current;
-                        if (!wrapper) return;
+                  <div className="flex flex-row items-center gap-4 mt-8">
+                    <Button onClick={onBookingClick}>Book Now</Button>
+                    {activeSectionIndex < appointmentSections.length - 1 && (
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          const wrapper = scrollWrapperRef.current;
+                          if (!wrapper) return;
 
-                        const nextPanelIndex = activeSectionIndex + 1;
-                        const wrapperHeight = wrapper.offsetHeight;
-                        const wrapperTop =
-                          wrapper.getBoundingClientRect().top + window.scrollY;
+                          const nextPanelIndex = activeSectionIndex + 1;
+                          const wrapperHeight = wrapper.offsetHeight;
+                          const wrapperTop =
+                            wrapper.getBoundingClientRect().top +
+                            window.scrollY;
 
-                        // Use same usable range as handleScroll (80% of wrapper)
-                        const usableScrollRange = wrapperHeight * 0.8;
+                          // Use same usable range as handleScroll (80% of wrapper)
+                          const usableScrollRange = wrapperHeight * 0.8;
 
-                        // Calculate target progress for next panel
-                        const targetProgress =
-                          nextPanelIndex / appointmentSections.length + 0.01;
+                          // Calculate target progress for next panel
+                          const targetProgress =
+                            nextPanelIndex / appointmentSections.length + 0.01;
 
-                        // Calculate scroll needed within the usable range
-                        const scrollNeeded = targetProgress * usableScrollRange;
-                        const targetScrollY = wrapperTop + scrollNeeded;
+                          // Calculate scroll needed within the usable range
+                          const scrollNeeded =
+                            targetProgress * usableScrollRange;
+                          const targetScrollY = wrapperTop + scrollNeeded;
 
-                        console.log("Next button clicked:", {
-                          currentPanel: activeSectionIndex,
-                          nextPanel: nextPanelIndex,
-                          wrapperTop,
-                          wrapperHeight,
-                          usableScrollRange,
-                          targetProgress,
-                          scrollNeeded,
-                          targetScrollY,
-                          currentScrollY: window.scrollY,
-                        });
+                          console.log("Next button clicked:", {
+                            currentPanel: activeSectionIndex,
+                            nextPanel: nextPanelIndex,
+                            wrapperTop,
+                            wrapperHeight,
+                            usableScrollRange,
+                            targetProgress,
+                            scrollNeeded,
+                            targetScrollY,
+                            currentScrollY: window.scrollY,
+                          });
 
-                        window.scrollTo({
-                          top: targetScrollY,
-                          behavior: "smooth",
-                        });
-                      }}
-                      className="inline-flex self-start items-center gap-2 mt-6 group"
-                    >
-                      Next{" "}
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  )}
+                          window.scrollTo({
+                            top: targetScrollY,
+                            behavior: "smooth",
+                          });
+                        }}
+                        className="inline-flex self-start items-center gap-2 group"
+                      >
+                        Next{" "}
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

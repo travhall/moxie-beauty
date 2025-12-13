@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
+import Button from "./button";
 
 interface ServiceOverlayProps {
   title: string;
   fullDescription: string;
   isOpen: boolean;
   onClose: () => void;
+  onBookingClick: () => void;
 }
 
 const ServiceOverlay = ({
@@ -13,6 +15,7 @@ const ServiceOverlay = ({
   fullDescription,
   isOpen,
   onClose,
+  onBookingClick,
 }: ServiceOverlayProps) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -69,9 +72,10 @@ const ServiceOverlay = ({
     const handleFocusTrap = (event: KeyboardEvent) => {
       if (!overlayRef.current || event.key !== "Tab") return;
 
-      const focusableElements = overlayRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
+      const focusableElements =
+        overlayRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
       const firstElement = focusableElements[0];
       const lastElement = focusableElements[focusableElements.length - 1];
 
@@ -119,7 +123,7 @@ const ServiceOverlay = ({
     >
       <div
         ref={overlayRef}
-        className="bg-(--background) max-w-4xl rounded-lg border border-(--accent)/20 p-6 shadow-md overflow-hidden"
+        className="bg-(--background) max-w-3xl rounded-lg border border-(--accent)/20 p-6 shadow-md overflow-hidden"
         style={{
           opacity: isClosing ? 0 : isVisible ? 1 : 0,
           transform: isClosing
@@ -161,7 +165,7 @@ const ServiceOverlay = ({
           </button>
         </div>
 
-        <div className="prose prose-lg text-balance p-4" id="dialog-description">
+        <div className="prose prose-lg text-balance p-4">
           {paragraphs.length > 0 ? (
             paragraphs.map((paragraph, index) => (
               <p
@@ -197,6 +201,25 @@ const ServiceOverlay = ({
               {fullDescription}
             </p>
           )}
+
+          <div
+            className="flex flex-row flex-wrap items-end gap-4 mt-8"
+            style={{
+              opacity: isClosing ? 0 : isVisible ? 1 : 0,
+              transform: isClosing
+                ? "translateY(20px)"
+                : isVisible
+                ? "translateY(0)"
+                : "translateY(20px)",
+              transition:
+                "opacity 0.6s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
+              transitionDelay: "0.15s",
+            }}
+          >
+            <Button size="lg" onClick={onBookingClick}>
+              Book Now
+            </Button>
+          </div>
         </div>
 
         <div

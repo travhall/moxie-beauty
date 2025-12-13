@@ -125,6 +125,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
             fullDescription={servicesData[activeService].fullDescription}
             isOpen={activeService !== null}
             onClose={closeOverlay}
+            onBookingClick={onBookingClick}
           />
         )}
       </div>

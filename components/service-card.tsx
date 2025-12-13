@@ -38,7 +38,7 @@ const ServiceCard = ({
       <p className="text-base mb-4 text-pretty">{preview}</p>
 
       <span
-        className="inline-flex self-start items-center gap-2 text-(--accent) mt-6 before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out group-hover:before:scale-x-100 group-hover:before:origin-left relative"
+        className="inline-flex self-start items-center gap-1 text-(--accent) mt-6 before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out group-hover:before:scale-x-100 group-hover:before:origin-left relative"
         aria-hidden="true"
       >
         <span>{readMoreLabel}</span>
