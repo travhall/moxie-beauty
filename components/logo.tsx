@@ -10,7 +10,7 @@ const Logo: React.FC<LogoProps> = ({ placement, className = "" }) => {
     return (
       <a
         href="#top"
-        className={`inline-block ${className}`}
+        className={`inline-block absolute ${className}`}
         onClick={(e) => {
           e.preventDefault();
           window.scrollTo({

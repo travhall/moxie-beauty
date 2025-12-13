@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Logo from "./logo";
 import apptImage from "@/public/images/moxie-lobby.jpg";
@@ -132,6 +132,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
   const [prevSectionIndex, setPrevSectionIndex] = useState(-1);
   const [isSlideInComplete, setIsSlideInComplete] = useState(false);
   const [showPrevPanel, setShowPrevPanel] = useState(false);
+  const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(0);
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -303,21 +304,49 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         </div>
       </div>
 
-      {/* Mobile: Simple stacked content sections */}
-      <div className="lg:hidden appointments-mobile-stack w-full">
-        {appointmentSections.map((section, index) => (
-          <div
-            key={section.id}
-            className="appointment-mobile-panel p-4 m-4 bg-(--background) border-b border-(--foreground)/10 last-of-type:border-b-0 relative z-100"
-          >
-            <div className="max-w-xl mx-auto py-10">
-              <h3 className="text-xl lg:text-2xl font-nyght mb-5 lg:mb-6">
-                {section.title}
+      {/* Mobile: Accordion panels */}
+      <div className="lg:hidden appointments-mobile-stack w-full max-w-3xl mx-auto px-4 py-8">
+        {appointmentSections.map((section, index) => {
+          const isOpen = openAccordionIndex === index;
+          const accordionId = `accordion-${section.id}`;
+          const panelId = `panel-${section.id}`;
+
+          return (
+            <div
+              key={section.id}
+              className="appointment-mobile-accordion border-b border-(--foreground)/10 last:border-b-0"
+            >
+              <h3>
+                <button
+                  type="button"
+                  id={accordionId}
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setOpenAccordionIndex(isOpen ? null : index)}
+                  className="flex justify-between items-center w-full py-6 text-left font-nyght text-xl transition-colors hover:text-(--accent)"
+                >
+                  <span>{section.title}</span>
+                  <ChevronDown
+                    className={`w-5 h-5 transition-transform duration-300 flex-shrink-0 ml-4 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
               </h3>
-              <div className="prose max-w-none">{section.content}</div>
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={accordionId}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="pb-6 prose max-w-none">{section.content}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Desktop: Animated scroll-driven panels */}
