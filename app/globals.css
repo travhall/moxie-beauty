@@ -8,24 +8,12 @@
   --ivory-rose-200: oklch(73.42% 0.0358 29.23);
   --ivory-rose-300: oklch(62.17% 0.0455 29.23);
   --ivory-rose-400: oklch(56.73% 0.0594 29.23);
-  --ivory-rose-500: oklch(51.28% 0.0594 29.23);
+  --ivory-rose-500: oklch(48.28% 0.0594 29.23);
   --ivory-rose-600: oklch(35.38% 0.0714 29.23);
   --ivory-rose-700: oklch(27.6% 0.0714 29.23);
-  --ivory-rose-800: oklch(20.08% 0.0834 29.23);
-  --ivory-rose-900: oklch(12.47% 0.0834 29.23);
+  --ivory-rose-800: oklch(16.08% 0.0834 29.23);
+  --ivory-rose-900: oklch(9.47% 0.0834 29.23);
   --color-ivory-rose: var(--ivory-rose-500);
-
-  --monstera-50: oklch(96.79% 0.0033 142.5);
-  --monstera-100: oklch(87.67% 0.0057 142.5);
-  --monstera-200: oklch(73.31% 0.0097 142.5);
-  --monstera-300: oklch(62.63% 0.0097 142.5);
-  --monstera-400: oklch(57.34% 0.0097 142.5);
-  --monstera-500: oklch(51.95% 0.0097 142.5);
-  --monstera-600: oklch(36.71% 0.0205 142.5);
-  --monstera-700: oklch(29.03% 0.0205 142.5);
-  --monstera-800: oklch(21.7% 0.0422 142.5);
-  --monstera-900: oklch(14.84% 0.0422 142.5);
-  --color-monstera: var(--monstera-500);
 
   --rose-gold-50: oklch(97.31% 0.028 63);
   --rose-gold-100: oklch(89.25% 0.048 63);
