@@ -243,22 +243,22 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         <Image
           src={apptImage}
           alt="Moxie's waiting room."
-          className="w-full lg:max-w-1/2 h-96 lg:h-auto max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border-r border-b border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0"
+          className="w-full lg:max-w-1/2 h-96 lg:h-auto max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border-r border-b border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0 fade-in-section"
         />
         <div className="content relative max-w-2xl text-balance">
-          <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance">
+          <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section delay-100">
             Your Moxie Beauty Journey
           </h2>
-          <p className="text-xl mb-4">
+          <p className="text-xl mb-4 fade-in-section delay-200">
             Discover the perfect service for your beauty goals by exploring our
             menu of lash and brow enhancements.
           </p>
-          <p className="text-base mb-10">
+          <p className="text-base mb-10 fade-in-section delay-300">
             If you&rsquo;re considering microblading, we recommend starting with
             a complimentary consultation where we&rsquo;ll discuss your desired
             shape, ideal pigment, and what to expect during the healing process.
           </p>
-          <div className="flex flex-col lg:flex-row items-start gap-4">
+          <div className="flex flex-col lg:flex-row items-start gap-4 fade-in-section delay-400">
             <Button
               size="lg"
               onClick={onBookingClick}
@@ -317,11 +317,12 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
           const isOpen = openAccordionIndex === index;
           const accordionId = `accordion-${section.id}`;
           const panelId = `panel-${section.id}`;
+          const delayClass = `delay-${Math.min((index + 1) * 100, 400)}`;
 
           return (
             <div
               key={section.id}
-              className="appointment-mobile-accordion border-b border-(--foreground)/10 last:border-b-0"
+              className={`appointment-mobile-accordion border-b border-(--foreground)/10 last:border-b-0 fade-in-section ${delayClass}`}
             >
               <h3>
                 <button

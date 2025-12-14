@@ -1,5 +1,5 @@
 // About.tsx
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Button from "@/components/button";
 import profileImage from "@/public/images/jackie-profile.jpg";
@@ -10,14 +10,6 @@ interface AboutProps {
 }
 
 const About: React.FC<AboutProps> = ({ onBookingClick }) => {
-  useEffect(() => {
-    const initSectionAnimations = () => {
-      // console.log("Animations initialized");
-    };
-
-    initSectionAnimations();
-  }, []);
-
   return (
     <>
       <section
@@ -34,7 +26,7 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
             <Image
               src={profileImage}
               alt="Jackie Schult, owner and operator of Moxie Beauty Studio"
-              className="h-96 w-[calc(100%-2rem)] md:max-w-64 mx-4 xl:mr-8 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover z-0"
+              className="h-96 w-[calc(100%-2rem)] md:max-w-64 mx-4 xl:mr-8 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover z-0 fade-in-section"
               priority={false}
               loading="lazy"
             />
@@ -42,10 +34,10 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
               className="about-content px-4 text-pretty"
               data-animate="about-content"
             >
-              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance">
+              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section delay-100">
                 Discover the Heart & Soul of Moxie
               </h2>
-              <p className="text-base mb-12 max-w-[68ch] text-balance">
+              <p className="text-base mb-12 max-w-[68ch] text-balance fade-in-section delay-200">
                 Moxie Beauty Studio is owned and operated by{" "}
                 <strong>Jackie Schult</strong>. Jackie specializes in{" "}
                 <em>
@@ -59,14 +51,14 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
               <Image
                 src={workImage}
                 alt="A picture of Jackie working on another satisfied client."
-                className="h-64 lg:h-96 w-full max-w-xl mb-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover object-top z-0"
+                className="h-64 lg:h-96 w-full max-w-xl mb-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover object-top z-0 fade-in-section delay-300"
                 priority={false}
                 loading="lazy"
               />
             </div>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center max-w-7xl gap-4 p-4 mx-auto my-12">
+        <div className="flex flex-col lg:flex-row items-center max-w-7xl gap-4 p-4 mx-auto my-12 fade-in-section delay-400">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="hsl(var(--background))"

@@ -10,7 +10,7 @@ const Logo: React.FC<LogoProps> = ({ placement, className = "" }) => {
     return (
       <a
         href="#top"
-        className={`inline-block absolute ${className}`}
+        className={`inline-block relative md:fixed mb-8 md:mb-0 top-12 md:top-6 left-8 z-40 ${className} fade-in-section`}
         onClick={(e) => {
           e.preventDefault();
           window.scrollTo({
@@ -20,7 +20,7 @@ const Logo: React.FC<LogoProps> = ({ placement, className = "" }) => {
         }}
       >
         <span className="sr-only">Moxie Beauty Studio</span>
-        <div className="inline-block relative md:fixed mb-8 md:mb-0 top-12 md:top-6 left-8 z-40">
+        <div className="">
           {/* Large Logo */}
           <svg
             width="180"

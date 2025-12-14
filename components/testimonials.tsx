@@ -1,5 +1,5 @@
 // TestimonialsCarousel.tsx
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 interface Testimonial {
   quote: string;
@@ -97,28 +97,13 @@ const TestimonialsCarousel = () => {
     }
   };
 
-  // Initialize animations after component mounts
-  useEffect(() => {
-    const initSectionAnimations = () => {
-      // console.log("Animations initialized");
-
-      // Optional: Add smooth scrolling behavior for browsers that don't support it natively
-      const container = scrollContainerRef.current;
-      if (container) {
-        // You could add custom scroll behavior here if needed
-      }
-    };
-
-    initSectionAnimations();
-  }, []);
-
   return (
     <section
-      className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-12 overflow-visible"
+      className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-12 overflow-visible fade-in-section"
       data-animate="testimonials"
     >
       <div className="mx-auto max-w-7xl overflow-visible p-6 pb-0">
-        <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl xl:text-6xl my-8 pb-2 text-balance">
+        <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl xl:text-6xl my-8 pb-2 text-balance fade-in-section delay-100">
           What our clients are saying about Moxie
         </h2>
       </div>
@@ -137,14 +122,16 @@ const TestimonialsCarousel = () => {
             paddingRight: "10vw",
           }}
         >
-          {testimonials.map((testimonial, index) => (
-            <li
-              key={index}
-              className="shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-l-8 border-t-8 border-(--accent) text-balance focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2"
-              tabIndex={index === focusedIndex ? 0 : -1}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              aria-label={`Testimonial from ${testimonial.author}`}
-            >
+          {testimonials.map((testimonial, index) => {
+            const delayClass = `delay-${Math.min((index + 2) * 100, 600)}`;
+            return (
+              <li
+                key={index}
+                className={`shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-l-8 border-t-8 border-(--accent) text-balance focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2 fade-in-section ${delayClass}`}
+                tabIndex={index === focusedIndex ? 0 : -1}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                aria-label={`Testimonial from ${testimonial.author}`}
+              >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="hsl(var(--background))"
@@ -166,7 +153,8 @@ const TestimonialsCarousel = () => {
                 ~ {testimonial.author}
               </p>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </section>

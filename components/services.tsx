@@ -80,14 +80,14 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
         <div className="grid grid-cols-1 gap-6 services-grid">
           {/* Content Block */}
           <div className="services-content p-4  lg:place-self-end lg:pl-8 lg:pb-0">
-            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance">
+            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section">
               The Magic of Moxie
             </h2>
-            <p className="text-xl mb-4 text-balance">
+            <p className="text-xl mb-4 text-balance fade-in-section delay-100">
               Discover Moxie&rsquo;s premium beauty treatments and services,
               meticulously crafted to enhance your natural allure.
             </p>
-            <p className="text-base mb-10 text-pretty max-w-[72ch]">
+            <p className="text-base mb-10 text-pretty max-w-[72ch] fade-in-section delay-200">
               From special occasions to everyday self-care, Moxie is here to
               help you look and feel your best. Our expert team provides
               personalized services, including lashes, brows, microblading, and
@@ -95,7 +95,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
               balance of artistry and precision, we&rsquo;re dedicated to making
               every visit unforgettable.
             </p>
-            <div className="flex flex-row flex-wrap gap-4 mb-4">
+            <div className="flex flex-row flex-wrap gap-4 mb-4 fade-in-section delay-300">
               <Button
                 size="lg"
                 onClick={onBookingClick}
