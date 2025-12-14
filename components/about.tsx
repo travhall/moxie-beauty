@@ -42,7 +42,7 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
               className="about-content px-4 text-pretty"
               data-animate="about-content"
             >
-              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
+              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance">
                 Discover the Heart & Soul of Moxie
               </h2>
               <p className="text-base mb-12 max-w-[68ch] text-balance">
@@ -66,7 +66,7 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center max-w-7xl gap-4 mx-auto my-12">
+        <div className="flex flex-col lg:flex-row items-center max-w-7xl gap-4 p-4 mx-auto my-12">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="hsl(var(--background))"

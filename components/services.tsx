@@ -80,7 +80,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
         <div className="grid grid-cols-1 gap-6 services-grid">
           {/* Content Block */}
           <div className="services-content p-4  lg:place-self-end lg:pl-8 lg:pb-0">
-            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
+            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance">
               The Magic of Moxie
             </h2>
             <p className="text-xl mb-4 text-balance">

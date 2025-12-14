@@ -22,10 +22,10 @@ export default function Home() {
         aria-label="Hero section"
       >
         <div className="content bg-(--background)/80 backdrop-blur relative p-4 lg:p-0 mt-32 lg:mt-0 w-full max-w-[72ch] rounded-tr-4xl lg:left-56 z-20">
-          <h1 className="font-nyght text-(--foreground) text-4xl sm:text-5xl md:text-6xl my-8 text-balance">
+          <h1 className="font-nyght text-(--foreground) text-6xl xl:text-7xl my-8 text-balance">
             Welcome to{" "}
             <span className="inline-block bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pr-2 pb-2">
-              Moxie Beauty Studio
+              Moxie Beauty <span className="hidden lg:inline">Studio</span>
             </span>
           </h1>
           <p className="text-base text-balance mb-10">
@@ -86,7 +86,7 @@ export default function Home() {
 
       <Services onBookingClick={() => setIsBookingOpen(true)} />
       <Appointments onBookingClick={() => setIsBookingOpen(true)} />
-      <div className="w-full h-32 bg-linear-to-t from-(--background) sticky bottom-0 z-20 pointer-events-none" />
+      <div className="w-full h-32 bg-linear-to-t from-(--background) sticky bottom-0 z-20 -mt-32 pointer-events-none" />
       <About onBookingClick={() => setIsBookingOpen(true)} />
       <Testimonials />
 

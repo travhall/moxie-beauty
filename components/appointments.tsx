@@ -246,7 +246,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
           className="w-full lg:max-w-1/2 h-96 lg:h-auto max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border-r border-b border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0"
         />
         <div className="content relative max-w-2xl text-balance">
-          <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl my-8 pb-2 text-balance">
+          <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance">
             Your Moxie Beauty Journey
           </h2>
           <p className="text-xl mb-4">

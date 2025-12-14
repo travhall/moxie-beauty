@@ -88,7 +88,7 @@ export default function RootLayout({
         className={`${mulish.variable} ${nyghtLight.variable} ${nyghtLightItalic.variable} ${nyghtDark.variable} ${nyghtDarkItalic.variable} antialiased relative`}
         id="top"
       >
-        <div className="site-container mx-auto relative">
+        <div className="site-container">
           <ThemeProvider>
             <Navigation />
             {children}

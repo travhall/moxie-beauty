@@ -93,7 +93,11 @@ body {
 }
 
 .site-container {
+  position: relative;
   background: var(--background);
+  /* border-right: 0.5px solid var(--accent);
+  border-left: 0.5px solid var(--accent); */
+  margin: 0 auto;
   max-width: 1680px;
 }
 
