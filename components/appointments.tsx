@@ -290,13 +290,13 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   const buffer = 10; // 10px buffer to ensure rect.top becomes negative
                   const targetScrollY = currentScrollY + rect.top + buffer;
 
-                  console.log("Plan button clicked:", {
-                    currentScrollY,
-                    rectTop: rect.top,
-                    buffer,
-                    targetScrollY,
-                    scrollAmount: rect.top + buffer,
-                  });
+                  // console.log("Plan button clicked:", {
+                  //   currentScrollY,
+                  //   rectTop: rect.top,
+                  //   buffer,
+                  //   targetScrollY,
+                  //   scrollAmount: rect.top + buffer,
+                  // });
 
                   window.scrollTo({
                     top: targetScrollY,

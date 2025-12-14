@@ -103,14 +103,14 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
               >
                 Make an Appointment
               </Button>
-              <Button
+              {/* <Button
                 size="lg"
                 variant="outline"
                 onClick={onBookingClick}
                 className="w-full md:w-auto"
               >
                 Schedule a Consultation
-              </Button>
+              </Button> */}
             </div>
           </div>
 
