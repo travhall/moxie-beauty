@@ -72,7 +72,7 @@ export default function Home() {
         <Image
           src={HeroImg}
           alt="Close up of a woman's face. She has amazing lashes."
-          className="absolute top-0 right-0 w-60 md:w-1/3 2xl:w-[32vw] h-96 md:h-[48vh] lg:h-[64vh] xl:h-[80vh] 2xl:h-[88vh] rounded-bl-full rounded-tl-[15%] border-l-[1rem] border-(--accent) object-cover z-0"
+          className="absolute top-0 right-0 w-60 md:w-1/3 2xl:w-[32vw] h-96 md:h-[48vh] lg:h-[64vh] xl:h-[80vh] 2xl:h-[88vh] rounded-bl-full rounded-tl-[15%] border-l-16 border-(--accent) object-cover z-0"
           sizes="(max-width: 768px) 15rem, (max-width: 1536px) 33vw, 32vw"
           quality={90}
           priority={true}
