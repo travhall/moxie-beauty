@@ -22,10 +22,9 @@ export default function Navigation() {
     left: 0,
     opacity: 0,
   });
-  const [scrollProgress, setScrollProgress] = useState(0);
-
   const navRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const navContainerRef = useRef<HTMLElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
   const activeSectionRef = useRef(activeSection);
   activeSectionRef.current = activeSection;
 
@@ -73,10 +72,13 @@ export default function Navigation() {
     onIntersection: handleIntersection,
   });
 
-  // Update scroll progress
+  // Update scroll progress bar directly — bypasses React state to stay
+  // frame-perfect with the scroll position (no re-render overhead)
   useEffect(() => {
     const handleScroll = () => {
-      setScrollProgress(getScrollProgress());
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = `${getScrollProgress()}%`;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -162,14 +164,14 @@ export default function Navigation() {
       <div
         className="fixed top-0 left-0 right-0 h-1 bg-(--background)/20 z-50"
         role="progressbar"
-        aria-valuenow={scrollProgress}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label="Page scroll progress"
       >
         <div
-          className="h-full bg-(--accent) transition-[width] duration-100 ease-linear"
-          style={{ width: `${scrollProgress}%` }}
+          ref={progressBarRef}
+          className="h-full bg-(--accent)"
+          style={{ width: "0%" }}
         />
       </div>
 
