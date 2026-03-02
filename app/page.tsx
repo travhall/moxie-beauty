@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <main>
       <section
-        className="min-h-screen md:min-h-[70vh] w-full grid place-items-center lg:place-items-start p-4"
+        className="min-h-[70vh] w-full grid place-items-center lg:place-items-start p-4"
         id="hero"
         tabIndex={-1}
         aria-label="Hero section"

@@ -163,68 +163,41 @@ body {
   }
 }
 
-/* Keyframe animations */
-@keyframes slideInFromLeft {
+/* Appointment step transition animations */
+@keyframes stepEnter {
   from {
-    transform: translateX(-100%);
     opacity: 0;
+    transform: translateY(20px);
+    filter: blur(6px);
   }
   to {
-    transform: translateX(0);
     opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
+@keyframes stepExit {
   from {
     opacity: 1;
+    transform: translateY(0);
     filter: blur(0);
   }
   to {
     opacity: 0;
-    filter: blur(32px);
+    transform: translateY(-16px);
+    filter: blur(6px);
   }
 }
 
-.sticky-panel-left {
-  left: 0;
-  transform: translateX(-100%);
-  opacity: 0;
-  border-right: 1px solid var(--accent);
+/* both = fill-mode backwards (holds `from` before delay) + forwards (holds `to` after) */
+.step-content-enter {
+  animation: stepEnter 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-.sticky-panel-right {
-  right: 0;
-  transform: translateX(100%);
-  opacity: 0;
-  border-left: 1px solid var(--accent);
-}
-
-/* Slide in animations */
-.sticky-panel-left.slide-in:not(.fade-out) {
-  animation: slideInFromLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.sticky-panel-right.slide-in:not(.fade-out) {
-  animation: slideInFromRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Fade out animation - must come after slide-in and have higher specificity */
-.sticky-panel-left.slide-in.fade-out,
-.sticky-panel-right.slide-in.fade-out {
-  animation: fadeOut 0.35s ease-out forwards;
-  transform: translateX(0);
+.step-content-exit {
+  animation: stepExit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
 }
 
 /* Fade-in animation: opacity + blur, no positional transforms */

@@ -2,7 +2,6 @@
 
 import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
-import Logo from "./logo";
 import apptImage from "@/public/images/moxie-lobby.jpg";
 import Button from "./button";
 import { useEffect, useRef, useState } from "react";
@@ -11,134 +10,176 @@ interface AppointmentsProps {
   onBookingClick: () => void;
 }
 
-const getAppointmentSections = (onBookingClick: () => void) => [
+const steps = [
   {
-    id: "section-planning",
-    title: "Planning Your Visit",
-    position: "left",
+    id: "step-discover",
+    label: "Find Your Service",
     content: (
       <>
-        <p className="mb-4">
-          Discover the perfect service for your beauty goals by exploring our
-          menu of lash and brow enhancements. If you&rsquo;re considering
-          microblading, we recommend starting with a{" "}
-          <span className="text-rose-gold font-semibold">
+        <p className="mb-4 leading-relaxed">
+          Whether you&rsquo;re drawn to full, fluttery lashes or perfectly
+          defined brows, our menu of services is designed to match your beauty
+          goals and lifestyle.
+        </p>
+        <p className="mb-4 leading-relaxed">
+          New to microblading? We recommend starting with a{" "}
+          <span className="text-(--accent) font-medium">
             complimentary consultation
           </span>{" "}
-          where we&rsquo;ll discuss your desired shape, ideal pigment, and what
-          to expect during the healing process.
+          — we&rsquo;ll map your ideal shape, select the perfect pigment, and
+          walk you through the full process before you commit to anything.
         </p>
-        <p className="mb-4">
-          For a seamless experience, we invite new clients to complete our{" "}
-          <span className="text-rose-gold font-semibold">New Client Form</span>{" "}
-          before your appointment. We also encourage you to review our{" "}
-          <span className="text-rose-gold font-semibold">
-            Booking Guidelines
-          </span>{" "}
-          regarding cancellations and scheduling to ensure your visit is as
-          smooth as possible.
+        <p className="leading-relaxed">
+          Ready to get started? Complete our{" "}
+          <span className="text-(--accent) font-medium">New Client Form</span>{" "}
+          before your visit so we can hit the ground running from the moment you
+          arrive.
         </p>
       </>
     ),
   },
   {
-    id: "section-preparing",
-    title: "Preparing for Your Appointment",
-    position: "right",
+    id: "step-prepare",
+    label: "Before You Arrive",
     content: (
       <>
-        <p className="mb-4">
-          To make the most of your Moxie experience, we recommend:
+        <p className="mb-5 leading-relaxed">
+          A little preparation goes a long way. Here&rsquo;s how to set
+          yourself up for the best possible experience:
         </p>
-        <ul className="list-disc ml-6 mb-4 space-y-2">
-          <li>Arriving 5-10 minutes early (15 minutes for new clients)</li>
-          <li>
-            Coming with clean, makeup-free treatment areas for optimal results
-          </li>
-          <li>Dressing comfortably, as some services take up to 2 hours</li>
-          <li>
-            Making childcare arrangements, as we maintain a relaxing adult
-            environment
-          </li>
-          <li>Limiting caffeine before lash appointments to help you relax</li>
-          <li>
-            Avoiding retinol products for 3 days before any brow or waxing
-            services
-          </li>
+        <ul className="space-y-3">
+          {[
+            "Arrive 5–10 minutes early — 15 minutes if it's your first visit with us",
+            "Come with clean, makeup-free lashes or brows for the best results",
+            "Wear comfortable clothing — some services take up to two hours",
+            "We maintain a relaxing adult environment, so please plan for childcare",
+            "Limit caffeine before lash appointments to help you stay still and comfortable",
+            "Skip retinol products for three days before any brow or waxing service",
+          ].map((item) => (
+            <li key={item} className="flex gap-3 text-sm leading-relaxed">
+              <span className="text-(--accent) font-semibold shrink-0 select-none">
+                —
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
         </ul>
       </>
     ),
   },
   {
-    id: "section-guidelines",
-    title: "Service Guidelines",
-    position: "left",
+    id: "step-expect",
+    label: "What to Expect",
     content: (
       <>
-        <h4 className="font-semibold text-lg mb-2">Lash Extensions</h4>
-        <p className="mb-4">
-          Full sets require completely clean lashes and approximately 2 hours.
-          For fills, timing depends on your maintenance schedule: 1-week fills
-          (30 min), 2-week fills (60 min), or 3-week fills (75 min).
+        <p className="mb-5 leading-relaxed">
+          Every service is tailored to you — here&rsquo;s a general sense of
+          what to plan for.
         </p>
-
-        <h4 className="font-semibold text-lg mb-2">Lash Lift & Tint</h4>
-        <p className="mb-4">
-          Come with clean lashes and plan for a 90-minute appointment that will
-          leave your natural lashes beautifully curled and tinted.
-        </p>
-
-        <h4 className="font-semibold text-lg mb-2">Microblading</h4>
-        <p className="mb-4">
-          Begin with a consultation where we&rsquo;ll map your perfect brow
-          shape and select a complementary pigment for your skin tone before
-          scheduling your full service.
-        </p>
+        <div className="space-y-5">
+          <div>
+            <h4 className="font-semibold text-(--accent) mb-1.5">
+              Lash Extensions
+            </h4>
+            <p className="text-sm leading-relaxed text-(--foreground)/75">
+              Full sets take approximately two hours with completely clean
+              lashes. For fills: 1-week (30 min), 2-week (60 min), 3-week (75
+              min).
+            </p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-(--accent) mb-1.5">
+              Lash Lift & Tint
+            </h4>
+            <p className="text-sm leading-relaxed text-(--foreground)/75">
+              Plan for about 90 minutes. Come with clean, dry lashes and leave
+              with beautifully curled and tinted results.
+            </p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-(--accent) mb-1.5">
+              Microblading
+            </h4>
+            <p className="text-sm leading-relaxed text-(--foreground)/75">
+              Begins with a complimentary consultation to map your shape and
+              choose your pigment, followed by your full service appointment.
+            </p>
+          </div>
+        </div>
       </>
     ),
   },
   {
-    id: "section-aftercare",
-    title: "Aftercare Essentials",
-    position: "right",
+    id: "step-aftercare",
+    label: "Caring for Your Results",
     content: (
       <>
-        <h4 className="font-semibold text-lg mb-2">For Lash Services</h4>
-        <ul className="list-disc ml-6 mb-4 space-y-2">
-          <li>Keep lashes completely dry for the first 24 hours</li>
-          <li>Avoid tanning beds, saunas, and hot yoga for 48 hours</li>
-          <li>Sleep on your back when possible to maintain lash integrity</li>
-          <li>
-            Schedule regular fills every 2-3 weeks for continuous fullness
-          </li>
-        </ul>
-
-        <h4 className="font-semibold text-lg mb-2">For Microblading</h4>
-        <ul className="list-disc ml-6 mb-4 space-y-2">
-          <li>
-            Avoid sweating, swimming, and direct water contact for 10 days
-          </li>
-          <li>Expect some flaking as part of the normal healing process</li>
-          <li>Complete your required 6-week touch-up for perfected results</li>
-        </ul>
+        <p className="mb-5 leading-relaxed">
+          Your results are worth protecting. A little care in the days after
+          your service keeps everything looking its best.
+        </p>
+        <div className="space-y-5">
+          <div>
+            <h4 className="font-semibold text-(--accent) mb-2">
+              For Lash Services
+            </h4>
+            <ul className="space-y-2">
+              {[
+                "Keep lashes completely dry for the first 24 hours",
+                "Avoid tanning beds, saunas, and hot yoga for 48 hours",
+                "Sleep on your back when possible to maintain lash shape",
+                "Book fills every 2–3 weeks to keep your look seamless",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-3 text-sm leading-relaxed text-(--foreground)/75"
+                >
+                  <span className="text-(--accent) shrink-0 select-none">
+                    —
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-(--accent) mb-2">
+              For Microblading
+            </h4>
+            <ul className="space-y-2">
+              {[
+                "Avoid sweating, swimming, and direct water contact for 10 days",
+                "Expect light flaking — it's a normal part of the healing process",
+                "Your 6-week touch-up is required for the best final result",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-3 text-sm leading-relaxed text-(--foreground)/75"
+                >
+                  <span className="text-(--accent) shrink-0 select-none">
+                    —
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </>
     ),
   },
 ];
 
 export default function Appointments({ onBookingClick }: AppointmentsProps) {
-  const appointmentSections = getAppointmentSections(onBookingClick);
-  const [activeSectionIndex, setActiveSectionIndex] = useState(-1);
-  const [prevSectionIndex, setPrevSectionIndex] = useState(-1);
-  const [isSlideInComplete, setIsSlideInComplete] = useState(false);
-  const [showPrevPanel, setShowPrevPanel] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [exitIndex, setExitIndex] = useState<number | null>(null);
   const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(
     0
   );
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
-  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const fadeOutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const activeIndexRef = useRef(-1);
+  const exitTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const wrapper = scrollWrapperRef.current;
@@ -146,90 +187,70 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
 
     const handleScroll = () => {
       const rect = wrapper.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
 
-      // Before wrapper enters viewport
       if (rect.top > 0) {
-        setActiveSectionIndex(-1);
+        activeIndexRef.current = -1;
+        setActiveIndex(-1);
         return;
       }
 
-      // After wrapper leaves viewport completely
       if (rect.bottom < 0) {
-        setActiveSectionIndex(-1);
+        activeIndexRef.current = -1;
+        setActiveIndex(-1);
         return;
       }
 
-      // Calculate how far we've scrolled into the wrapper
       const wrapperHeight = wrapper.offsetHeight;
       const scrolledIntoWrapper = Math.max(0, -rect.top);
-
-      // Define the usable scroll range (0 to 80% of wrapper height)
-      // This ensures the last panel appears before we'd scroll past the section
       const usableScrollRange = wrapperHeight * 0.8;
-
-      // Cap scroll at the usable range
       const cappedScroll = Math.min(scrolledIntoWrapper, usableScrollRange);
-
-      // Calculate progress (0 to 1) based on usable range
       const progress = cappedScroll / usableScrollRange;
 
-      // Map progress to panel index
       const index = Math.min(
-        Math.floor(progress * appointmentSections.length),
-        appointmentSections.length - 1
+        Math.floor(progress * steps.length),
+        steps.length - 1
       );
 
-      setActiveSectionIndex((currentIndex) => {
-        if (index !== currentIndex) {
-          console.log(`Switching from panel ${currentIndex} to ${index}`);
+      const currentIndex = activeIndexRef.current;
+      if (index !== currentIndex) {
+        if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
 
-          // Clear any existing timeouts
-          if (animationTimeoutRef.current) {
-            clearTimeout(animationTimeoutRef.current);
-          }
-          if (fadeOutTimeoutRef.current) {
-            clearTimeout(fadeOutTimeoutRef.current);
-          }
-
-          // Set up the previous panel to show and fade out
-          if (currentIndex >= 0) {
-            setPrevSectionIndex(currentIndex);
-            setShowPrevPanel(true);
-
-            // Remove the previous panel after fade-out completes (350ms) + buffer
-            fadeOutTimeoutRef.current = setTimeout(() => {
-              setShowPrevPanel(false);
-            }, 800);
-          }
-
-          // Reset slide-in state for new panel
-          setIsSlideInComplete(false);
-
-          // Use single RAF to ensure initial render is painted before animation starts
-          requestAnimationFrame(() => {
-            console.log(`Starting slide-in animation for panel ${index}`);
-            setIsSlideInComplete(true);
-          });
-
-          return index;
+        if (currentIndex >= 0) {
+          setExitIndex(currentIndex);
+          exitTimerRef.current = setTimeout(() => setExitIndex(null), 800);
         }
-        return currentIndex;
-      });
+
+        activeIndexRef.current = index;
+        setActiveIndex(index);
+      }
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
-      if (fadeOutTimeoutRef.current) {
-        clearTimeout(fadeOutTimeoutRef.current);
-      }
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
     };
   }, []);
+
+  const scrollToSteps = () => {
+    const wrapper = scrollWrapperRef.current;
+    if (!wrapper) return;
+    const rect = wrapper.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top + 10, behavior: "smooth" });
+  };
+
+  const scrollToStep = (targetIndex: number) => {
+    const wrapper = scrollWrapperRef.current;
+    if (!wrapper) return;
+    const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
+    const usableScrollRange = wrapper.offsetHeight * 0.8;
+    const targetProgress = targetIndex / steps.length + 0.01;
+    window.scrollTo({
+      top: wrapperTop + targetProgress * usableScrollRange,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section
@@ -239,6 +260,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       tabIndex={-1}
       aria-label="Appointments section"
     >
+      {/* Intro — always visible, sticks while scroll wrapper fills the section */}
       <div className="container flex flex-col md:flex-row lg:gap-14 items-start mx-auto p-8 lg:mb-10 lg:sticky lg:top-24 min-h-screen z-0">
         <Image
           src={apptImage}
@@ -250,13 +272,12 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
             Your Moxie Beauty Journey
           </h2>
           <p className="text-xl mb-4 fade-in-section delay-200">
-            Discover the perfect service for your beauty goals by exploring our
-            menu of lash and brow enhancements.
+            Every Moxie appointment is crafted around you — your goals, your
+            lifestyle, your look.
           </p>
           <p className="text-base mb-10 fade-in-section delay-300">
-            If you&rsquo;re considering microblading, we recommend starting with
-            a complimentary consultation where we&rsquo;ll discuss your desired
-            shape, ideal pigment, and what to expect during the healing process.
+            Scroll through the steps below to walk through the full experience,
+            or book directly when you&rsquo;re ready.
           </p>
           <div className="flex flex-col lg:flex-row items-start gap-4 fade-in-section delay-400">
             <Button
@@ -270,40 +291,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
               size="lg"
               variant="outline"
               className="w-full md:w-auto hidden! lg:inline-flex!"
-              onClick={() => {
-                const wrapper = scrollWrapperRef.current;
-                const mobileStack = document.querySelector(
-                  ".appointments-mobile-stack"
-                );
-                const target = wrapper || mobileStack;
-
-                if (target) {
-                  // For desktop: scroll to where rect.top will be at or just above 0
-                  // We need to account for the sticky intro section
-                  const rect = target.getBoundingClientRect();
-                  const currentScrollY = window.scrollY;
-
-                  // Calculate the exact position where rect.top will be 0
-                  // rect.top is the distance from viewport top, so we need to scroll
-                  // by that amount to bring it to the top
-                  // Add a small buffer to ensure we trigger the first panel
-                  const buffer = 10; // 10px buffer to ensure rect.top becomes negative
-                  const targetScrollY = currentScrollY + rect.top + buffer;
-
-                  // console.log("Plan button clicked:", {
-                  //   currentScrollY,
-                  //   rectTop: rect.top,
-                  //   buffer,
-                  //   targetScrollY,
-                  //   scrollAmount: rect.top + buffer,
-                  // });
-
-                  window.scrollTo({
-                    top: targetScrollY,
-                    behavior: "smooth",
-                  });
-                }
-              }}
+              onClick={scrollToSteps}
             >
               Plan Your Visit
             </Button>
@@ -311,18 +299,18 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         </div>
       </div>
 
-      {/* Mobile: Accordion panels */}
+      {/* Mobile: Accordion */}
       <div className="lg:hidden appointments-mobile-stack w-full max-w-3xl mx-auto p-8">
-        {appointmentSections.map((section, index) => {
+        {steps.map((step, index) => {
           const isOpen = openAccordionIndex === index;
-          const accordionId = `accordion-${section.id}`;
-          const panelId = `panel-${section.id}`;
+          const accordionId = `accordion-${step.id}`;
+          const panelId = `panel-${step.id}`;
           const delayClass = `delay-${Math.min((index + 1) * 100, 400)}`;
 
           return (
             <div
-              key={section.id}
-              className={`appointment-mobile-accordion border-b border-(--foreground)/10 last:border-b-0 fade-in-section ${delayClass}`}
+              key={step.id}
+              className={`border-b border-(--foreground)/10 last:border-b-0 fade-in-section ${delayClass}`}
             >
               <h3>
                 <button
@@ -331,13 +319,17 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   onClick={() => setOpenAccordionIndex(isOpen ? null : index)}
-                  className="flex justify-between items-center w-full py-6 text-left font-nyght text-3xl transition-colors hover:text-(--accent)"
+                  className="flex justify-between items-center w-full py-6 text-left font-nyght text-2xl transition-colors hover:text-(--accent)"
                 >
-                  <span>{section.title}</span>
+                  <span>
+                    <span className="text-(--accent)/60 text-sm font-sans font-semibold tracking-widest mr-3">
+                      0{index + 1}
+                    </span>
+                    {step.label}
+                  </span>
                   <ChevronDown
-                    className={`w-5 h-5 transition-transform duration-300 shrink-0 ml-4 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
+                    className={`w-5 h-5 transition-transform duration-300 shrink-0 ml-4 ${isOpen ? "rotate-180" : ""
+                      }`}
                     aria-hidden="true"
                   />
                 </button>
@@ -346,131 +338,130 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                 id={panelId}
                 role="region"
                 aria-labelledby={accordionId}
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  isOpen ? "max-h-500 opacity-100" : "max-h-0 opacity-0"
-                }`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                  }`}
               >
-                <div className="pb-6 prose max-w-none">{section.content}</div>
+                <div className="pb-6 text-(--foreground)/80">{step.content}</div>
               </div>
             </div>
           );
         })}
+        <div className="pt-8 mb-48">
+          <Button onClick={onBookingClick} size="lg" className="w-full">
+            Make an Appointment
+          </Button>
+        </div>
       </div>
 
-      {/* Desktop: Animated scroll-driven panels */}
+      {/* Desktop: Scroll-driven step journey */}
       <div
         ref={scrollWrapperRef}
-        className="hidden lg:block appointments-scroll-wrapper sticky top-0 border-t border-(--accent)/50"
-        style={{ height: `300vh` }}
+        className="hidden lg:block appointments-scroll-wrapper"
+        style={{ height: "300vh" }}
       >
-        <div className="sticky-scroll-container grid place-content-center min-h-dvh sticky top-0 overflow-hidden snap-start snap-always w-full backdrop-blur-lg bg-(--background)/75 z-50">
-          <Logo placement="background" />
+        <div className="sticky top-0 min-h-dvh flex overflow-hidden border-t border-(--accent)/20 bg-(--background)/95 backdrop-blur-xl z-50">
 
-          {showPrevPanel &&
-            prevSectionIndex >= 0 &&
-            prevSectionIndex !== activeSectionIndex && (
+          {/* Left: persistent image */}
+          <div className="relative w-2/5 xl:w-1/2 shrink-0">
+            <Image
+              src={apptImage}
+              alt="Moxie Beauty Studio lobby"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1280px) 50vw, 40vw"
+            />
+            {/* Soft gradient blends image into the content panel */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-(--background)/60" />
+          </div>
+
+          {/* Right: step content */}
+          <div className="flex-1 flex items-center justify-start">
+            <div className="w-full max-w-lg px-10 xl:px-14 py-12">
+
+              {/* Step indicator */}
               <div
-                className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${appointmentSections[prevSectionIndex].position} slide-in fade-out`}
-                style={{ zIndex: 1 }}
+                className={`flex items-center gap-3 mb-10 transition-opacity duration-500 ${activeIndex >= 0 ? "opacity-100" : "opacity-0"
+                  }`}
+                aria-hidden="true"
               >
-                <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90 backdrop-blur-lg">
-                  <div className="max-w-xl p-8 lg:p-12">
-                    <h3 className="text-3xl lg:text-4xl font-nyght mb-5 lg:mb-6">
-                      {appointmentSections[prevSectionIndex].title}
+                <div className="flex gap-1.5 items-center">
+                  {steps.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`h-px transition-all duration-500 ease-out rounded-full ${i === activeIndex
+                        ? "w-8 bg-(--accent)"
+                        : i < activeIndex
+                          ? "w-4 bg-(--accent)/40"
+                          : "w-4 bg-(--foreground)/15"
+                        }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-xs tracking-widest text-(--foreground)/30 tabular-nums">
+                  {activeIndex >= 0 ? `0${activeIndex + 1}` : "01"} /{" "}
+                  0{steps.length}
+                </span>
+              </div>
+
+              {/* Content — grid overlap so enter/exit animate in the same space */}
+              <div className="grid">
+                {/* Exiting step */}
+                {exitIndex !== null &&
+                  exitIndex >= 0 &&
+                  exitIndex !== activeIndex && (
+                    <div className="step-content-exit col-start-1 row-start-1">
+                      <h3 className="font-nyght text-3xl lg:text-4xl mb-6 text-balance">
+                        {steps[exitIndex].label}
+                      </h3>
+                      <div className="text-(--foreground)/75">
+                        {steps[exitIndex].content}
+                      </div>
+                    </div>
+                  )}
+
+                {/* Active step */}
+                {activeIndex >= 0 && (
+                  <div
+                    key={`step-${activeIndex}`}
+                    className="step-content-enter col-start-1 row-start-1"
+                  >
+                    <h3 className="font-nyght text-3xl lg:text-4xl mb-6 text-balance">
+                      {steps[activeIndex].label}
                     </h3>
-                    <div className="prose max-w-none">
-                      {appointmentSections[prevSectionIndex].content}
+                    <div className="text-(--foreground)/75">
+                      {steps[activeIndex].content}
+                    </div>
+
+                    <div className="flex items-center gap-4 mt-10">
+                      <Button onClick={onBookingClick}>Book Now</Button>
+                      {activeIndex < steps.length - 1 ? (
+                        <Button
+                          variant="ghost"
+                          onClick={() => scrollToStep(activeIndex + 1)}
+                          className="inline-flex items-center gap-2 group"
+                        >
+                          Next{" "}
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            document
+                              .getElementById("About")
+                              ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                          }}
+                          className="inline-flex items-center gap-2"
+                        >
+                          Get To Know Moxie
+                        </Button>
+                      )}
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
-          {activeSectionIndex >= 0 && (
-            <div
-              className={`sticky-panel w-1/2 absolute top-0 z-10 sticky-panel-${
-                appointmentSections[activeSectionIndex].position
-              } ${isSlideInComplete ? "slide-in" : ""}`}
-              style={{ zIndex: 2 }}
-            >
-              <div className="sticky-panel-content min-h-dvh flex justify-center items-center bg-(--background)/90 backdrop-blur-lg">
-                <div className="max-w-xl p-8 lg:p-12">
-                  <h3 className="text-3xl lg:text-4xl font-nyght mb-5 lg:mb-6">
-                    {appointmentSections[activeSectionIndex].title}
-                  </h3>
-                  <div className="prose max-w-none">
-                    {appointmentSections[activeSectionIndex].content}
-                  </div>
-                  <div className="flex flex-row items-center gap-4 mt-8">
-                    <Button onClick={onBookingClick}>Book Now</Button>
-                    {activeSectionIndex < appointmentSections.length - 1 ? (
-                      <Button
-                        variant="ghost"
-                        onClick={() => {
-                          const wrapper = scrollWrapperRef.current;
-                          if (!wrapper) return;
-
-                          const nextPanelIndex = activeSectionIndex + 1;
-                          const wrapperHeight = wrapper.offsetHeight;
-                          const wrapperTop =
-                            wrapper.getBoundingClientRect().top +
-                            window.scrollY;
-
-                          // Use same usable range as handleScroll (80% of wrapper)
-                          const usableScrollRange = wrapperHeight * 0.8;
-
-                          // Calculate target progress for next panel
-                          const targetProgress =
-                            nextPanelIndex / appointmentSections.length + 0.01;
-
-                          // Calculate scroll needed within the usable range
-                          const scrollNeeded =
-                            targetProgress * usableScrollRange;
-                          const targetScrollY = wrapperTop + scrollNeeded;
-
-                          console.log("Next button clicked:", {
-                            currentPanel: activeSectionIndex,
-                            nextPanel: nextPanelIndex,
-                            wrapperTop,
-                            wrapperHeight,
-                            usableScrollRange,
-                            targetProgress,
-                            scrollNeeded,
-                            targetScrollY,
-                            currentScrollY: window.scrollY,
-                          });
-
-                          window.scrollTo({
-                            top: targetScrollY,
-                            behavior: "smooth",
-                          });
-                        }}
-                        className="inline-flex self-start items-center gap-2 group"
-                      >
-                        Next{" "}
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          const aboutSection = document.getElementById("About");
-                          if (aboutSection) {
-                            aboutSection.scrollIntoView({
-                              behavior: "smooth",
-                              block: "start",
-                            });
-                          }
-                        }}
-                        className="inline-flex self-start items-center gap-2 group"
-                      >
-                        Get To Know Us
-                      </Button>
-                    )}
-                  </div>
-                </div>
+                )}
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>
