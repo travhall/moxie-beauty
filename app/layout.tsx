@@ -58,7 +58,8 @@ const nyghtDarkItalic = localFont({
 
 export const metadata: Metadata = {
   title: "Moxie Beauty Studio",
-  description: "Moxie is …",
+  description:
+    "Moxie Beauty Studio specializes in bespoke lash and brow transformations in Wisconsin. Services include eyelash extensions, lash lift & tint, microblading, brow lamination, and facial waxing.",
 };
 
 export default function RootLayout({

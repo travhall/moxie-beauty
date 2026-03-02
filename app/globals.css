@@ -227,41 +227,32 @@ body {
   transform: translateX(0);
 }
 
-/* Scroll-triggered fade-in animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Fade-only animation (no transform) for fixed elements */
+/* Fade-in animation: opacity + blur, no positional transforms */
 @keyframes fadeIn {
   from {
     opacity: 0;
+    filter: blur(8px);
   }
   to {
     opacity: 1;
+    filter: blur(0px);
   }
 }
 
 /* Animation classes */
 .fade-in-section {
   opacity: 0;
-  transform: translateY(30px);
+  filter: blur(8px);
 }
 
 .fade-in-section.is-visible {
-  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Fade-only class for fixed elements */
+/* Fixed elements (e.g. nav) — slightly shorter duration for quicker availability */
 .fade-in-fixed {
   opacity: 0;
+  filter: blur(8px);
 }
 
 .fade-in-fixed.is-visible {

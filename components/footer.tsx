@@ -44,7 +44,7 @@ export default function Footer() {
           </Link>
           <Link
             className="text-base md:text-xs p-1 font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative self-start"
-            href="tel:(262) 332-6072"
+            href="tel:+12623326072"
           >
             (262) 332-6072
           </Link>

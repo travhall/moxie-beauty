@@ -21,7 +21,6 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
         <div className="w-full max-w-5xl">
           <div
             className="about-container flex flex-col md:flex-row justify-center pt-8"
-            data-animate="about"
           >
             <Image
               src={profileImage}
@@ -32,7 +31,6 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
             />
             <div
               className="about-content px-4 text-pretty"
-              data-animate="about-content"
             >
               <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section delay-100">
                 Discover the Heart & Soul of Moxie

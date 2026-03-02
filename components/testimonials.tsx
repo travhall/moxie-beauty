@@ -1,3 +1,5 @@
+"use client";
+
 // TestimonialsCarousel.tsx
 import React, { useRef, useState } from "react";
 
@@ -100,7 +102,6 @@ const TestimonialsCarousel = () => {
   return (
     <section
       className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-12 overflow-visible fade-in-section"
-      data-animate="testimonials"
     >
       <div className="mx-auto max-w-7xl overflow-visible p-6 pb-0">
         <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl xl:text-6xl my-8 pb-2 text-balance fade-in-section delay-100">

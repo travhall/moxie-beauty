@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import Logo from "./logo";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import {
@@ -27,6 +26,8 @@ export default function Navigation() {
 
   const navRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const navContainerRef = useRef<HTMLElement>(null);
+  const activeSectionRef = useRef(activeSection);
+  activeSectionRef.current = activeSection;
 
   const navItems = useMemo<NavItem[]>(
     () => [
@@ -84,58 +85,56 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Update indicator position - more robust approach
+  // Update indicator position on section change
   useEffect(() => {
-    // console.log("Active section changed to:", activeSection); // Debug log
-
-    // Skip if hero section or no container
     if (activeSection === "hero" || !navContainerRef.current) {
-      // console.log("Hiding indicator - hero section or no container"); // Debug log
       setIndicatorStyle({ width: 0, left: 0, opacity: 0 });
       return;
     }
 
-    const updateIndicator = () => {
+    const rafId = requestAnimationFrame(() => {
       const activeNav = navRefs.current[activeSection];
       const navContainer = navContainerRef.current;
-
-      // console.log(
-      //   "Updating indicator - nav:",
-      //   !!activeNav,
-      //   "container:",
-      //   !!navContainer
-      // ); // Debug log
 
       if (activeNav && navContainer) {
         const navRect = activeNav.getBoundingClientRect();
         const containerRect = navContainer.getBoundingClientRect();
-
-        const newStyle = {
+        setIndicatorStyle({
           width: navRect.width,
           left: navRect.left - containerRect.left,
           opacity: 1,
-        };
-
-        // console.log("New indicator style:", newStyle); // Debug log
-        setIndicatorStyle(newStyle);
+        });
       } else {
-        // console.log("Failed to update indicator - missing elements"); // Debug log
         setIndicatorStyle({ width: 0, left: 0, opacity: 0 });
       }
-    };
+    });
 
-    // Multiple update attempts for reliability
-    updateIndicator();
-    const timer1 = setTimeout(updateIndicator, 50);
-    const timer2 = setTimeout(updateIndicator, 150);
-    const timer3 = setTimeout(updateIndicator, 300);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-    };
+    return () => cancelAnimationFrame(rafId);
   }, [activeSection]);
+
+  // Re-measure indicator on container resize (e.g. window resize, font load)
+  useEffect(() => {
+    const navContainer = navContainerRef.current;
+    if (!navContainer) return;
+
+    const observer = new ResizeObserver(() => {
+      const section = activeSectionRef.current;
+      if (section === "hero") return;
+      const activeNav = navRefs.current[section];
+      if (activeNav && navContainerRef.current) {
+        const navRect = activeNav.getBoundingClientRect();
+        const containerRect = navContainerRef.current.getBoundingClientRect();
+        setIndicatorStyle({
+          width: navRect.width,
+          left: navRect.left - containerRect.left,
+          opacity: 1,
+        });
+      }
+    });
+
+    observer.observe(navContainer);
+    return () => observer.disconnect();
+  }, []);
 
   const scrollToSection = useCallback(
     (sectionId: string, e: React.MouseEvent) => {
@@ -168,10 +167,9 @@ export default function Navigation() {
         aria-valuemax={100}
         aria-label="Page scroll progress"
       >
-        <motion.div
-          className="h-full bg-(--accent)"
+        <div
+          className="h-full bg-(--accent) transition-[width] duration-100 ease-linear"
           style={{ width: `${scrollProgress}%` }}
-          transition={{ type: "spring", stiffness: 100, damping: 20 }}
         />
       </div>
 
@@ -203,35 +201,25 @@ export default function Navigation() {
               <span className="sm:hidden">{item.mobileLabel || item.name}</span>
               <span className="hidden sm:inline">{item.name}</span>
             </span>
-            {activeSection === item.section && (
-              <motion.span
-                className="absolute inset-0 rounded-full bg-(--accent) bevel"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              />
-            )}
+            <span
+              className={`absolute inset-0 rounded-full bg-(--accent) bevel transition-opacity duration-200 pointer-events-none ${
+                activeSection === item.section ? "opacity-100" : "opacity-0"
+              }`}
+            />
           </a>
         ))}
 
         {/* Sliding indicator */}
-        <AnimatePresence>
-          {activeSection !== "hero" && (
-            <motion.div
-              className="absolute bg-(--accent)/90 rounded-full shadow-lg z-0"
-              style={{
-                height: "calc(100% - 2rem)",
-                top: "1rem",
-              }}
-              animate={indicatorStyle}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 30,
-              }}
-            />
-          )}
-        </AnimatePresence>
+        <div
+          className="absolute bg-(--accent)/90 rounded-full shadow-lg z-0 transition-[width,left,opacity] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] pointer-events-none"
+          style={{
+            height: "calc(100% - 2rem)",
+            top: "1rem",
+            width: `${indicatorStyle.width}px`,
+            left: `${indicatorStyle.left}px`,
+            opacity: indicatorStyle.opacity,
+          }}
+        />
       </nav>
     </>
   );

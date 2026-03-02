@@ -1,3 +1,5 @@
+"use client";
+
 // components/services.tsx
 import React, { useState } from "react";
 import ServiceCard from "./service-card";
