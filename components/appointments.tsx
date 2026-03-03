@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import apptImage from "@/public/images/moxie-lobby.jpg";
 import apptImgDiscover from "@/public/images/appt-img4.jpg";
@@ -183,15 +183,18 @@ const steps = [
 ];
 
 export default function Appointments({ onBookingClick }: AppointmentsProps) {
+  // Desktop scroll-driven state
   const [activeIndex, setActiveIndex] = useState(-1);
   const [exitIndex, setExitIndex] = useState<number | null>(null);
-  const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(
-    0
-  );
+  // Tablet tap-driven state
+  const [tabIndex, setTabIndex] = useState(0);
+  const [tabExitIndex, setTabExitIndex] = useState<number | null>(null);
+
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const activeIndexRef = useRef(-1);
   const exitTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const tabExitTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const wrapper = scrollWrapperRef.current;
@@ -242,6 +245,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+      if (tabExitTimerRef.current) clearTimeout(tabExitTimerRef.current);
     };
   }, []);
 
@@ -264,6 +268,14 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
     });
   };
 
+  const handleTabChange = (index: number) => {
+    if (index === tabIndex) return;
+    if (tabExitTimerRef.current) clearTimeout(tabExitTimerRef.current);
+    setTabExitIndex(tabIndex);
+    tabExitTimerRef.current = setTimeout(() => setTabExitIndex(null), 800);
+    setTabIndex(index);
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -272,24 +284,19 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      {/* Intro — always visible, sticks while scroll wrapper fills the section */}
-      <div className="flex flex-col md:flex-row lg:gap-14 items-start lg:sticky lg:top-40 min-h-screen z-0">
-        {/* <Image
-          src={apptImage}
-          alt="Moxie's waiting room."
-          className="w-full lg:max-w-1/2 h-96 lg:h-auto max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border-r border-b border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0 fade-in-section"
-        /> */}
-        <div className="relative w-2/5 xl:w-1/2 shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-[25%] overflow-hidden">
+      {/* Intro — sticks on desktop, compact on mobile/tablet */}
+      <div className="flex flex-col md:flex-row lg:gap-14 items-start lg:sticky lg:top-40 lg:min-h-screen z-0">
+        {/* Image: hidden on mobile, shown md+ */}
+        <div className="hidden md:block relative w-2/5 xl:w-1/2 self-stretch shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-4xl lg:rounded-tr-[25%] overflow-hidden">
           <Image
             src={apptImage}
             alt="Moxie Beauty Studio lobby"
-            width={1280}
-            height={720}
+            fill
             className="object-cover"
             sizes="(min-width: 1280px) 50vw, 40vw"
           />
         </div>
-        <div className="content relative max-w-2xl text-balance mt-8">
+        <div className="content relative max-w-2xl text-balance p-8">
           <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section delay-100">
             Your Moxie Beauty Journey
           </h2>
@@ -301,7 +308,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
             Scroll through the steps below to walk through the full experience,
             or book directly when you&rsquo;re ready.
           </p>
-          <div className="flex flex-col lg:flex-row items-start gap-4 fade-in-section delay-400">
+          <div className="flex flex-col lg:flex-row items-start gap-4 fade-in-section delay-400 mb-16">
             <Button
               size="lg"
               onClick={onBookingClick}
@@ -321,61 +328,163 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         </div>
       </div>
 
-      {/* Mobile: Accordion */}
-      <div className="lg:hidden appointments-mobile-stack w-full max-w-3xl mx-auto p-8">
+      {/* ── Mobile: Vertical step cards (< md) ──────────────────────────── */}
+      <div className="md:hidden">
         {steps.map((step, index) => {
-          const isOpen = openAccordionIndex === index;
-          const accordionId = `accordion-${step.id}`;
-          const panelId = `panel-${step.id}`;
           const delayClass = `delay-${Math.min((index + 1) * 100, 400)}`;
-
           return (
             <div
               key={step.id}
-              className={`border-b border-(--foreground)/10 last:border-b-0 fade-in-section ${delayClass}`}
+              className={`fade-in-section ${delayClass}`}
             >
-              <h3>
-                <button
-                  type="button"
-                  id={accordionId}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => setOpenAccordionIndex(isOpen ? null : index)}
-                  className="flex justify-between items-center w-full py-6 text-left font-nyght text-2xl transition-colors hover:text-(--accent)"
-                >
-                  <span>
-                    <span className="text-(--accent)/60 text-sm font-sans font-semibold tracking-widest mr-3">
-                      0{index + 1}
-                    </span>
-                    {step.label}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 transition-transform duration-300 shrink-0 ml-4 ${isOpen ? "rotate-180" : ""
-                      }`}
-                    aria-hidden="true"
-                  />
-                </button>
-              </h3>
-              <div
-                id={panelId}
-                role="region"
-                aria-labelledby={accordionId}
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
-                  }`}
-              >
-                <div className="pb-6 text-(--foreground)/80">{step.content}</div>
+              {/* Step image with number badge */}
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <Image
+                  src={step.image}
+                  alt={step.imageAlt}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  priority={index === 0}
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-(--foreground)/50 via-transparent to-transparent" />
+                <span className="absolute top-4 left-4 text-(--accent) text-xs font-semibold tracking-widest bg-(--background)/85 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                  0{index + 1}
+                </span>
+              </div>
+              {/* Step content */}
+              <div className="px-6 pt-6 pb-8 border-b border-(--foreground)/10 last:border-b-0">
+                <h3 className="font-nyght text-2xl mb-4">{step.label}</h3>
+                <div className="text-(--foreground)/75">
+                  {step.content}
+                </div>
               </div>
             </div>
           );
         })}
-        <div className="pt-8 mb-48">
+        <div className="px-6 pt-8 pb-20">
           <Button onClick={onBookingClick} size="lg" className="w-full">
             Make an Appointment
           </Button>
         </div>
       </div>
 
-      {/* Desktop: Scroll-driven step journey */}
+      {/* ── Tablet: Interactive split panel (md to lg) ───────────────────── */}
+      <div className="hidden md:flex lg:hidden min-h-screen overflow-hidden">
+
+        {/* Left: per-step crossfade images */}
+        <div className="relative w-2/5 shrink-0 border-r-16 border-(--accent) rounded-br-[25%] overflow-hidden">
+          {steps.map((step, i) => (
+            <div
+              key={step.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${i === tabIndex ? "opacity-100" : "opacity-0"
+                }`}
+            >
+              <Image
+                src={step.image}
+                alt={step.imageAlt}
+                fill
+                className="object-cover"
+                sizes="40vw"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Right: clickable step indicator + animated content */}
+        <div className="flex-1 flex items-start overflow-y-auto">
+          <div className="w-full max-w-xl px-8 pt-16 pb-12">
+
+            {/* Clickable step indicator — mirrors desktop but interactive */}
+            <div
+              className="flex items-center gap-3 mb-10"
+              aria-label="Step navigation"
+            >
+              <div className="flex gap-1.5 items-center">
+                {steps.map((step, i) => (
+                  <button
+                    key={step.id}
+                    type="button"
+                    onClick={() => handleTabChange(i)}
+                    aria-current={i === tabIndex ? "step" : undefined}
+                    aria-label={step.label}
+                    className="group py-2 px-0.5 -my-2 cursor-pointer"
+                  >
+                    <div
+                      className={`h-px transition-all duration-500 ease-out rounded-full ${i === tabIndex
+                        ? "w-8 bg-(--accent)"
+                        : i < tabIndex
+                          ? "w-4 bg-(--accent)/40 group-hover:bg-(--accent)/60"
+                          : "w-4 bg-(--foreground)/15 group-hover:bg-(--foreground)/30"
+                        }`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <span className="text-xs tracking-widest text-(--foreground)/30 tabular-nums">
+                0{tabIndex + 1} / 0{steps.length}
+              </span>
+            </div>
+
+            {/* Content — same grid overlap enter/exit pattern as desktop */}
+            <div className="grid">
+              {/* Exiting step */}
+              {tabExitIndex !== null && tabExitIndex !== tabIndex && (
+                <div className="step-content-exit col-start-1 row-start-1">
+                  <h3 className="font-nyght text-3xl mb-6 text-balance">
+                    {steps[tabExitIndex].label}
+                  </h3>
+                  <div className="text-(--foreground)/75">
+                    {steps[tabExitIndex].content}
+                  </div>
+                </div>
+              )}
+
+              {/* Active step */}
+              <div
+                key={`tab-${tabIndex}`}
+                className="step-content-enter col-start-1 row-start-1"
+              >
+                <h3 className="font-nyght text-3xl mb-6 text-balance">
+                  {steps[tabIndex].label}
+                </h3>
+                <div className="text-(--foreground)/75">
+                  {steps[tabIndex].content}
+                </div>
+                <div className="flex items-center gap-4 mt-10">
+                  <Button onClick={onBookingClick}>Book Now</Button>
+                  {tabIndex < steps.length - 1 ? (
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleTabChange(tabIndex + 1)}
+                      className="inline-flex items-center gap-2 group"
+                    >
+                      {steps[tabIndex + 1].label}{" "}
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        document
+                          .getElementById("About")
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      className="inline-flex items-center gap-2"
+                    >
+                      Get To Know Moxie
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* ── Desktop: Scroll-driven step journey (lg+) ───────────────────── */}
       <div
         ref={scrollWrapperRef}
         className="hidden lg:block appointments-scroll-wrapper"
@@ -388,9 +497,8 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
             {steps.map((step, i) => (
               <div
                 key={step.id}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  i === Math.max(0, activeIndex) ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${i === Math.max(0, activeIndex) ? "opacity-100" : "opacity-0"
+                  }`}
               >
                 <Image
                   src={step.image}
