@@ -3,7 +3,10 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import apptImage from "@/public/images/moxie-lobby.jpg";
-import apptImage2 from "@/public/images/appt-img.jpg";
+import apptImgDiscover from "@/public/images/appt-img4.jpg";
+import apptImgPrepare from "@/public/images/appt-img2.jpg";
+import apptImgExpect from "@/public/images/appt-img.jpg";
+import apptImgAftercare from "@/public/images/appt-img3.jpg";
 import Button from "./button";
 import { useEffect, useRef, useState } from "react";
 
@@ -15,6 +18,8 @@ const steps = [
   {
     id: "step-discover",
     label: "Find Your Service",
+    image: apptImgDiscover,
+    imageAlt: "Moxie Beauty Studio consultation and waiting area",
     content: (
       <>
         <p className="mb-4 leading-relaxed">
@@ -42,6 +47,8 @@ const steps = [
   {
     id: "step-prepare",
     label: "Before You Arrive",
+    image: apptImgPrepare,
+    imageAlt: "Moxie Beauty Studio entrance through barn doors",
     content: (
       <>
         <p className="mb-5 leading-relaxed">
@@ -71,6 +78,8 @@ const steps = [
   {
     id: "step-expect",
     label: "What to Expect",
+    image: apptImgExpect,
+    imageAlt: "Moxie Beauty Studio treatment room",
     content: (
       <>
         <p className="mb-5 leading-relaxed">
@@ -113,6 +122,8 @@ const steps = [
   {
     id: "step-aftercare",
     label: "Caring for Your Results",
+    image: apptImgAftercare,
+    imageAlt: "Moxie Beauty Studio professional workstation with certifications",
     content: (
       <>
         <p className="mb-5 leading-relaxed">
@@ -370,19 +381,27 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         className="hidden lg:block appointments-scroll-wrapper"
         style={{ height: "300vh" }}
       >
-        <div className="sticky top-0 min-h-dvh flex overflow-hidden border-t border-(--accent)/20 bg-(--background)/90 backdrop-blur-xl z-50">
+        <div className="sticky top-0 min-h-dvh flex overflow-hidden bg-(--background)/90 backdrop-blur-xl z-50">
 
-          {/* Left: persistent image */}
+          {/* Left: per-step crossfade images */}
           <div className="relative w-2/5 xl:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-[25%] overflow-hidden">
-            <Image
-              src={apptImage2}
-              alt="Moxie Beauty Studio lobby"
-              fill
-              className="object-cover"
-              sizes="(min-width: 1280px) 50vw, 40vw"
-            />
-            {/* Soft gradient blends image into the content panel */}
-            {/* <div className="absolute inset-0 bg-linear-to-r from-transparent via-transparent to-(--background)/60" /> */}
+            {steps.map((step, i) => (
+              <div
+                key={step.id}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                  i === Math.max(0, activeIndex) ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <Image
+                  src={step.image}
+                  alt={step.imageAlt}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1280px) 50vw, 40vw"
+                  priority={i === 0}
+                />
+              </div>
+            ))}
           </div>
 
           {/* Right: step content */}
@@ -451,7 +470,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                           onClick={() => scrollToStep(activeIndex + 1)}
                           className="inline-flex items-center gap-2 group"
                         >
-                          Next{" "}
+                          {steps[activeIndex + 1].label}{" "}
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </Button>
                       ) : (
