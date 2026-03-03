@@ -3,6 +3,7 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import apptImage from "@/public/images/moxie-lobby.jpg";
+import apptImage2 from "@/public/images/appt-img.jpg";
 import Button from "./button";
 import { useEffect, useRef, useState } from "react";
 
@@ -261,13 +262,23 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       aria-label="Appointments section"
     >
       {/* Intro — always visible, sticks while scroll wrapper fills the section */}
-      <div className="container flex flex-col md:flex-row lg:gap-14 items-start mx-auto p-8 lg:mb-10 lg:sticky lg:top-24 min-h-screen z-0">
-        <Image
+      <div className="flex flex-col md:flex-row lg:gap-14 items-start lg:sticky lg:top-40 min-h-screen z-0">
+        {/* <Image
           src={apptImage}
           alt="Moxie's waiting room."
           className="w-full lg:max-w-1/2 h-96 lg:h-auto max-h-[60vh] rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border-r border-b border-l-8 border-t-8 border-(--accent) object-cover mt-8 lg:mt-0 fade-in-section"
-        />
-        <div className="content relative max-w-2xl text-balance">
+        /> */}
+        <div className="relative w-2/5 xl:w-1/2 shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-[25%] overflow-hidden">
+          <Image
+            src={apptImage}
+            alt="Moxie Beauty Studio lobby"
+            width={1280}
+            height={720}
+            className="object-cover"
+            sizes="(min-width: 1280px) 50vw, 40vw"
+          />
+        </div>
+        <div className="content relative max-w-2xl text-balance mt-8">
           <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section delay-100">
             Your Moxie Beauty Journey
           </h2>
@@ -359,24 +370,24 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         className="hidden lg:block appointments-scroll-wrapper"
         style={{ height: "300vh" }}
       >
-        <div className="sticky top-0 min-h-dvh flex overflow-hidden border-t border-(--accent)/20 bg-(--background)/95 backdrop-blur-xl z-50">
+        <div className="sticky top-0 min-h-dvh flex overflow-hidden border-t border-(--accent)/20 bg-(--background)/90 backdrop-blur-xl z-50">
 
           {/* Left: persistent image */}
-          <div className="relative w-2/5 xl:w-1/2 shrink-0">
+          <div className="relative w-2/5 xl:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-[25%] overflow-hidden">
             <Image
-              src={apptImage}
+              src={apptImage2}
               alt="Moxie Beauty Studio lobby"
               fill
               className="object-cover"
               sizes="(min-width: 1280px) 50vw, 40vw"
             />
             {/* Soft gradient blends image into the content panel */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-(--background)/60" />
+            {/* <div className="absolute inset-0 bg-linear-to-r from-transparent via-transparent to-(--background)/60" /> */}
           </div>
 
           {/* Right: step content */}
           <div className="flex-1 flex items-center justify-start">
-            <div className="w-full max-w-lg px-10 xl:px-14 py-12">
+            <div className="w-full max-w-xl px-10 xl:px-14 py-12">
 
               {/* Step indicator */}
               <div

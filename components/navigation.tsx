@@ -191,9 +191,8 @@ export default function Navigation() {
               navRefs.current[item.section] = el;
               // console.log(`Nav ref set for ${item.section}:`, !!el); // Debug log
             }}
-            className={`text-base font-bold rounded-full py-1 px-4 transition-all relative z-10 text-shadow-(--foreground) border border-transparent hover:border-(--accent)/20 hover:bg-(--accent)/20 focus:outline-none focus:ring-2 focus:ring-(--accent)/50 focus:border-(--accent)/40 ${
-              activeSection === item.section ? "text-(--background)" : ""
-            }`}
+            className={`text-base font-bold rounded-full py-1 px-4 transition-all relative z-10 text-shadow-(--foreground) border border-transparent hover:border-(--accent)/20 hover:bg-(--accent)/20 focus:outline-none focus:ring-2 focus:ring-(--accent)/50 focus:border-(--accent)/40 ${activeSection === item.section ? "text-(--background)" : ""
+              }`}
             onClick={(e) => scrollToSection(item.section, e)}
             onKeyDown={(e) => handleKeyDown(e, item.section)}
             aria-label={item.description}
@@ -204,16 +203,15 @@ export default function Navigation() {
               <span className="hidden sm:inline">{item.name}</span>
             </span>
             <span
-              className={`absolute inset-0 rounded-full bg-(--accent) bevel transition-opacity duration-200 pointer-events-none ${
-                activeSection === item.section ? "opacity-100" : "opacity-0"
-              }`}
+              className={`absolute inset-0 rounded-full bg-(--accent) bevel transition-opacity duration-200 pointer-events-none ${activeSection === item.section ? "opacity-100" : "opacity-0"
+                }`}
             />
           </a>
         ))}
 
         {/* Sliding indicator */}
         <div
-          className="absolute bg-(--accent)/90 rounded-full shadow-lg z-0 transition-[width,left,opacity] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] pointer-events-none"
+          className="absolute bg-(--accent)/90 rounded-full shadow-lg z-0 transition-[width,left,opacity] duration-300 ease-in-out pointer-events-none"
           style={{
             height: "calc(100% - 2rem)",
             top: "1rem",

@@ -93,9 +93,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
               From special occasions to everyday self-care, Moxie is here to
               help you look and feel your best. Our expert team provides
               personalized services, including lashes, brows, microblading, and
-              waxing, to ensure flawless, long-lasting results. With a perfect
-              balance of artistry and precision, we&rsquo;re dedicated to making
-              every visit unforgettable.
+              waxing, to ensure flawless, long-lasting results.
             </p>
             <div className="flex flex-row flex-wrap gap-4 mb-4 fade-in-section delay-300">
               <Button
