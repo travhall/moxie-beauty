@@ -25,7 +25,7 @@ export default function Home() {
         aria-label="Hero section"
       >
         <div className="content bg-(--background)/80 backdrop-blur relative p-4 lg:p-0 mt-32 lg:mt-0 w-full max-w-[72ch] rounded-tr-4xl lg:left-56 z-20">
-          <h1 className="font-nyght text-(--foreground) text-6xl xl:text-7xl my-8 text-balance fade-in-section">
+          <h1 className="font-nyght text-(--foreground) text-6xl lg:text-7xl my-8 text-balance fade-in-section">
             Welcome to{" "}
             <span className="inline-block bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pr-2 pb-2">
               Moxie Beauty <span className="hidden lg:inline">Studio</span>

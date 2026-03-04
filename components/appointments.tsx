@@ -285,7 +285,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       aria-label="Appointments section"
     >
       {/* Intro — sticks on desktop, compact on mobile/tablet */}
-      <div className="flex flex-col md:flex-row lg:gap-14 items-start lg:sticky lg:top-40 lg:min-h-screen z-0">
+      <div className="flex flex-col md:flex-row lg:gap-14 items-center lg:items-start lg:sticky lg:top-40 min-h-screen z-0">
         {/* Image: hidden on mobile, shown md+ */}
         <div className="hidden md:block relative w-2/5 xl:w-1/2 self-stretch shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-4xl lg:rounded-tr-[25%] overflow-hidden">
           <Image
@@ -297,7 +297,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
           />
         </div>
         <div className="content relative max-w-2xl text-balance p-8">
-          <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section delay-100">
+          <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl lg:text-6xl my-8 pb-2 text-balance fade-in-section delay-100">
             Your Moxie Beauty Journey
           </h2>
           <p className="text-xl mb-4 fade-in-section delay-200">
@@ -354,7 +354,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
               </div>
               {/* Step content */}
               <div className="px-6 pt-6 pb-8 border-b border-(--foreground)/10 last:border-b-0">
-                <h3 className="font-nyght text-2xl mb-4">{step.label}</h3>
+                <h3 className="font-nyght text-3xl mb-4">{step.label}</h3>
                 <div className="text-(--foreground)/75">
                   {step.content}
                 </div>
@@ -373,7 +373,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       <div className="hidden md:flex lg:hidden min-h-screen overflow-hidden">
 
         {/* Left: per-step crossfade images */}
-        <div className="relative w-2/5 shrink-0 border-r-16 border-(--accent) rounded-br-[25%] overflow-hidden">
+        <div className="relative w-2/5 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
           {steps.map((step, i) => (
             <div
               key={step.id}
@@ -493,7 +493,8 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         <div className="sticky top-0 min-h-dvh flex overflow-hidden bg-(--background)/90 backdrop-blur-xl z-50">
 
           {/* Left: per-step crossfade images */}
-          <div className="relative w-2/5 xl:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-[25%] overflow-hidden">
+          <div className="relative w-2/5 xl:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
+            <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
             {steps.map((step, i) => (
               <div
                 key={step.id}

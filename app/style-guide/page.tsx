@@ -1,412 +1,280 @@
 "use client";
 
 import Button from "@/components/button";
-import {
-  Heart,
-  Send,
-  Menu,
-  Facebook,
-  Instagram,
-  CalendarClock,
-} from "lucide-react";
+import { Heart, Send, Menu, CalendarClock } from "lucide-react";
+
+// ─── Type Scale ───────────────────────────────────────────────────────────────
+
+const typeScale = [
+  {
+    label: "Display / H1",
+    usage: "Hero heading",
+    classes: "font-nyght text-6xl lg:text-7xl text-balance",
+    gradient: true,
+    sample: "Welcome to Moxie Beauty Studio",
+  },
+  {
+    label: "Section / H2",
+    usage: "Section headings",
+    classes: "font-nyght text-5xl lg:text-6xl text-balance",
+    gradient: true,
+    sample: "The Magic of Moxie",
+  },
+  {
+    label: "Step / H3",
+    usage: "Appointment steps, desktop panels",
+    classes: "font-nyght text-3xl lg:text-4xl text-balance",
+    gradient: true,
+    sample: "Find Your Service",
+  },
+  {
+    label: "Card / H3",
+    usage: "Service cards",
+    classes: "font-nyght text-xl sm:text-2xl text-balance",
+    gradient: true,
+    sample: "Eyelash Extensions",
+  },
+  {
+    label: "Blockquote",
+    usage: "Featured pull quotes",
+    classes: "font-nyght-italic text-3xl lg:text-4xl text-balance",
+    gradient: true,
+    sample:
+      "Jackie is committed to fostering strong relationships with her clients.",
+  },
+  {
+    label: "Lead Body",
+    usage: "Section subtitles",
+    classes: "text-xl text-balance",
+    gradient: false,
+    sample:
+      "Discover Moxie\u2019s premium beauty treatments, crafted to enhance your natural allure.",
+  },
+  {
+    label: "Body",
+    usage: "General copy",
+    classes: "text-base text-pretty",
+    gradient: false,
+    sample:
+      "From special occasions to everyday self-care, Moxie is here to help you look and feel your best. Our expert team provides personalized services to ensure flawless, long-lasting results.",
+  },
+  {
+    label: "Small",
+    usage: "Captions, meta, fine print",
+    classes: "text-sm",
+    gradient: false,
+    sample:
+      "Results last longest when kept dry for 24 hours and away from saunas for 48 hours.",
+  },
+  {
+    label: "Nav / Label",
+    usage: "Navigation links, UI labels",
+    classes: "font-bold text-base tracking-wide",
+    gradient: false,
+    sample: "Our Services  \u00b7  Appointments  \u00b7  About Moxie",
+  },
+  {
+    label: "Accent Label",
+    usage: "Eyebrow labels, section markers",
+    classes: "font-nyght-bold text-sm tracking-widest uppercase",
+    gradient: false,
+    sample: "Moxie Beauty Studio — Est. 2022",
+  },
+];
+
+// ─── Font Families ────────────────────────────────────────────────────────────
+
+const fontFamilies = [
+  {
+    label: "Nyght Light",
+    classes: "font-nyght text-2xl",
+    sample: "Aa — The quick brown fox jumps over the lazy dog",
+  },
+  {
+    label: "Nyght Light Italic",
+    classes: "font-nyght-italic text-2xl",
+    sample: "Aa — The quick brown fox jumps over the lazy dog",
+  },
+  {
+    label: "Nyght Dark",
+    classes: "font-nyght-bold text-2xl",
+    sample: "Aa — The quick brown fox jumps over the lazy dog",
+  },
+  {
+    label: "Nyght Dark Italic",
+    classes: "font-nyght-bold-italic text-2xl",
+    sample: "Aa — The quick brown fox jumps over the lazy dog",
+  },
+  {
+    label: "Mulish Regular",
+    classes: "font-sans font-normal text-2xl",
+    sample: "Aa — The quick brown fox jumps over the lazy dog",
+  },
+  {
+    label: "Mulish SemiBold",
+    classes: "font-sans font-semibold text-2xl",
+    sample: "Aa — The quick brown fox jumps over the lazy dog",
+  },
+  {
+    label: "Mulish Bold",
+    classes: "font-sans font-bold text-2xl",
+    sample: "Aa — The quick brown fox jumps over the lazy dog",
+  },
+];
+
+// ─── Color Palettes ───────────────────────────────────────────────────────────
+
+const palettes = [
+  { name: "Ivory Rose", token: "ivory-rose", darkFrom: 600 },
+  { name: "Rose Gold", token: "rose-gold", darkFrom: 600 },
+  { name: "Midnite", token: "midnite", darkFrom: 600 },
+];
+
+const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StyleGuide() {
   return (
-    <main>
-      {/* STYLE GUIDE STUFFS */}
-      <section className="p-12">
-        <style jsx>{`
-          .swatch {
-            width: 100%;
-            height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 8px;
-            border-radius: 6px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-          }
+    <main className="p-8 md:p-12 space-y-24 max-w-6xl mx-auto">
+      <header className="border-b border-(--accent) pb-6">
+        <p className="font-nyght-bold text-sm tracking-widest uppercase text-(--accent) mb-2">
+          Moxie Beauty Studio
+        </p>
+        <h1 className="font-nyght text-4xl lg:text-5xl">Style Guide</h1>
+      </header>
 
-          .swatch:hover {
-            transform: scale(1.05);
-          }
+      {/* ── Typography ─────────────────────────────────────────────── */}
+      <section>
+        <h2 className="font-sans font-bold text-2xl mb-2 text-(--accent)">
+          Typography
+        </h2>
+        <p className="text-sm text-(--foreground)/50 mb-12">
+          Nyght Serif renders optically smaller than equivalent sans-serif sizes.
+          All heading levels are scaled ~1 step larger to compensate.
+        </p>
 
-          .swatch-name {
-            font-weight: 500;
-            font-size: 0.875rem;
-            margin-bottom: 2px;
-          }
-
-          .swatch-value {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            word-break: break-all;
-          }
-
-          .dark-text {
-            color: #111827;
-          }
-
-          .light-text {
-            color: #f3f4f6;
-          }
-
-          .palette-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            margin-top: 2rem;
-          }
-        `}</style>
-
-        <h1 className="text-3xl font-bold mb-8">Color Palette Preview</h1>
-
-        {/* Ivory Rose Palette */}
-        <div>
-          <h2 className="palette-title">Ivory Rose</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--ivory-rose-50)" }}
-            >
-              <div className="swatch-name">--ivory-rose-50</div>
-              <div className="swatch-value">oklch(96.79% 0.0068 29.23)</div>
+        {/* Type scale specimens */}
+        <div className="space-y-10 mb-20">
+          {typeScale.map(({ label, usage, classes, gradient, sample }) => (
+            <div key={label} className="border-b border-(--accent)/15 pb-8">
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
+                <span className="font-sans font-bold text-xs text-(--accent) uppercase tracking-widest">
+                  {label}
+                </span>
+                <span className="text-xs text-(--foreground)/40">{usage}</span>
+                <code className="text-xs bg-(--foreground)/5 px-2 py-0.5 rounded font-mono text-(--foreground)/60">
+                  {classes}
+                </code>
+              </div>
+              <p
+                className={`${classes} ${gradient
+                  ? "bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent"
+                  : "text-(--foreground)"
+                  }`}
+              >
+                {sample}
+              </p>
             </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--ivory-rose-100)" }}
-            >
-              <div className="swatch-name">--ivory-rose-100</div>
-              <div className="swatch-value">oklch(87.67% 0.0137 29.23)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--ivory-rose-200)" }}
-            >
-              <div className="swatch-name">--ivory-rose-200</div>
-              <div className="swatch-value">oklch(73.31% 0.0274 29.23)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--ivory-rose-300)" }}
-            >
-              <div className="swatch-name">--ivory-rose-300</div>
-              <div className="swatch-value">oklch(62.63% 0.0313 29.23)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--ivory-rose-400)" }}
-            >
-              <div className="swatch-name">--ivory-rose-400</div>
-              <div className="swatch-value">oklch(57.34% 0.0411 29.23)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--ivory-rose-500)" }}
-            >
-              <div className="swatch-name">--ivory-rose-500</div>
-              <div className="swatch-value">oklch(51.95% 0.0446 29.23)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--ivory-rose-600)" }}
-            >
-              <div className="swatch-name">--ivory-rose-600</div>
-              <div className="swatch-value">oklch(36.71% 0.0490 29.23)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--ivory-rose-700)" }}
-            >
-              <div className="swatch-name">--ivory-rose-700</div>
-              <div className="swatch-value">oklch(29.03% 0.0505 29.23)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--ivory-rose-800)" }}
-            >
-              <div className="swatch-name">--ivory-rose-800</div>
-              <div className="swatch-value">oklch(21.70% 0.0520 29.23)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--ivory-rose-900)" }}
-            >
-              <div className="swatch-name">--ivory-rose-900</div>
-              <div className="swatch-value">oklch(14.84% 0.0431 29.23)</div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Rose Gold Palette */}
-        <div>
-          <h2 className="palette-title">Rose Gold</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--rose-gold-50)" }}
-            >
-              <div className="swatch-name">--rose-gold-50</div>
-              <div className="swatch-value">oklch(97.31% 0.0280 63.00)</div>
+        {/* Font family specimens */}
+        <h3 className="font-sans font-bold text-lg mb-6">Font Families</h3>
+        <div className="space-y-5">
+          {fontFamilies.map(({ label, classes, sample }) => (
+            <div key={label} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
+              <span className="text-xs text-(--foreground)/40 sm:w-40 shrink-0 uppercase tracking-wide">
+                {label}
+              </span>
+              <span className={classes}>{sample}</span>
             </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--rose-gold-100)" }}
-            >
-              <div className="swatch-name">--rose-gold-100</div>
-              <div className="swatch-value">oklch(89.25% 0.0480 63.00)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--rose-gold-200)" }}
-            >
-              <div className="swatch-name">--rose-gold-200</div>
-              <div className="swatch-value">oklch(79.46% 0.0650 63.00)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--rose-gold-300)" }}
-            >
-              <div className="swatch-name">--rose-gold-300</div>
-              <div className="swatch-value">oklch(70.18% 0.0750 63.00)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--rose-gold-400)" }}
-            >
-              <div className="swatch-name">--rose-gold-400</div>
-              <div className="swatch-value">oklch(63.50% 0.0850 63.00)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--rose-gold-500)" }}
-            >
-              <div className="swatch-name">--rose-gold-500</div>
-              <div className="swatch-value">oklch(56.85% 0.0920 63.00)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--rose-gold-600)" }}
-            >
-              <div className="swatch-name">--rose-gold-600</div>
-              <div className="swatch-value">oklch(42.47% 0.0720 63.00)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--rose-gold-700)" }}
-            >
-              <div className="swatch-name">--rose-gold-700</div>
-              <div className="swatch-value">oklch(33.89% 0.0580 63.00)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--rose-gold-800)" }}
-            >
-              <div className="swatch-name">--rose-gold-800</div>
-              <div className="swatch-value">oklch(25.42% 0.0420 63.00)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--rose-gold-900)" }}
-            >
-              <div className="swatch-name">--rose-gold-900</div>
-              <div className="swatch-value">oklch(17.15% 0.0380 63.00)</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Midnite Palette */}
-        <div>
-          <h2 className="palette-title">Midnite</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--midnite-50)" }}
-            >
-              <div className="swatch-name">--midnite-50</div>
-              <div className="swatch-value">oklch(96.79% 0.0008 48.79)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--midnite-100)" }}
-            >
-              <div className="swatch-name">--midnite-100</div>
-              <div className="swatch-value">oklch(87.67% 0.0014 48.79)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--midnite-200)" }}
-            >
-              <div className="swatch-name">--midnite-200</div>
-              <div className="swatch-value">oklch(73.31% 0.0024 48.79)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--midnite-300)" }}
-            >
-              <div className="swatch-name">--midnite-300</div>
-              <div className="swatch-value">oklch(62.63% 0.0024 48.79)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--midnite-400)" }}
-            >
-              <div className="swatch-name">--midnite-400</div>
-              <div className="swatch-value">oklch(57.34% 0.0024 48.79)</div>
-            </div>
-            <div
-              className="swatch dark-text"
-              style={{ backgroundColor: "var(--midnite-500)" }}
-            >
-              <div className="swatch-name">--midnite-500</div>
-              <div className="swatch-value">oklch(48.10% 0.0024 48.79)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--midnite-600)" }}
-            >
-              <div className="swatch-name">--midnite-600</div>
-              <div className="swatch-value">oklch(32.93% 0.0024 48.79)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--midnite-700)" }}
-            >
-              <div className="swatch-name">--midnite-700</div>
-              <div className="swatch-value">oklch(21.70% 0.0024 48.79)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--midnite-800)" }}
-            >
-              <div className="swatch-name">--midnite-800</div>
-              <div className="swatch-value">oklch(14.84% 0.0024 48.79)</div>
-            </div>
-            <div
-              className="swatch light-text"
-              style={{ backgroundColor: "var(--midnite-900)" }}
-            >
-              <div className="swatch-name">--midnite-900</div>
-              <div className="swatch-value">oklch(8.48% 0.0024 48.79)</div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      <section className="p-12">
-        <h2 className="text-xl mb-4">Default Variant</h2>
-        <div className="flex flex-wrap gap-4">
-          {/* Text only */}
-          <Button>Default Button</Button>
-          <Button size="sm">Small Button</Button>
-          <Button size="lg">Large Button</Button>
-
-          {/* Text + Icon Left */}
-          <Button icon={Heart}>With Icon</Button>
-          <Button icon={Heart} size="sm">
-            Small with Icon
-          </Button>
-          <Button icon={Heart} size="lg">
-            Large with Icon
-          </Button>
-
-          {/* Text + Icon Right */}
-          <Button icon={Send} iconPosition="right">
-            Icon Right
-          </Button>
-
-          {/* Icon only */}
-          <Button
-            icon={CalendarClock}
-            iconOnly
-            aria-label="Schedule Appointment"
-          />
-          <Button
-            icon={CalendarClock}
-            iconOnly
-            size="sm"
-            aria-label="Schedule Appointment"
-          />
-          <Button
-            icon={CalendarClock}
-            iconOnly
-            size="lg"
-            aria-label="Schedule Appointment"
-          />
-
-          <Button icon={Facebook} iconOnly aria-label="Facebook" />
-          <Button icon={Instagram} iconOnly aria-label="Instagram" />
-
-          {/* Loading state */}
-          <Button isLoading>Loading</Button>
+      {/* ── Color Palette ──────────────────────────────────────────── */}
+      <section>
+        <h2 className="font-sans font-bold text-2xl mb-8 text-(--accent)">
+          Color Palette
+        </h2>
+        <div className="space-y-8">
+          {palettes.map(({ name, token, darkFrom }) => (
+            <div key={name}>
+              <h3 className="font-sans font-semibold text-sm uppercase tracking-widest mb-3 text-(--foreground)/60">
+                {name}
+              </h3>
+              <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
+                {shades.map((shade) => (
+                  <div
+                    key={shade}
+                    className="rounded-sm"
+                    style={{
+                      backgroundColor: `var(--${token}-${shade})`,
+                      height: "64px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                      padding: "4px 6px",
+                    }}
+                  >
+                    <span
+                      className="text-xs font-medium"
+                      style={{
+                        color: shade >= darkFrom ? "#f3f4f6" : "#111827",
+                      }}
+                    >
+                      {shade}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="p-12">
-        <h2 className="text-xl mb-4">Outline Variant</h2>
-        <div className="flex flex-wrap gap-4">
-          {/* Text only */}
-          <Button variant="outline">Outline Button</Button>
-          <Button variant="outline" size="sm">
-            Small Outline
-          </Button>
-          <Button variant="outline" size="lg">
-            Large Outline
-          </Button>
-
-          {/* Text + Icon */}
-          <Button variant="outline" icon={Heart}>
-            With Icon
-          </Button>
-
-          {/* Icon only */}
-          <Button variant="outline" icon={Menu} iconOnly aria-label="Menu" />
-
-          {/* Loading state */}
-          <Button variant="outline" isLoading>
-            Loading
-          </Button>
-        </div>
-      </section>
-
-      <section className="p-12">
-        <h2 className="text-xl mb-4">Ghost Variant</h2>
-        <div className="flex flex-wrap gap-4">
-          {/* Text only */}
-          <Button variant="ghost">Ghost Button</Button>
-          <Button variant="ghost" size="sm">
-            Small Ghost
-          </Button>
-          <Button variant="ghost" size="lg">
-            Large Ghost
-          </Button>
-
-          {/* Text + Icon */}
-          <Button variant="ghost" icon={Heart}>
-            With Icon
-          </Button>
-
-          {/* Icon only */}
-          <Button variant="ghost" icon={Menu} iconOnly aria-label="Menu" />
-
-          {/* Loading state */}
-          <Button variant="ghost" isLoading>
-            Loading
-          </Button>
-        </div>
-      </section>
-
-      <section className="p-12">
-        <h2 className="text-xl mb-4">Disabled State</h2>
-        <div className="flex flex-wrap gap-4">
-          <Button disabled>Disabled Default</Button>
-          <Button variant="outline" disabled>
-            Disabled Outline
-          </Button>
-          <Button variant="ghost" disabled>
-            Disabled Ghost
-          </Button>
+      {/* ── Buttons ────────────────────────────────────────────────── */}
+      <section>
+        <h2 className="font-sans font-bold text-2xl mb-8 text-(--accent)">
+          Buttons
+        </h2>
+        <div className="space-y-10">
+          {(["default", "outline", "ghost"] as const).map((variant) => (
+            <div key={variant}>
+              <h3 className="font-sans font-semibold text-xs uppercase tracking-widest text-(--foreground)/40 mb-4 capitalize">
+                {variant}
+              </h3>
+              <div className="flex flex-wrap gap-4 items-center">
+                <Button variant={variant} size="sm">
+                  Small
+                </Button>
+                <Button variant={variant}>Default</Button>
+                <Button variant={variant} size="lg">
+                  Large
+                </Button>
+                <Button variant={variant} icon={Heart}>
+                  With Icon
+                </Button>
+                <Button variant={variant} icon={Send} iconPosition="right">
+                  Icon Right
+                </Button>
+                <Button
+                  variant={variant}
+                  icon={CalendarClock}
+                  iconOnly
+                  aria-label="Calendar"
+                />
+                <Button variant={variant} icon={Menu} iconOnly aria-label="Menu" />
+                <Button variant={variant} isLoading>
+                  Loading
+                </Button>
+                <Button variant={variant} disabled>
+                  Disabled
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </main>

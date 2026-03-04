@@ -13,7 +13,7 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
   return (
     <>
       <section
-        className="min-h-screen w-full grid place-items-center p-4 md:pt-24"
+        className="min-h-screen w-full grid place-items-center p-4 md:pt-24 lg:mt-32"
         id="About"
         tabIndex={-1}
         aria-label="About section"
@@ -32,7 +32,7 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
             <div
               className="about-content px-4 text-pretty"
             >
-              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-6xl xl:text-7xl my-8 pb-2 text-balance fade-in-section delay-100">
+              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl lg:text-6xl my-8 pb-2 text-balance fade-in-section delay-100">
                 Discover the Heart & Soul of Moxie
               </h2>
               <p className="text-base mb-12 max-w-[68ch] text-balance fade-in-section delay-200">
