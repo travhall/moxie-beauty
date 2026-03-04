@@ -67,12 +67,52 @@
   --accent: var(--rose-gold-300);
 }
 
+/* ─── Background Shader ────────────────────────────────────────────────────
+   Configurable variables:
+   --shader-color-a  : first orb color  (default: rose-gold tint)
+   --shader-color-b  : second orb color (default: ivory-rose tint)
+   --shader-opacity  : overall opacity of the effect (0–1)
+   --shader-size-a   : size of orb A as a % of the container
+   --shader-size-b   : size of orb B as a % of the container
+   --shader-pos-a    : position of orb A (x y)
+   --shader-pos-b    : position of orb B (x y)
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --shader-color-a: var(--rose-gold-200);
+  --shader-color-b: var(--ivory-rose-200);
+  --shader-opacity: 0.35;
+  --shader-size-a: 60%;
+  --shader-size-b: 55%;
+  --shader-pos-a: 85% 10%;
+  --shader-pos-b: 10% 80%;
+}
+
+.dark {
+  --shader-color-a: var(--rose-gold-900);
+  --shader-color-b: var(--ivory-rose-800);
+  --shader-opacity: 0.5;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--shader-opacity);
+  background:
+    radial-gradient(ellipse var(--shader-size-a) var(--shader-size-a) at var(--shader-pos-a), var(--shader-color-a), transparent),
+    radial-gradient(ellipse var(--shader-size-b) var(--shader-size-b) at var(--shader-pos-b), var(--shader-color-b), transparent);
+  transition: opacity 0.3s ease;
+  will-change: opacity;
 }
 
 ::selection {
@@ -82,11 +122,12 @@ body {
 
 .site-container {
   position: relative;
-  background: var(--background);
+  background: transparent;
   border-right: 0.5px solid var(--accent);
   border-left: 0.5px solid var(--accent);
   margin: 0 auto;
   max-width: 1680px;
+  z-index: 1;
 }
 
 .bevel {
