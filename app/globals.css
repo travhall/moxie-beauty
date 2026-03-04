@@ -69,28 +69,34 @@
 
 /* ─── Background Shader ────────────────────────────────────────────────────
    Configurable variables:
-   --shader-color-a  : first orb color  (default: rose-gold tint)
-   --shader-color-b  : second orb color (default: ivory-rose tint)
+   --shader-color-a  : first orb color  (default: rose-gold light tint)
+   --shader-color-b  : second orb color (default: ivory-rose light tint)
    --shader-opacity  : overall opacity of the effect (0–1)
-   --shader-size-a   : size of orb A as a % of the container
-   --shader-size-b   : size of orb B as a % of the container
+   --shader-size-a   : size of orb A as a % of the viewport
+   --shader-size-b   : size of orb B as a % of the viewport
    --shader-pos-a    : position of orb A (x y)
    --shader-pos-b    : position of orb B (x y)
+
+   Color values are raw oklch to avoid @theme inline scoping limitations.
+   rose-gold-200  = oklch(79.46% 0.065 63)
+   ivory-rose-200 = oklch(73.42% 0.0358 29.23)
+   rose-gold-900  = oklch(17.15% 0.038 63)
+   ivory-rose-800 = oklch(16.08% 0.0834 29.23)
    ──────────────────────────────────────────────────────────────────────── */
 :root {
-  --shader-color-a: var(--rose-gold-200);
-  --shader-color-b: var(--ivory-rose-200);
-  --shader-opacity: 0.35;
-  --shader-size-a: 60%;
-  --shader-size-b: 55%;
+  --shader-color-a: oklch(79.46% 0.065 63);
+  --shader-color-b: oklch(73.42% 0.0358 29.23);
+  --shader-opacity: 0.4;
+  --shader-size-a: 65%;
+  --shader-size-b: 60%;
   --shader-pos-a: 85% 10%;
-  --shader-pos-b: 10% 80%;
+  --shader-pos-b: 10% 85%;
 }
 
 .dark {
-  --shader-color-a: var(--rose-gold-900);
-  --shader-color-b: var(--ivory-rose-800);
-  --shader-opacity: 0.5;
+  --shader-color-a: oklch(17.15% 0.038 63);
+  --shader-color-b: oklch(16.08% 0.0834 29.23);
+  --shader-opacity: 0.8;
 }
 
 body {
