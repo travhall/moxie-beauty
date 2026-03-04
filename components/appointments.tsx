@@ -494,7 +494,6 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
 
           {/* Left: per-step crossfade images */}
           <div className="relative w-2/5 xl:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
-            <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
             {steps.map((step, i) => (
               <div
                 key={step.id}
