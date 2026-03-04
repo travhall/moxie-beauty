@@ -490,7 +490,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         className="hidden lg:block appointments-scroll-wrapper"
         style={{ height: "300vh" }}
       >
-        <div className="sticky top-0 min-h-dvh flex overflow-hidden bg-(--background)/90 backdrop-blur-xl z-50">
+        <div className="sticky top-0 min-h-dvh flex overflow-hidden z-50">
 
           {/* Left: per-step crossfade images */}
           <div className="relative w-2/5 xl:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
