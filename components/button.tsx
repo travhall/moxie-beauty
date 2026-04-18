@@ -9,7 +9,7 @@ export interface ButtonProps
   children?: React.ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  icon?: LucideIcon;
+  icon?: React.ElementType;
   iconPosition?: "left" | "right";
   iconOnly?: boolean;
   className?: string;
