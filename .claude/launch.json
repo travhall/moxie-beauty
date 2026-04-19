@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Next.js Dev",
+      "name": "moxie-beauty",
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["dev", "--port", "3001"],
       "port": 3001
