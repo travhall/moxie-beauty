@@ -24,14 +24,14 @@ export default function Home() {
         tabIndex={-1}
         aria-label="Hero section"
       >
-        <div className="content bg-(--background)/80 backdrop-blur relative p-4 lg:p-0 mt-32 lg:mt-0 w-full max-w-[72ch] rounded-tr-4xl lg:left-56 z-20">
-          <h1 className="font-nyght text-(--foreground) text-6xl lg:text-7xl my-8 text-balance fade-in-section">
+        <div className="content bg-(--background)/80 backdrop-blur relative p-4 lg:p-0 mt-16 lg:mt-0 w-full max-w-[70ch] rounded-tr-4xl lg:rounded-tr-[25%] lg:left-56 z-20">
+          <h1 className="font-nyght text-(--foreground) text-4xl xs:text-5xl sm:text-6xl md:text-7xl my-4 lg:my-8 text-balance fade-in-section">
             Welcome to{" "}
             <span className="inline-block bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pr-2 pb-2">
               Moxie Beauty <span className="hidden lg:inline">Studio</span>
             </span>
           </h1>
-          <p className="text-base text-balance mb-10 fade-in-section delay-100">
+          <p className="text-balance mb-10 fade-in-section delay-100">
             Where artistry meets individuality. Specializing in bespoke lash and
             brow transformations, we craft personalized enhancements to
             highlight your natural beauty. Let your confidence shine with

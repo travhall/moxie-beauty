@@ -287,7 +287,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       {/* Intro — mobile/tablet only; desktop uses the persistent column layout below */}
       <div className="flex flex-col md:flex-row lg:gap-14 items-center lg:items-start lg:sticky lg:top-40 min-h-screen z-0 lg:hidden">
         {/* Image: hidden on mobile, shown md+ */}
-        <div className="hidden md:block relative w-1/2 self-stretch shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-4xl lg:rounded-tr-[25%] overflow-hidden">
+        <div className="hidden md:block relative w-2/5 lg:w-1/2 self-stretch shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-4xl lg:rounded-tr-[25%] overflow-hidden">
           <Image
             src={apptImage}
             alt="Moxie Beauty Studio lobby"
@@ -373,7 +373,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       <div className="hidden md:flex lg:hidden min-h-screen overflow-hidden">
 
         {/* Left: per-step crossfade images */}
-        <div className="relative w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
+        <div className="relative w-2/5 lg:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
           {steps.map((step, i) => (
             <div
               key={step.id}
