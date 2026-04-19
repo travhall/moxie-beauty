@@ -57,6 +57,7 @@ const nyghtDarkItalic = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://moxiebeautystudiowi.com"),
   title: "Moxie Beauty Studio | Lash & Brow Specialists in Wisconsin",
   description:
     "Moxie Beauty Studio specializes in bespoke lash and brow transformations in Wisconsin. Services include eyelash extensions, lash lift & tint, microblading, brow lamination, and facial waxing.",

@@ -79,6 +79,7 @@ export default function Home() {
           sizes="(max-width: 768px) 15rem, (max-width: 1536px) 33vw, 32vw"
           quality={75}
           priority={true}
+          fetchPriority="high"
           loading="eager"
           placeholder="blur"
           blurDataURL="data:image/png;base64,L3CFkh^300%LD*W.~BxG00xZ?aNG"

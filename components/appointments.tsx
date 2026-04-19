@@ -344,7 +344,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   alt={step.imageAlt}
                   fill
                   className="object-cover"
-                  sizes="100vw"
+                  sizes="(max-width: 767px) 100vw, 50vw"
                   priority={index === 0}
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-(--foreground)/50 via-transparent to-transparent" />
