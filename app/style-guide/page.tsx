@@ -242,7 +242,7 @@ export default function StyleGuide() {
         <div className="space-y-10">
           {(["default", "outline", "ghost"] as const).map((variant) => (
             <div key={variant}>
-              <h3 className="font-sans font-semibold text-xs uppercase tracking-widest text-(--foreground)/40 mb-4 capitalize">
+              <h3 className="font-sans font-semibold text-xs uppercase tracking-widest text-(--foreground)/40 mb-4">
                 {variant}
               </h3>
               <div className="flex flex-wrap gap-4 items-center">

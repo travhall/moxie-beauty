@@ -279,15 +279,15 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen w-full md:pt-24 relative z-10"
+      className="min-h-screen w-full relative z-10"
       id="Appointments"
       tabIndex={-1}
       aria-label="Appointments section"
     >
-      {/* Intro — sticks on desktop, compact on mobile/tablet */}
-      <div className="flex flex-col md:flex-row lg:gap-14 items-center lg:items-start lg:sticky lg:top-40 min-h-screen z-0">
+      {/* Intro — mobile/tablet only; desktop uses the persistent column layout below */}
+      <div className="flex flex-col md:flex-row lg:gap-14 items-center lg:items-start lg:sticky lg:top-40 min-h-screen z-0 lg:hidden">
         {/* Image: hidden on mobile, shown md+ */}
-        <div className="hidden md:block relative w-2/5 xl:w-1/2 self-stretch shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-4xl lg:rounded-tr-[25%] overflow-hidden">
+        <div className="hidden md:block relative w-1/2 self-stretch shrink-0 fade-in-section border-r-16 border-(--accent) rounded-tr-4xl lg:rounded-tr-[25%] overflow-hidden">
           <Image
             src={apptImage}
             alt="Moxie Beauty Studio lobby"
@@ -338,7 +338,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
               className={`fade-in-section ${delayClass}`}
             >
               {/* Step image with number badge */}
-              <div className="relative w-full aspect-[4/3] overflow-hidden">
+              <div className="relative w-full aspect-4/3 overflow-hidden">
                 <Image
                   src={step.image}
                   alt={step.imageAlt}
@@ -373,7 +373,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
       <div className="hidden md:flex lg:hidden min-h-screen overflow-hidden">
 
         {/* Left: per-step crossfade images */}
-        <div className="relative w-2/5 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
+        <div className="relative w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
           {steps.map((step, i) => (
             <div
               key={step.id}
@@ -484,123 +484,177 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
         </div>
       </div>
 
-      {/* ── Desktop: Scroll-driven step journey (lg+) ───────────────────── */}
-      <div
-        ref={scrollWrapperRef}
-        className="hidden lg:block appointments-scroll-wrapper"
-        style={{ height: "300vh" }}
-      >
-        <div className="sticky top-0 min-h-dvh flex overflow-hidden bg-(--background)/90 backdrop-blur-xl z-50">
+      {/* ── Desktop: Persistent column + scroll-driven steps (lg+) ─────── */}
+      <div className="hidden lg:flex">
 
-          {/* Left: per-step crossfade images */}
-          <div className="relative w-2/5 xl:w-1/2 shrink-0 border-r-16 border-(--accent) rounded-br-4xl lg:rounded-br-[25%] overflow-hidden">
-            <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
-            {steps.map((step, i) => (
-              <div
-                key={step.id}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${i === Math.max(0, activeIndex) ? "opacity-100" : "opacity-0"
-                  }`}
-              >
-                <Image
-                  src={step.image}
-                  alt={step.imageAlt}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1280px) 50vw, 40vw"
-                  priority={i === 0}
-                />
-              </div>
-            ))}
+        {/* Left: single sticky image column — shared by intro and steps */}
+        <div
+          className="self-start sticky top-0 h-screen w-1/2 shrink-0 border-r-16 border-(--accent) rounded-tr-[25%] overflow-hidden"
+          style={{
+            borderBottomRightRadius: activeIndex >= 0 ? "25%" : "0",
+            transition: "border-bottom-right-radius 600ms ease-in-out",
+          }}
+        >
+          {/* Lobby image — shown during intro phase */}
+          <div
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${activeIndex < 0 ? "opacity-100" : "opacity-0"
+              }`}
+          >
+            <Image
+              src={apptImage}
+              alt="Moxie Beauty Studio lobby"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1280px) 50vw, 40vw"
+            />
           </div>
+          {/* Step images — crossfade as steps activate */}
+          {steps.map((step, i) => (
+            <div
+              key={step.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${i === activeIndex ? "opacity-100" : "opacity-0"
+                }`}
+            >
+              <Image
+                src={step.image}
+                alt={step.imageAlt}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1280px) 50vw, 40vw"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
 
-          {/* Right: step content */}
-          <div className="flex-1 flex items-center justify-start">
-            <div className="w-full max-w-xl px-10 xl:px-14 py-12">
+        {/* Right: intro text (in flow) + scroll-driven step content */}
+        <div className="flex-1">
 
-              {/* Step indicator */}
-              <div
-                className={`flex items-center gap-3 mb-10 transition-opacity duration-500 ${activeIndex >= 0 ? "opacity-100" : "opacity-0"
-                  }`}
-                aria-hidden="true"
-              >
-                <div className="flex gap-1.5 items-center">
-                  {steps.map((_, i) => (
-                    <div
-                      key={i}
-                      className={`h-px transition-all duration-500 ease-out rounded-full ${i === activeIndex
-                        ? "w-8 bg-(--accent)"
-                        : i < activeIndex
-                          ? "w-4 bg-(--accent)/40"
-                          : "w-4 bg-(--foreground)/15"
-                        }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-xs tracking-widest text-(--foreground)/30 tabular-nums">
-                  {activeIndex >= 0 ? `0${activeIndex + 1}` : "01"} /{" "}
-                  0{steps.length}
-                </span>
-              </div>
-
-              {/* Content — grid overlap so enter/exit animate in the same space */}
-              <div className="grid">
-                {/* Exiting step */}
-                {exitIndex !== null &&
-                  exitIndex >= 0 &&
-                  exitIndex !== activeIndex && (
-                    <div className="step-content-exit col-start-1 row-start-1">
-                      <h3 className="font-nyght text-3xl lg:text-4xl mb-6 text-balance">
-                        {steps[exitIndex].label}
-                      </h3>
-                      <div className="text-(--foreground)/75">
-                        {steps[exitIndex].content}
-                      </div>
-                    </div>
-                  )}
-
-                {/* Active step */}
-                {activeIndex >= 0 && (
-                  <div
-                    key={`step-${activeIndex}`}
-                    className="step-content-enter col-start-1 row-start-1"
-                  >
-                    <h3 className="font-nyght text-3xl lg:text-4xl mb-6 text-balance">
-                      {steps[activeIndex].label}
-                    </h3>
-                    <div className="text-(--foreground)/75">
-                      {steps[activeIndex].content}
-                    </div>
-
-                    <div className="flex items-center gap-4 mt-10">
-                      <Button onClick={onBookingClick}>Book Now</Button>
-                      {activeIndex < steps.length - 1 ? (
-                        <Button
-                          variant="ghost"
-                          onClick={() => scrollToStep(activeIndex + 1)}
-                          className="inline-flex items-center gap-2 group"
-                        >
-                          {steps[activeIndex + 1].label}{" "}
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outline"
-                          onClick={() => {
-                            document
-                              .getElementById("About")
-                              ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                          }}
-                          className="inline-flex items-center gap-2"
-                        >
-                          Get To Know Moxie
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                )}
+          {/* Intro text — sticky matches original lg:top-40 behavior */}
+          <div className="min-h-screen flex items-start sticky top-40">
+            <div className="content relative max-w-2xl text-balance px-12 xl:px-16 pt-16">
+              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl lg:text-6xl my-8 pb-2 text-balance fade-in-section delay-100">
+                Your Moxie Beauty Journey
+              </h2>
+              <p className="text-xl mb-4 fade-in-section delay-200">
+                Every Moxie appointment is crafted around you — your goals, your
+                lifestyle, your look.
+              </p>
+              <p className="text-base mb-10 fade-in-section delay-300">
+                Scroll through the steps below to walk through the full
+                experience, or book directly when you&rsquo;re ready.
+              </p>
+              <div className="flex flex-col lg:flex-row items-start gap-4 fade-in-section delay-400 mb-16">
+                <Button size="lg" onClick={onBookingClick}>
+                  Make an Appointment
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={scrollToSteps}
+                >
+                  Plan Your Visit
+                </Button>
               </div>
             </div>
           </div>
+
+          {/* Scroll wrapper — drives step progression */}
+          <div
+            ref={scrollWrapperRef}
+            className="appointments-scroll-wrapper"
+            style={{ height: "300vh" }}
+          >
+            <div className="sticky top-0 min-h-dvh flex items-center bg-(--background)/80 backdrop-blur-xl z-50">
+              <div className="w-full max-w-xl px-12 xl:px-16">
+
+                {/* Step indicator */}
+                <div
+                  className={`flex items-center gap-3 mb-10 transition-opacity duration-500 ${activeIndex >= 0 ? "opacity-100" : "opacity-0"
+                    }`}
+                  aria-hidden="true"
+                >
+                  <div className="flex gap-1.5 items-center">
+                    {steps.map((_, i) => (
+                      <div
+                        key={i}
+                        className={`h-px transition-all duration-500 ease-out rounded-full ${i === activeIndex
+                          ? "w-8 bg-(--accent)"
+                          : i < activeIndex
+                            ? "w-4 bg-(--accent)/40"
+                            : "w-4 bg-(--foreground)/15"
+                          }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-xs tracking-widest text-(--foreground)/30 tabular-nums">
+                    {activeIndex >= 0 ? `0${activeIndex + 1}` : "01"} /{" "}
+                    0{steps.length}
+                  </span>
+                </div>
+
+                {/* Content — grid overlap for enter/exit animation */}
+                <div className="grid">
+                  {exitIndex !== null &&
+                    exitIndex >= 0 &&
+                    exitIndex !== activeIndex && (
+                      <div className="step-content-exit col-start-1 row-start-1">
+                        <h3 className="font-nyght text-3xl lg:text-4xl mb-6 text-balance">
+                          {steps[exitIndex].label}
+                        </h3>
+                        <div className="text-(--foreground)/75">
+                          {steps[exitIndex].content}
+                        </div>
+                      </div>
+                    )}
+
+                  {activeIndex >= 0 && (
+                    <div
+                      key={`step-${activeIndex}`}
+                      className="step-content-enter col-start-1 row-start-1"
+                    >
+                      <h3 className="font-nyght text-3xl lg:text-4xl mb-6 text-balance">
+                        {steps[activeIndex].label}
+                      </h3>
+                      <div className="text-(--foreground)/75">
+                        {steps[activeIndex].content}
+                      </div>
+                      <div className="flex items-center gap-4 mt-10">
+                        <Button onClick={onBookingClick}>Book Now</Button>
+                        {activeIndex < steps.length - 1 ? (
+                          <Button
+                            variant="ghost"
+                            onClick={() => scrollToStep(activeIndex + 1)}
+                            className="inline-flex items-center gap-2 group"
+                          >
+                            {steps[activeIndex + 1].label}{" "}
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              document
+                                .getElementById("About")
+                                ?.scrollIntoView({
+                                  behavior: "smooth",
+                                  block: "start",
+                                });
+                            }}
+                            className="inline-flex items-center gap-2"
+                          >
+                            Get To Know Moxie
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
