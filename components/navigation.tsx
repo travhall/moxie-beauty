@@ -195,7 +195,6 @@ export default function Navigation() {
               }`}
             onClick={(e) => scrollToSection(item.section, e)}
             onKeyDown={(e) => handleKeyDown(e, item.section)}
-            aria-label={item.description}
             aria-current={activeSection === item.section ? "true" : "false"}
           >
             <span className="relative z-10">
