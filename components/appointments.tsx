@@ -394,7 +394,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
 
         {/* Right: clickable step indicator + animated content */}
         <div className="flex-1 flex items-start overflow-y-auto">
-          <div className="w-full max-w-xl px-8 pt-16 pb-12">
+          <div className="w-full max-w-2xl px-8 pt-16 pb-12">
 
             {/* Clickable step indicator — mirrors desktop but interactive */}
             <div
@@ -566,7 +566,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
             style={{ height: "300vh" }}
           >
             <div className="sticky top-0 min-h-dvh flex items-center bg-(--background)/80 backdrop-blur-xl z-50">
-              <div className="w-full max-w-xl px-12 xl:px-16">
+              <div className="w-full max-w-2xl px-12 xl:px-16">
 
                 {/* Step indicator */}
                 <div

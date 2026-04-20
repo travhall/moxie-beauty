@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface UseIntersectionObserverProps {
   elementIds: string[];
@@ -10,44 +10,74 @@ interface UseIntersectionObserverProps {
 export function useIntersectionObserver({
   elementIds,
   rootMargin = "-80px 0px -40% 0px",
-  threshold = [0, 0.1, 0.25, 0.5, 0.75, 1],
+  threshold = [0],
   onIntersection,
 }: UseIntersectionObserverProps): string | null {
   const [activeId, setActiveId] = useState<string | null>(null);
+  // Track all currently-intersecting sections across callback batches
+  const intersectingIds = useRef<Set<string>>(new Set());
+
+  // Among all sections currently in the detection zone, pick the one whose
+  // top edge has most recently crossed above the viewport top (80px matches
+  // the -80px rootMargin offset). This correctly handles sections that are
+  // taller than the viewport — ratio-based approaches break there because a
+  // 5× viewport-height section can never score above a 1× section.
+  const pickActive = useCallback(() => {
+    const ids = Array.from(intersectingIds.current);
+    if (ids.length === 0) return;
+
+    const NAV_OFFSET = 80; // matches rootMargin top value
+    let bestId: string | null = null;
+    let bestTop = -Infinity;
+
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const top = el.getBoundingClientRect().top;
+      // Sections whose top has scrolled past the nav offset win; among those
+      // pick the one deepest into the viewport (top closest to 0 from above).
+      if (top <= NAV_OFFSET && top > bestTop) {
+        bestTop = top;
+        bestId = id;
+      }
+    }
+
+    // Nothing past the nav yet — fall back to the topmost visible section
+    if (!bestId) {
+      let lowestTop = Infinity;
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top < lowestTop) {
+          lowestTop = top;
+          bestId = id;
+        }
+      }
+    }
+
+    if (bestId) {
+      setActiveId(bestId);
+      onIntersection?.(bestId);
+    }
+  }, [onIntersection]);
 
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      let mostVisibleEntry: IntersectionObserverEntry | null = null;
-      let maxVisibility = 0;
-
       for (const entry of entries) {
-        const visibility = entry.intersectionRatio;
-        // console.log(`Section ${entry.target.id}: visibility=${visibility}`); // Debug log
-
-        if (visibility > maxVisibility) {
-          maxVisibility = visibility;
-          mostVisibleEntry = entry;
+        if (entry.isIntersecting) {
+          intersectingIds.current.add(entry.target.id);
+        } else {
+          intersectingIds.current.delete(entry.target.id);
         }
       }
-
-      if (mostVisibleEntry && mostVisibleEntry.intersectionRatio > 0.05) {
-        const targetElement = mostVisibleEntry.target as HTMLElement;
-        const newActiveId = targetElement.id;
-
-        // console.log(
-        //   `Setting active section: ${newActiveId} (visibility: ${mostVisibleEntry.intersectionRatio})`
-        // ); // Debug log
-        setActiveId(newActiveId);
-        onIntersection?.(newActiveId);
-      }
+      pickActive();
     },
-    [onIntersection]
+    [pickActive]
   );
 
   useEffect(() => {
     if (elementIds.length === 0) return;
-
-    // console.log("Setting up intersection observer for:", elementIds); // Debug log
 
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
@@ -55,20 +85,12 @@ export function useIntersectionObserver({
       threshold,
     });
 
-    // Validate elements exist before observing
     elementIds.forEach((id) => {
       const element = document.getElementById(id);
-      if (element) {
-        // console.log(`Observing element: ${id}`, element); // Debug log
-        observer.observe(element);
-      } else {
-        // console.warn(`Element with id "${id}" not found`); // Debug log
-      }
+      if (element) observer.observe(element);
     });
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [elementIds, rootMargin, threshold, handleIntersection]);
 
   return activeId;
