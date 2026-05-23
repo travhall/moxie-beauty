@@ -9,10 +9,7 @@ import apptImgExpect from "@/public/images/appt-img.jpg";
 import apptImgAftercare from "@/public/images/appt-img3.jpg";
 import Button from "./button";
 import { useEffect, useRef, useState } from "react";
-
-interface AppointmentsProps {
-  onBookingClick: () => void;
-}
+import { useBooking } from "@/context/BookingContext";
 
 const steps = [
   {
@@ -182,7 +179,8 @@ const steps = [
   },
 ];
 
-export default function Appointments({ onBookingClick }: AppointmentsProps) {
+export default function Appointments() {
+  const { openBooking } = useBooking();
   // Desktop scroll-driven state
   const [activeIndex, setActiveIndex] = useState(-1);
   const [exitIndex, setExitIndex] = useState<number | null>(null);
@@ -311,7 +309,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
           <div className="flex flex-col lg:flex-row items-start gap-4 fade-in-section delay-400 mb-16">
             <Button
               size="lg"
-              onClick={onBookingClick}
+              onClick={openBooking}
               className="w-full md:w-auto"
             >
               Make an Appointment
@@ -363,7 +361,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
           );
         })}
         <div className="px-6 pt-8 pb-20">
-          <Button onClick={onBookingClick} size="lg" className="w-full">
+          <Button onClick={openBooking} size="lg" className="w-full">
             Make an Appointment
           </Button>
         </div>
@@ -453,7 +451,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                   {steps[tabIndex].content}
                 </div>
                 <div className="flex items-center gap-4 mt-10">
-                  <Button onClick={onBookingClick}>Book Now</Button>
+                  <Button onClick={openBooking}>Book Now</Button>
                   {tabIndex < steps.length - 1 ? (
                     <Button
                       variant="ghost"
@@ -545,7 +543,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                 experience, or book directly when you&rsquo;re ready.
               </p>
               <div className="flex flex-col lg:flex-row items-start gap-4 fade-in-section delay-400 mb-16">
-                <Button size="lg" onClick={onBookingClick}>
+                <Button size="lg" onClick={openBooking}>
                   Make an Appointment
                 </Button>
                 <Button
@@ -620,7 +618,7 @@ export default function Appointments({ onBookingClick }: AppointmentsProps) {
                         {steps[activeIndex].content}
                       </div>
                       <div className="flex items-center gap-4 mt-10">
-                        <Button onClick={onBookingClick}>Book Now</Button>
+                        <Button onClick={openBooking}>Book Now</Button>
                         {activeIndex < steps.length - 1 ? (
                           <Button
                             variant="ghost"

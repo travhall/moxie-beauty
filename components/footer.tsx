@@ -39,11 +39,10 @@ const Instagram = (props: React.ComponentProps<"svg">) => (
   </svg>
 );
 
-const currentYear = new Date().getFullYear();
-
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
-    <footer className="flex flex-col gap-8 pb-28 px-6 md:pb-4">
+    <footer className="flex flex-col gap-8 pb-28 px-6 md:pb-4 border-b-[.5px] border-(--accent)">
       <div className="md:p-4">
         <Logo placement="footer" className="mb-4" />
       </div>

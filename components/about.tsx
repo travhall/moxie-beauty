@@ -1,15 +1,15 @@
 // About.tsx
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Button from "@/components/button";
 import profileImage from "@/public/images/jackie-profile.jpg";
 import workImage from "@/public/images/jackie-working.jpg";
+import { useBooking } from "@/context/BookingContext";
 
-interface AboutProps {
-  onBookingClick: () => void;
-}
-
-const About: React.FC<AboutProps> = ({ onBookingClick }) => {
+const About: React.FC = () => {
+  const { openBooking } = useBooking();
   return (
     <>
       <section
@@ -73,7 +73,7 @@ const About: React.FC<AboutProps> = ({ onBookingClick }) => {
           </blockquote>
           <Button
             className="w-full md:w-auto mt-8 lg:mt-0"
-            onClick={onBookingClick}
+            onClick={openBooking}
             size="lg"
           >
             Make an Appointment

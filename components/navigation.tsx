@@ -195,7 +195,7 @@ export default function Navigation() {
               }`}
             onClick={(e) => scrollToSection(item.section, e)}
             onKeyDown={(e) => handleKeyDown(e, item.section)}
-            aria-current={activeSection === item.section ? "true" : "false"}
+            aria-current={activeSection === item.section ? "page" : undefined}
           >
             <span className="relative z-10">
               <span className="sm:hidden">{item.mobileLabel || item.name}</span>

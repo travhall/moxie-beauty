@@ -4,6 +4,7 @@ import { Mulish } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "../providers/theme-provider";
+import { BookingProvider } from "@/context/BookingContext";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 
@@ -153,7 +154,8 @@ export default function RootLayout({
               email: "hello@moxiebeautystudiowi.com",
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Wisconsin",
+                addressLocality: "Mukwonago",
+                addressRegion: "WI",
                 addressCountry: "US",
               },
               geo: {
@@ -227,7 +229,8 @@ export default function RootLayout({
                     itemOffered: {
                       "@type": "Service",
                       name: "Eyebrow & Facial Waxing",
-                      description: "Precise waxing for smooth skin and shaped brows",
+                      description:
+                        "Precise waxing for smooth skin and shaped brows",
                     },
                   },
                 ],
@@ -242,10 +245,12 @@ export default function RootLayout({
       >
         <div className="site-container">
           <ThemeProvider>
-            <Navigation />
-            {children}
-            <Analytics />
-            <Footer />
+            <BookingProvider>
+              <Navigation />
+              {children}
+              <Analytics />
+              <Footer />
+            </BookingProvider>
           </ThemeProvider>
         </div>
       </body>

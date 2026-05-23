@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import ServiceCard from "./service-card";
 import ServiceOverlay from "./service-overlay";
 import Button from "./button";
+import { useBooking } from "@/context/BookingContext";
 
 interface ServiceData {
   title: string;
@@ -56,11 +57,8 @@ const servicesData: ServiceData[] = [
   },
 ];
 
-interface ServicesProps {
-  onBookingClick: () => void;
-}
-
-const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
+const Services: React.FC = () => {
+  const { openBooking } = useBooking();
   const [activeService, setActiveService] = useState<number | null>(null);
 
   const openOverlay = (index: number) => {
@@ -98,7 +96,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
             <div className="flex flex-row flex-wrap gap-4 mb-4 fade-in-section delay-300">
               <Button
                 size="lg"
-                onClick={onBookingClick}
+                onClick={openBooking}
                 className="w-full md:w-auto"
               >
                 Make an Appointment
@@ -106,7 +104,7 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
               {/* <Button
                 size="lg"
                 variant="outline"
-                onClick={onBookingClick}
+                onClick={openBooking}
                 className="w-full md:w-auto"
               >
                 Schedule a Consultation
@@ -134,7 +132,6 @@ const Services: React.FC<ServicesProps> = ({ onBookingClick }) => {
             fullDescription={servicesData[activeService].fullDescription}
             isOpen={activeService !== null}
             onClose={closeOverlay}
-            onBookingClick={onBookingClick}
           />
         )}
       </div>

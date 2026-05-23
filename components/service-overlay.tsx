@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import Button from "./button";
+import { useBooking } from "@/context/BookingContext";
 
 interface ServiceOverlayProps {
   title: string;
   fullDescription: string;
   isOpen: boolean;
   onClose: () => void;
-  onBookingClick: () => void;
 }
 
 const ServiceOverlay = ({
@@ -15,8 +15,8 @@ const ServiceOverlay = ({
   fullDescription,
   isOpen,
   onClose,
-  onBookingClick,
 }: ServiceOverlayProps) => {
+  const { openBooking } = useBooking();
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
@@ -165,7 +165,7 @@ const ServiceOverlay = ({
           </button>
         </div>
 
-        <div className="prose prose-lg text-balance p-4">
+        <div className="text-base text-balance leading-relaxed p-4 space-y-4">
           {paragraphs.length > 0 ? (
             paragraphs.map((paragraph, index) => (
               <p
@@ -218,7 +218,7 @@ const ServiceOverlay = ({
           >
             <Button
               size="lg"
-              onClick={onBookingClick}
+              onClick={openBooking}
               className="w-full md:w-auto"
             >
               Book Now

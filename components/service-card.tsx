@@ -14,24 +14,14 @@ const ServiceCard = ({
   readMoreLabel = "Read more",
   cardIndex,
 }: ServiceCardProps) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      onOpenOverlay();
-    }
-  };
-
   const delayClass = `delay-${Math.min((cardIndex + 3) * 100, 600)}`;
 
   return (
-    <div
-      className={`service-card service-card-${cardIndex + 1
-        } rounded-lg rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-(--accent)/20 hover:border-(--accent) p-6 transition-all hover:shadow-[-8px_8px_0_0_var(--accent)] hover:translate-x-2 hover:-translate-y-2 cursor-pointer group focus-visible:ring-2 focus-visible:ring-(--accent)/50 focus-visible:ring-offset-2 fade-in-section ${delayClass}`}
-      role="button"
-      tabIndex={0}
+    <button
+      type="button"
+      className={`service-card service-card-${cardIndex + 1} text-left rounded-lg rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-(--accent)/20 hover:border-(--accent) p-6 transition-all hover:shadow-[-8px_8px_0_0_var(--accent)] hover:translate-x-2 hover:-translate-y-2 cursor-pointer group focus-visible:ring-2 focus-visible:ring-(--accent)/50 focus-visible:ring-offset-2 fade-in-section ${delayClass}`}
       onClick={onOpenOverlay}
-      onKeyDown={handleKeyDown}
-      aria-label={`${title} - ${preview}`}
+      aria-label={`${title} — learn more`}
     >
       <h3 className="font-nyght text-2xl mb-4 bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-balance">
         {title}
@@ -53,7 +43,7 @@ const ServiceCard = ({
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </span>
-    </div>
+    </button>
   );
 };
 
