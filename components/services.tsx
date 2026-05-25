@@ -1,10 +1,19 @@
-// components/services.tsx
 import { siteConfig } from "@/lib/site-config";
 import Button from "./button";
 import DiagArrow from "./icons/DiagArrow";
+import {
+  getSquareServices,
+  formatPrice,
+  formatDuration,
+  lowestPrice,
+  primaryDuration,
+  type SquareService,
+} from "@/lib/square";
 
-// TODO: confirm service names, pricing, and durations with Jackie
-const services = [
+// ── Fallback data ─────────────────────────────────────────────────────────────
+// Shown if Square API is unavailable or returns no services.
+
+const FALLBACK_SERVICES = [
   {
     num: "01",
     name: "Brow Lamination & Shape",
@@ -67,7 +76,108 @@ const services = [
   },
 ];
 
-export default function Services() {
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+/** Build the meta pills for a live Square service. */
+function buildMeta(svc: SquareService) {
+  const price = lowestPrice(svc.variations);
+  const duration = primaryDuration(svc.variations);
+  const meta: { label: string; value: string }[] = [];
+
+  if (price != null) meta.push({ label: "From", value: formatPrice(price) });
+  else meta.push({ label: "Price", value: "Ask us" });
+
+  if (duration != null)
+    meta.push({ label: "Duration", value: formatDuration(duration) });
+
+  return meta;
+}
+
+// ── Row component ─────────────────────────────────────────────────────────────
+
+interface ServiceRowProps {
+  num: string;
+  name: string;
+  desc: string;
+  meta: { label: string; value: string }[];
+  isOdd: boolean;
+}
+
+function ServiceRow({ num, name, desc, meta, isOdd }: ServiceRowProps) {
+  return (
+    <a
+      href={siteConfig.bookingUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${name} — book this service (opens in new tab)`}
+      className={[
+        "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground) no-underline",
+        "transition-colors duration-300 hover:bg-(--bg-soft)",
+        isOdd ? "sm:border-r sm:border-(--line) sm:pr-15" : "sm:pl-10",
+      ].join(" ")}
+    >
+      {/* Service number */}
+      <span className="font-mono text-[11px] tracking-widest text-(--ink-mute) pt-1.5 shrink-0 tabular-nums">
+        {num}
+      </span>
+
+      {/* Name + description + meta */}
+      <div className="flex-1 min-w-0">
+        <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-colors duration-300">
+          {name}
+        </h3>
+        <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch]">
+          {desc}
+        </p>
+        <div className="flex gap-4 flex-wrap">
+          {meta.map(({ label, value }) => (
+            <span
+              key={label}
+              className="text-[11px] tracking-[0.18em] uppercase text-(--ink-mute)"
+            >
+              {label}{" "}
+              <strong className="text-(--foreground) font-medium ml-1">
+                {value}
+              </strong>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Diagonal arrow */}
+      <span
+        className="shrink-0 mt-1 w-9 h-9 rounded-full border border-(--line) flex items-center justify-center text-(--ink-soft) group-hover:border-(--accent) group-hover:text-(--accent) transition-[border-color,color,transform] duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+        aria-hidden="true"
+      >
+        <DiagArrow />
+      </span>
+    </a>
+  );
+}
+
+// ── Section ───────────────────────────────────────────────────────────────────
+
+export default async function Services() {
+  // Attempt to load live services from Square
+  let liveServices: SquareService[] = [];
+  try {
+    liveServices = await getSquareServices();
+  } catch {
+    // API unavailable — fall through to fallback
+  }
+
+  const useLive = liveServices.length > 0;
+
+  // First 6 live services, or hardcoded fallback
+  const displayServices = useLive
+    ? liveServices.slice(0, 6).map((svc, i) => ({
+        num: String(i + 1).padStart(2, "0"),
+        name: svc.name,
+        desc: svc.description,
+        meta: buildMeta(svc),
+      }))
+    : FALLBACK_SERVICES;
+
   return (
     <section
       id="Services"
@@ -103,61 +213,16 @@ export default function Services() {
 
         {/* ── Service rows — 2-col grid ───────────────────────────────── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line)">
-          {services.map((svc, i) => {
-            const isOdd = i % 2 === 0;
-            return (
-              <a
-                key={svc.num}
-                href={siteConfig.bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${svc.name} — book this service (opens in new tab)`}
-                className={[
-                  "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground) no-underline",
-                  "transition-colors duration-300 hover:bg-(--bg-soft)",
-                  isOdd
-                    ? "sm:border-r sm:border-(--line) sm:pr-15"
-                    : "sm:pl-10",
-                ].join(" ")}
-              >
-                {/* Service number */}
-                <span className="font-mono text-[11px] tracking-widest text-(--ink-mute) pt-1.5 shrink-0 tabular-nums">
-                  {svc.num}
-                </span>
-
-                {/* Name + description + meta */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-colors duration-300">
-                    {svc.name}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch]">
-                    {svc.desc}
-                  </p>
-                  <div className="flex gap-4 flex-wrap">
-                    {svc.meta.map(({ label, value }) => (
-                      <span
-                        key={label}
-                        className="text-[11px] tracking-[0.18em] uppercase text-(--ink-mute)"
-                      >
-                        {label}{" "}
-                        <strong className="text-(--foreground) font-medium ml-1">
-                          {value}
-                        </strong>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Diagonal arrow */}
-                <span
-                  className="shrink-0 mt-1 w-9 h-9 rounded-full border border-(--line) flex items-center justify-center text-(--ink-soft) group-hover:border-(--accent) group-hover:text-(--accent) transition-[border-color,color,transform] duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  aria-hidden="true"
-                >
-                  <DiagArrow />
-                </span>
-              </a>
-            );
-          })}
+          {displayServices.map((svc, i) => (
+            <ServiceRow
+              key={svc.num}
+              num={svc.num}
+              name={svc.name}
+              desc={svc.desc}
+              meta={svc.meta}
+              isOdd={i % 2 === 0}
+            />
+          ))}
         </div>
 
         {/* ── Footer CTA ───────────────────────────────────────────────── */}

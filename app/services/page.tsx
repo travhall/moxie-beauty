@@ -4,6 +4,14 @@ import MarqueeTicker from "@/components/marquee-ticker";
 import { siteConfig } from "@/lib/site-config";
 import { containerClass } from "@/lib/layout";
 import DiagArrow from "@/components/icons/DiagArrow";
+import {
+  getSquareServices,
+  formatPrice,
+  formatDuration,
+  lowestPrice,
+  primaryDuration,
+  type SquareService,
+} from "@/lib/square";
 
 export const metadata: Metadata = {
   title: "Our Services | Moxie Beauty Studio",
@@ -31,7 +39,7 @@ interface ServiceCardProps {
   num: string;
   name: string;
   desc: string;
-  meta: [string, string, string];
+  meta: string[];
 }
 
 function ServiceCard({ num, name, desc, meta }: ServiceCardProps) {
@@ -51,7 +59,6 @@ function ServiceCard({ num, name, desc, meta }: ServiceCardProps) {
           {name}
         </h3>
         <p className="text-sm text-(--ink-soft) leading-relaxed mb-4">{desc}</p>
-        {/* TODO: confirm all pricing and durations with Jackie */}
         <div className="flex flex-wrap gap-x-5 gap-y-1 text-[12px] text-(--ink-mute)">
           {meta.map((m, i) => (
             <span key={i}>{m}</span>
@@ -65,10 +72,100 @@ function ServiceCard({ num, name, desc, meta }: ServiceCardProps) {
   );
 }
 
+// ── Live service helpers ──────────────────────────────────────────────────────
+
+/** Build meta string array from a live Square service. */
+function squareMeta(svc: SquareService): string[] {
+  const price = lowestPrice(svc.variations);
+  const duration = primaryDuration(svc.variations);
+  const meta: string[] = [];
+  meta.push(price != null ? `From ${formatPrice(price)}` : "Ask us");
+  if (duration != null) meta.push(formatDuration(duration));
+  return meta;
+}
+
+/**
+ * Group live Square services into Brow / Lash / Extras buckets.
+ *
+ * Strategy: check the Square category name first. If it doesn't resolve,
+ * fall back to matching keywords in the service name itself — useful when
+ * services haven't been assigned to categories in Square yet.
+ *
+ * Brow keywords : brow, eyebrow, microblade
+ * Lash keywords : lash, volume, fill  (checked after brow to avoid overlap)
+ */
+function groupServices(services: SquareService[]) {
+  const brow: SquareService[] = [];
+  const lash: SquareService[] = [];
+  const extras: SquareService[] = [];
+
+  const BROW = /brow|eyebrow|microblade/i;
+  const LASH = /lash|volume|fill/i;
+
+  for (const svc of services) {
+    const signal = svc.categoryName || svc.name;
+    if (BROW.test(signal)) brow.push(svc);
+    else if (LASH.test(signal)) lash.push(svc);
+    else extras.push(svc);
+  }
+
+  return { brow, lash, extras };
+}
+
+// ── Hardcoded fallback data ───────────────────────────────────────────────────
+
+const FALLBACK_BROW = [
+  { num: "01", name: "Signature Brow Shape", desc: "Mapping, shaping with wax & precision tweezing, gentle trim and a finished groom. The foundation for every other brow service.", meta: ["From $55", "45 min", "Every 3–4 wks"] },
+  { num: "02", name: "Brow Lamination & Shape", desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint, and a precision shape.", meta: ["From $95", "75 min", "Lasts 6–8 wks"] },
+  { num: "03", name: "Henna Brows", desc: "Plant-based brow color that softly stains the skin beneath, for a fuller-looking shape that holds up between visits. No ammonia, no peroxide.", meta: ["From $65", "45 min", "Skin: 1–2 wks"] },
+  { num: "04", name: "Brow Tint & Shape", desc: "A short, all-purpose visit. Soft tint matched to your hair, plus a shape — the easiest way to wake up looking finished.", meta: ["From $75", "45 min", "Lasts 3–4 wks"] },
+];
+
+const FALLBACK_LASH = [
+  { num: "05", name: "Classic Lash Set", desc: "One natural extension applied to each of your natural lashes — the look of a really good mascara, without the mascara.", meta: ["From $145", "120 min", "Fills $70"] },
+  { num: "06", name: "Hybrid Lash Set", desc: "Half classic, half volume. Subtle texture and a little more depth, without the full drama of a volume set.", meta: ["From $170", "135 min", "Fills $85"] },
+  { num: "07", name: "Volume Lash Set", desc: "Hand-made fans of ultra-fine extensions create soft, even density. Choose anywhere from a quiet 2D to a deliberate 5D set.", meta: ["From $195", "150 min", "Fills $95"] },
+  { num: "08", name: "Lash Lift & Tint", desc: "A subtle curl from root to tip that makes your own lashes look longer. Pair with a tint to skip the mascara entirely.", meta: ["From $110", "60 min", "Lasts 6–8 wks"] },
+];
+
+const FALLBACK_EXTRAS = [
+  { num: "09", name: "First-Visit Consult", desc: "New here? Start with a 30-minute mapping & consultation. We'll plan a shape together and book the right services for you.", meta: ["Complimentary", "30 min", "In studio"] },
+  { num: "10", name: "Lash Removal", desc: "Safe, gentle removal of extensions applied anywhere. No tugging, no damage to your natural lashes. Often paired with a lift.", meta: ["From $35", "30 min", "Walk-out clean"] },
+  { num: "11", name: "Lash Tint", desc: "A small visit, big difference — semi-permanent color that darkens the full length of your natural lashes for 4–6 weeks.", meta: ["From $45", "30 min", "Lasts 4–6 wks"] },
+  { num: "12", name: "Moxie Gift Card", desc: "A quietly thoughtful gift, in any amount. Delivered as a small card by mail, or by email the same day.", meta: ["$50+", "No expiry", "Mail or email"] },
+];
+
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
   const container = containerClass;
+
+  // Attempt to load live services from Square
+  let groups = { brow: [] as SquareService[], lash: [] as SquareService[], extras: [] as SquareService[] };
+  let useLive = false;
+  try {
+    const live = await getSquareServices();
+    if (live.length > 0) {
+      groups = groupServices(live);
+      useLive = true;
+    }
+  } catch {
+    // Fall through to hardcoded data
+  }
+
+  // Build per-section card arrays — live data if available, otherwise fallback
+  function liveCards(svcs: SquareService[], startNum: number) {
+    return svcs.map((svc, i) => ({
+      num: String(startNum + i).padStart(2, "0"),
+      name: svc.name,
+      desc: svc.description,
+      meta: squareMeta(svc),
+    }));
+  }
+
+  const browCards = useLive ? liveCards(groups.brow, 1) : FALLBACK_BROW;
+  const lashCards = useLive ? liveCards(groups.lash, browCards.length + 1) : FALLBACK_LASH;
+  const extrasCards = useLive ? liveCards(groups.extras, browCards.length + lashCards.length + 1) : FALLBACK_EXTRAS;
 
   return (
     <main>
@@ -156,183 +253,127 @@ export default function ServicesPage() {
       />
 
       {/* ── I · Brow ──────────────────────────────────────────────────── */}
-      <section className="py-20">
-        <div className={container}>
-          <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
-            <div>
-              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
-                I · Brow
+      {browCards.length > 0 && (
+        <section className="py-20">
+          <div className={container}>
+            <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
+              <div>
+                <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+                  I · Brow
+                </p>
+                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+                  For the{" "}
+                  <em className="font-nyght-italic not-italic text-(--accent)">
+                    shape
+                  </em>{" "}
+                  you were born with.
+                </h2>
+              </div>
+              <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
+                Brow design is part architecture, part observation. We map your
+                bone structure, talk through how you want to look on a Monday and
+                a Saturday, and only then pick up the tweezers.
               </p>
-              <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
-                For the{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  shape
-                </em>{" "}
-                you were born with.
-              </h2>
             </div>
-            <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
-              Brow design is part architecture, part observation. We map your
-              bone structure, talk through how you want to look on a Monday and
-              a Saturday, and only then pick up the tweezers.
+
+            <div className="divide-y-0">
+              {browCards.map((c) => (
+                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Price ribbon — shown when at least one adjacent section exists ── */}
+      {(browCards.length > 0 || lashCards.length > 0) && (
+        <section
+          className="py-20 bg-(--foreground)"
+          aria-label="A note on the way we work"
+        >
+          <div className={container}>
+            <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/50 mb-6">
+              A note on the way we work
+            </p>
+            <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-2xl">
+              We&apos;d rather be <span className="text-(--accent)">slow</span>{" "}
+              &amp; right
+              <br />
+              than fast and full of{" "}
+              <span className="text-(--accent)">apologies.</span>
+            </p>
+            <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)/40">
+              Jackie · founder · est. 2019
             </p>
           </div>
-
-          <div className="divide-y-0">
-            <ServiceCard
-              num="01"
-              name="Signature Brow Shape"
-              desc="Mapping, shaping with wax & precision tweezing, gentle trim and a finished groom. The foundation for every other brow service."
-              meta={["From $55", "45 min", "Every 3–4 wks"]}
-            />
-            <ServiceCard
-              num="02"
-              name="Brow Lamination & Shape"
-              desc="A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint, and a precision shape."
-              meta={["From $95", "75 min", "Lasts 6–8 wks"]}
-            />
-            <ServiceCard
-              num="03"
-              name="Henna Brows"
-              desc="Plant-based brow color that softly stains the skin beneath, for a fuller-looking shape that holds up between visits. No ammonia, no peroxide."
-              meta={["From $65", "45 min", "Skin: 1–2 wks"]}
-            />
-            <ServiceCard
-              num="04"
-              name="Brow Tint & Shape"
-              desc="A short, all-purpose visit. Soft tint matched to your hair, plus a shape — the easiest way to wake up looking finished."
-              meta={["From $75", "45 min", "Lasts 3–4 wks"]}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── Price ribbon ──────────────────────────────────────────────── */}
-      {/* TODO: confirm "est. 2019" founding year */}
-      <section
-        className="py-20 bg-(--foreground)"
-        aria-label="A note on the way we work"
-      >
-        <div className={container}>
-          <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/50 mb-6">
-            A note on the way we work
-          </p>
-          <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-2xl">
-            We&apos;d rather be <span className="text-(--accent)">slow</span>{" "}
-            &amp; right
-            <br />
-            than fast and full of{" "}
-            <span className="text-(--accent)">apologies.</span>
-          </p>
-          <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)/40">
-            Jackie · founder · est. 2019
-          </p>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── II · Lash ─────────────────────────────────────────────────── */}
-      <section className="py-20">
-        <div className={container}>
-          <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
-            <div>
-              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
-                II · Lash
+      {lashCards.length > 0 && (
+        <section className="py-20">
+          <div className={container}>
+            <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
+              <div>
+                <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+                  II · Lash
+                </p>
+                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+                  Lashes that look like{" "}
+                  <em className="font-nyght-italic not-italic text-(--accent)">
+                    yours,
+                  </em>{" "}
+                  only better.
+                </h2>
+              </div>
+              <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
+                Hand-applied, customized to your eye shape, lifestyle, and how
+                much you&apos;d like to feel them. We use vegan adhesives and
+                finishes that hold up in summer humidity and winter wool.
               </p>
-              <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
-                Lashes that look like{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  yours,
-                </em>{" "}
-                only better.
-              </h2>
             </div>
-            <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
-              Hand-applied, customized to your eye shape, lifestyle, and how
-              much you&apos;d like to feel them. We use vegan adhesives and
-              finishes that hold up in summer humidity and winter wool.
-            </p>
-          </div>
 
-          <div>
-            <ServiceCard
-              num="05"
-              name="Classic Lash Set"
-              desc="One natural extension applied to each of your natural lashes — the look of a really good mascara, without the mascara."
-              meta={["From $145", "120 min", "Fills $70"]}
-            />
-            <ServiceCard
-              num="06"
-              name="Hybrid Lash Set"
-              desc="Half classic, half volume. Subtle texture and a little more depth, without the full drama of a volume set."
-              meta={["From $170", "135 min", "Fills $85"]}
-            />
-            <ServiceCard
-              num="07"
-              name="Volume Lash Set"
-              desc="Hand-made fans of ultra-fine extensions create soft, even density. Choose anywhere from a quiet 2D to a deliberate 5D set."
-              meta={["From $195", "150 min", "Fills $95"]}
-            />
-            <ServiceCard
-              num="08"
-              name="Lash Lift & Tint"
-              desc="A subtle curl from root to tip that makes your own lashes look longer. Pair with a tint to skip the mascara entirely."
-              meta={["From $110", "60 min", "Lasts 6–8 wks"]}
-            />
+            <div>
+              {lashCards.map((c) => (
+                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── III · Extras ──────────────────────────────────────────────── */}
-      <section className="pb-20">
-        <div className={container}>
-          <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
-            <div>
-              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
-                III · Extras
+      {extrasCards.length > 0 && (
+        <section className="pb-20">
+          <div className={container}>
+            <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
+              <div>
+                <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+                  III · Extras
+                </p>
+                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+                  Small{" "}
+                  <em className="font-nyght-italic not-italic text-(--accent)">
+                    finishes,
+                  </em>{" "}
+                  &amp; first visits.
+                </h2>
+              </div>
+              <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
+                A handful of tidy-ups and additions that pair well with the
+                services above — and the consultation you&apos;ll want if
+                it&apos;s your first time here.
               </p>
-              <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
-                Small{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  finishes,
-                </em>{" "}
-                &amp; first visits.
-              </h2>
             </div>
-            <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
-              A handful of tidy-ups and additions that pair well with the
-              services above — and the consultation you&apos;ll want if
-              it&apos;s your first time here.
-            </p>
-          </div>
 
-          <div>
-            <ServiceCard
-              num="09"
-              name="First-Visit Consult"
-              desc="New here? Start with a 30-minute mapping & consultation. We'll plan a shape together and book the right services for you."
-              meta={["Complimentary", "30 min", "In studio"]}
-            />
-            <ServiceCard
-              num="10"
-              name="Lash Removal"
-              desc="Safe, gentle removal of extensions applied anywhere. No tugging, no damage to your natural lashes. Often paired with a lift."
-              meta={["From $35", "30 min", "Walk-out clean"]}
-            />
-            <ServiceCard
-              num="11"
-              name="Lash Tint"
-              desc="A small visit, big difference — semi-permanent color that darkens the full length of your natural lashes for 4–6 weeks."
-              meta={["From $45", "30 min", "Lasts 4–6 wks"]}
-            />
-            <ServiceCard
-              num="12"
-              name="Moxie Gift Card"
-              desc="A quietly thoughtful gift, in any amount. Delivered as a small card by mail, or by email the same day."
-              meta={["$50+", "No expiry", "Mail or email"]}
-            />
+            <div>
+              {extrasCards.map((c) => (
+                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
       <Appointments />
