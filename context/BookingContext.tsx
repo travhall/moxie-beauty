@@ -9,18 +9,28 @@ import {
 import BookingOverlay from "@/components/booking-overlay";
 
 interface BookingContextType {
-  openBooking: () => void;
+  openBooking: (serviceId?: string) => void;
 }
 
 const BookingContext = createContext<BookingContextType | null>(null);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [serviceId, setServiceId] = useState<string | undefined>(undefined);
+
+  const openBooking = (id?: string) => {
+    setServiceId(id);
+    setIsOpen(true);
+  };
 
   return (
-    <BookingContext.Provider value={{ openBooking: () => setIsOpen(true) }}>
+    <BookingContext.Provider value={{ openBooking }}>
       {children}
-      <BookingOverlay isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <BookingOverlay
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        serviceId={serviceId}
+      />
     </BookingContext.Provider>
   );
 }

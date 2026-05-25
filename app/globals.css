@@ -55,14 +55,79 @@
   --foreground: var(--ivory-rose-900);
   --accent: var(--rose-gold-500);
 
-  --button: var(--accent);
-  --button-foreground: var(--background);
+  /* Semantic surface / ink / line tokens */
+  --surface: var(--ivory-rose-50);
+  --bg-soft: color-mix(
+    in oklab,
+    var(--ivory-rose-50) 80%,
+    var(--rose-gold-100)
+  );
+  --ink: var(--midnite-800);
+  --ink-soft: var(--midnite-600);
+  --ink-mute: var(--midnite-400);
+  --line: color-mix(in oklab, var(--midnite-800) 12%, transparent);
+  --line-soft: color-mix(in oklab, var(--midnite-800) 6%, transparent);
+  --accent-soft: var(--rose-gold-300);
+
+  /* Buttons — dark ink primary */
+  --button: var(--rose-gold-800);
+  --button-foreground: var(--rose-gold-50);
 }
 
 .dark {
   --background: var(--ivory-rose-900);
   --foreground: var(--ivory-rose-50);
   --accent: var(--rose-gold-300);
+
+  --surface: color-mix(in oklab, var(--midnite-800) 85%, var(--ivory-rose-900));
+  --bg-soft: color-mix(in oklab, var(--midnite-900) 80%, var(--ivory-rose-900));
+  --ink: var(--ivory-rose-50);
+  --ink-soft: var(--ivory-rose-200);
+  --ink-mute: var(--ivory-rose-300);
+  --line: color-mix(in oklab, var(--ivory-rose-50) 14%, transparent);
+  --line-soft: color-mix(in oklab, var(--ivory-rose-50) 7%, transparent);
+  --accent-soft: var(--rose-gold-200);
+
+  --button: var(--rose-gold-50);
+  --button-foreground: var(--rose-gold-900);
+}
+
+/* ---------- Ambient blob canvas ---------- */
+/*
+ * The canvas sits fixed behind all page content. CSS blur does the heavy
+ * lifting — the geometry stays sharp in WebGL, the blur softens it into
+ * a diffuse ambient wash.
+ *
+ * Light mode: very low opacity + low saturation so the pale rose-gold
+ * blends with the ivory background rather than floating visibly on top.
+ * Dark mode: moderate opacity + boosted saturation for warmth against
+ * the dark surface.
+ */
+.blob-canvas {
+  position: fixed;
+  inset: 0;
+  width: 150vw;
+  height: 150vh;
+  top: -25vh;
+  left: -25vw;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(72px) saturate(0.85);
+  opacity: 0.4;
+  transition:
+    opacity 0.8s ease,
+    filter 0.8s ease;
+}
+
+.dark .blob-canvas {
+  filter: blur(80px) saturate(1);
+  opacity: 0.2;
+}
+
+/* Ensure all page content stacks above the fixed blob canvas */
+.site-container {
+  position: relative;
+  z-index: 1;
 }
 
 body {
@@ -191,66 +256,188 @@ body {
   pointer-events: none;
 }
 
-/* Fade-in animation: opacity + blur, no positional transforms */
-@keyframes fadeIn {
+/* ---------- Button arrow ---------- */
+.btn-arrow {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.btn-arrow-shaft {
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+  transition: width 0.3s ease;
+}
+.btn-arrow-shaft::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+button:hover .btn-arrow-shaft,
+a:hover .btn-arrow-shaft {
+  width: 22px;
+}
+
+/* ---------- Mobile nav drawer ---------- */
+.nav-mobile-drawer {
+  position: fixed;
+  inset: 0 0 0 0;
+  z-index: 49;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-12px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.nav-mobile-drawer.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+body.menu-open {
+  overflow: hidden;
+}
+
+/* ---------- Marquee ticker ---------- */
+@keyframes marquee {
   from {
-    opacity: 0;
-    filter: blur(8px);
+    transform: translateX(0);
   }
   to {
-    opacity: 1;
-    filter: blur(0px);
+    transform: translateX(-50%);
+  }
+}
+.marquee-ticker {
+  overflow: hidden;
+  padding: 18px 0;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.marquee-ticker-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+  font-family: var(--font-nyght-italic);
+  font-size: clamp(16px, 1.8vw, 24px);
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+}
+.marquee-dot {
+  display: inline-flex;
+  width: 4px;
+  height: 4px;
+  min-width: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 20px;
+  transform: translateY(-1px);
+}
+
+/* ---------- FAQ accordion ---------- */
+.faq-item {
+  border-bottom: 1px solid var(--line-soft);
+}
+.faq-item summary {
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+details.faq-item[open] .faq-chev {
+  transform: rotate(45deg);
+}
+.faq-chev {
+  transition: transform 0.3s ease;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* cSpell:ignore faq-chev */
+
+/* ---------- Branded focus baseline ---------- */
+/*
+ * Provides the rose-gold accent focus ring for every interactive element that
+ * doesn't already have an explicit focus-visible Tailwind class.
+ *
+ * Specificity is intentionally low via :where() — only (0,1,0) from the
+ * :focus-visible pseudo-class. Any Tailwind focus-visible:* utility compiles
+ * to a class + pseudo-class selector (0,2,0), so it always wins wherever an
+ * explicit style is set (Button, nav links, hamburger, toggles, etc.).
+ * This rule is purely a safety-net for bare <a>, raw <button>, and <summary>
+ * elements that have no component-level focus treatment.
+ */
+:where(a, button, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---------- Reduced motion ---------- */
+/*
+ * Strips CSS-driven transitions and animations for users who have requested
+ * reduced motion (WCAG 2.1 § 2.3.3). JS-driven animations (nav blob) handle
+ * this separately via window.matchMedia in navigation.tsx.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .nav-mobile-drawer {
+    transition: none;
+  }
+  .step-content-enter,
+  .step-content-exit {
+    animation: none !important;
+  }
+  .marquee-ticker-track {
+    animation: none !important;
+  }
+  .theme-thumb-squish {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 
-/* Animation classes */
-/* opacity: 0.001 (not 0) ensures Lighthouse/crawlers register a paint — visually imperceptible */
-.fade-in-section {
-  opacity: 0.001;
-  filter: blur(8px);
+/* ---------- Theme toggle ---------- */
+/*
+ * Two-element thumb trick: outer span handles translateX (position),
+ * inner span handles scaleX/scaleY (squish). Keeping them separate means
+ * the CSS transition and CSS animation never fight over the same property
+ * on the same element.
+ *
+ * squish: resting → wide oval (mid-travel) → slight overshoot → resting.
+ * Paired with a spring translateX on the outer span, this reads as a
+ * bead of liquid sliding across the track.
+ */
+@keyframes thumbSquish {
+  0% {
+    transform: scaleX(1) scaleY(1);
+  }
+  28% {
+    transform: scaleX(1.5) scaleY(0.72);
+  }
+  62% {
+    transform: scaleX(0.88) scaleY(1.1);
+  }
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
 }
-
-.fade-in-section.is-visible {
-  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Fixed elements (e.g. nav) — slightly shorter duration for quicker availability */
-.fade-in-fixed {
-  opacity: 0.001;
-  filter: blur(8px);
-}
-
-.fade-in-fixed.is-visible {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Stagger delays for multiple elements */
-.fade-in-section.delay-100,
-.fade-in-fixed.delay-100 {
-  animation-delay: 0.1s;
-}
-
-.fade-in-section.delay-200,
-.fade-in-fixed.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.fade-in-section.delay-300,
-.fade-in-fixed.delay-300 {
-  animation-delay: 0.3s;
-}
-
-.fade-in-section.delay-400,
-.fade-in-fixed.delay-400 {
-  animation-delay: 0.4s;
-}
-
-.fade-in-section.delay-500,
-.fade-in-fixed.delay-500 {
-  animation-delay: 0.5s;
-}
-
-.fade-in-section.delay-600,
-.fade-in-fixed.delay-600 {
-  animation-delay: 0.6s;
+.theme-thumb-squish {
+  animation: thumbSquish 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

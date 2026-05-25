@@ -70,41 +70,43 @@ const TestimonialsCarousel = () => {
     }
   };
 
+  // Move roving focus to a specific card — updates state AND transfers real focus
+  const moveFocus = (nextIndex: number) => {
+    setFocusedIndex(nextIndex);
+    scrollToTestimonial(nextIndex);
+    // tabIndex on the target card updates asynchronously via React state, but
+    // tabIndex="-1" elements can still receive programmatic focus immediately.
+    const container = scrollContainerRef.current;
+    if (container) {
+      (container.children[nextIndex] as HTMLElement)?.focus();
+    }
+  };
+
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+    if (!scrollContainerRef.current) return;
 
     const totalTestimonials = testimonials.length;
 
     if (e.key === "ArrowRight") {
       e.preventDefault();
-      const nextIndex = (index + 1) % totalTestimonials;
-      setFocusedIndex(nextIndex);
-      scrollToTestimonial(nextIndex);
+      moveFocus((index + 1) % totalTestimonials);
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
-      const prevIndex = (index - 1 + totalTestimonials) % totalTestimonials;
-      setFocusedIndex(prevIndex);
-      scrollToTestimonial(prevIndex);
+      moveFocus((index - 1 + totalTestimonials) % totalTestimonials);
     } else if (e.key === "Home") {
       e.preventDefault();
-      setFocusedIndex(0);
-      scrollToTestimonial(0);
+      moveFocus(0);
     } else if (e.key === "End") {
       e.preventDefault();
-      const lastIndex = totalTestimonials - 1;
-      setFocusedIndex(lastIndex);
-      scrollToTestimonial(lastIndex);
+      moveFocus(totalTestimonials - 1);
     }
   };
 
   return (
-    <section
-      className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-background to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-12 overflow-visible fade-in-section"
-    >
+    <section className="testimonials rounded-tr-[6rem] rounded-bl-[6rem] bg-linear-to-b from-(--background) to-(--accent)/20 border-b-8 border-(--accent) my-12 pb-12 overflow-visible">
       <div className="mx-auto max-w-7xl overflow-visible p-6 pb-0">
-        <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl lg:text-6xl my-8 pb-2 text-balance fade-in-section delay-100">
+        <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl lg:text-6xl my-8 pb-2 text-balance">
           What our clients are saying
         </h2>
       </div>
@@ -124,11 +126,10 @@ const TestimonialsCarousel = () => {
           }}
         >
           {testimonials.map((testimonial, index) => {
-            const delayClass = `delay-${Math.min((index + 2) * 100, 600)}`;
             return (
               <li
                 key={index}
-                className={`shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-l-8 border-t-8 border-(--accent) text-balance focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2 fade-in-section ${delayClass}`}
+                className="shrink-0 flex flex-col justify-between w-[320px] h-auto snap-start p-4 bg-(--background) rounded-tl rounded-tr-2xl rounded-br rounded-bl-2xl border border-l-8 border-t-8 border-(--accent) text-balance focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent)"
                 tabIndex={index === focusedIndex ? 0 : -1}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 aria-label={`Testimonial from ${testimonial.author}`}

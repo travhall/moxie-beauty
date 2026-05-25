@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@/components/button";
-import { Heart, Send, Menu, CalendarClock } from "lucide-react";
 
 // ─── Type Scale ───────────────────────────────────────────────────────────────
 
@@ -253,19 +252,9 @@ export default function StyleGuide() {
                 <Button variant={variant} size="lg">
                   Large
                 </Button>
-                <Button variant={variant} icon={Heart}>
-                  With Icon
+                <Button variant={variant} size="lg" showArrow>
+                  With Arrow
                 </Button>
-                <Button variant={variant} icon={Send} iconPosition="right">
-                  Icon Right
-                </Button>
-                <Button
-                  variant={variant}
-                  icon={CalendarClock}
-                  iconOnly
-                  aria-label="Calendar"
-                />
-                <Button variant={variant} icon={Menu} iconOnly aria-label="Menu" />
                 <Button variant={variant} isLoading>
                   Loading
                 </Button>

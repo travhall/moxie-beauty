@@ -1,87 +1,170 @@
-// About.tsx
-"use client";
-
-import React from "react";
+// components/about.tsx
 import Image from "next/image";
 import Button from "@/components/button";
 import profileImage from "@/public/images/jackie-profile.jpg";
+import lobbyImage from "@/public/images/moxie-lobby.jpg";
 import workImage from "@/public/images/jackie-working.jpg";
-import { useBooking } from "@/context/BookingContext";
 
-const About: React.FC = () => {
-  const { openBooking } = useBooking();
+// TODO: confirm stat numbers (years in practice, review count) with Jackie
+
+export default function About() {
   return (
-    <>
-      <section
-        className="min-h-screen w-full grid place-items-center p-4 md:pt-24 lg:mt-32"
-        id="About"
-        tabIndex={-1}
-        aria-label="About section"
-      >
-        <div className="w-full max-w-5xl">
+    <section
+      id="About"
+      tabIndex={-1}
+      aria-label="About section"
+      className="py-32 lg:py-40 border-t border-(--line-soft)"
+    >
+      <div className="max-w-335 mx-auto px-10 max-[720px]:px-5.5">
+        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 xl:gap-24 items-center">
+          {/* ── Gallery mosaic ─────────────────────────────────────────── */}
           <div
-            className="about-container flex flex-col md:flex-row justify-center pt-8"
+            aria-hidden="true"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1.1fr",
+              gridTemplateRows: "1fr 1fr",
+              gap: "14px",
+              aspectRatio: "5 / 6",
+              width: "100%",
+            }}
           >
-            <Image
-              src={profileImage}
-              alt="Jackie Schult, owner and operator of Moxie Beauty Studio"
-              className="h-96 w-[calc(100%-2rem)] md:max-w-64 mx-4 xl:mr-8 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover z-0 fade-in-section"
-              priority={false}
-              loading="lazy"
-            />
+            {/* gal-a: Jackie portrait — arched top-left corner */}
             <div
-              className="about-content px-4 text-pretty"
+              style={{
+                gridArea: "1 / 1",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: "120px 14px 14px 14px",
+                border: "1px solid var(--accent)",
+                borderLeftWidth: "8px",
+              }}
             >
-              <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl lg:text-6xl my-8 pb-2 text-balance fade-in-section delay-100">
-                Discover the Heart & Soul of Moxie
-              </h2>
-              <p className="text-base mb-12 max-w-[68ch] text-balance fade-in-section delay-200">
-                Moxie Beauty Studio is owned and operated by{" "}
-                <strong>Jackie Schult</strong>. Jackie specializes in{" "}
-                <em>
-                  eyelash extensions, lash lift and tint, eyebrow lamination,
-                  microblading, and waxing
-                </em>
-                . Her dedication to continuous improvement drives her to expand
-                both her skills and services, always staying ahead of industry
-                trends to provide the best possible care.
-              </p>
+              <Image
+                src={profileImage}
+                alt="Jackie Schult, founder of Moxie Beauty Studio"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 30vw, 18vw"
+                loading="lazy"
+              />
+            </div>
+
+            {/* gal-b: Studio interior — tall right tile, arched bottom-right corner */}
+            <div
+              style={{
+                gridArea: "1 / 2 / 3 / 3",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: "14px 14px 220px 14px",
+                border: "1px solid var(--accent)",
+                borderRightWidth: "8px",
+              }}
+            >
+              <Image
+                src={lobbyImage}
+                alt="Moxie Beauty Studio interior"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 35vw, 22vw"
+                loading="lazy"
+              />
+            </div>
+
+            {/* gal-c: Jackie at work — arched bottom-left corner */}
+            <div
+              style={{
+                gridArea: "2 / 1",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: "14px 14px 14px 120px",
+                border: "1px solid var(--accent)",
+                borderLeftWidth: "8px",
+              }}
+            >
               <Image
                 src={workImage}
-                alt="A picture of Jackie working on another satisfied client."
-                className="h-64 lg:h-96 w-full max-w-xl mb-8 lg:mr-10 rounded-tl rounded-tr-[4rem] rounded-br rounded-bl-[4rem] border border-l-8 border-t-8 border-(--accent) object-cover object-top z-0 fade-in-section delay-300"
-                priority={false}
+                alt="Jackie working on a brow appointment"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 30vw, 18vw"
                 loading="lazy"
               />
             </div>
           </div>
-        </div>
-        <div className="flex flex-col lg:flex-row items-center max-w-7xl gap-4 p-4 mx-auto my-12 fade-in-section delay-400">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="hsl(var(--background))"
-            viewBox="0 0 50 60"
-            className="w-20 h-auto fill-(--accent)"
-            aria-hidden="true"
-          >
-            <path d="M36.7282 29.0497C30.6329 30.4594 23.5969 35.5518 23.5283 42.1787C23.5283 42.3961 23.4724 42.5942 23.3617 42.7732C23.1657 43.0993 23.051 43.0737 23.0187 42.6965C22.2641 35.1586 16.3844 30.1334 9.0348 28.9346C9.00246 28.9282 8.99266 28.941 9.0054 28.9729C9.0054 28.9794 9.0054 28.989 9.0054 29.0017C9.01226 29.0209 9.02206 29.0273 9.0348 29.0209C17.2144 27.6335 21.9574 22.9663 23.2637 15.0192C23.2637 15.0141 23.2656 15.0092 23.2695 15.0057C23.2735 15.002 23.2784 15 23.2833 15C23.2882 15 23.293 15.002 23.297 15.0057C23.3009 15.0092 23.3029 15.0141 23.3029 15.0192C24.322 22.0009 29.3001 27.8892 36.7184 28.8483C37.0907 28.893 37.0937 28.9602 36.7282 29.0497Z" />
-          </svg>
-          <blockquote className="text-3xl lg:text-4xl font-nyght-italic bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent max-w-[56ch] text-balance">
-            Jackie is committed to fostering strong relationships with her
-            clients, ensuring each appointment is a personalized &amp; enjoyable
-            experience.
-          </blockquote>
-          <Button
-            className="w-full md:w-auto mt-8 lg:mt-0"
-            onClick={openBooking}
-            size="lg"
-          >
-            Make an Appointment
-          </Button>
-        </div>
-      </section>
-    </>
-  );
-};
 
-export default About;
+          {/* ── Body ───────────────────────────────────────────────────── */}
+          <div>
+            <p className="flex items-center gap-3 font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-5">
+              <span
+                className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
+                aria-hidden="true"
+              />
+              About the studio
+            </p>
+
+            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl lg:text-5xl leading-tight text-balance pb-1">
+              Discover the Heart &amp; Soul of Moxie
+            </h2>
+
+            <p className="text-[17px] leading-relaxed text-(--ink-soft) mt-6 mb-4">
+              Moxie Beauty Studio is owned and operated by{" "}
+              <strong className="text-(--foreground) font-semibold">
+                Jackie Schult
+              </strong>
+              . Jackie specializes in{" "}
+              <em className="font-nyght-italic">
+                eyelash extensions, lash lift and tint, eyebrow lamination,
+                microblading, and waxing
+              </em>
+              . Her dedication to continuous improvement drives her to expand
+              both her skills and services, always staying ahead of industry
+              trends to provide the best possible care.
+            </p>
+
+            <p className="text-[15px] leading-relaxed text-(--ink-soft)">
+              Jackie is committed to fostering strong relationships with her
+              clients, ensuring each appointment is a personalized &amp;
+              enjoyable experience.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 mt-10 pt-7 border-t border-(--line)">
+              <div>
+                <div className="font-nyght text-[40px] leading-none text-(--foreground)">
+                  7{" "}
+                  <span className="font-nyght-italic text-(--accent)">yrs</span>
+                </div>
+                <div className="text-[11px] tracking-[0.2em] uppercase text-(--ink-mute) mt-2">
+                  In practice
+                </div>
+              </div>
+              <div>
+                <div className="font-nyght text-[40px] leading-none text-(--foreground)">
+                  1<span className="font-nyght-italic text-(--accent)">:</span>1
+                </div>
+                <div className="text-[11px] tracking-[0.2em] uppercase text-(--ink-mute) mt-2">
+                  Always
+                </div>
+              </div>
+              <div>
+                <div className="font-nyght text-[40px] leading-none text-(--foreground)">
+                  312
+                </div>
+                <div className="text-[11px] tracking-[0.2em] uppercase text-(--ink-mute) mt-2">
+                  5★ reviews
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-9">
+              <Button variant="ghost" href="/about" showArrow>
+                Read more
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

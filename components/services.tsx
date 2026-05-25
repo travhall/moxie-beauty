@@ -1,142 +1,172 @@
-"use client";
-
 // components/services.tsx
-import React, { useState } from "react";
-import ServiceCard from "./service-card";
-import ServiceOverlay from "./service-overlay";
+import { siteConfig } from "@/lib/site-config";
 import Button from "./button";
-import { useBooking } from "@/context/BookingContext";
+import DiagArrow from "./icons/DiagArrow";
 
-interface ServiceData {
-  title: string;
-  preview: string;
-  fullDescription: string;
-  readMoreLabel?: string;
-}
-
-const servicesData: ServiceData[] = [
+// TODO: confirm service names, pricing, and durations with Jackie
+const services = [
   {
-    title: "Eyelash Extensions",
-    preview:
-      'Wake up every morning with lush, camera-ready lashes. Our extensions are hand-applied to blend seamlessly with your natural lashes, offering customizable length, curl, and volume—from "did-she-or-didn\'t-she" subtlety to full glam.',
-    fullDescription:
-      "Imagine skipping mascara forever. At Moxie, we use premium lightweight fibers to create a personalized lash look that enhances your eye shape and lifestyle. A Full Set (2 hours) builds your dream lashes from scratch, while Lash Fills (30-75 min, depending on timing) keep them flawless. Pro Tip: Arrive with clean lashes (no mascara!) and avoid caffeine if it makes you twitchy—this helps you relax during the process. Results last longest when kept dry for 24 hours and away from saunas or hot yoga for 48 hours.",
-    readMoreLabel: "Learn more",
+    num: "01",
+    name: "Brow Lamination & Shape",
+    desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint and a precision shape.",
+    meta: [
+      { label: "From", value: "$95" },
+      { label: "Duration", value: "75 min" },
+      { label: "Lasts", value: "6–8 wks" },
+    ],
   },
   {
-    title: "Lash Lift & Tint",
-    preview:
-      "No extensions? No problem. This treatment gives your natural lashes a salon-permanent curl and tint, so they look longer, darker, and perfectly lifted—like you've just stepped out of a mascara ad.",
-    fullDescription:
-      "The Lash Lift + Tint is the ultimate low-maintenance luxury. We gently lift your lashes from the root (no harsh extensions!) and tint them for a wide-eyed effect that lasts 6-8 weeks. Fun fact: The lift is customized to your lash length—shorter lashes get a gentler curve, while longer lashes can handle dramatic swoops. Heads up: Avoid steam/sweat for 48 hours to lock in the curl, but after that? Mascara is optional (though you might not need it).",
-    // No readMoreLabel specified - will use default "Read more"
+    num: "02",
+    name: "Classic Lash Set",
+    desc: "One natural extension applied to each of your natural lashes — the look of a really good mascara, without the mascara.",
+    meta: [
+      { label: "From", value: "$145" },
+      { label: "Duration", value: "120 min" },
+      { label: "Fills", value: "$70" },
+    ],
   },
   {
-    title: "Microblading",
-    preview:
-      "Semi-permanent brows so natural, even your closest friends will do a double-take. Hair-like strokes fill sparse areas, with pigment matched to your unique coloring.",
-    fullDescription:
-      "Tired of pencils and powders? Microblading is a hand-crafted technique that deposits pigment under the skin to mimic real brow hairs. At Moxie, we start with a free consultation to design your ideal shape (based on your bone structure!) and select the perfect pigment. Important: Healing takes 2 weeks (expect some flaking!), and a 6-week touch-up ensures your brows stay sharp for 1+ years. Pro move: Schedule this when you can avoid heavy sweating/swimming during healing.",
-    readMoreLabel: "Book consultation",
+    num: "03",
+    name: "Volume & Hybrid Lashes",
+    desc: "Hand-made fans for soft density, or a mix of classics and fans for texture. Customized to your eye shape and lifestyle.",
+    meta: [
+      { label: "From", value: "$195" },
+      { label: "Duration", value: "150 min" },
+      { label: "Fills", value: "$95" },
+    ],
   },
   {
-    title: "Brow Lamination & Tint",
-    preview:
-      'The "glass skin" of brows—fluffy, brushed-up, and tinted for Insta-worthy definition. Perfect for unruly or sparse brows craving polish.',
-    fullDescription:
-      "This viral treatment uses a keratin solution to relax and redirect brow hairs upward, creating the illusion of fullness and symmetry. Paired with a tint, it's a game-changer for thin or uneven brows. Love your current brow makeup? Wear it to your appointment so we can replicate your fave shape. Aftercare is easy: Just avoid water/retinol for 24-48 hours, then enjoy 6+ weeks of effortless grooming.",
-    readMoreLabel: "Discover more",
+    num: "04",
+    name: "Lash Lift & Tint",
+    desc: "A subtle curl from root to tip that makes your own lashes look longer. Pair with a tint to skip the mascara entirely.",
+    meta: [
+      { label: "From", value: "$110" },
+      { label: "Duration", value: "60 min" },
+      { label: "Lasts", value: "6–8 wks" },
+    ],
   },
   {
-    title: "Eyebrow & Facial Waxing",
-    preview:
-      "Precise, smooth, and fast. Our waxing removes unwanted hair with minimal discomfort, leaving skin silky and brows flawlessly shaped.",
-    fullDescription:
-      "Whether you're prepping for a special event or just craving clean lines, our waxing services use high-quality formulas to reduce irritation. Note: Avoid retinol/sun exposure 3 days prior (we can't wax sensitive skin!), and skip if you've used Accutane in the last 6 months. Bonus: Regular waxing can lead to finer regrowth over time.",
-    // No readMoreLabel specified - will use default "Read more"
+    num: "05",
+    name: "Henna & Tinting",
+    desc: "Plant-based brow color that softly stains the skin beneath, for a fuller-looking shape that holds up between visits.",
+    meta: [
+      { label: "From", value: "$65" },
+      { label: "Duration", value: "45 min" },
+      { label: "Skin", value: "2 wks" },
+    ],
+  },
+  {
+    num: "06",
+    name: "First-Visit Consult",
+    desc: "New here? Start with a 30-minute mapping & consultation. We'll plan a shape together and book the right services for you.",
+    meta: [
+      { label: "Price", value: "Complimentary" },
+      { label: "Duration", value: "30 min" },
+      { label: "Where", value: "In studio" },
+    ],
   },
 ];
 
-const Services: React.FC = () => {
-  const { openBooking } = useBooking();
-  const [activeService, setActiveService] = useState<number | null>(null);
-
-  const openOverlay = (index: number) => {
-    setActiveService(index);
-  };
-
-  const closeOverlay = () => {
-    setActiveService(null);
-  };
-
+export default function Services() {
   return (
     <section
-      className="min-h-screen w-full grid place-items-center p-4 md:py-24 mb-48"
       id="Services"
       tabIndex={-1}
       aria-label="Services section"
+      className="py-32 lg:py-40"
     >
-      <div className="max-w-295 w-full mx-auto xl:mx-48">
-        <div className="grid grid-cols-1 gap-6 services-grid">
-          {/* Content Block */}
-          <div className="services-content p-4  lg:place-self-end lg:pl-8 lg:pb-0">
-            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-5xl lg:text-6xl my-8 pb-2 text-balance fade-in-section">
-              The Magic of Moxie
+      <div className="max-w-335 mx-auto px-10 max-[720px]:px-5.5">
+        {/* ── Section header ───────────────────────────────────────────── */}
+        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-6 lg:gap-20 items-end mb-16 lg:mb-20">
+          <div>
+            <p className="flex items-center gap-3 font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-5">
+              <span
+                className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
+                aria-hidden="true"
+              />
+              Services
+            </p>
+            <h2 className="font-nyght text-5xl lg:text-6xl leading-none tracking-tight text-balance">
+              What we{" "}
+              <span className="font-nyght-italic text-(--accent)">do</span>
+              ,
+              <br className="hidden lg:block" /> slowly &amp; with care.
             </h2>
-            <p className="text-xl mb-4 text-balance fade-in-section delay-100">
-              Discover Moxie&rsquo;s premium beauty treatments and services,
-              meticulously crafted to enhance your natural allure.
-            </p>
-            <p className="text-base mb-10 text-pretty max-w-[72ch] fade-in-section delay-200">
-              From special occasions to everyday self-care, Moxie is here to
-              help you look and feel your best. Our expert team provides
-              personalized services, including lashes, brows, microblading, and
-              waxing, to ensure flawless, long-lasting results.
-            </p>
-            <div className="flex flex-row flex-wrap gap-4 mb-4 fade-in-section delay-300">
-              <Button
-                size="lg"
-                onClick={openBooking}
-                className="w-full md:w-auto"
-              >
-                Make an Appointment
-              </Button>
-              {/* <Button
-                size="lg"
-                variant="outline"
-                onClick={openBooking}
-                className="w-full md:w-auto"
-              >
-                Schedule a Consultation
-              </Button> */}
-            </div>
           </div>
-
-          {/* Service Cards */}
-          {servicesData.map((service, index) => (
-            <ServiceCard
-              key={index}
-              title={service.title}
-              preview={service.preview}
-              onOpenOverlay={() => openOverlay(index)}
-              readMoreLabel={service.readMoreLabel}
-              cardIndex={index}
-            />
-          ))}
+          <p className="text-[17px] leading-relaxed text-(--ink-soft) max-w-[52ch]">
+            Every appointment begins with a quiet consultation. We map your
+            features, talk through how you want to look and feel, and tailor the
+            work from there. No two faces are the same &mdash; your brows
+            shouldn&rsquo;t be either.
+          </p>
         </div>
 
-        {/* Service Overlay */}
-        {activeService !== null && (
-          <ServiceOverlay
-            title={servicesData[activeService].title}
-            fullDescription={servicesData[activeService].fullDescription}
-            isOpen={activeService !== null}
-            onClose={closeOverlay}
-          />
-        )}
+        {/* ── Service rows — 2-col grid ───────────────────────────────── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line)">
+          {services.map((svc, i) => {
+            const isOdd = i % 2 === 0;
+            return (
+              <a
+                key={svc.num}
+                href={siteConfig.bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${svc.name} — book this service (opens in new tab)`}
+                className={[
+                  "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground) no-underline",
+                  "transition-colors duration-300 hover:bg-(--bg-soft)",
+                  isOdd
+                    ? "sm:border-r sm:border-(--line) sm:pr-15"
+                    : "sm:pl-10",
+                ].join(" ")}
+              >
+                {/* Service number */}
+                <span className="font-mono text-[11px] tracking-widest text-(--ink-mute) pt-1.5 shrink-0 tabular-nums">
+                  {svc.num}
+                </span>
+
+                {/* Name + description + meta */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-colors duration-300">
+                    {svc.name}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch]">
+                    {svc.desc}
+                  </p>
+                  <div className="flex gap-4 flex-wrap">
+                    {svc.meta.map(({ label, value }) => (
+                      <span
+                        key={label}
+                        className="text-[11px] tracking-[0.18em] uppercase text-(--ink-mute)"
+                      >
+                        {label}{" "}
+                        <strong className="text-(--foreground) font-medium ml-1">
+                          {value}
+                        </strong>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Diagonal arrow */}
+                <span
+                  className="shrink-0 mt-1 w-9 h-9 rounded-full border border-(--line) flex items-center justify-center text-(--ink-soft) group-hover:border-(--accent) group-hover:text-(--accent) transition-[border-color,color,transform] duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  aria-hidden="true"
+                >
+                  <DiagArrow />
+                </span>
+              </a>
+            );
+          })}
+        </div>
+
+        {/* ── Footer CTA ───────────────────────────────────────────────── */}
+        <div className="mt-12">
+          <Button variant="ghost" href="/services" showArrow>
+            View All Services
+          </Button>
+        </div>
       </div>
     </section>
   );
-};
-
-export default Services;
+}

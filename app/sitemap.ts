@@ -2,38 +2,37 @@ import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://moxiebeautystudiowi.com";
-  const currentDate = new Date().toISOString();
 
   return [
     {
       url: baseUrl,
-      lastModified: currentDate,
+      lastModified: "2025-05-01",
       changeFrequency: "weekly",
       priority: 1.0,
     },
     {
-      url: `${baseUrl}#Services`,
-      lastModified: currentDate,
+      url: `${baseUrl}/services`,
+      lastModified: "2025-05-01",
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${baseUrl}#Appointments`,
-      lastModified: currentDate,
+      url: `${baseUrl}/about`,
+      lastModified: "2025-05-01",
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}#About`,
-      lastModified: currentDate,
+      url: `${baseUrl}/visit`,
+      lastModified: "2025-05-01",
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/style-guide`,
-      lastModified: currentDate,
-      changeFrequency: "yearly",
-      priority: 0.3,
+      url: `${baseUrl}/contact`,
+      lastModified: "2025-05-01",
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
   ];
 }

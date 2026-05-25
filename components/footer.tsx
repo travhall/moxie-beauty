@@ -1,104 +1,117 @@
-import Button from "./button";
-import ThemeSwitch from "./theme-toggle";
 import Link from "next/link";
 import Logo from "./logo";
+import FooterThemeIsland from "./footer-theme-island";
+import { siteConfig } from "@/lib/site-config";
 
-const Facebook = (props: React.ComponentProps<"svg">) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
+const footerLinks = {
+  services: [
+    { label: "Brow Lamination", href: "/services" },
+    { label: "Lash Extensions", href: "/services" },
+    { label: "Lash Lift & Tint", href: "/services" },
+    { label: "Henna Brows", href: "/services" },
+    { label: "Gift Cards", href: "/services" },
+  ],
+  studio: [
+    { label: "About Moxie", href: "/about" },
+    { label: "Your Visit", href: "/visit" },
+    { label: "Aftercare", href: "#" },
+    { label: "Policies", href: "#" },
+  ],
+  stayClose: [
+    {
+      label: "Instagram",
+      href: siteConfig.social.instagram.href,
+      external: true,
+    },
+    { label: "TikTok", href: siteConfig.social.tiktok.href, external: true },
+    {
+      label: "Facebook",
+      href: siteConfig.social.facebook.href,
+      external: true,
+    },
+  ],
+} as const;
 
-const Instagram = (props: React.ComponentProps<"svg">) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-  </svg>
-);
+function FooterCol({
+  heading,
+  links,
+}: {
+  heading: string;
+  links: readonly { label: string; href: string; external?: boolean }[];
+}) {
+  return (
+    <div>
+      <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) mb-5">
+        {heading}
+      </p>
+      <ul className="flex flex-col gap-3">
+        {links.map(({ label, href, external }) => (
+          <li key={label}>
+            {external ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200"
+              >
+                {label}
+              </a>
+            ) : (
+              <Link
+                href={href}
+                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200"
+              >
+                {label}
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const YEAR = new Date().getFullYear();
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-  return (
-    <footer className="flex flex-col gap-8 pb-28 px-6 md:pb-4 border-b-[.5px] border-(--accent)">
-      <div className="md:p-4">
-        <Logo placement="footer" className="mb-4" />
-      </div>
+  const year = YEAR;
 
-      <div className="flex flex-col-reverse md:flex-row justify-between gap-8">
-        <div className="flex flex-col-reverse md:flex-row md:flex-wrap gap-4">
-          <small className="text-base md:text-xs p-1">
-            &copy;{currentYear} Moxie Beauty Studio, all rights reserved
-          </small>
-          <Link
-            className="text-base md:text-xs p-1 font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative self-start"
-            href="/"
-          >
-            Appointment Policy
-          </Link>
-          <Link
-            className="text-base md:text-xs p-1 font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative self-start"
-            href="/"
-          >
-            Terms &amp; Conditions
-          </Link>
-          <Link
-            className="text-base md:text-xs p-1 font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative self-start"
-            href="/"
-          >
-            FAQs
-          </Link>
-          <Link
-            className="text-base md:text-xs p-1 font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative self-start"
-            href="mailto:hello@moxiebeautystudiowi.com"
-          >
-            hello@moxiebeautystudiowi.com
-          </Link>
-          <Link
-            className="text-base md:text-xs p-1 font-semibold no-underline text-nowrap before:absolute before:-bottom-0.5 before:left-0 before:w-full before:h-0.5 before:bg-(--accent) before:transform before:scale-x-0 before:origin-right before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:before:origin-left relative self-start"
-            href="tel:+12623326072"
-          >
-            (262) 332-6072
-          </Link>
+  return (
+    <footer className="border-t border-(--line-soft) bg-(--background)/60">
+      <div className="max-w-335 mx-auto px-10 max-[720px]:px-5.5">
+        {/* ── Main grid ───────────────────────────────────────────────── */}
+        <div className="grid grid-cols-2 lg:grid-cols-[280px_1fr_1fr_1fr] gap-10 lg:gap-16 py-16">
+          {/* Brand column */}
+          <div className="col-span-2 lg:col-span-1">
+            <Link href="/" className="inline-block mb-5">
+              <Logo placement="footer" />
+            </Link>
+
+            <p className="text-sm text-(--ink-soft) leading-relaxed max-w-70 mb-8">
+              A brow &amp; lash studio in Rochester, Wisconsin. By appointment
+              only.
+            </p>
+
+            {/* Theme toggle */}
+            <FooterThemeIsland />
+          </div>
+
+          {/* Link columns */}
+          <FooterCol heading="Services" links={footerLinks.services} />
+          <FooterCol heading="Studio" links={footerLinks.studio} />
+          <FooterCol heading="Stay close" links={footerLinks.stayClose} />
         </div>
-        <div className="flex flex-row items-center gap-2">
-          <Button
-            variant="default"
-            size="sm"
-            icon={Facebook}
-            iconOnly
-            aria-label="Visit us on Facebook"
-          />
-          <Button
-            variant="default"
-            size="sm"
-            icon={Instagram}
-            iconOnly
-            aria-label="Follow us on Instagram"
-          />
-          <ThemeSwitch />
+
+        {/* ── Footer foot ─────────────────────────────────────────────── */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-6 border-t border-(--line-soft)">
+          <p className="text-[11px] text-(--ink-mute)">
+            &copy; {year}&nbsp;Moxie Beauty Studio &nbsp;&middot;&nbsp;
+            {siteConfig.address.short} &nbsp;&middot;&nbsp;
+            {siteConfig.url.replace("https://", "")}
+          </p>
+          <p className="text-[11px] text-(--ink-mute)">
+            Booking handled by Square &nbsp;&middot;&nbsp; Crafted with care
+          </p>
         </div>
       </div>
     </footer>

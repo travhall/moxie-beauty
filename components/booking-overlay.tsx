@@ -1,294 +1,279 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { X, RefreshCw, AlertCircle } from "lucide-react";
+import { X, RefreshCw, PhoneCall } from "lucide-react";
 import Button from "./button";
+import Logo from "./logo";
+import { siteConfig } from "@/lib/site-config";
 
 interface BookingOverlayProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Optional service ID for pre-selecting a service in the booking flow */
+  serviceId?: string;
 }
 
-const BookingOverlay: React.FC<BookingOverlayProps> = ({ isOpen, onClose }) => {
+const BookingOverlay: React.FC<BookingOverlayProps> = ({
+  isOpen,
+  onClose,
+  serviceId: _serviceId,
+}) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
-  const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [isAnimatingIn, setIsAnimatingIn] = useState(false);
-  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
 
-  // Reset state when overlay opens
+  // ── Mount / unmount with animation ────────────────────────────────────────
   useEffect(() => {
     if (isOpen) {
       setIsLoading(true);
       setHasError(false);
-    }
-  }, [isOpen]);
-
-  // Handle opening and closing animations
-  useEffect(() => {
-    if (isOpen) {
-      // Start rendering with initial state (not animating)
-      setIsAnimatingIn(false);
-      setIsAnimatingOut(false);
       setShouldRender(true);
-
-      // Wait for the component to render, then trigger entrance animation
-      const timer = setTimeout(() => {
-        setIsAnimatingIn(true);
-      }, 10); // Small delay to ensure initial render completes
-
-      return () => clearTimeout(timer);
+      // Defer visibility so CSS transition fires after DOM insertion
+      const t = requestAnimationFrame(() => setIsVisible(true));
+      return () => cancelAnimationFrame(t);
     } else if (shouldRender) {
-      // Trigger exit animation
-      setIsAnimatingIn(false);
-      setIsAnimatingOut(true);
-
-      // Remove from DOM after animation completes
-      const timeout = setTimeout(() => {
-        setShouldRender(false);
-        setIsAnimatingOut(false);
-      }, 300); // Match the transition duration
-
-      return () => clearTimeout(timeout);
+      setIsVisible(false);
+      const t = setTimeout(() => setShouldRender(false), 350);
+      return () => clearTimeout(t);
     }
-  }, [isOpen, shouldRender]);
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Handle iframe loading timeout
+  // ── Loading timeout (15 s) ─────────────────────────────────────────────────
   useEffect(() => {
-    if (isOpen && isLoading) {
-      // Set a timeout for iframe loading (15 seconds)
-      loadingTimeoutRef.current = setTimeout(() => {
-        if (isLoading) {
-          setHasError(true);
-          setIsLoading(false);
-        }
-      }, 15000);
-
-      return () => {
-        if (loadingTimeoutRef.current) {
-          clearTimeout(loadingTimeoutRef.current);
-        }
-      };
-    }
+    if (!isOpen || !isLoading) return;
+    loadingTimeoutRef.current = setTimeout(() => {
+      setHasError(true);
+      setIsLoading(false);
+    }, 15_000);
+    return () => {
+      if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    };
   }, [isOpen, isLoading]);
 
-  // Handle iframe load success
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-    setHasError(false);
-    if (loadingTimeoutRef.current) {
-      clearTimeout(loadingTimeoutRef.current);
-    }
-  };
-
-  // Handle iframe load error
-  const handleIframeError = () => {
-    setIsLoading(false);
-    setHasError(true);
-    if (loadingTimeoutRef.current) {
-      clearTimeout(loadingTimeoutRef.current);
-    }
-  };
-
-  // Refresh/retry loading the iframe
-  const handleRefresh = () => {
-    setIsLoading(true);
-    setHasError(false);
-    setIframeKey((prev) => prev + 1); // Force iframe reload by changing key
-  };
-
+  // ── Body scroll lock + focus management + Escape ───────────────────────────
   useEffect(() => {
-    if (isOpen && isAnimatingIn) {
-      // Store the currently focused element to restore focus later
-      previousActiveElement.current = document.activeElement as HTMLElement;
+    if (!isOpen || !isVisible) return;
 
-      // Prevent body scroll when overlay is open
-      document.body.style.overflow = "hidden";
+    previousActiveElement.current = document.activeElement as HTMLElement;
+    document.body.style.overflow = "hidden";
 
-      // Focus the close button when overlay opens
-      setTimeout(() => {
-        closeButtonRef.current?.focus();
-      }, 150);
+    const t = setTimeout(() => closeButtonRef.current?.focus(), 150);
 
-      // Handle Escape key
-      const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === "Escape") {
-          onClose();
-        }
-      };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKeyDown);
 
-      document.addEventListener("keydown", handleEscape);
+    return () => {
+      clearTimeout(t);
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+      previousActiveElement.current?.focus();
+    };
+  }, [isOpen, isVisible, onClose]);
 
-      return () => {
-        document.removeEventListener("keydown", handleEscape);
-        // Restore body scroll
-        document.body.style.overflow = "";
-        // Restore focus to the element that triggered the overlay
-        previousActiveElement.current?.focus();
-      };
-    }
-  }, [isOpen, isAnimatingIn, onClose]);
-
-  // Focus trap implementation
+  // ── Focus trap ────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!isOpen) return;
-
     const overlay = overlayRef.current;
     if (!overlay) return;
 
-    const handleTabKey = (e: KeyboardEvent) => {
+    const onTab = (e: KeyboardEvent) => {
       if (e.key !== "Tab") return;
-
-      const focusableElements = overlay.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      const els = overlay.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])'
       );
-
-      const firstElement = focusableElements[0];
-      const lastElement = focusableElements[focusableElements.length - 1];
-
+      const first = els[0];
+      const last = els[els.length - 1];
       if (e.shiftKey) {
-        // Shift + Tab
-        if (document.activeElement === firstElement) {
-          e.preventDefault();
-          lastElement.focus();
-        }
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
       } else {
-        // Tab
-        if (document.activeElement === lastElement) {
-          e.preventDefault();
-          firstElement.focus();
-        }
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     };
 
-    document.addEventListener("keydown", handleTabKey);
-
-    return () => {
-      document.removeEventListener("keydown", handleTabKey);
-    };
+    document.addEventListener("keydown", onTab);
+    return () => document.removeEventListener("keydown", onTab);
   }, [isOpen]);
+
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+    setHasError(false);
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+  };
+
+  const handleIframeError = () => {
+    setIsLoading(false);
+    setHasError(true);
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+  };
+
+  const handleRetry = () => {
+    setIsLoading(true);
+    setHasError(false);
+    setIframeKey((k) => k + 1);
+  };
 
   if (!shouldRender) return null;
 
   return (
     <div
       ref={overlayRef}
-      className={`fixed inset-0 z-9999 bg-(--background) flex flex-col transition-all duration-300 ease-in-out ${
-        isAnimatingIn && !isAnimatingOut
-          ? "opacity-100 scale-100"
-          : "opacity-0 scale-95"
-      }`}
       role="dialog"
       aria-modal="true"
       aria-label="Book an appointment"
-      style={{ transformOrigin: "center" }}
+      className={[
+        "fixed inset-0 z-[9999] flex flex-col bg-(--background)",
+        "transition-[opacity,transform] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        isVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-4",
+      ].join(" ")}
     >
-      {/* Close button - positioned at top right */}
+      {/* ── Header bar ──────────────────────────────────────────────────── */}
       <div
-        className={`absolute top-4 right-4 z-10000 transition-all duration-300 delay-100 ease-in-out ${
-          isAnimatingIn && !isAnimatingOut
+        className={[
+          "shrink-0 flex items-center justify-between h-16 px-5 border-b border-(--line-soft)",
+          "bg-(--background)/95 backdrop-blur-sm",
+          "transition-[opacity,transform] duration-350 delay-75 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isVisible
             ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-2"
-        }`}
+            : "opacity-0 -translate-y-2",
+        ].join(" ")}
       >
+        {/* Brand */}
+        <div className="flex items-center gap-3.5">
+          <Logo placement="header" />
+          <span
+            className="hidden sm:block w-px h-5 bg-(--line)"
+            aria-hidden="true"
+          />
+          <p className="hidden sm:block text-[11px] font-medium tracking-[0.18em] uppercase text-(--ink-mute)">
+            Book an Appointment
+          </p>
+        </div>
+
+        {/* Close */}
         <Button
           ref={closeButtonRef}
           variant="outline"
-          size="lg"
-          icon={X}
+          size="sm"
           onClick={onClose}
-          ariaLabel="Close booking overlay"
+          aria-label="Close booking"
         >
+          <X size={15} aria-hidden="true" />
           Close
         </Button>
       </div>
 
-      {/* Iframe container */}
+      {/* ── Content area (iframe + overlays) ────────────────────────────── */}
       <div
-        className={`flex-1 w-full h-full p-4 pt-20 transition-all duration-300 delay-75 ease-in-out relative ${
-          isAnimatingIn && !isAnimatingOut
+        className={[
+          "relative flex-1 min-h-0",
+          "transition-[opacity,transform] duration-350 delay-100 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isVisible
             ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4"
-        }`}
+            : "opacity-0 translate-y-3",
+        ].join(" ")}
       >
-        {/* Loading indicator */}
+        {/* Loading state */}
         {isLoading && !hasError && (
           <div
-            className="absolute inset-0 flex flex-col items-center justify-center bg-(--background) z-10 rounded-lg m-4 mt-20"
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-5 bg-(--background)"
             role="status"
             aria-live="polite"
             aria-label="Loading booking page"
           >
-            <div className="flex flex-col items-center gap-4">
-              <div
-                className="w-12 h-12 border-4 border-(--accent)/30 border-t-(--accent) rounded-full animate-spin"
-                aria-hidden="true"
-              />
-              <p className="text-lg font-medium">Loading booking page...</p>
+            {/* Branded pulsing dots */}
+            <div className="flex items-center gap-2" aria-hidden="true">
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="w-2 h-2 rounded-full bg-(--accent) animate-bounce"
+                  style={{ animationDelay: `${i * 0.15}s` }}
+                />
+              ))}
             </div>
+            <p className="text-sm text-(--ink-mute) tracking-[0.1em]">
+              Opening booking&hellip;
+            </p>
           </div>
         )}
 
         {/* Error state */}
         {hasError && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-(--background) z-10 rounded-lg m-4 mt-20">
-            <div className="flex flex-col items-center gap-6 max-w-md text-center p-8">
-              <AlertCircle className="w-16 h-16 text-(--accent)" />
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-(--background) p-8">
+            <div className="w-full max-w-sm flex flex-col items-center gap-6 text-center">
+              {/* Icon */}
+              <span
+                className="flex items-center justify-center w-14 h-14 rounded-full bg-(--accent)/10 text-(--accent)"
+                aria-hidden="true"
+              >
+                <PhoneCall size={24} />
+              </span>
+
               <div>
-                <h3 className="text-xl font-bold mb-2">
-                  Unable to Load Booking Page
+                <h3 className="font-nyght text-2xl text-(--foreground) mb-2">
+                  Couldn&rsquo;t load booking
                 </h3>
-                <p className="text-base mb-6">
-                  We&rsquo;re having trouble loading the appointment booking
-                  page. This might be due to a slow connection or temporary
-                  issue.
+                <p className="text-sm text-(--ink-soft) leading-relaxed">
+                  The booking page didn&rsquo;t load — this is usually a slow
+                  connection or a temporary issue with Square.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <Button
-                  size="lg"
-                  onClick={handleRefresh}
-                  icon={RefreshCw}
-                  className="flex-1"
-                >
-                  Try Again
+
+              <div className="flex flex-col sm:flex-row gap-3 w-full">
+                <Button size="md" onClick={handleRetry} className="flex-1" showArrow={false}>
+                  <RefreshCw size={14} aria-hidden="true" />
+                  Try again
                 </Button>
                 <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={onClose}
+                  size="md"
+                  variant="ghost"
+                  href={siteConfig.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex-1"
                 >
-                  Close
+                  Open in new tab
                 </Button>
               </div>
-              <p className="text-sm text-(--foreground)/60">
-                Or call us directly at{" "}
+
+              <p className="text-sm text-(--ink-mute)">
+                Or reach us directly —{" "}
                 <a
-                  href="tel:2623326072"
-                  className="font-semibold text-(--accent) hover:underline"
+                  href={siteConfig.contact.smsHref}
+                  className="text-(--foreground) hover:text-(--accent) transition-colors font-medium"
                 >
-                  (262) 332-6072
+                  text us
+                </a>{" "}
+                or{" "}
+                <a
+                  href={siteConfig.contact.phoneHref}
+                  className="text-(--foreground) hover:text-(--accent) transition-colors font-medium"
+                >
+                  {siteConfig.contact.phone}
                 </a>
               </p>
             </div>
           </div>
         )}
 
-        {/* Iframe */}
+        {/* Square booking iframe */}
         <iframe
           key={iframeKey}
           ref={iframeRef}
-          src="https://book.squareup.com/appointments/anzl660330wful/location/LHZ09SDE51Z6W/services"
-          title="Moxie Beauty Studio Appointment Booking"
-          className="w-full h-full border-0 rounded-lg"
+          src={siteConfig.bookingUrl}
+          title="Book an appointment at Moxie Beauty Studio"
+          className="w-full h-full border-0"
           sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation-by-user-activation"
           allow="payment"
           loading="eager"

@@ -1,20 +1,28 @@
 import HeroSection from "@/components/hero-section";
-import PageAnimations from "@/components/page-animations";
 import Services from "@/components/services";
 import Appointments from "@/components/appointments";
 import About from "@/components/about";
-import Testimonials from "@/components/testimonials";
+import MarqueeTicker from "@/components/marquee-ticker";
 
 export default function Home() {
   return (
     <main>
-      <PageAnimations />
       <HeroSection />
-      <div className="w-full h-32 bg-linear-to-b from-(--background) sticky top-0 z-20" />
+      <MarqueeTicker
+        items={[
+          "brow lamination",
+          "classic lashes",
+          "volume sets",
+          "hybrid lashes",
+          "lash lifts",
+          "brow shaping",
+          "tinting",
+          "henna brows",
+        ]}
+      />
       <Services />
-      <Appointments />
       <About />
-      <Testimonials />
+      <Appointments />
     </main>
   );
 }
