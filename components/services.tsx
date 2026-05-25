@@ -7,6 +7,7 @@ import {
   formatDuration,
   lowestPrice,
   primaryDuration,
+  primaryVariationId,
   type SquareService,
 } from "@/lib/square";
 
@@ -101,18 +102,29 @@ interface ServiceRowProps {
   desc: string;
   meta: { label: string; value: string }[];
   isOdd: boolean;
+  variationId: string | null;
 }
 
-function ServiceRow({ num, name, desc, meta, isOdd }: ServiceRowProps) {
+function ServiceRow({
+  num,
+  name,
+  desc,
+  meta,
+  isOdd,
+  variationId,
+}: ServiceRowProps) {
+  const href = variationId
+    ? `${siteConfig.bookingUrl}/${variationId}`
+    : siteConfig.bookingUrl;
   return (
     <a
-      href={siteConfig.bookingUrl}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${name} — book this service (opens in new tab)`}
       className={[
         "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground) no-underline",
-        "transition-colors duration-300 hover:bg-(--bg-soft)",
+        "transition-colors duration-300 odd:hover:bg-linear-to-l odd:hover:from-(--bg-soft) odd:hover:to-transparent even:hover:bg-linear-to-r even:hover:from-(--bg-soft) even:hover:to-transparent",
         isOdd ? "sm:border-r sm:border-(--line) sm:pr-15" : "sm:pl-10",
       ].join(" ")}
     >
@@ -175,8 +187,9 @@ export default async function Services() {
         name: svc.name,
         desc: svc.description,
         meta: buildMeta(svc),
+        variationId: svc.id,
       }))
-    : FALLBACK_SERVICES;
+    : FALLBACK_SERVICES.map((s) => ({ ...s, variationId: null }));
 
   return (
     <section
@@ -221,6 +234,7 @@ export default async function Services() {
               desc={svc.desc}
               meta={svc.meta}
               isOdd={i % 2 === 0}
+              variationId={svc.variationId}
             />
           ))}
         </div>

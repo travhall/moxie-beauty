@@ -320,6 +320,8 @@ body.menu-open {
   }
 }
 .marquee-ticker {
+  font-size: clamp(24px, 2vw, 32px);
+  color: var(--ink-soft);
   overflow: hidden;
   padding: 18px 0;
   border-top: 1px solid var(--line-soft);
@@ -331,7 +333,8 @@ body.menu-open {
   white-space: nowrap;
   animation: marquee 30s linear infinite;
   font-family: var(--font-nyght-italic);
-  font-size: clamp(16px, 1.8vw, 24px);
+  font-size: clamp(24px, 2vw, 32px);
+  font-style: italic;
   color: var(--ink-soft);
   letter-spacing: 0.05em;
 }

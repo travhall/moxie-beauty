@@ -10,6 +10,7 @@ import {
   formatDuration,
   lowestPrice,
   primaryDuration,
+  primaryVariationId,
   type SquareService,
 } from "@/lib/square";
 
@@ -40,12 +41,16 @@ interface ServiceCardProps {
   name: string;
   desc: string;
   meta: string[];
+  variationId?: string | null;
 }
 
-function ServiceCard({ num, name, desc, meta }: ServiceCardProps) {
+function ServiceCard({ num, name, desc, meta, variationId }: ServiceCardProps) {
+  const href = variationId
+    ? `${siteConfig.bookingUrl}/${variationId}`
+    : siteConfig.bookingUrl;
   return (
     <a
-      href={siteConfig.bookingUrl}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${name} — book this service (opens in new tab)`}
@@ -160,12 +165,16 @@ export default async function ServicesPage() {
       name: svc.name,
       desc: svc.description,
       meta: squareMeta(svc),
+      variationId: svc.id,
     }));
   }
 
-  const browCards = useLive ? liveCards(groups.brow, 1) : FALLBACK_BROW;
-  const lashCards = useLive ? liveCards(groups.lash, browCards.length + 1) : FALLBACK_LASH;
-  const extrasCards = useLive ? liveCards(groups.extras, browCards.length + lashCards.length + 1) : FALLBACK_EXTRAS;
+  const fallbackWithId = (arr: typeof FALLBACK_BROW) =>
+    arr.map((c) => ({ ...c, variationId: null }));
+
+  const browCards = useLive ? liveCards(groups.brow, 1) : fallbackWithId(FALLBACK_BROW);
+  const lashCards = useLive ? liveCards(groups.lash, browCards.length + 1) : fallbackWithId(FALLBACK_LASH);
+  const extrasCards = useLive ? liveCards(groups.extras, browCards.length + lashCards.length + 1) : fallbackWithId(FALLBACK_EXTRAS);
 
   return (
     <main>
@@ -278,7 +287,7 @@ export default async function ServicesPage() {
 
             <div className="divide-y-0">
               {browCards.map((c) => (
-                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} />
+                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} variationId={c.variationId} />
               ))}
             </div>
           </div>
@@ -335,7 +344,7 @@ export default async function ServicesPage() {
 
             <div>
               {lashCards.map((c) => (
-                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} />
+                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} variationId={c.variationId} />
               ))}
             </div>
           </div>
@@ -368,7 +377,7 @@ export default async function ServicesPage() {
 
             <div>
               {extrasCards.map((c) => (
-                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} />
+                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} variationId={c.variationId} />
               ))}
             </div>
           </div>

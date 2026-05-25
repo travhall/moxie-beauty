@@ -94,6 +94,13 @@ export function primaryDuration(variations: ServiceVariation[]): number | null {
   return source[0]?.durationMs ?? null;
 }
 
+/** The variation ID to use when pre-selecting this service in the booking URL. */
+export function primaryVariationId(variations: ServiceVariation[]): string | null {
+  const available = variations.filter((v) => v.availableForBooking);
+  const source = available.length ? available : variations;
+  return source[0]?.id ?? null;
+}
+
 // ── Raw fetch (not cached) ────────────────────────────────────────────────────
 
 async function fetchServicesRaw(): Promise<SquareService[]> {
@@ -165,8 +172,12 @@ async function fetchServicesRaw(): Promise<SquareService[]> {
 
 // ── Cached fetch (1-hour ISR) ─────────────────────────────────────────────────
 
+// Include the environment in the cache key so sandbox and production data
+// are never mixed — switching SQUARE_ENVIRONMENT always gets a fresh fetch.
+const cacheEnv = process.env.SQUARE_ENVIRONMENT ?? "sandbox";
+
 export const getSquareServices = unstable_cache(
   fetchServicesRaw,
-  ["square-services"],
+  [`square-services-${cacheEnv}`],
   { revalidate: 3600 }
 );

@@ -16,8 +16,13 @@ interface BookingOverlayProps {
 const BookingOverlay: React.FC<BookingOverlayProps> = ({
   isOpen,
   onClose,
-  serviceId: _serviceId,
+  serviceId,
 }) => {
+  // Append variation ID to the base URL to pre-select the service.
+  // Square's hosted booking format: .../services/{variationId}
+  const iframeSrc = serviceId
+    ? `${siteConfig.bookingUrl}/${serviceId}`
+    : siteConfig.bookingUrl;
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -271,7 +276,7 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
         <iframe
           key={iframeKey}
           ref={iframeRef}
-          src={siteConfig.bookingUrl}
+          src={iframeSrc}
           title="Book an appointment at Moxie Beauty Studio"
           className="w-full h-full border-0"
           sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation-by-user-activation"

@@ -18,27 +18,27 @@ const COLORS = {
    * so the blob reads as a soft warmth rather than a distinct shape.
    */
   light: {
-    primary:          "rgb(242, 210, 188)",
-    emissive:         "rgb(224, 183, 160)",
+    primary: "rgb(242, 210, 188)",
+    emissive: "rgb(224, 183, 160)",
     emissiveIntensity: 0.25,
-    secondary:        "rgb(250, 228, 212)",
+    secondary: "rgb(250, 228, 212)",
   },
   /**
    * Dark mode: warmer, richer rose-gold from the prototype — the reduced
    * canvas opacity (set in CSS) keeps it from overpowering the dark surface.
    */
   dark: {
-    primary:          "rgb(231, 188, 156)",
-    emissive:         "rgb(214, 158, 132)",
+    primary: "rgb(231, 188, 156)",
+    emissive: "rgb(214, 158, 132)",
     emissiveIntensity: 0.35,
-    secondary:        "rgb(245, 220, 200)",
+    secondary: "rgb(245, 220, 200)",
   },
 } as const;
 
 // ── Animation constants ──────────────────────────────────────────────────────
 
-const SPEED      = 0.0004;  // prototype was 0.0006 — slowed per design intent
-const NOISE_AMP  = 0.32;
+const SPEED = 0.0002;
+const NOISE_AMP = 0.32;
 const NOISE_FREQ = 1.15;
 
 export default function Blob() {
@@ -48,8 +48,8 @@ export default function Blob() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    let rafId     = 0;
-    let disposed  = false;
+    let rafId = 0;
+    let disposed = false;
 
     void (async () => {
       // Dynamic import keeps Three.js out of the initial bundle entirely
@@ -62,8 +62,8 @@ export default function Blob() {
       // ── Renderer ──────────────────────────────────────────────────────────
       const renderer = new THREE.WebGLRenderer({
         canvas,
-        antialias:       true,
-        alpha:           true,
+        antialias: true,
+        alpha: true,
         powerPreference: "low-power",
       });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
@@ -71,7 +71,7 @@ export default function Blob() {
       renderer.setClearColor(0x000000, 0);
 
       // ── Scene & camera ────────────────────────────────────────────────────
-      const scene  = new THREE.Scene();
+      const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
         45,
         window.innerWidth / window.innerHeight,
@@ -92,31 +92,31 @@ export default function Blob() {
       scene.add(new THREE.AmbientLight(0xffffff, 0.35));
 
       // ── Primary blob ──────────────────────────────────────────────────────
-      const geom      = new THREE.IcosahedronGeometry(1.6, 5);
+      const geom = new THREE.IcosahedronGeometry(1.6, 5);
       const baseVerts = new Float32Array(geom.attributes.position.array);
-      const mat       = new THREE.MeshPhongMaterial({
-        shininess:   22,
+      const mat = new THREE.MeshPhongMaterial({
+        shininess: 22,
         flatShading: false,
         transparent: true,
-        opacity:     0.95,
+        opacity: 0.95,
       });
       const blob = new THREE.Mesh(geom, mat);
       scene.add(blob);
 
       // ── Secondary (accent) blob ───────────────────────────────────────────
-      const geom2      = new THREE.IcosahedronGeometry(0.9, 3);
+      const geom2 = new THREE.IcosahedronGeometry(0.9, 3);
       const baseVerts2 = new Float32Array(geom2.attributes.position.array);
-      const mat2       = new THREE.MeshPhongMaterial({
-        shininess:   18,
+      const mat2 = new THREE.MeshPhongMaterial({
+        shininess: 18,
         transparent: true,
-        opacity:     0.75,
+        opacity: 0.75,
       });
       const blob2 = new THREE.Mesh(geom2, mat2);
       blob2.position.set(2.2, -1.4, -1.8);
       scene.add(blob2);
 
       // ── Theme-aware color sync ────────────────────────────────────────────
-      const isDark    = () => document.documentElement.classList.contains("dark");
+      const isDark = () => document.documentElement.classList.contains("dark");
       const syncColors = () => {
         const c = isDark() ? COLORS.dark : COLORS.light;
         mat.color.set(c.primary);
@@ -130,19 +130,19 @@ export default function Blob() {
 
       const themeObserver = new MutationObserver(syncColors);
       themeObserver.observe(document.documentElement, {
-        attributes:      true,
+        attributes: true,
         attributeFilter: ["class"],
       });
 
       // ── Noise & deformation ───────────────────────────────────────────────
       const noise4D = createNoise4D();
-      const tmp     = new THREE.Vector3();
+      const tmp = new THREE.Vector3();
 
       function deform(
-        geometry:  BufferGeometry,
-        baseArr:   Float32Array,
-        t:         number,
-        ampScale:  number,
+        geometry: BufferGeometry,
+        baseArr: Float32Array,
+        t: number,
+        ampScale: number,
       ) {
         const pos = geometry.attributes.position as BufferAttribute;
         const arr = pos.array as Float32Array;
@@ -156,8 +156,8 @@ export default function Blob() {
             tmp.z * NOISE_FREQ,
             t,
           );
-          const k   = 1 + n * amp;
-          arr[i]     = baseArr[i]     * k;
+          const k = 1 + n * amp;
+          arr[i] = baseArr[i] * k;
           arr[i + 1] = baseArr[i + 1] * k;
           arr[i + 2] = baseArr[i + 2] * k;
         }
@@ -166,27 +166,30 @@ export default function Blob() {
       }
 
       // ── Pointer parallax ─────────────────────────────────────────────────
-      let mx = 0, my = 0;
+      let mx = 0,
+        my = 0;
       const onPointer = (e: PointerEvent) => {
-        mx = e.clientX / window.innerWidth  - 0.5;
+        mx = e.clientX / window.innerWidth - 0.5;
         my = e.clientY / window.innerHeight - 0.5;
       };
       window.addEventListener("pointermove", onPointer, { passive: true });
 
       // Respect reduced-motion preference — render a single static frame and stop
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
       // ── Render loop ───────────────────────────────────────────────────────
-      let t    = 0;
+      let t = 0;
       let last = performance.now();
 
       function loop(now: number) {
         const dt = now - last;
-        last     = now;
-        t       += dt * SPEED;
+        last = now;
+        t += dt * SPEED;
 
-        deform(geom,  baseVerts,  t,        1.0);
-        deform(geom2, baseVerts2, t * 1.4,  0.7);
+        deform(geom, baseVerts, t, 1.0);
+        deform(geom2, baseVerts2, t * 1.4, 0.7);
 
         blob.position.x = Math.sin(t * 0.6) * 0.5 + mx * 0.4;
         blob.position.y = Math.cos(t * 0.4) * 0.35 - my * 0.3;
@@ -213,7 +216,9 @@ export default function Blob() {
       window.addEventListener("resize", onResize);
 
       // Stash teardown on the canvas so the outer cleanup can reach it
-      (canvas as HTMLCanvasElement & { __blobCleanup?: () => void }).__blobCleanup = () => {
+      (
+        canvas as HTMLCanvasElement & { __blobCleanup?: () => void }
+      ).__blobCleanup = () => {
         themeObserver.disconnect();
         window.removeEventListener("pointermove", onPointer);
         window.removeEventListener("resize", onResize);
@@ -230,11 +235,5 @@ export default function Blob() {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className="blob-canvas"
-    />
-  );
+  return <canvas ref={canvasRef} aria-hidden="true" className="blob-canvas" />;
 }
