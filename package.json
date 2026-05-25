@@ -29,12 +29,7 @@
     "last 2 Safari versions",
     "last 2 Edge versions"
   ],
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "unrs-resolver"
-    ]
-  },
+  "packageManager": "pnpm@11.3.0",
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
     "@types/node": "^25.9.1",
