@@ -26,6 +26,9 @@
 /lighthouse/
 /.claude/
 
+# pnpm — generated locally by pnpm approve-builds; never commit (breaks Vercel pnpm 9)
+pnpm-workspace.yaml
+
 # debug
 npm-debug.log*
 yarn-debug.log*
