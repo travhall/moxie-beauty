@@ -29,12 +29,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Our Services | Moxie Beauty Studio",
-    description: "Lash extensions, lash lift & tint, brow lamination, and more.",
+    description:
+      "Lash extensions, lash lift & tint, brow lamination, and more.",
     images: ["/images/hero-img.jpg"],
   },
 };
-
-
 
 interface ServiceCardProps {
   num: string;
@@ -120,24 +119,84 @@ function groupServices(services: SquareService[]) {
 // ── Hardcoded fallback data ───────────────────────────────────────────────────
 
 const FALLBACK_BROW = [
-  { num: "01", name: "Signature Brow Shape", desc: "Mapping, shaping with wax & precision tweezing, gentle trim and a finished groom. The foundation for every other brow service.", meta: ["From $55", "45 min", "Every 3–4 wks"] },
-  { num: "02", name: "Brow Lamination & Shape", desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint, and a precision shape.", meta: ["From $95", "75 min", "Lasts 6–8 wks"] },
-  { num: "03", name: "Henna Brows", desc: "Plant-based brow color that softly stains the skin beneath, for a fuller-looking shape that holds up between visits. No ammonia, no peroxide.", meta: ["From $65", "45 min", "Skin: 1–2 wks"] },
-  { num: "04", name: "Brow Tint & Shape", desc: "A short, all-purpose visit. Soft tint matched to your hair, plus a shape — the easiest way to wake up looking finished.", meta: ["From $75", "45 min", "Lasts 3–4 wks"] },
+  {
+    num: "01",
+    name: "Signature Brow Shape",
+    desc: "Mapping, shaping with wax & precision tweezing, gentle trim and a finished groom. The foundation for every other brow service.",
+    meta: ["From $55", "45 min", "Every 3–4 wks"],
+  },
+  {
+    num: "02",
+    name: "Brow Lamination & Shape",
+    desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint, and a precision shape.",
+    meta: ["From $95", "75 min", "Lasts 6–8 wks"],
+  },
+  {
+    num: "03",
+    name: "Henna Brows",
+    desc: "Plant-based brow color that softly stains the skin beneath, for a fuller-looking shape that holds up between visits. No ammonia, no peroxide.",
+    meta: ["From $65", "45 min", "Skin: 1–2 wks"],
+  },
+  {
+    num: "04",
+    name: "Brow Tint & Shape",
+    desc: "A short, all-purpose visit. Soft tint matched to your hair, plus a shape — the easiest way to wake up looking finished.",
+    meta: ["From $75", "45 min", "Lasts 3–4 wks"],
+  },
 ];
 
 const FALLBACK_LASH = [
-  { num: "05", name: "Classic Lash Set", desc: "One natural extension applied to each of your natural lashes — the look of a really good mascara, without the mascara.", meta: ["From $145", "120 min", "Fills $70"] },
-  { num: "06", name: "Hybrid Lash Set", desc: "Half classic, half volume. Subtle texture and a little more depth, without the full drama of a volume set.", meta: ["From $170", "135 min", "Fills $85"] },
-  { num: "07", name: "Volume Lash Set", desc: "Hand-made fans of ultra-fine extensions create soft, even density. Choose anywhere from a quiet 2D to a deliberate 5D set.", meta: ["From $195", "150 min", "Fills $95"] },
-  { num: "08", name: "Lash Lift & Tint", desc: "A subtle curl from root to tip that makes your own lashes look longer. Pair with a tint to skip the mascara entirely.", meta: ["From $110", "60 min", "Lasts 6–8 wks"] },
+  {
+    num: "05",
+    name: "Classic Lash Set",
+    desc: "One natural extension applied to each of your natural lashes — the look of a really good mascara, without the mascara.",
+    meta: ["From $145", "120 min", "Fills $70"],
+  },
+  {
+    num: "06",
+    name: "Hybrid Lash Set",
+    desc: "Half classic, half volume. Subtle texture and a little more depth, without the full drama of a volume set.",
+    meta: ["From $170", "135 min", "Fills $85"],
+  },
+  {
+    num: "07",
+    name: "Volume Lash Set",
+    desc: "Hand-made fans of ultra-fine extensions create soft, even density. Choose anywhere from a quiet 2D to a deliberate 5D set.",
+    meta: ["From $195", "150 min", "Fills $95"],
+  },
+  {
+    num: "08",
+    name: "Lash Lift & Tint",
+    desc: "A subtle curl from root to tip that makes your own lashes look longer. Pair with a tint to skip the mascara entirely.",
+    meta: ["From $110", "60 min", "Lasts 6–8 wks"],
+  },
 ];
 
 const FALLBACK_EXTRAS = [
-  { num: "09", name: "First-Visit Consult", desc: "New here? Start with a 30-minute mapping & consultation. We'll plan a shape together and book the right services for you.", meta: ["Complimentary", "30 min", "In studio"] },
-  { num: "10", name: "Lash Removal", desc: "Safe, gentle removal of extensions applied anywhere. No tugging, no damage to your natural lashes. Often paired with a lift.", meta: ["From $35", "30 min", "Walk-out clean"] },
-  { num: "11", name: "Lash Tint", desc: "A small visit, big difference — semi-permanent color that darkens the full length of your natural lashes for 4–6 weeks.", meta: ["From $45", "30 min", "Lasts 4–6 wks"] },
-  { num: "12", name: "Moxie Gift Card", desc: "A quietly thoughtful gift, in any amount. Delivered as a small card by mail, or by email the same day.", meta: ["$50+", "No expiry", "Mail or email"] },
+  {
+    num: "09",
+    name: "First-Visit Consult",
+    desc: "New here? Start with a 30-minute mapping & consultation. We'll plan a shape together and book the right services for you.",
+    meta: ["Complimentary", "30 min", "In studio"],
+  },
+  {
+    num: "10",
+    name: "Lash Removal",
+    desc: "Safe, gentle removal of extensions applied anywhere. No tugging, no damage to your natural lashes. Often paired with a lift.",
+    meta: ["From $35", "30 min", "Walk-out clean"],
+  },
+  {
+    num: "11",
+    name: "Lash Tint",
+    desc: "A small visit, big difference — semi-permanent color that darkens the full length of your natural lashes for 4–6 weeks.",
+    meta: ["From $45", "30 min", "Lasts 4–6 wks"],
+  },
+  {
+    num: "12",
+    name: "Moxie Gift Card",
+    desc: "A quietly thoughtful gift, in any amount. Delivered as a small card by mail, or by email the same day.",
+    meta: ["$50+", "No expiry", "Mail or email"],
+  },
 ];
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
@@ -146,7 +205,11 @@ export default async function ServicesPage() {
   const container = containerClass;
 
   // Attempt to load live services from Square
-  let groups = { brow: [] as SquareService[], lash: [] as SquareService[], extras: [] as SquareService[] };
+  let groups = {
+    brow: [] as SquareService[],
+    lash: [] as SquareService[],
+    extras: [] as SquareService[],
+  };
   let useLive = false;
   try {
     const live = await getSquareServices();
@@ -172,9 +235,15 @@ export default async function ServicesPage() {
   const fallbackWithId = (arr: typeof FALLBACK_BROW) =>
     arr.map((c) => ({ ...c, variationId: null }));
 
-  const browCards = useLive ? liveCards(groups.brow, 1) : fallbackWithId(FALLBACK_BROW);
-  const lashCards = useLive ? liveCards(groups.lash, browCards.length + 1) : fallbackWithId(FALLBACK_LASH);
-  const extrasCards = useLive ? liveCards(groups.extras, browCards.length + lashCards.length + 1) : fallbackWithId(FALLBACK_EXTRAS);
+  const browCards = useLive
+    ? liveCards(groups.brow, 1)
+    : fallbackWithId(FALLBACK_BROW);
+  const lashCards = useLive
+    ? liveCards(groups.lash, browCards.length + 1)
+    : fallbackWithId(FALLBACK_LASH);
+  const extrasCards = useLive
+    ? liveCards(groups.extras, browCards.length + lashCards.length + 1)
+    : fallbackWithId(FALLBACK_EXTRAS);
 
   return (
     <main>
@@ -196,7 +265,7 @@ export default async function ServicesPage() {
             <span aria-current="page">Services &amp; Pricing</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_380px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               The{" "}
               <em className="font-nyght-italic not-italic text-(--accent)">
@@ -207,7 +276,7 @@ export default async function ServicesPage() {
               <br />
               done carefully.
             </h1>
-            <p className="text-xl text-(--ink-soft) leading-relaxed self-end max-w-105">
+            <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               A focused list of brow and lash services — each one designed
               around the consultation we&apos;ll have before we begin. Prices
               are starting points; final pricing reflects your shape, density,
@@ -280,14 +349,21 @@ export default async function ServicesPage() {
               </div>
               <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
                 Brow design is part architecture, part observation. We map your
-                bone structure, talk through how you want to look on a Monday and
-                a Saturday, and only then pick up the tweezers.
+                bone structure, talk through how you want to look on a Monday
+                and a Saturday, and only then pick up the tweezers.
               </p>
             </div>
 
             <div className="divide-y-0">
               {browCards.map((c) => (
-                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} variationId={c.variationId} />
+                <ServiceCard
+                  key={c.num}
+                  num={c.num}
+                  name={c.name}
+                  desc={c.desc}
+                  meta={c.meta}
+                  variationId={c.variationId}
+                />
               ))}
             </div>
           </div>
@@ -344,7 +420,14 @@ export default async function ServicesPage() {
 
             <div>
               {lashCards.map((c) => (
-                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} variationId={c.variationId} />
+                <ServiceCard
+                  key={c.num}
+                  num={c.num}
+                  name={c.name}
+                  desc={c.desc}
+                  meta={c.meta}
+                  variationId={c.variationId}
+                />
               ))}
             </div>
           </div>
@@ -377,7 +460,14 @@ export default async function ServicesPage() {
 
             <div>
               {extrasCards.map((c) => (
-                <ServiceCard key={c.num} num={c.num} name={c.name} desc={c.desc} meta={c.meta} variationId={c.variationId} />
+                <ServiceCard
+                  key={c.num}
+                  num={c.num}
+                  name={c.name}
+                  desc={c.desc}
+                  meta={c.meta}
+                  variationId={c.variationId}
+                />
               ))}
             </div>
           </div>
@@ -385,7 +475,7 @@ export default async function ServicesPage() {
       )}
 
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
-      <Appointments />
+      <Appointments context="services" />
     </main>
   );
 }

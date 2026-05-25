@@ -49,7 +49,7 @@ export default function AboutPage() {
             <span aria-current="page">About the studio</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_380px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               Quiet hands,
               <br />
@@ -58,7 +58,7 @@ export default function AboutPage() {
                 eyes.
               </em>
             </h1>
-            <p className="text-xl text-(--ink-soft) leading-relaxed self-end max-w-105">
+            <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               Moxie is a one-chair brow and lash studio in the village of
               Rochester, Wisconsin. We opened in 2019 with a small idea: that
               the people doing this kind of work should be allowed to take their
@@ -291,7 +291,17 @@ export default function AboutPage() {
 
       {/* ── Marquee ───────────────────────────────────────────────────── */}
       {/* TODO: "312 five-star reviews" is a placeholder */}
-      <MarqueeTicker items={["slow work", "1:1 appointments", "vegan adhesives", "plant-based tints", "licensed esthetician", "rochester, wi", "312 five-star reviews"]} />
+      <MarqueeTicker
+        items={[
+          "slow work",
+          "1:1 appointments",
+          "vegan adhesives",
+          "plant-based tints",
+          "licensed esthetician",
+          "rochester, wi",
+          "312 five-star reviews",
+        ]}
+      />
 
       {/* ── Studio mosaic ─────────────────────────────────────────────── */}
       <section className="py-20">
@@ -356,7 +366,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
-      <Appointments />
+      <Appointments context="about" />
     </main>
   );
 }

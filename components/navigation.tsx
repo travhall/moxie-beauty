@@ -351,7 +351,7 @@ export default function Navigation() {
       {/* Rendered outside the header to escape its backdrop-filter stacking context */}
       <div
         id="nav-mobile-drawer"
-        className={`nav-mobile-drawer bg-(--background) ${menuOpen ? " open" : ""}`}
+        className={`nav-mobile-drawer bg-(--background) lg:hidden ${menuOpen ? " open" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
@@ -368,6 +368,7 @@ export default function Navigation() {
                   href={item.href}
                   ref={index === 0 ? drawerFirstLinkRef : undefined}
                   className={[
+                    "drawer-item",
                     // Base — vertical accent bar grows from center on left edge
                     "block font-nyght text-[clamp(36px,8vw,52px)] leading-none no-underline py-4.5 border-b border-(--line-soft) tracking-[-0.01em] relative pl-0",
                     "before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5 before:rounded-full before:bg-(--accent)",
@@ -378,6 +379,11 @@ export default function Navigation() {
                       ? "text-(--accent) before:scale-y-100 pl-4"
                       : "text-(--foreground) hover:text-(--accent) hover:pl-4 before:scale-y-0 hover:before:scale-y-100",
                   ].join(" ")}
+                  style={
+                    {
+                      "--drawer-delay": `${0.05 + index * 0.055}s`,
+                    } as React.CSSProperties
+                  }
                   aria-current={isActive ? "page" : undefined}
                 >
                   {item.name}
@@ -387,7 +393,10 @@ export default function Navigation() {
           </nav>
 
           {/* CTA buttons */}
-          <div className="mt-9 flex flex-col items-start gap-3">
+          <div
+            className="drawer-item mt-9 flex flex-col items-start gap-3"
+            style={{ "--drawer-delay": "0.28s" } as React.CSSProperties}
+          >
             <Button
               size="sm"
               showArrow
@@ -411,7 +420,10 @@ export default function Navigation() {
           </div>
 
           {/* Meta: hours + address */}
-          <div className="mt-11 pt-7 border-t border-(--line-soft) flex flex-col gap-5">
+          <div
+            className="drawer-item mt-11 pt-7 border-t border-(--line-soft) flex flex-col gap-5"
+            style={{ "--drawer-delay": "0.36s" } as React.CSSProperties}
+          >
             <div>
               <p className="text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) font-medium">
                 Hours
@@ -429,8 +441,6 @@ export default function Navigation() {
               </p>
               <a
                 href={siteConfig.contact.phoneHref}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="font-nyght text-[19px] text-(--foreground) mt-1 block hover:text-(--accent) transition-colors"
               >
                 {siteConfig.contact.phone}
@@ -444,6 +454,7 @@ export default function Navigation() {
                 href={siteConfig.address.mapsHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`${siteConfig.address.short} (opens in new tab)`}
                 className="font-nyght text-[19px] text-(--foreground) mt-1 block hover:text-(--accent) transition-colors"
               >
                 {siteConfig.address.short}

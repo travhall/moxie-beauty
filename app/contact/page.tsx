@@ -20,12 +20,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Contact | Moxie Beauty Studio",
-    description: "402 S Front Street, Rochester WI — hours, directions, and contact.",
+    description:
+      "402 S Front Street, Rochester WI — hours, directions, and contact.",
     images: ["/images/hero-img.jpg"],
   },
 };
-
-
 
 const PlusIcon = () => (
   <svg
@@ -103,7 +102,7 @@ export default function ContactPage() {
             <span aria-current="page">Contact</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_380px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               402 South
               <br />
@@ -112,7 +111,7 @@ export default function ContactPage() {
                 Street.
               </em>
             </h1>
-            <p className="text-xl text-(--ink-soft) leading-relaxed self-end max-w-105">
+            <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               The studio sits in a 1908 mercantile on the south end of Front
               Street in Rochester, Wisconsin. There&apos;s a small painted M on
               the door — you&apos;ll know it when you see it.
@@ -413,7 +412,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
-      <Appointments />
+      <Appointments context="contact" />
     </main>
   );
 }
