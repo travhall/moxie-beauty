@@ -401,6 +401,8 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* cSpell:ignore chev */}
+
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
       <Appointments context="contact" />
     </main>

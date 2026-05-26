@@ -113,7 +113,7 @@ export default function About() {
                 Jackie Schult
               </strong>
               . Jackie specializes in{" "}
-              <em className="font-nyght-italic">
+              <em className="italic font-bold text-(--accent)">
                 eyelash extensions, lash lift and tint, eyebrow lamination,
                 microblading, and waxing
               </em>
@@ -122,7 +122,7 @@ export default function About() {
               trends to provide the best possible care.
             </p>
 
-            <p className="text-[15px] leading-relaxed text-(--ink-soft)">
+            <p className="leading-relaxed text-(--ink-soft)">
               Jackie is committed to fostering strong relationships with her
               clients, ensuring each appointment is a personalized &amp;
               enjoyable experience.

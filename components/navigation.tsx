@@ -287,7 +287,7 @@ export default function Navigation() {
                 />
               </div>
 
-              {/* Nav links — z-10 to float above the blob layer */}
+              {/* Nav links */}
               {navItems.map((item) => {
                 const isActive = isNavActive(item);
                 return (

@@ -145,15 +145,6 @@ body {
   color: var(--background);
 }
 
-/* .site-container {
-  position: relative;
-  background: var(--background);
-  border-right: 0.5px solid var(--accent);
-  border-left: 0.5px solid var(--accent);
-  margin: 0 auto;
-  max-width: 1680px;
-} */
-
 .bevel {
   box-shadow:
     inset 0.2em 0.2em 0.2em 0 hsla(0, 0%, 88%, 0.25),

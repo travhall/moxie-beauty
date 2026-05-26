@@ -232,6 +232,8 @@ export default async function ServicesPage() {
     }));
   }
 
+  // cSpell:ignore svcs
+
   const fallbackWithId = (arr: typeof FALLBACK_BROW) =>
     arr.map((c) => ({ ...c, variationId: null }));
 
@@ -269,9 +271,9 @@ export default async function ServicesPage() {
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               The <em className="font-nyght-italic text-(--accent)">menu.</em>
               <br />
-              Slow work,
+              Quality work,
               <br />
-              done carefully.
+              crafted with care.
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               A focused list of brow and lash services — each one designed
@@ -372,7 +374,7 @@ export default async function ServicesPage() {
           aria-label="A note on the way we work"
         >
           <div className={container}>
-            <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/50 mb-6">
+            <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/60 mb-6">
               A note on the way we work
             </p>
             <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-2xl">
@@ -382,7 +384,7 @@ export default async function ServicesPage() {
               than fast and full of{" "}
               <span className="text-(--accent)">apologies.</span>
             </p>
-            <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)/40">
+            <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)/60">
               Jackie · founder · est. 2019
             </p>
           </div>

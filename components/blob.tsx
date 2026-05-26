@@ -103,6 +103,8 @@ export default function Blob() {
       const blob = new THREE.Mesh(geom, mat);
       scene.add(blob);
 
+      // cSpell:ignore Verts Phong flatShading
+
       // ── Secondary (accent) blob ───────────────────────────────────────────
       const geom2 = new THREE.IcosahedronGeometry(0.9, 3);
       const baseVerts2 = new Float32Array(geom2.attributes.position.array);

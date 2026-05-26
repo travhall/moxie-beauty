@@ -114,7 +114,7 @@ function ServiceRow({
   variationId,
 }: ServiceRowProps) {
   const href = variationId
-    ? `${siteConfig.bookingUrl}/${variationId}`
+    ? `${siteConfig.bookingUrl}?service_id=${variationId}`
     : siteConfig.bookingUrl;
   return (
     <a
@@ -187,7 +187,7 @@ export default async function Services() {
         name: svc.name,
         desc: svc.description,
         meta: buildMeta(svc),
-        variationId: svc.id,
+        variationId: primaryVariationId(svc.variations),
       }))
     : FALLBACK_SERVICES.map((s) => ({ ...s, variationId: null }));
 
@@ -216,12 +216,13 @@ export default async function Services() {
               <br className="hidden lg:block" /> slowly &amp; with care.
             </h2>
           </div>
-          <p className="text-[17px] leading-relaxed text-(--ink-soft) max-w-[52ch]">
-            Every appointment begins with a quiet consultation. We map your
+          <p className="text-[17px] leading-relaxed text-(--ink-soft) max-w-[56ch] justify-self-end">
+            Every appointment begins with a one on one consultation. We map your
             features, talk through how you want to look and feel, and tailor the
             work from there. No two faces are the same &mdash; your brows
             shouldn&rsquo;t be either.
           </p>
+          {/* cSpell:ignore shouldn */}
         </div>
 
         {/* ── Service rows — 2-col grid ───────────────────────────────── */}

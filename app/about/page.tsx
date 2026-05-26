@@ -57,10 +57,9 @@ export default function AboutPage() {
               <em className="font-nyght-italic text-(--accent)">eyes.</em>
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-              Moxie is a one-chair brow and lash studio in the village of
-              Rochester, Wisconsin. We opened in 2019 with a small idea: that
-              the people doing this kind of work should be allowed to take their
-              time.
+              Moxie is a small, intimate brow and lash studio in the village of
+              Rochester, Wisconsin. We opened in 2019 with a small idea: bring
+              the artistry of brow and lash services to our community.
             </p>
           </div>
 
@@ -105,45 +104,39 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-20">
             {/* Portrait */}
             <div className="flex flex-col items-start gap-3">
-              <div
-                className="relative w-full max-w-85 overflow-hidden"
-                style={{ borderRadius: "999px 999px 24px 24px" }}
-              >
+              <div className="relative w-full max-w-85 overflow-hidden rounded-b-2xl">
                 <Image
                   src="/images/jackie-profile.jpg"
                   alt="Jackie, founder of Moxie Beauty Studio"
                   width={680}
                   height={900}
-                  className="w-full object-cover"
+                  className="w-full object-cover rounded-t-full border-l-8 border-(--accent)"
                   priority
                 />
               </div>
-              <p className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--ink-mute)">
-                Jackie · founder
-              </p>
             </div>
 
             {/* Bio */}
-            <div className="lg:pt-8">
+            <div className="lg:pt-8 max-w-2xl">
               <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-6">
                 The founder
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
-                A studio built by someone who&apos;d{" "}
-                <em className="font-nyght-italic text-(--accent)">rather</em>{" "}
-                sit and study.
+                A studio built by someone who constantly{" "}
+                <em className="font-nyght-italic text-(--accent)">evolving</em>{" "}
+                their practice.
               </h2>
               <p className="text-xl text-(--ink-soft) mb-5 leading-relaxed">
-                Jackie is a licensed esthetician with a quiet obsession for
-                symmetry, the underside of a good brow shape, and the way a lash
-                sits when nobody told it to.
+                Jackie is a licensed esthetician with an eye for symmetry, the
+                underside of a good brow shape, and the way a lash sits when
+                nobody told it to.
               </p>
               <p className="text-(--ink-soft) mb-5 leading-relaxed">
                 She trained in Milwaukee, worked several years in a much busier
                 salon, and finally opened Moxie when she realized the work she
                 wanted to do — the slow, mapped, half-an-hour-of-consultation
                 kind — wasn&apos;t really possible alongside someone else&apos;s
-                schedule. The studio is small on purpose.
+                schedule.
               </p>
               <p className="text-(--ink-soft) leading-relaxed">
                 When she isn&apos;t in studio, you&apos;ll find her in her
@@ -163,6 +156,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      {/* cSpell:ignore wasn hasn */}
 
       {/* ── Pull quote ────────────────────────────────────────────────── */}
       <section className="py-12">
@@ -196,7 +190,7 @@ export default function AboutPage() {
       {/* ── Principles ────────────────────────────────────────────────── */}
       <section className="py-20">
         <div className={container}>
-          <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-14">
+          <div className="grid lg:grid-cols-[480px_1fr] gap-16 mb-14">
             <div>
               <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                 Principles
@@ -292,7 +286,7 @@ export default function AboutPage() {
       {/* ── Studio mosaic ─────────────────────────────────────────────── */}
       <section className="py-20">
         <div className={container}>
-          <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-12">
+          <div className="grid lg:grid-cols-[480px_1fr] gap-16 mb-12">
             <div>
               <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                 The space
@@ -302,24 +296,20 @@ export default function AboutPage() {
                 <em className="font-nyght-italic text-(--accent)">
                   light-filled
                 </em>{" "}
-                room.
+                studio.
               </h2>
             </div>
             <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
               We&apos;re tucked into a 1908 mercantile building on the south end
               of Front Street, with one north-facing window, soft Belgian linen,
-              and a single chair that hasn&apos;t yet had a guest fall asleep in
-              it.
+              and a warm, inviting vibe — a retreat from the world outside.
             </p>
           </div>
 
           {/* Mosaic grid */}
           <div className="grid grid-cols-6 grid-rows-[280px_180px] gap-3 rounded-3xl overflow-hidden">
             {/* Tile 1: lobby photo — wide */}
-            <div
-              className="col-span-6 sm:col-span-3 row-span-2 relative overflow-hidden rounded-2xl"
-              style={{ borderRadius: "40px 40px 16px 16px" }}
-            >
+            <div className="col-span-6 sm:col-span-3 row-span-2 relative overflow-hidden rounded-sm rounded-l-2xl">
               <Image
                 src="/images/moxie-lobby.jpg"
                 alt="The Moxie studio"
@@ -329,20 +319,14 @@ export default function AboutPage() {
             </div>
 
             {/* Tile 2: placeholder — top right */}
-            <div
-              className="col-span-6 sm:col-span-3 row-span-1 bg-(--bg-soft) border border-(--line-soft) flex items-end p-5 rounded-2xl"
-              style={{ borderRadius: "16px 40px 16px 16px" }}
-            >
+            <div className="col-span-6 sm:col-span-3 row-span-1 bg-(--bg-soft) border border-(--line-soft) flex items-end p-5 relative overflow-hidden rounded-sm rounded-tr-2xl">
               <span className="font-nyght-bold text-[9px] tracking-[0.25em] uppercase text-(--ink-mute)">
                 [ Studio · service chair detail ]
               </span>
             </div>
 
             {/* Tile 3: placeholder — bottom right */}
-            <div
-              className="col-span-6 sm:col-span-3 row-span-1 bg-(--bg-soft) border border-(--line-soft) flex items-end p-5 rounded-2xl"
-              style={{ borderRadius: "16px 16px 40px 16px" }}
-            >
+            <div className="col-span-6 sm:col-span-3 row-span-1 bg-(--bg-soft) border border-(--line-soft) flex items-end p-5 relative overflow-hidden rounded-sm rounded-br-2xl">
               <span className="font-nyght-bold text-[9px] tracking-[0.25em] uppercase text-(--ink-mute)">
                 [ Botanical · north window ]
               </span>
