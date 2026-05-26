@@ -54,9 +54,7 @@ export default function AboutPage() {
               Quiet hands,
               <br />
               careful{" "}
-              <em className="font-nyght-italic not-italic text-(--accent)">
-                eyes.
-              </em>
+              <em className="font-nyght-italic text-(--accent)">eyes.</em>
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               Moxie is a one-chair brow and lash studio in the village of
@@ -132,9 +130,7 @@ export default function AboutPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
                 A studio built by someone who&apos;d{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  rather
-                </em>{" "}
+                <em className="font-nyght-italic text-(--accent)">rather</em>{" "}
                 sit and study.
               </h2>
               <p className="text-xl text-(--ink-soft) mb-5 leading-relaxed">
@@ -157,9 +153,7 @@ export default function AboutPage() {
               <div className="mt-10 pt-8 border-t border-(--line-soft)">
                 <p className="font-nyght text-3xl text-(--foreground)">
                   Jackie
-                  <em className="font-nyght-italic not-italic text-(--accent)">
-                    .
-                  </em>
+                  <em className="font-nyght-italic text-(--accent)">.</em>
                 </p>
                 <p className="text-[11px] tracking-[0.2em] uppercase text-(--ink-mute) mt-1">
                   Founder &amp; lead artist
@@ -209,10 +203,8 @@ export default function AboutPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
                 Four{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  things
-                </em>{" "}
-                we hold to.
+                <em className="font-nyght-italic text-(--accent)">things</em> we
+                hold to.
               </h2>
             </div>
             <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
@@ -228,9 +220,7 @@ export default function AboutPage() {
                 heading: (
                   <span>
                     One guest at a{" "}
-                    <em className="font-nyght-italic not-italic text-(--accent)">
-                      time.
-                    </em>
+                    <em className="font-nyght-italic text-(--accent)">time.</em>
                   </span>
                 ),
                 body: "No double-booking, no rushed handoffs, no waiting room. Your hour is yours. We never overlap appointments — even by a few minutes — so the studio stays quiet.",
@@ -240,9 +230,7 @@ export default function AboutPage() {
                 heading: (
                   <span>
                     The consultation{" "}
-                    <em className="font-nyght-italic not-italic text-(--accent)">
-                      comes
-                    </em>{" "}
+                    <em className="font-nyght-italic text-(--accent)">comes</em>{" "}
                     first.
                   </span>
                 ),
@@ -253,7 +241,7 @@ export default function AboutPage() {
                 heading: (
                   <span>
                     Products we&apos;d use{" "}
-                    <em className="font-nyght-italic not-italic text-(--accent)">
+                    <em className="font-nyght-italic text-(--accent)">
                       ourselves.
                     </em>
                   </span>
@@ -265,9 +253,7 @@ export default function AboutPage() {
                 heading: (
                   <span>
                     Aftercare is part of the{" "}
-                    <em className="font-nyght-italic not-italic text-(--accent)">
-                      work.
-                    </em>
+                    <em className="font-nyght-italic text-(--accent)">work.</em>
                   </span>
                 ),
                 body: "You leave with a small card of instructions written for your specific service, and a number you can text if anything feels off in the first week.",
@@ -313,7 +299,7 @@ export default function AboutPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
                 A small,{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
+                <em className="font-nyght-italic text-(--accent)">
                   light-filled
                 </em>{" "}
                 room.

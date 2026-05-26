@@ -267,10 +267,7 @@ export default async function ServicesPage() {
 
           <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
-              The{" "}
-              <em className="font-nyght-italic not-italic text-(--accent)">
-                menu.
-              </em>
+              The <em className="font-nyght-italic text-(--accent)">menu.</em>
               <br />
               Slow work,
               <br />
@@ -341,9 +338,7 @@ export default async function ServicesPage() {
                 </p>
                 <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
                   For the{" "}
-                  <em className="font-nyght-italic not-italic text-(--accent)">
-                    shape
-                  </em>{" "}
+                  <em className="font-nyght-italic text-(--accent)">shape</em>{" "}
                   you were born with.
                 </h2>
               </div>
@@ -405,9 +400,7 @@ export default async function ServicesPage() {
                 </p>
                 <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
                   Lashes that look like{" "}
-                  <em className="font-nyght-italic not-italic text-(--accent)">
-                    yours,
-                  </em>{" "}
+                  <em className="font-nyght-italic text-(--accent)">yours,</em>{" "}
                   only better.
                 </h2>
               </div>
@@ -445,7 +438,7 @@ export default async function ServicesPage() {
                 </p>
                 <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
                   Small{" "}
-                  <em className="font-nyght-italic not-italic text-(--accent)">
+                  <em className="font-nyght-italic text-(--accent)">
                     finishes,
                   </em>{" "}
                   &amp; first visits.

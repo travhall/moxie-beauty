@@ -54,9 +54,7 @@ export default function VisitPage() {
               Your appointment,
               <br />
               start to{" "}
-              <em className="font-nyght-italic not-italic text-(--accent)">
-                finish.
-              </em>
+              <em className="font-nyght-italic text-(--accent)">finish.</em>
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               Every visit follows the same quiet rhythm — a consultation first,
@@ -107,7 +105,7 @@ export default function VisitPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
                 Find a{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
+                <em className="font-nyght-italic text-(--accent)">
                   quiet hour
                 </em>{" "}
                 for yourself.
@@ -145,9 +143,7 @@ export default function VisitPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
                 Arrive as{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  yourself.
-                </em>
+                <em className="font-nyght-italic text-(--accent)">yourself.</em>
               </h2>
               <p className="text-(--ink-soft) leading-relaxed mb-5">
                 If you can, come with a clean face — no eye makeup, no heavy
@@ -182,9 +178,7 @@ export default function VisitPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
                 The consultation{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  comes
-                </em>{" "}
+                <em className="font-nyght-italic text-(--accent)">comes</em>{" "}
                 first.
               </h2>
               <p className="text-(--ink-soft) leading-relaxed mb-5">
@@ -220,9 +214,7 @@ export default function VisitPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
                 You leave with{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  written
-                </em>{" "}
+                <em className="font-nyght-italic text-(--accent)">written</em>{" "}
                 instructions.
               </h2>
               <p className="text-(--ink-soft) leading-relaxed mb-5">
@@ -261,9 +253,7 @@ export default function VisitPage() {
             </p>
             <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
               402 S Front{" "}
-              <em className="font-nyght-italic not-italic text-(--accent)">
-                Street,
-              </em>{" "}
+              <em className="font-nyght-italic text-(--accent)">Street,</em>{" "}
               Rochester.
             </h2>
           </div>
@@ -275,9 +265,7 @@ export default function VisitPage() {
                 heading: (
                   <span>
                     The{" "}
-                    <em className="font-nyght-italic not-italic text-(--accent)">
-                      door
-                    </em>{" "}
+                    <em className="font-nyght-italic text-(--accent)">door</em>{" "}
                     with the M.
                   </span>
                 ),
@@ -292,7 +280,7 @@ export default function VisitPage() {
                 heading: (
                   <span>
                     Free, on the{" "}
-                    <em className="font-nyght-italic not-italic text-(--accent)">
+                    <em className="font-nyght-italic text-(--accent)">
                       street.
                     </em>
                   </span>
@@ -305,7 +293,7 @@ export default function VisitPage() {
                 heading: (
                   <span>
                     Just{" "}
-                    <em className="font-nyght-italic not-italic text-(--accent)">
+                    <em className="font-nyght-italic text-(--accent)">
                       yourself.
                     </em>
                   </span>

@@ -107,9 +107,7 @@ export default function ContactPage() {
               402 South
               <br />
               Front{" "}
-              <em className="font-nyght-italic not-italic text-(--accent)">
-                Street.
-              </em>
+              <em className="font-nyght-italic text-(--accent)">Street.</em>
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               The studio sits in a 1908 mercantile on the south end of Front
@@ -212,13 +210,9 @@ export default function ContactPage() {
               </p>
               <h2 className="font-nyght text-3xl lg:text-4xl leading-tight mb-8">
                 Open{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  Tuesday
-                </em>{" "}
+                <em className="font-nyght-italic text-(--accent)">Tuesday</em>{" "}
                 through{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  Saturday,
-                </em>{" "}
+                <em className="font-nyght-italic text-(--accent)">Saturday,</em>{" "}
                 by appointment.
               </h2>
 
@@ -287,9 +281,7 @@ export default function ContactPage() {
               </p>
               <h2 className="font-nyght text-3xl lg:text-4xl leading-tight mb-8">
                 The{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  quickest
-                </em>{" "}
+                <em className="font-nyght-italic text-(--accent)">quickest</em>{" "}
                 way to reach us.
               </h2>
               <p className="text-(--ink-soft) leading-relaxed mb-8">
@@ -376,9 +368,7 @@ export default function ContactPage() {
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
                 The things people{" "}
-                <em className="font-nyght-italic not-italic text-(--accent)">
-                  often
-                </em>{" "}
+                <em className="font-nyght-italic text-(--accent)">often</em>{" "}
                 ask.
               </h2>
             </div>
