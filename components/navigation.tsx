@@ -224,7 +224,7 @@ export default function Navigation() {
             {/* Brand */}
             <Link
               href="/"
-              className="inline-flex ms-4"
+              className="inline-flex ms-4 rounded-sm"
               aria-label="Moxie Beauty Studio — Home"
             >
               <Logo placement="header" />
@@ -296,7 +296,7 @@ export default function Navigation() {
                     href={item.href}
                     className={[
                       "relative z-10 px-3 text-sm font-semibold tracking-[0.06em] no-underline transition-colors duration-250",
-                      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent)",
+                      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent) rounded-full",
                       isActive
                         ? "text-(--accent)"
                         : "text-(--ink-soft) hover:text-(--foreground)",

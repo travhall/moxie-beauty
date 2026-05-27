@@ -73,7 +73,7 @@ export default function HeroSection() {
                 </p>
                 <Link
                   href={siteConfig.contact.phoneHref}
-                  className="font-nyght text-[19px] text-(--foreground) no-underline hover:text-(--accent) transition-colors"
+                  className="font-nyght text-[19px] text-(--foreground) no-underline hover:text-(--accent) transition-colors rounded-full"
                 >
                   {siteConfig.contact.phone}
                 </Link>
@@ -84,7 +84,7 @@ export default function HeroSection() {
                 </p>
                 <Link
                   href={siteConfig.contact.emailHref}
-                  className="font-nyght text-[19px] text-(--foreground) no-underline hover:text-(--accent) transition-colors"
+                  className="font-nyght text-[19px] text-(--foreground) no-underline hover:text-(--accent) transition-colors rounded-full"
                 >
                   {siteConfig.contact.email}
                 </Link>

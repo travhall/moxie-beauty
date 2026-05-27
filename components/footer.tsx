@@ -52,14 +52,14 @@ function FooterCol({
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200"
+                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200 rounded-full"
               >
                 {label}
               </a>
             ) : (
               <Link
                 href={href}
-                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200"
+                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200 rounded-full"
               >
                 {label}
               </Link>
@@ -83,7 +83,11 @@ export default function Footer() {
         <div className="grid grid-cols-2 lg:grid-cols-[280px_1fr_1fr_1fr] gap-10 lg:gap-16 py-16">
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-block mb-5">
+            <Link
+              href="/"
+              className="inline-block mb-5 rounded-sm"
+              aria-label="Moxie Beauty Studio — Home"
+            >
               <Logo placement="footer" />
             </Link>
 
@@ -110,7 +114,16 @@ export default function Footer() {
             {siteConfig.url.replace("https://", "")}
           </p>
           <p className="text-[11px] text-(--ink-mute)">
-            Booking handled by Square &nbsp;&middot;&nbsp; Crafted with care
+            Booking handled by Square &nbsp;&middot;&nbsp; Crafted with care by{" "}
+            <a
+              href="https://travishall.design"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-(--ink-mute) hover:text-(--accent) transition-colors duration-200 rounded-full"
+            >
+              travishall.design
+            </a>
+            .
           </p>
         </div>
       </div>
