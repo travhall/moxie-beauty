@@ -173,9 +173,9 @@ export default function AboutPage() {
             </span>
             <blockquote className="relative font-nyght-italic text-3xl lg:text-4xl text-(--foreground) leading-snug max-w-2xl">
               Brows and lashes should look like they{" "}
-              <em className="not-italic text-(--accent)">grew</em> that way
-              <em className="not-italic text-(--accent)">.</em> Only a little
-              better than the morning you happened to catch them at their best.
+              <em className="text-(--accent)">grew</em> that way
+              <em className="text-(--accent)">.</em> Only a little better than
+              the morning you happened to catch them at their best.
             </blockquote>
             <div className="flex items-center gap-3 mt-8">
               <span
