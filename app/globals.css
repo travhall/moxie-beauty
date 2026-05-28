@@ -74,6 +74,15 @@
   --button-foreground: var(--rose-gold-50);
 }
 
+@layer utilities {
+  .font-nyght-italic {
+    font-style: italic;
+  }
+  .font-nyght-bold-italic {
+    font-style: italic;
+  }
+}
+
 .dark {
   --background: var(--ivory-rose-900);
   --foreground: var(--ivory-rose-50);

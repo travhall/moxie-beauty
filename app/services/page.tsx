@@ -261,7 +261,7 @@ export default async function ServicesPage() {
             <span aria-current="page">Services &amp; Pricing</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               The <em className="font-nyght-italic text-(--accent)">menu.</em>
               <br />
@@ -326,7 +326,7 @@ export default async function ServicesPage() {
       {browCards.length > 0 && (
         <section className="py-20">
           <div className={container}>
-            <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
+            <div className="grid lg:grid-cols-[420px_540px] gap-4 justify-between mb-10">
               <div>
                 <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                   I · Brow
@@ -337,7 +337,7 @@ export default async function ServicesPage() {
                   you were born with.
                 </h2>
               </div>
-              <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
+              <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed text-pretty">
                 Brow design is part architecture, part observation. We map your
                 bone structure, talk through how you want to look on a Monday
                 and a Saturday, and only then pick up the tweezers.
@@ -370,9 +370,8 @@ export default async function ServicesPage() {
             <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/80 mb-6">
               A note on the way we work
             </p>
-            <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-2xl">
-              We&apos;d rather be{" "}
-              <span className="font-nyght-italic text-(--accent)">slow</span>{" "}
+            <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-3xl">
+              We&apos;d rather be <span className="text-(--accent)">slow</span>{" "}
               &amp; right
               <br />
               than fast and full of{" "}
@@ -389,7 +388,7 @@ export default async function ServicesPage() {
       {lashCards.length > 0 && (
         <section className="py-20">
           <div className={container}>
-            <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
+            <div className="grid lg:grid-cols-[420px_540px] gap-4 justify-between mb-10">
               <div>
                 <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                   II · Lash
@@ -400,7 +399,7 @@ export default async function ServicesPage() {
                   only better.
                 </h2>
               </div>
-              <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed">
+              <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed text-pretty">
                 Hand-applied, customized to your eye shape, lifestyle, and how
                 much you&apos;d like to feel them. We use vegan adhesives and
                 finishes that hold up in summer humidity and winter wool.

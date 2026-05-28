@@ -150,6 +150,8 @@ const aftercareGroups = [
   },
 ];
 
+// cSpell:ignore spoolie exfoliants retinol doesn
+
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
 export default function AftercarePage() {
@@ -174,7 +176,7 @@ export default function AftercarePage() {
             <span aria-current="page">Aftercare</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               The work
               <br />
@@ -183,8 +185,8 @@ export default function AftercarePage() {
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               How you care for your lashes and brows at home has a direct impact
-              on how long your results last — and how your next appointment goes.
-              Find your service below.
+              on how long your results last — and how your next appointment
+              goes. Find your service below.
             </p>
           </div>
 

@@ -102,7 +102,7 @@ export default function ContactPage() {
             <span aria-current="page">Contact</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               402 South
               <br />

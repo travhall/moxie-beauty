@@ -48,7 +48,7 @@ export default function AboutPage() {
             <span aria-current="page">About the studio</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               Quiet hands,
               <br />
@@ -121,20 +121,19 @@ export default function AboutPage() {
                 The founder
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
-                Built from a love of beauty —
-                and a need to do it{" "}
+                Built from a love of beauty — and a need to do it{" "}
                 <em className="font-nyght-italic text-(--accent)">right.</em>
               </h2>
               <p className="text-xl text-(--ink-soft) mb-5 leading-relaxed">
                 Jackie has always had a passion for helping women feel confident
-                and like the best version of themselves. Learning lash extensions
-                felt like a natural first step — and once she started, she
-                couldn&apos;t stop.
+                and like the best version of themselves. Learning lash
+                extensions felt like a natural first step — and once she
+                started, she couldn&apos;t stop.
               </p>
               <p className="text-(--ink-soft) mb-5 leading-relaxed">
                 She trained at The Beauty Room in Eau Claire, with additional
-                specialty brow training in Chicago. As her client base grew,
-                she realized she wasn&apos;t just building a business — she was
+                specialty brow training in Chicago. As her client base grew, she
+                realized she wasn&apos;t just building a business — she was
                 building something intentional. Every detail at Moxie, from the
                 way appointments are structured to the scents in the room, is
                 chosen on purpose.
@@ -145,6 +144,8 @@ export default function AboutPage() {
                 Rochester, making memories with the people she loves — and is
                 rarely without an ice-cold Diet Coke.
               </p>
+
+              {/* cSpell:ignore wasn couldn */}
 
               <div className="mt-10 pt-8 border-t border-(--line-soft)">
                 <p className="font-nyght text-3xl text-(--foreground)">

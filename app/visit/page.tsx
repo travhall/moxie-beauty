@@ -49,7 +49,7 @@ export default function VisitPage() {
             <span aria-current="page">Your Visit</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-16">
+          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               Your appointment,
               <br />
@@ -123,7 +123,7 @@ export default function VisitPage() {
               </p>
             </div>
             <div
-              className="relative rounded-3xl overflow-hidden aspect-4/3g-(--bg-soft)"
+              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft)"
               style={{ borderRadius: "16px 40px 16px 40px" }}
             >
               <Image

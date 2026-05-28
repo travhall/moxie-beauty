@@ -109,12 +109,11 @@ export default function PoliciesPage() {
             <span aria-current="page">Studio Policies</span>
           </nav>
 
-          <div className="grid lg:grid-cols-[1fr_540px] gap-10 mb-10">
+          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
             <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
               Let&apos;s agree
               <br />
-              to{" "}
-              <em className="font-nyght-italic text-(--accent)">agree.</em>
+              to <em className="font-nyght-italic text-(--accent)">agree.</em>
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
               These policies exist to protect your time and ours. They&apos;re
@@ -150,18 +149,18 @@ export default function PoliciesPage() {
       </section>
 
       {/* ── Closing note ──────────────────────────────────────────────── */}
-      <section className="py-16 bg-(--bg-soft) border-t border-(--line-soft)">
+      <section className="py-16 bg-(--foreground)">
         <div className={container}>
           <div className="max-w-2xl">
-            <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+            <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
               A note from Jackie
             </p>
-            <p className="font-nyght text-3xl lg:text-4xl text-(--foreground) leading-snug mb-6">
+            <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-6">
               I genuinely love what I do — and I want every visit to feel that
-              way for{" "}
-              <em className="font-nyght-italic text-(--accent)">you</em>, too.
+              way for <em className="font-nyght-italic text-(--accent)">you</em>
+              , too.
             </p>
-            <p className="text-(--ink-soft) leading-relaxed">
+            <p className="text-(--background)/80 leading-relaxed">
               These policies keep the studio running smoothly so that when
               you&apos;re in the chair, we can focus entirely on you. If
               something ever feels off, reach out — I&apos;d rather hear about
