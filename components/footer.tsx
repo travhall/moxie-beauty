@@ -8,14 +8,14 @@ const footerLinks = {
     { label: "Brow Lamination", href: "/services" },
     { label: "Lash Extensions", href: "/services" },
     { label: "Lash Lift & Tint", href: "/services" },
-    { label: "Henna Brows", href: "/services" },
+    { label: "Microblading", href: "/services" },
     { label: "Gift Cards", href: "/services" },
   ],
   studio: [
     { label: "About Moxie", href: "/about" },
     { label: "Your Visit", href: "/visit" },
-    { label: "Aftercare", href: "#" },
-    { label: "Policies", href: "#" },
+    { label: "Aftercare", href: "/aftercare" },
+    { label: "Policies", href: "/policies" },
   ],
   stayClose: [
     {

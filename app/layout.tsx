@@ -67,16 +67,16 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://moxiebeautystudiowi.com"),
   title: "Moxie Beauty Studio | Lash & Brow Specialists in Wisconsin",
   description:
-    "Moxie Beauty Studio specializes in bespoke lash and brow transformations in Wisconsin. Services include eyelash extensions, lash lift & tint, microblading, brow lamination, and facial waxing.",
+    "Moxie Beauty Studio specializes in bespoke lash and brow transformations in Rochester, Wisconsin. Services include eyelash extensions, lash lift & tint, microblading, and brow lamination.",
   keywords: [
     "lash extensions",
     "microblading",
     "brow lamination",
     "lash lift and tint",
-    "facial waxing",
     "beauty studio Wisconsin",
     "eyelash extensions Wisconsin",
-    "brow services",
+    "brow services Rochester WI",
+    "lash studio Rochester Wisconsin",
   ],
   authors: [{ name: "Moxie Beauty Studio" }],
   creator: "Moxie Beauty Studio",
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
     siteName: "Moxie Beauty Studio",
     title: "Moxie Beauty Studio | Lash & Brow Specialists in Wisconsin",
     description:
-      "Where artistry meets individuality. Specializing in bespoke lash and brow transformations with services including eyelash extensions, lash lift & tint, microblading, brow lamination, and facial waxing.",
+      "Where artistry meets individuality. Specializing in bespoke lash and brow transformations with services including eyelash extensions, lash lift & tint, microblading, and brow lamination.",
     images: [
       {
         url: "/images/hero-img.jpg",
@@ -194,9 +194,18 @@ export default function RootLayout({
                     "@type": "Offer",
                     itemOffered: {
                       "@type": "Service",
-                      name: "Eyelash Extensions",
+                      name: "Signature Lash Extensions",
                       description:
-                        "Hand-applied lash extensions for customizable length, curl, and volume",
+                        "Fully customized hand-applied lash extensions tailored to your eye shape and lifestyle",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "Volume Lash Extensions",
+                      description:
+                        "Hand-crafted fans of ultra-fine extensions for soft, even density",
                     },
                   },
                   {
@@ -205,7 +214,7 @@ export default function RootLayout({
                       "@type": "Service",
                       name: "Lash Lift & Tint",
                       description:
-                        "Natural lash curl and tint for a low-maintenance look",
+                        "Natural lash curl and tint for a low-maintenance, mascara-free look",
                     },
                   },
                   {
@@ -214,7 +223,7 @@ export default function RootLayout({
                       "@type": "Service",
                       name: "Microblading",
                       description:
-                        "Semi-permanent brow enhancement with natural hair-like strokes",
+                        "Semi-permanent brow enhancement with natural hair-like strokes, lasting 12–18 months",
                     },
                   },
                   {
@@ -223,16 +232,7 @@ export default function RootLayout({
                       "@type": "Service",
                       name: "Brow Lamination & Tint",
                       description:
-                        "Fluffy, brushed-up brows with tint for definition",
-                    },
-                  },
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Eyebrow & Facial Waxing",
-                      description:
-                        "Precise waxing for smooth skin and shaped brows",
+                        "Fluffy, brushed-up brows with tint for definition lasting 6–8 weeks",
                     },
                   },
                 ],

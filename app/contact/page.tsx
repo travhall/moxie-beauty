@@ -59,22 +59,22 @@ const faqItems = [
   {
     num: "03",
     q: "Do you take deposits?",
-    a: "Yes — a $25 deposit is held on the card you book with for new guests, and rolls into the service. Returning clients aren't charged a deposit unless they've missed an appointment in the last six months.",
+    a: "Not currently — a credit card is required to hold your appointment, and any late cancellation or no-show fees are charged to the card on file. No charge if you cancel with at least 24 hours' notice.",
   },
   {
     num: "04",
     q: "What if I'm pregnant?",
-    a: "Brow shaping, henna, and tinting are all fine. We don't perform lash lifts or extensions during the first trimester, and we'll always confirm with you before any new service. Mention it when you book and we'll plan around it.",
+    a: "Brow shaping and tinting are generally fine. For lash services and lamination, we recommend consulting your doctor first and letting us know when you book so we can plan accordingly.",
   },
   {
     num: "05",
     q: "Can I bring my child?",
-    a: "The studio is genuinely tiny — there's space for one guest and one chair. If you need to bring someone, please let us know in advance; we may be able to accommodate, or suggest a time when it'll work better.",
+    a: "To keep the studio safe and relaxing for everyone, we ask that you make other arrangements for children while you're receiving services. The space is small and the work requires focus — we appreciate your understanding.",
   },
   {
     num: "06",
-    q: "Do you sell gift cards?",
-    a: "Yes — physical or digital, any amount from $50. Physical cards mail in two days; digital cards deliver the same day. They don't expire and can be applied to any service in the studio.",
+    q: "What payment do you accept?",
+    a: "Cash and credit card. A card is required on file to hold your appointment — cancellation and no-show fees are charged there if applicable.",
   },
 ];
 

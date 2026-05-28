@@ -18,7 +18,7 @@ const FALLBACK_SERVICES = [
   {
     num: "01",
     name: "Brow Lamination & Shape",
-    desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint and a precision shape.",
+    desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint, and a precision shape.",
     meta: [
       { label: "From", value: "$95" },
       { label: "Duration", value: "75 min" },
@@ -27,28 +27,28 @@ const FALLBACK_SERVICES = [
   },
   {
     num: "02",
-    name: "Classic Lash Set",
-    desc: "One natural extension applied to each of your natural lashes — the look of a really good mascara, without the mascara.",
+    name: "Signature Lash Set",
+    desc: "Fully customized extensions hand-applied to your natural lashes — length, curl, and finish tailored to your eye shape and lifestyle.",
     meta: [
       { label: "From", value: "$145" },
       { label: "Duration", value: "120 min" },
-      { label: "Fills", value: "$70" },
+      { label: "Fills", value: "from $70" },
     ],
   },
   {
     num: "03",
-    name: "Volume & Hybrid Lashes",
-    desc: "Hand-made fans for soft density, or a mix of classics and fans for texture. Customized to your eye shape and lifestyle.",
+    name: "Volume Lash Set",
+    desc: "Hand-crafted fans of ultra-fine extensions for soft, even density with more dimension. Choose your level of drama.",
     meta: [
       { label: "From", value: "$195" },
       { label: "Duration", value: "150 min" },
-      { label: "Fills", value: "$95" },
+      { label: "Fills", value: "from $95" },
     ],
   },
   {
     num: "04",
     name: "Lash Lift & Tint",
-    desc: "A subtle curl from root to tip that makes your own lashes look longer. Pair with a tint to skip the mascara entirely.",
+    desc: "A subtle curl from root to tip that makes your own lashes look longer and darker. Low maintenance, high impact.",
     meta: [
       { label: "From", value: "$110" },
       { label: "Duration", value: "60 min" },
@@ -57,12 +57,12 @@ const FALLBACK_SERVICES = [
   },
   {
     num: "05",
-    name: "Henna & Tinting",
-    desc: "Plant-based brow color that softly stains the skin beneath, for a fuller-looking shape that holds up between visits.",
+    name: "Microblading",
+    desc: "Semi-permanent, hair-stroke brows matched to your natural coloring and bone structure. Starts with a required consultation.",
     meta: [
-      { label: "From", value: "$65" },
-      { label: "Duration", value: "45 min" },
-      { label: "Skin", value: "2 wks" },
+      { label: "Consult", value: "Required" },
+      { label: "Lasts", value: "12–18 mo" },
+      { label: "Touch-up", value: "6 wks" },
     ],
   },
   {

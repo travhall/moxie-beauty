@@ -32,7 +32,6 @@ export default function AboutPage() {
   return (
     <main>
       {/* ── Page hero ─────────────────────────────────────────────────── */}
-      {/* TODO: confirm founding year (2019) and review count with Jackie */}
       <section className="pt-14 pb-16 border-b border-(--line-soft)">
         <div className={container}>
           <nav
@@ -57,15 +56,16 @@ export default function AboutPage() {
               <em className="font-nyght-italic text-(--accent)">eyes.</em>
             </h1>
             <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-              Moxie is a small, intimate brow and lash studio in the village of
-              Rochester, Wisconsin. We opened in 2019 with a small idea: bring
-              the artistry of brow and lash services to our community.
+              Moxie is a one-chair brow and lash studio in the village of
+              Rochester, Wisconsin. We opened in 2021 with a simple idea: that
+              this kind of work deserves time — and the people receiving it
+              deserve someone who actually cares.
             </p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
             {[
-              { k: "Founded", v: "2019" },
+              { k: "Founded", v: "2021" },
               {
                 k: "Studio size",
                 v: (
@@ -74,12 +74,12 @@ export default function AboutPage() {
                   </span>
                 ),
               },
-              { k: "Licensed", v: "WI Esthetician" },
+              { k: "Specialist", v: "Brows & Lashes" },
               {
                 k: "Reviews",
                 v: (
                   <span>
-                    312 · <em className="font-nyght-italic">5★</em>
+                    5<em className="font-nyght-italic">★</em> on Google
                   </span>
                 ),
               },
@@ -98,7 +98,6 @@ export default function AboutPage() {
       </section>
 
       {/* ── Founder ───────────────────────────────────────────────────── */}
-      {/* TODO: ALL copy in this section is placeholder — needs Jackie's review */}
       <section className="py-20">
         <div className={container}>
           <div className="grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-20">
@@ -107,7 +106,7 @@ export default function AboutPage() {
               <div className="relative w-full max-w-85 overflow-hidden rounded-b-2xl">
                 <Image
                   src="/images/jackie-profile.jpg"
-                  alt="Jackie, founder of Moxie Beauty Studio"
+                  alt="Jackie Schult, founder of Moxie Beauty Studio"
                   width={680}
                   height={900}
                   className="w-full object-cover rounded-t-full border-l-8 border-(--accent)"
@@ -122,25 +121,29 @@ export default function AboutPage() {
                 The founder
               </p>
               <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6">
-                A studio built by someone who constantly{" "}
-                <em className="font-nyght-italic text-(--accent)">evolving</em>{" "}
-                their practice.
+                Built from a love of beauty —
+                and a need to do it{" "}
+                <em className="font-nyght-italic text-(--accent)">right.</em>
               </h2>
               <p className="text-xl text-(--ink-soft) mb-5 leading-relaxed">
-                Jackie is a licensed esthetician with an eye for symmetry, the
-                underside of a good brow shape, and the way a lash sits when
-                nobody told it to.
+                Jackie has always had a passion for helping women feel confident
+                and like the best version of themselves. Learning lash extensions
+                felt like a natural first step — and once she started, she
+                couldn&apos;t stop.
               </p>
               <p className="text-(--ink-soft) mb-5 leading-relaxed">
-                She trained in Milwaukee, worked several years in a much busier
-                salon, and finally opened Moxie when she realized the work she
-                wanted to do — the slow, mapped, half-an-hour-of-consultation
-                kind — wasn&apos;t really possible alongside someone else&apos;s
-                schedule.
+                She trained at The Beauty Room in Eau Claire, with additional
+                specialty brow training in Chicago. As her client base grew,
+                she realized she wasn&apos;t just building a business — she was
+                building something intentional. Every detail at Moxie, from the
+                way appointments are structured to the scents in the room, is
+                chosen on purpose.
               </p>
               <p className="text-(--ink-soft) leading-relaxed">
-                When she isn&apos;t in studio, you&apos;ll find her in her
-                garden in Burlington, or with a coffee somewhere nearby.
+                Outside the studio, Jackie is a wife and mom to three kids who
+                she&apos;d describe as pretty rad. She loves small-town life in
+                Rochester, making memories with the people she loves — and is
+                rarely without an ice-cold Diet Coke.
               </p>
 
               <div className="mt-10 pt-8 border-t border-(--line-soft)">
@@ -156,7 +159,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      {/* cSpell:ignore wasn hasn */}
 
       {/* ── Pull quote ────────────────────────────────────────────────── */}
       <section className="py-12">
@@ -228,19 +230,19 @@ export default function AboutPage() {
                     first.
                   </span>
                 ),
-                body: "We map your features and talk through how you want to look before any wax or adhesive comes out. If a service isn't right for you that day, we'll say so.",
+                body: "We map your features and talk through how you want to look before anything comes out. If a service isn't right for you that day, we'll say so — and suggest something that is.",
               },
               {
                 num: "03",
                 heading: (
                   <span>
-                    Products we&apos;d use{" "}
+                    Every detail is{" "}
                     <em className="font-nyght-italic text-(--accent)">
-                      ourselves.
+                      chosen.
                     </em>
                   </span>
                 ),
-                body: "Vegan, cruelty-free adhesives. Plant-based brow tints. We don't carry anything we haven't tried on our own face, and we'll always tell you what we're using and why.",
+                body: "The scents in the room, the mini fridge with cold drinks, the candy jars on the counter — none of it is accidental. A good appointment should feel like a good appointment from the moment you walk in.",
               },
               {
                 num: "04",
@@ -270,16 +272,15 @@ export default function AboutPage() {
       </section>
 
       {/* ── Marquee ───────────────────────────────────────────────────── */}
-      {/* TODO: "312 five-star reviews" is a placeholder */}
       <MarqueeTicker
         items={[
           "slow work",
           "1:1 appointments",
-          "vegan adhesives",
-          "plant-based tints",
-          "licensed esthetician",
+          "est. 2021",
+          "intentional by design",
+          "brows & lashes",
           "rochester, wi",
-          "312 five-star reviews",
+          "5★ on google",
         ]}
       />
 

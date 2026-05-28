@@ -11,13 +11,13 @@ export default function Home() {
       <MarqueeTicker
         items={[
           "brow lamination",
-          "classic lashes",
+          "signature lashes",
           "volume sets",
-          "hybrid lashes",
           "lash lifts",
+          "microblading",
           "brow shaping",
           "tinting",
-          "henna brows",
+          "lash fills",
         ]}
       />
       <Services />

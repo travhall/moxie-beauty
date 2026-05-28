@@ -5,7 +5,7 @@ import profileImage from "@/public/images/jackie-profile.jpg";
 import lobbyImage from "@/public/images/moxie-lobby.jpg";
 import workImage from "@/public/images/jackie-working.jpg";
 
-// TODO: confirm stat numbers (years in practice, review count) with Jackie
+
 
 export default function About() {
   return (
@@ -114,29 +114,28 @@ export default function About() {
               </strong>
               . Jackie specializes in{" "}
               <em className="italic font-bold text-(--accent)">
-                eyelash extensions, lash lift and tint, eyebrow lamination,
-                microblading, and waxing
+                eyelash extensions, lash lift and tint, brow lamination,
+                and microblading
               </em>
-              . Her dedication to continuous improvement drives her to expand
-              both her skills and services, always staying ahead of industry
-              trends to provide the best possible care.
+              . Her dedication to craft drives her to keep learning — every
+              service is built around the client in the chair, not a template.
             </p>
 
             <p className="leading-relaxed text-(--ink-soft)">
-              Jackie is committed to fostering strong relationships with her
-              clients, ensuring each appointment is a personalized &amp;
-              enjoyable experience.
+              Every detail at Moxie is intentional — from the scents in the
+              studio to the way appointments are structured. Jackie isn&apos;t
+              just offering a service; she&apos;s creating an experience.
             </p>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 mt-10 pt-7 border-t border-(--line)">
               <div>
                 <div className="font-nyght text-[40px] leading-none text-(--foreground)">
-                  7{" "}
-                  <span className="font-nyght-italic text-(--accent)">yrs</span>
+                  Est.{" "}
+                  <span className="font-nyght-italic text-(--accent)">&#8217;21</span>
                 </div>
                 <div className="text-[11px] tracking-[0.2em] uppercase text-(--ink-mute) mt-2">
-                  In practice
+                  Rochester, WI
                 </div>
               </div>
               <div>
@@ -148,11 +147,11 @@ export default function About() {
                 </div>
               </div>
               <div>
-                <div className="font-nyght text-[40px] leading-none text-(--foreground)">
-                  312
+                <div className="font-nyght text-[34px] leading-none text-(--foreground)">
+                  5<span className="font-nyght-italic text-(--accent)">★</span>
                 </div>
                 <div className="text-[11px] tracking-[0.2em] uppercase text-(--ink-mute) mt-2">
-                  5★ reviews
+                  On Google
                 </div>
               </div>
             </div>

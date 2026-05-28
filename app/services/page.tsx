@@ -133,41 +133,35 @@ const FALLBACK_BROW = [
   },
   {
     num: "03",
-    name: "Henna Brows",
-    desc: "Plant-based brow color that softly stains the skin beneath, for a fuller-looking shape that holds up between visits. No ammonia, no peroxide.",
-    meta: ["From $65", "45 min", "Skin: 1–2 wks"],
-  },
-  {
-    num: "04",
     name: "Brow Tint & Shape",
     desc: "A short, all-purpose visit. Soft tint matched to your hair, plus a shape — the easiest way to wake up looking finished.",
     meta: ["From $75", "45 min", "Lasts 3–4 wks"],
+  },
+  {
+    num: "04",
+    name: "Microblading",
+    desc: "Semi-permanent, hair-stroke brows crafted to match your natural coloring and bone structure. Begins with a required consultation to map your ideal shape and walk through the healing process.",
+    meta: ["Consultation required", "Lasts 12–18 mo", "Touch-up at 6 wks"],
   },
 ];
 
 const FALLBACK_LASH = [
   {
     num: "05",
-    name: "Classic Lash Set",
-    desc: "One natural extension applied to each of your natural lashes — the look of a really good mascara, without the mascara.",
-    meta: ["From $145", "120 min", "Fills $70"],
+    name: "Signature Lash Set",
+    desc: "Fully customized extensions hand-applied to your natural lashes — length, curl, and finish tailored to your eye shape and lifestyle. The look of great lashes, made to feel like yours.",
+    meta: ["From $145", "120 min", "Fills from $70"],
   },
   {
     num: "06",
-    name: "Hybrid Lash Set",
-    desc: "Half classic, half volume. Subtle texture and a little more depth, without the full drama of a volume set.",
-    meta: ["From $170", "135 min", "Fills $85"],
+    name: "Volume Lash Set",
+    desc: "Hand-crafted fans of ultra-fine extensions for soft, even density with more dimension. Choose your level of drama — from a quiet lift to a deliberate full set.",
+    meta: ["From $195", "150 min", "Fills from $95"],
   },
   {
     num: "07",
-    name: "Volume Lash Set",
-    desc: "Hand-made fans of ultra-fine extensions create soft, even density. Choose anywhere from a quiet 2D to a deliberate 5D set.",
-    meta: ["From $195", "150 min", "Fills $95"],
-  },
-  {
-    num: "08",
     name: "Lash Lift & Tint",
-    desc: "A subtle curl from root to tip that makes your own lashes look longer. Pair with a tint to skip the mascara entirely.",
+    desc: "A subtle curl from root to tip that makes your own lashes look longer and darker. Low maintenance, high impact — results last 6–8 weeks.",
     meta: ["From $110", "60 min", "Lasts 6–8 wks"],
   },
 ];
@@ -284,7 +278,6 @@ export default async function ServicesPage() {
           </div>
 
           {/* Fact strip */}
-          {/* TODO: confirm "Starting $65" and session range with Jackie */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
             {[
               { k: "Studio", v: "By appointment" },
@@ -319,13 +312,13 @@ export default async function ServicesPage() {
       <MarqueeTicker
         items={[
           "brow lamination",
-          "classic lashes",
+          "signature lashes",
           "volume sets",
-          "hybrid lashes",
           "lash lifts",
+          "microblading",
           "brow shaping",
           "tinting",
-          "henna brows",
+          "lash fills",
         ]}
       />
 
@@ -374,18 +367,19 @@ export default async function ServicesPage() {
           aria-label="A note on the way we work"
         >
           <div className={container}>
-            <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/60 mb-6">
+            <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/80 mb-6">
               A note on the way we work
             </p>
             <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-2xl">
-              We&apos;d rather be <span className="text-(--accent)">slow</span>{" "}
+              We&apos;d rather be{" "}
+              <span className="font-nyght-italic text-(--accent)">slow</span>{" "}
               &amp; right
               <br />
               than fast and full of{" "}
               <span className="text-(--accent)">apologies.</span>
             </p>
-            <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)/60">
-              Jackie · founder · est. 2019
+            <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)/80">
+              Jackie · founder · est. 2021
             </p>
           </div>
         </section>
