@@ -59,7 +59,7 @@ function ServiceCard({ num, name, desc, meta, variationId }: ServiceCardProps) {
         {num}
       </span>
       <div className="flex-1 min-w-0">
-        <h3 className="font-nyght text-xl text-(--foreground) mb-2 group-hover:text-(--accent) transition-colors duration-300">
+        <h3 className="font-nyght text-2xl lg:text-3xl text-(--foreground) mb-2 group-hover:text-(--accent) transition-colors duration-300">
           {name}
         </h3>
         <p className="text-sm text-(--ink-soft) leading-relaxed mb-4">{desc}</p>
@@ -401,8 +401,8 @@ export default async function ServicesPage() {
               </div>
               <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed text-pretty">
                 Hand-applied, customized to your eye shape, lifestyle, and how
-                much you&apos;d like to feel them. We use vegan adhesives and
-                finishes that hold up in summer humidity and winter wool.
+                much you&apos;d like to feel them. Extensions that hold up in
+                summer humidity and winter wool.
               </p>
             </div>
 

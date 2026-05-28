@@ -139,6 +139,11 @@
   z-index: 1;
 }
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

@@ -52,7 +52,7 @@ const aftercareGroups = [
       },
       {
         heading: "Fills",
-        body: "Book your fill every 2–3 weeks to keep them full and healthy. Waiting longer means more work — and more cost — at each appointment.",
+        body: "Book fills on schedule to keep your lashes full and healthy. The timing determines your appointment length — 1-week fill (0–9 days): 30 min. 2-week fill (10–18 days): 60 min. 3-week fill (19–27 days): 75 min. Waiting longer means more work at each visit.",
       },
       {
         heading: "What to avoid",
@@ -64,23 +64,23 @@ const aftercareGroups = [
     num: "II",
     category: "Lash Lift & Tint",
     intro:
-      "Your lift is set by a chemical process that takes about 24 hours to fully stabilize. Protecting it during that window makes the difference between a lift that lasts 6 weeks and one that drops after two.",
+      "Your lift is set by a chemical process that takes about 24 hours to fully stabilize. Protecting it during that window — and the 48 hours after — makes the difference between a lift that lasts 6 weeks and one that drops after two.",
     items: [
       {
         heading: "First 24 hours",
-        body: "Keep lashes completely dry and avoid steam, sweat, and humidity. No showers with the water hitting your face, no hot yoga, no saunas.",
+        body: "Keep lashes completely dry. No washing, no steam, no humidity. No showers with the water hitting your face, no saunas, no hot yoga. The lift is still setting.",
       },
       {
-        heading: "Sleeping",
-        body: "Sleep on your back for the first night to avoid creasing the lift while it's still setting.",
+        heading: "24–48 hours",
+        body: "Continue avoiding tanning beds, saunas, and hot yoga through the full 48 hours. These activities generate sustained heat that relaxes the curl before it's locked in.",
       },
       {
-        heading: "Makeup",
-        body: "Mascara is optional — you probably won't need it. If you do use it, water-based formulas only, and remove gently.",
+        heading: "Mascara",
+        body: "You can add mascara after 48 hours if you want it — but most clients find they don't need it. If you do use it, water-based formulas only. Avoid waterproof mascara, which is harder to remove and can stress the lashes.",
       },
       {
         heading: "Ongoing care",
-        body: "Use a lash serum or conditioning oil on your natural lashes between appointments to keep them healthy. Avoid waterproof formulas, which are harder to remove and can stress the lashes.",
+        body: "Use a lash serum or conditioning oil between appointments to keep your natural lashes healthy. The better condition they're in, the better your next lift will hold.",
       },
       {
         heading: "Results",
@@ -196,7 +196,7 @@ export default function AftercarePage() {
               <a
                 key={num}
                 href={`#aftercare-${num.toLowerCase()}`}
-                className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border border-(--line-soft) text-(--ink-mute) hover:text-(--accent) hover:border-(--accent) transition-colors"
+                className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border border-(--accent)/60 text-(--accent)/80 hover:text-(--accent) hover:border-(--line-soft) hover:bg-(--accent)/10 transition-colors"
               >
                 {category}
               </a>
@@ -214,7 +214,7 @@ export default function AftercarePage() {
           tabIndex={-1}
         >
           <div className={container}>
-            <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-12">
+            <div className="grid lg:grid-cols-[380px_540px] justify-between gap-16 mb-12">
               <div>
                 <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                   {num} · {category}
@@ -230,11 +230,11 @@ export default function AftercarePage() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
               {items.map(({ heading, body }) => (
-                <div key={heading} className="bg-(--background) p-7 lg:p-8">
-                  <h3 className="font-nyght text-lg text-(--foreground) mb-3">
+                <div key={heading} className="bg-(--background)/40 p-7 lg:p-8">
+                  <h3 className="font-nyght text-xl lg:text-2xl xl:text-3xl text-(--foreground) mb-3 text-balance">
                     {heading}
                   </h3>
-                  <p className="text-sm text-(--ink-soft) leading-relaxed">
+                  <p className="text-sm text-(--ink-soft) leading-relaxed text-pretty">
                     {body}
                   </p>
                 </div>
@@ -276,14 +276,14 @@ export default function AftercarePage() {
       </section>
 
       {/* ── Questions note ────────────────────────────────────────────── */}
-      <section className="py-16">
+      <section className="py-16 bg-(--foreground)">
         <div className={container}>
           <div className="max-w-2xl">
-            <p className="font-nyght text-3xl lg:text-4xl text-(--foreground) leading-snug mb-5">
+            <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-5">
               Something doesn&apos;t look right?{" "}
               <em className="font-nyght-italic text-(--accent)">Text us.</em>
             </p>
-            <p className="text-(--ink-soft) leading-relaxed">
+            <p className="text-(--background) leading-relaxed">
               If anything feels off in the first week after your appointment,
               reach out before your next visit. Lash services come with a
               complimentary adjustment window of 7 days — we&apos;d rather fix

@@ -123,8 +123,8 @@ function ServiceRow({
       rel="noopener noreferrer"
       aria-label={`${name} — book this service (opens in new tab)`}
       className={[
-        "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground) no-underline",
-        "transition-colors duration-300 odd:hover:bg-linear-to-l odd:hover:from-(--bg-soft) odd:hover:to-transparent even:hover:bg-linear-to-r even:hover:from-(--bg-soft) even:hover:to-transparent",
+        "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground) no-underline transition-all duration-300",
+        "odd:hover:bg-linear-to-l odd:hover:from-(--bg-soft) odd:hover:to-transparent even:hover:bg-linear-to-r even:hover:from-(--bg-soft) even:hover:to-transparent",
         isOdd ? "sm:border-r sm:border-(--line) sm:pr-15" : "sm:pl-10",
       ].join(" ")}
     >
@@ -135,7 +135,7 @@ function ServiceRow({
 
       {/* Name + description + meta */}
       <div className="flex-1 min-w-0">
-        <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-colors duration-300">
+        <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-all duration-300">
           {name}
         </h3>
         <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch] text-pretty">
@@ -158,7 +158,7 @@ function ServiceRow({
 
       {/* Diagonal arrow */}
       <span
-        className="shrink-0 mt-1 w-9 h-9 rounded-full border border-(--line) flex items-center justify-center text-(--ink-soft) group-hover:border-(--accent) group-hover:text-(--accent) transition-[border-color,color,transform] duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+        className="shrink-0 mt-1 w-9 h-9 rounded-full border border-(--line) flex items-center justify-center text-(--ink-soft) group-hover:border-(--accent) group-hover:text-(--accent) transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
         aria-hidden="true"
       >
         <DiagArrow />

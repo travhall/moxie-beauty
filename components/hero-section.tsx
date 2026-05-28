@@ -98,20 +98,18 @@ export default function HeroSection() {
             aria-hidden="true"
           >
             <div
-              className="relative w-full border border-(--line-soft)"
+              className="relative w-full border border-(--line-soft) shadow-xl"
               style={{
                 aspectRatio: "4 / 5",
                 borderRadius: "32px 32px 32px 240px",
                 overflow: "hidden",
-                boxShadow:
-                  "0 32px 80px -24px color-mix(in oklab, var(--midnite-900) 28%, transparent)",
               }}
             >
               <Image
                 src={HeroImg}
                 alt="Close up of a woman's face. She has amazing lashes."
                 fill
-                className="border-l-16 border-(--accent) object-cover z-0"
+                className="border border-l-16 border-(--accent) object-cover z-0"
                 style={{ borderRadius: "inherit" }}
                 sizes="(max-width: 1280px) 380px, (max-width: 1536px) 440px, 480px"
                 quality={80}

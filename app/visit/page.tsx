@@ -123,8 +123,8 @@ export default function VisitPage() {
               </p>
             </div>
             <div
-              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft)"
-              style={{ borderRadius: "16px 40px 16px 40px" }}
+              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft) border border-r-8 border-(--accent) shadow-xl"
+              style={{ borderRadius: "16px 48px 16px 48px" }}
             >
               <Image
                 src="/images/appt-img4.jpg"
@@ -158,8 +158,8 @@ export default function VisitPage() {
               </p>
             </div>
             <div
-              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft) lg:order-1"
-              style={{ borderRadius: "40px 16px 40px 16px" }}
+              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft) lg:order-1 border border-l-8 border-(--accent) shadow-xl"
+              style={{ borderRadius: "48px 16px 48px 16px" }}
             >
               <Image
                 src="/images/appt-img2.jpg"
@@ -167,6 +167,106 @@ export default function VisitPage() {
                 fill
                 className="object-cover"
               />
+            </div>
+          </div>
+
+          {/* Service prep grid ───────────────────────────────────────── */}
+          <div className="py-14 border-b border-(--line-soft)">
+            <div className="mb-10">
+              <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) mb-5">
+                Before you arrive
+              </p>
+              <div className="grid lg:grid-cols-[1fr_540px] gap-6">
+                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+                  A little prep goes a{" "}
+                  <em className="font-nyght-italic text-(--accent)">
+                    long way.
+                  </em>
+                </h2>
+                <p className="text-(--ink-soft) leading-relaxed self-end text-pretty">
+                  Each service has a short list of things to know before you
+                  come in. None of it is complicated — but a few of these make a
+                  real difference to how your appointment goes.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
+              {[
+                {
+                  service: "Lash Extensions",
+                  items: [
+                    "Arrive with completely clean lashes — no mascara, no residue, including bottom lashes",
+                    "Limit caffeine beforehand if it makes you jittery; it helps you stay still",
+                    "Plan for up to 2 hours for a full set",
+                    "Make childcare arrangements in advance",
+                  ],
+                },
+                {
+                  service: "Lash Fills",
+                  items: [
+                    "Clean lashes required — no mascara or product residue",
+                    "1-week fill: plan 30 min · 2-week fill: 60 min · 3-week fill: 75 min",
+                    "If you're unsure whether you have enough lashes for a fill, text us a photo first",
+                  ],
+                },
+                {
+                  service: "Lash Lift & Tint",
+                  items: [
+                    "Come with clean lashes, free of mascara and residue",
+                    "Limit caffeine if it makes you jittery",
+                    "Plan for 90 minutes",
+                    "Make childcare arrangements in advance",
+                  ],
+                },
+                {
+                  service: "Microblading",
+                  items: [
+                    "A no-cost consultation is strongly advised before booking your full service",
+                    "We'll map your brow shape and select a pigment at the consult — not the day of",
+                    "Plan healing time into your schedule: 2 weeks of no swimming, sweating, or direct water contact",
+                    "A 6-week touch-up is required — factor this in when booking",
+                  ],
+                },
+                {
+                  service: "Brow Lamination",
+                  items: [
+                    "Wear your usual brow makeup to your appointment — it helps us see what you like",
+                    "Avoid retinol and retinoid products for at least 3 days prior",
+                    "No Accutane use within the past 6 months",
+                    "Make childcare arrangements in advance",
+                  ],
+                },
+                {
+                  service: "All services",
+                  items: [
+                    "Arrive 5–10 minutes early; new clients should plan for 15 minutes",
+                    "Please come alone — there's no waiting space and the studio is a single chair",
+                    "No children during appointments; please arrange care in advance",
+                    "If you have sensitivities or allergies, let us know when you book",
+                  ],
+                },
+              ].map(({ service, items }) => (
+                <div key={service} className="bg-(--background)/80 p-7 lg:p-8">
+                  <h3 className="font-nyght text-xl text-(--foreground) mb-4 leading-snug">
+                    {service}
+                  </h3>
+                  <ul className="space-y-2">
+                    {items.map((item) => (
+                      <li
+                        key={item}
+                        className="flex gap-2.5 text-sm text-(--ink-soft) text-pretty"
+                      >
+                        <span
+                          className="mt-1.5 w-1 h-1 rounded-full bg-(--accent) shrink-0"
+                          aria-hidden="true"
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -194,8 +294,8 @@ export default function VisitPage() {
               </p>
             </div>
             <div
-              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft)"
-              style={{ borderRadius: "16px 40px 16px 40px" }}
+              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft) border border-r-8 border-(--accent) shadow-xl"
+              style={{ borderRadius: "16px 48px 16px 48px" }}
             >
               <Image
                 src="/images/appt-img.jpg"
@@ -230,8 +330,8 @@ export default function VisitPage() {
               </p>
             </div>
             <div
-              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft) lg:order-1"
-              style={{ borderRadius: "40px 16px 40px 16px" }}
+              className="relative rounded-3xl overflow-hidden aspect-4/3 bg-(--bg-soft) lg:order-1 border border-l-8 border-(--accent) shadow-xl"
+              style={{ borderRadius: "16px 48px 16px 48px" }}
             >
               <Image
                 src="/images/appt-img3.jpg"
@@ -245,13 +345,13 @@ export default function VisitPage() {
       </section>
 
       {/* ── Arrival ───────────────────────────────────────────────────── */}
-      <section className="py-16 bg-(--bg-soft) border-t border-(--line-soft)">
+      <section className="py-16 bg-(--foreground) border-t border-(--line-soft)">
         <div className={container}>
           <div className="mb-12">
-            <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+            <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
               Finding us
             </p>
-            <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+            <h2 className="font-nyght text-4xl lg:text-5xl leading-tight text-(--background) mb-3">
               402 S Front{" "}
               <em className="font-nyght-italic text-(--accent)">Street,</em>{" "}
               Rochester.
@@ -303,7 +403,7 @@ export default function VisitPage() {
               },
             ].map(({ num, heading, body, cta }) => (
               <div key={num}>
-                <p className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--ink-mute) mb-4">
+                <p className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--background) mb-4">
                   {num} ·{" "}
                   {num === "01"
                     ? "Finding us"
@@ -311,10 +411,10 @@ export default function VisitPage() {
                       ? "Parking"
                       : "What to bring"}
                 </p>
-                <h3 className="font-nyght text-2xl text-(--foreground) mb-4 leading-snug">
+                <h3 className="font-nyght text-2xl text-(--background) mb-4 leading-snug">
                   {heading}
                 </h3>
-                <p className="text-sm text-(--ink-soft) leading-relaxed mb-3">
+                <p className="text-sm text-(--background)/80 leading-relaxed mb-3">
                   {body}
                 </p>
                 {cta && (
