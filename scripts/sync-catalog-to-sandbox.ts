@@ -121,11 +121,11 @@ async function main() {
     collectAll(await sandboxClient.catalog.list({ types: "CATEGORY" })),
   ]);
 
-  // name → existing Sandbox object ID
-  const sandboxItemByName = new Map<string, string>(
+  // name → existing Sandbox object (full, including variations)
+  const sandboxItemByName = new Map<string, AnyObj>(
     (existingSandboxItems as AnyObj[])
       .filter((o) => o.type === "ITEM" && o.itemData?.name && o.id)
-      .map((o) => [o.itemData.name as string, o.id as string])
+      .map((o) => [o.itemData.name as string, o])
   );
   const sandboxCatByName = new Map<string, string>(
     (existingSandboxCats as AnyObj[])
@@ -178,7 +178,8 @@ async function main() {
 
     const item = obj.itemData;
     const name = (item.name ?? "Unnamed") as string;
-    const existingId = sandboxItemByName.get(name);
+    const existingObj = sandboxItemByName.get(name);
+    const existingId = existingObj?.id as string | undefined;
     const sandboxId = existingId ?? `#item_${tempItemIdx++}`;
 
     if (existingId) updateCount++;
@@ -188,24 +189,36 @@ async function main() {
     const prodCatId = (item.categoryId ?? null) as string | null;
     const sandboxCatId = prodCatId ? (catIdMap.get(prodCatId) ?? null) : null;
 
-    // Rebuild variations (strip prod IDs; Square assigns new sandbox IDs)
+    // Rebuild variations — use real sandbox variation IDs for existing items so
+    // Square accepts the update; fall back to '#'-prefixed temp IDs for new ones.
+    const existingVariations: AnyObj[] = existingObj?.itemData?.variations ?? [];
     const variations = ((item.variations ?? []) as AnyObj[])
       .filter((v) => v.type === "ITEM_VARIATION" && v.itemVariationData)
-      .map((v, vi) => ({
-        type: "ITEM_VARIATION" as const,
-        id: `${sandboxId}_var_${vi}`,
-        itemVariationData: {
-          name: v.itemVariationData.name,
-          pricingType: v.itemVariationData.pricingType,
-          priceMoney: v.itemVariationData.priceMoney,
-          serviceDuration: v.itemVariationData.serviceDuration,
-          availableForBooking: v.itemVariationData.availableForBooking,
-        },
-      }));
+      .map((v, vi) => {
+        const existingVar =
+          existingVariations.find(
+            (ev: AnyObj) =>
+              ev.itemVariationData?.name === v.itemVariationData.name
+          ) ?? existingVariations[vi];
+        const varId = existingVar?.id ?? `#${sandboxId}_var_${vi}`;
+        return {
+          type: "ITEM_VARIATION" as const,
+          id: varId,
+          ...(existingVar?.version !== undefined && { version: existingVar.version }),
+          itemVariationData: {
+            name: v.itemVariationData.name,
+            pricingType: v.itemVariationData.pricingType,
+            priceMoney: v.itemVariationData.priceMoney,
+            serviceDuration: v.itemVariationData.serviceDuration,
+            availableForBooking: v.itemVariationData.availableForBooking,
+          },
+        };
+      });
 
     objects.push({
       type: "ITEM",
       id: sandboxId,
+      ...(existingObj?.version !== undefined && { version: existingObj.version }),
       itemData: {
         name,
         description: (item.description ?? undefined) as string | undefined,

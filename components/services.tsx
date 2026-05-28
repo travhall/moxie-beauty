@@ -138,7 +138,7 @@ function ServiceRow({
         <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-colors duration-300">
           {name}
         </h3>
-        <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch]">
+        <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch] text-pretty">
           {desc}
         </p>
         <div className="flex gap-4 flex-wrap">
