@@ -63,8 +63,8 @@
     var(--rose-gold-100)
   );
   --ink: var(--midnite-800);
-  --ink-soft: var(--midnite-600);
-  --ink-mute: var(--midnite-500);
+  --ink-soft: var(--midnite-700);
+  --ink-mute: var(--midnite-600);
   --line: color-mix(in oklab, var(--midnite-800) 12%, transparent);
   --line-soft: color-mix(in oklab, var(--midnite-800) 6%, transparent);
   --accent-soft: var(--rose-gold-300);
@@ -91,8 +91,8 @@
   --surface: color-mix(in oklab, var(--midnite-800) 85%, var(--ivory-rose-900));
   --bg-soft: color-mix(in oklab, var(--midnite-900) 80%, var(--ivory-rose-900));
   --ink: var(--ivory-rose-50);
-  --ink-soft: var(--ivory-rose-200);
-  --ink-mute: var(--ivory-rose-300);
+  --ink-soft: var(--ivory-rose-100);
+  --ink-mute: var(--ivory-rose-200);
   --line: color-mix(in oklab, var(--ivory-rose-50) 14%, transparent);
   --line-soft: color-mix(in oklab, var(--ivory-rose-50) 7%, transparent);
   --accent-soft: var(--rose-gold-200);

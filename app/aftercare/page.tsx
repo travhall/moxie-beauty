@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Appointments from "@/components/appointments";
 import { containerClass } from "@/lib/layout";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Aftercare | Moxie Beauty Studio",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     title: "Aftercare | Moxie Beauty Studio",
     description:
       "Service-specific aftercare instructions for lash extensions, lash lifts, brow lamination, and microblading.",
-    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630, alt: "Moxie Beauty Studio — lash and brow studio in Rochester, WI" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -154,26 +155,37 @@ const aftercareGroups = [
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://moxiebeautystudiowi.com" },
+    { "@type": "ListItem", position: 2, name: "Aftercare", item: "https://moxiebeautystudiowi.com/aftercare" },
+  ],
+};
+
 export default function AftercarePage() {
   const container = containerClass;
 
   return (
-    <main>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <main>
       {/* ── Page hero ─────────────────────────────────────────────────── */}
       <section className="pt-14 pb-16 border-b border-(--line-soft)">
         <div className={container}>
-          <nav
-            className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute) mb-10"
-            aria-label="Breadcrumb"
-          >
-            <a href="/" className="hover:text-(--accent) transition-colors">
-              Moxie
-            </a>
-            <span
-              className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1"
-              aria-hidden="true"
-            />
-            <span aria-current="page">Aftercare</span>
+          <nav aria-label="Breadcrumb" className="mb-10">
+            <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
+              <li>
+                <a href="/" className="hover:text-(--accent) transition-colors">Moxie</a>
+              </li>
+              <li aria-hidden="true">
+                <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
+              </li>
+              <li>
+                <span aria-current="page">Aftercare</span>
+              </li>
+            </ol>
           </nav>
 
           <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
@@ -276,12 +288,17 @@ export default function AftercarePage() {
       </section>
 
       {/* ── Questions note ────────────────────────────────────────────── */}
-      <section className="py-16 bg-(--foreground)">
+      <section className="py-16 bg-(--foreground)/90">
         <div className={container}>
           <div className="max-w-2xl">
             <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-5">
               Something doesn&apos;t look right?{" "}
-              <em className="font-nyght-italic text-(--accent)">Text us.</em>
+              <a
+                href={siteConfig.contact.smsHref}
+                className="font-nyght-italic text-(--accent) hover:underline underline-offset-4"
+              >
+                Text us.
+              </a>
             </p>
             <p className="text-(--background) leading-relaxed">
               If anything feels off in the first week after your appointment,
@@ -296,5 +313,6 @@ export default function AftercarePage() {
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
       <Appointments context="visit" />
     </main>
+    </>
   );
 }

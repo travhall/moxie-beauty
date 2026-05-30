@@ -42,11 +42,11 @@ export const siteConfig = {
     note: "Tue – Sat",
     schedule: [
       { day: "Monday", hours: null }, // closed
-      { day: "Tuesday", hours: "10:00 – 7:00" },
-      { day: "Wednesday", hours: "10:00 – 7:00" },
-      { day: "Thursday", hours: "10:00 – 7:00" },
-      { day: "Friday", hours: "10:00 – 7:00" },
-      { day: "Saturday", hours: "10:00 – 7:00" },
+      { day: "Tuesday", hours: "10 AM – 7 PM" },
+      { day: "Wednesday", hours: "10 AM – 7 PM" },
+      { day: "Thursday", hours: "10 AM – 7 PM" },
+      { day: "Friday", hours: "10 AM – 7 PM" },
+      { day: "Saturday", hours: "10 AM – 7 PM" },
       { day: "Sunday", hours: null }, // closed
     ],
   },

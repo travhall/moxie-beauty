@@ -52,6 +52,7 @@ function FooterCol({
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`${label} (opens in new tab)`}
                 className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200 rounded-full"
               >
                 {label}

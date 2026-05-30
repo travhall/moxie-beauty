@@ -17,14 +17,14 @@ import {
 export const metadata: Metadata = {
   title: "Our Services | Moxie Beauty Studio",
   description:
-    "Explore Moxie Beauty Studio's full range of lash and brow services — eyelash extensions, lash lift & tint, brow lamination, henna brows, and more.",
+    "Explore Moxie Beauty Studio's full range of lash and brow services — eyelash extensions, lash lift & tint, brow lamination, and more.",
   openGraph: {
     type: "website",
     url: "https://moxiebeautystudiowi.com/services",
     title: "Our Services | Moxie Beauty Studio",
     description:
-      "Lash extensions, lash lift & tint, brow lamination, henna brows, and more — by appointment in Rochester, WI.",
-    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630 }],
+      "Lash extensions, lash lift & tint, brow lamination, and more — by appointment in Rochester, WI.",
+    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630, alt: "Moxie Beauty Studio — lash and brow studio in Rochester, WI" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -241,24 +241,35 @@ export default async function ServicesPage() {
     ? liveCards(groups.extras, browCards.length + lashCards.length + 1)
     : fallbackWithId(FALLBACK_EXTRAS);
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://moxiebeautystudiowi.com" },
+      { "@type": "ListItem", position: 2, name: "Services & Pricing", item: "https://moxiebeautystudiowi.com/services" },
+    ],
+  };
+
   return (
-    <main>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <main>
       {/* ── Page hero ─────────────────────────────────────────────────── */}
       <section className="pt-14 pb-16 border-b border-(--line-soft)">
         <div className={container}>
           {/* Breadcrumb */}
-          <nav
-            className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute) mb-10"
-            aria-label="Breadcrumb"
-          >
-            <a href="/" className="hover:text-(--accent) transition-colors">
-              Moxie
-            </a>
-            <span
-              className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1"
-              aria-hidden="true"
-            />
-            <span aria-current="page">Services &amp; Pricing</span>
+          <nav aria-label="Breadcrumb" className="mb-10">
+            <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
+              <li>
+                <a href="/" className="hover:text-(--accent) transition-colors">Moxie</a>
+              </li>
+              <li aria-hidden="true">
+                <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
+              </li>
+              <li>
+                <span aria-current="page">Services &amp; Pricing</span>
+              </li>
+            </ol>
           </nav>
 
           <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
@@ -465,5 +476,6 @@ export default async function ServicesPage() {
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
       <Appointments context="services" />
     </main>
+    </>
   );
 }

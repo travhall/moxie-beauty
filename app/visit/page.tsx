@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "Your Visit | Moxie Beauty Studio",
     description:
       "What to expect at Moxie Beauty Studio — from booking through aftercare.",
-    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630, alt: "Moxie Beauty Studio — lash and brow studio in Rochester, WI" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -27,26 +27,37 @@ export const metadata: Metadata = {
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://moxiebeautystudiowi.com" },
+    { "@type": "ListItem", position: 2, name: "Your Visit", item: "https://moxiebeautystudiowi.com/visit" },
+  ],
+};
+
 export default function VisitPage() {
   const container = containerClass;
 
   return (
-    <main>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <main>
       {/* ── Page hero ─────────────────────────────────────────────────── */}
       <section className="pt-14 pb-16 border-b border-(--line-soft)">
         <div className={container}>
-          <nav
-            className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute) mb-10"
-            aria-label="Breadcrumb"
-          >
-            <a href="/" className="hover:text-(--accent) transition-colors">
-              Moxie
-            </a>
-            <span
-              className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1"
-              aria-hidden="true"
-            />
-            <span aria-current="page">Your Visit</span>
+          <nav aria-label="Breadcrumb" className="mb-10">
+            <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
+              <li>
+                <a href="/" className="hover:text-(--accent) transition-colors">Moxie</a>
+              </li>
+              <li aria-hidden="true">
+                <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
+              </li>
+              <li>
+                <span aria-current="page">Your Visit</span>
+              </li>
+            </ol>
           </nav>
 
           <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
@@ -130,6 +141,7 @@ export default function VisitPage() {
                 src="/images/appt-img4.jpg"
                 alt="Booking your appointment"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
@@ -165,6 +177,7 @@ export default function VisitPage() {
                 src="/images/appt-img2.jpg"
                 alt="Preparing for your appointment"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
@@ -301,6 +314,7 @@ export default function VisitPage() {
                 src="/images/appt-img.jpg"
                 alt="During your appointment"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
@@ -324,9 +338,15 @@ export default function VisitPage() {
                 printout.
               </p>
               <p className="text-(--ink-soft) leading-relaxed">
-                If anything feels off in the first week, text us. We&apos;d
-                rather hear from you than have you wait until the next
-                appointment.
+                If anything feels off in the first week,{" "}
+                <a
+                  href={siteConfig.contact.smsHref}
+                  className="text-(--foreground) hover:text-(--accent) transition-colors underline underline-offset-4"
+                >
+                  text us
+                </a>
+                . We&apos;d rather hear from you than have you wait until the
+                next appointment.
               </p>
             </div>
             <div
@@ -337,6 +357,7 @@ export default function VisitPage() {
                 src="/images/appt-img3.jpg"
                 alt="Aftercare instructions"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
@@ -371,7 +392,7 @@ export default function VisitPage() {
                 ),
                 body: "Front Street runs north-south through the village. Look for the small painted M — you'll know it when you see it.",
                 cta: {
-                  label: "Get directions →",
+                  label: "Get directions",
                   href: siteConfig.address.mapsHref,
                 },
               },
@@ -422,9 +443,10 @@ export default function VisitPage() {
                     href={cta.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`${cta.label} (opens in new tab)`}
                     className="text-sm text-(--accent) hover:underline underline-offset-4"
                   >
-                    {cta.label}
+                    {cta.label} ↗
                   </a>
                 )}
               </div>
@@ -436,5 +458,6 @@ export default function VisitPage() {
       {/* ── Booking CTA ───────────────────────────────────────────────── */}
       <Appointments context="visit" />
     </main>
+    </>
   );
 }
