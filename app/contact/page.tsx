@@ -297,7 +297,7 @@ export default function ContactPage() {
                         <span className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--ink-mute) w-8">
                           {abbr}
                         </span>
-                        <span className="font-nyght text-base text-(--foreground)">
+                        <span className="font-nyght text-base md:text-lg text-(--foreground)">
                           {day}
                         </span>
                       </div>
@@ -377,7 +377,7 @@ export default function ContactPage() {
                       <span className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) w-24 group-hover:text-(--accent) transition-colors duration-300">
                         {k}
                       </span>
-                      <span className="flex-1 font-nyght text-base text-(--foreground) group-hover:text-(--accent) transition-colors duration-300">
+                      <span className="flex-1 font-nyght text-base md:text-lg text-(--foreground) group-hover:text-(--accent) transition-colors duration-300">
                         {v}
                       </span>
                       <span className="text-(--ink-mute) group-hover:text-(--accent) transition-colors duration-300">
@@ -411,7 +411,7 @@ export default function ContactPage() {
                 <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                   FAQ
                 </p>
-                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+                <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
                   The things people{" "}
                   <em className="font-nyght-italic text-(--accent)">often</em>{" "}
                   ask.
@@ -436,7 +436,7 @@ export default function ContactPage() {
                     <span className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--ink-mute) w-7 shrink-0">
                       {num}
                     </span>
-                    <span className="flex-1 font-nyght text-xl text-(--foreground)">
+                    <span className="flex-1 font-nyght text-xl md:text-2xl text-(--foreground)">
                       {q}
                     </span>
                     <span className="faq-chev text-(--ink-mute) group-open:rotate-45">

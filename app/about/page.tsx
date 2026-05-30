@@ -136,9 +136,9 @@ export default function AboutPage() {
         {/* ── Founder ───────────────────────────────────────────────────── */}
         <section className="py-20">
           <div className={container}>
-            <div className="grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-20">
-              {/* Portrait */}
-              <div className="flex flex-col items-start gap-3">
+            <div className="grid md:grid-cols-[340px_1fr] gap-8 md:gap-x-12 md:gap-y-12 lg:gap-x-20 lg:gap-y-8">
+              {/* Portrait — spans both text rows on desktop */}
+              <div className="lg:row-span-2">
                 <div
                   className="relative w-full max-w-85 rounded-t-[170px] rounded-b-2xl overflow-hidden border-l-8 border-b-2 border-(--accent) shadow-xl bg-(--accent)"
                   style={{ height: "400px" }}
@@ -155,15 +155,19 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Bio */}
-              <div className="lg:pt-8 max-w-2xl">
+              {/* Eyebrow + Heading — beside image on tablet+, above body on desktop */}
+              <div className="md:self-center lg:self-auto lg:pt-8">
                 <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-6">
                   The founder
                 </p>
-                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6 text-balance">
+                <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
                   Built from a love of beauty — and a need to do it{" "}
                   <em className="font-nyght-italic text-(--accent)">right.</em>
                 </h2>
+              </div>
+
+              {/* Body + Signature — full width on tablet, right column on desktop */}
+              <div className="md:col-span-2 lg:col-span-1 lg:col-start-2 max-w-[72ch]">
                 <p className="text-xl text-(--ink-soft) mb-5 leading-relaxed">
                   Jackie has always had a passion for helping women feel
                   confident and like the best version of themselves. Learning
@@ -211,7 +215,7 @@ export default function AboutPage() {
               >
                 &ldquo;
               </span>
-              <blockquote className="relative font-nyght-italic text-3xl lg:text-4xl text-(--foreground) leading-snug max-w-2xl">
+              <blockquote className="relative font-nyght-italic text-3xl lg:text-4xl text-(--foreground) leading-snug max-w-2xl text-balance">
                 Brows and lashes should look like they{" "}
                 <em className="text-(--accent)">grew</em> that way
                 <em className="text-(--accent)">.</em> Only a little better than
@@ -233,12 +237,12 @@ export default function AboutPage() {
         {/* ── Principles ────────────────────────────────────────────────── */}
         <section className="py-20">
           <div className={container}>
-            <div className="grid lg:grid-cols-[480px_1fr] gap-16 mb-14">
+            <div className="grid lg:grid-cols-[1fr_540px] gap-16 mb-14">
               <div>
                 <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                   Principles
                 </p>
-                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+                <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
                   Four{" "}
                   <em className="font-nyght-italic text-(--accent)">things</em>{" "}
                   we hold to.
@@ -307,7 +311,7 @@ export default function AboutPage() {
                   <span className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) block mb-4">
                     {num}
                   </span>
-                  <h3 className="font-nyght text-2xl text-(--foreground) mb-3 leading-snug">
+                  <h3 className="font-nyght text-xl md:text-2xl text-(--foreground) mb-3 leading-snug">
                     {heading}
                   </h3>
                   <p className="text-sm text-(--ink-soft) leading-relaxed">
@@ -335,12 +339,12 @@ export default function AboutPage() {
         {/* ── Studio mosaic ─────────────────────────────────────────────── */}
         <section className="py-20">
           <div className={container}>
-            <div className="grid lg:grid-cols-[480px_540px] justify-between gap-16 mb-12">
+            <div className="grid lg:grid-cols-[1fr_540px] justify-between gap-16 mb-12">
               <div>
                 <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                   The space
                 </p>
-                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
+                <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
                   A small,{" "}
                   <em className="font-nyght-italic text-(--accent)">
                     light-filled

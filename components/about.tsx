@@ -5,8 +5,6 @@ import profileImage from "@/public/images/jackie-profile.jpg";
 import lobbyImage from "@/public/images/moxie-lobby.jpg";
 import workImage from "@/public/images/jackie-working.jpg";
 
-
-
 export default function About() {
   return (
     <section
@@ -103,7 +101,7 @@ export default function About() {
               About the studio
             </p>
 
-            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl lg:text-5xl leading-tight text-balance pb-1">
+            <h2 className="font-nyght bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent text-4xl md:text-5xl leading-tight text-balance pb-1">
               Discover the Heart &amp; Soul of Moxie
             </h2>
 
@@ -114,8 +112,8 @@ export default function About() {
               </strong>
               . Jackie specializes in{" "}
               <em className="italic font-bold text-(--accent)">
-                eyelash extensions, lash lift and tint, brow lamination,
-                and microblading
+                eyelash extensions, lash lift and tint, brow lamination, and
+                microblading
               </em>
               . Her dedication to craft drives her to keep learning — every
               service is built around the client in the chair, not a template.
@@ -132,7 +130,9 @@ export default function About() {
               <div>
                 <div className="font-nyght text-[40px] leading-none text-(--foreground)">
                   Est.{" "}
-                  <span className="font-nyght-italic text-(--accent)">&#8217;21</span>
+                  <span className="font-nyght-italic text-(--accent)">
+                    &#8217;21
+                  </span>
                 </div>
                 <div className="text-[11px] tracking-[0.2em] uppercase text-(--ink-mute) mt-2">
                   Rochester, WI

@@ -12,7 +12,14 @@ export const metadata: Metadata = {
     title: "Studio Policies | Moxie Beauty Studio",
     description:
       "Client policies for Moxie Beauty Studio — cancellations, no-shows, lash fills, and more.",
-    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630, alt: "Moxie Beauty Studio — lash and brow studio in Rochester, WI" }],
+    images: [
+      {
+        url: "/images/hero-img.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Moxie Beauty Studio — lash and brow studio in Rochester, WI",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -91,8 +98,18 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://moxiebeautystudiowi.com" },
-    { "@type": "ListItem", position: 2, name: "Studio Policies", item: "https://moxiebeautystudiowi.com/policies" },
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://moxiebeautystudiowi.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Studio Policies",
+      item: "https://moxiebeautystudiowi.com/policies",
+    },
   ],
 };
 
@@ -101,89 +118,97 @@ export default function PoliciesPage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <main>
-      {/* ── Page hero ─────────────────────────────────────────────────── */}
-      <section className="pt-14 pb-16 border-b border-(--line-soft)">
-        <div className={container}>
-          <nav aria-label="Breadcrumb" className="mb-10">
-            <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
-              <li>
-                <a href="/" className="hover:text-(--accent) transition-colors">Moxie</a>
-              </li>
-              <li aria-hidden="true">
-                <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
-              </li>
-              <li>
-                <span aria-current="page">Studio Policies</span>
-              </li>
-            </ol>
-          </nav>
+        {/* ── Page hero ─────────────────────────────────────────────────── */}
+        <section className="pt-14 pb-16 border-b border-(--line-soft)">
+          <div className={container}>
+            <nav aria-label="Breadcrumb" className="mb-10">
+              <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
+                <li>
+                  <a
+                    href="/"
+                    className="hover:text-(--accent) transition-colors"
+                  >
+                    Moxie
+                  </a>
+                </li>
+                <li aria-hidden="true">
+                  <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
+                </li>
+                <li>
+                  <span aria-current="page">Studio Policies</span>
+                </li>
+              </ol>
+            </nav>
 
-          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
-            <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
-              Let&apos;s agree
-              <br />
-              to <em className="font-nyght-italic text-(--accent)">agree.</em>
-            </h1>
-            <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-              These policies exist to protect your time and ours. They&apos;re
-              meant to be clear and fair — not fine print. If you have questions
-              about any of them, just ask before you book.
-            </p>
+            <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
+              <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
+                Let&apos;s agree
+                <br />
+                to <em className="font-nyght-italic text-(--accent)">agree.</em>
+              </h1>
+              <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
+                These policies exist to protect your time and ours. They&apos;re
+                meant to be clear and fair — not fine print. If you have
+                questions about any of them, just ask before you book.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Policies list ─────────────────────────────────────────────── */}
-      <section className="py-20">
-        <div className={container}>
-          <div className="max-w-3xl">
-            {policies.map(({ num, heading, body }) => (
-              <div
-                key={num}
-                className="grid sm:grid-cols-[80px_1fr] gap-4 py-10 border-b border-(--line-soft)"
-              >
-                <span className="font-nyght-bold text-[11px] tracking-[0.3em] uppercase text-(--ink-mute) pt-1">
-                  {num}
-                </span>
-                <div>
-                  <h2 className="font-nyght text-2xl text-(--foreground) mb-3">
-                    {heading}
-                  </h2>
-                  <p className="text-(--ink-soft) leading-relaxed">{body}</p>
+        {/* ── Policies list ─────────────────────────────────────────────── */}
+        <section className="py-20">
+          <div className={container}>
+            <div className="max-w-3xl">
+              {policies.map(({ num, heading, body }) => (
+                <div
+                  key={num}
+                  className="grid sm:grid-cols-[80px_1fr] gap-4 py-10 border-b border-(--line-soft)"
+                >
+                  <span className="font-nyght-bold text-[11px] tracking-[0.3em] uppercase text-(--ink-mute) pt-1">
+                    {num}
+                  </span>
+                  <div>
+                    <h2 className="font-nyght text-2xl md:text-3xl text-(--foreground) mb-3">
+                      {heading}
+                    </h2>
+                    <p className="text-(--ink-soft) leading-relaxed">{body}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Closing note ──────────────────────────────────────────────── */}
-      <section className="py-16 bg-(--foreground)">
-        <div className={container}>
-          <div className="max-w-2xl">
-            <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
-              A note from Jackie
-            </p>
-            <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-6">
-              I genuinely love what I do — and I want every visit to feel that
-              way for <em className="font-nyght-italic text-(--accent)">you</em>
-              , too.
-            </p>
-            <p className="text-(--background)/80 leading-relaxed">
-              These policies keep the studio running smoothly so that when
-              you&apos;re in the chair, we can focus entirely on you. If
-              something ever feels off, reach out — I&apos;d rather hear about
-              it than have you leave wondering.
-            </p>
+        {/* ── Closing note ──────────────────────────────────────────────── */}
+        <section className="py-16 bg-(--foreground) dark:bg-(--foreground)/80">
+          <div className={container}>
+            <div className="max-w-2xl">
+              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
+                A note from Jackie
+              </p>
+              <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-6">
+                I genuinely love what I do — and I want every visit to feel that
+                way for{" "}
+                <em className="font-nyght-italic text-(--accent)">you</em>, too.
+              </p>
+              <p className="text-(--background) leading-relaxed">
+                These policies keep the studio running smoothly so that when
+                you&apos;re in the chair, we can focus entirely on you. If
+                something ever feels off, reach out — I&apos;d rather hear about
+                it than have you leave wondering.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Booking CTA ───────────────────────────────────────────────── */}
-      <Appointments context="visit" />
-    </main>
+        {/* ── Booking CTA ───────────────────────────────────────────────── */}
+        <Appointments context="visit" />
+      </main>
     </>
   );
 }

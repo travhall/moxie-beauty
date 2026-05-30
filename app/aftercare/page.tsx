@@ -13,7 +13,14 @@ export const metadata: Metadata = {
     title: "Aftercare | Moxie Beauty Studio",
     description:
       "Service-specific aftercare instructions for lash extensions, lash lifts, brow lamination, and microblading.",
-    images: [{ url: "/images/hero-img.jpg", width: 1200, height: 630, alt: "Moxie Beauty Studio — lash and brow studio in Rochester, WI" }],
+    images: [
+      {
+        url: "/images/hero-img.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Moxie Beauty Studio — lash and brow studio in Rochester, WI",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -159,8 +166,18 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://moxiebeautystudiowi.com" },
-    { "@type": "ListItem", position: 2, name: "Aftercare", item: "https://moxiebeautystudiowi.com/aftercare" },
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://moxiebeautystudiowi.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Aftercare",
+      item: "https://moxiebeautystudiowi.com/aftercare",
+    },
   ],
 };
 
@@ -169,150 +186,162 @@ export default function AftercarePage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <main>
-      {/* ── Page hero ─────────────────────────────────────────────────── */}
-      <section className="pt-14 pb-16 border-b border-(--line-soft)">
-        <div className={container}>
-          <nav aria-label="Breadcrumb" className="mb-10">
-            <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
-              <li>
-                <a href="/" className="hover:text-(--accent) transition-colors">Moxie</a>
-              </li>
-              <li aria-hidden="true">
-                <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
-              </li>
-              <li>
-                <span aria-current="page">Aftercare</span>
-              </li>
-            </ol>
-          </nav>
-
-          <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
-            <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
-              The work
-              <br />
-              doesn&apos;t stop{" "}
-              <em className="font-nyght-italic text-(--accent)">here.</em>
-            </h1>
-            <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-              How you care for your lashes and brows at home has a direct impact
-              on how long your results last — and how your next appointment
-              goes. Find your service below.
-            </p>
-          </div>
-
-          {/* Jump links */}
-          <div className="flex flex-wrap gap-3">
-            {aftercareGroups.map(({ num, category }) => (
-              <a
-                key={num}
-                href={`#aftercare-${num.toLowerCase()}`}
-                className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border border-(--accent)/60 text-(--accent)/80 hover:text-(--accent) hover:border-(--line-soft) hover:bg-(--accent)/10 transition-colors"
-              >
-                {category}
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Aftercare sections ────────────────────────────────────────── */}
-      {aftercareGroups.map(({ num, category, intro, items }) => (
-        <section
-          key={num}
-          id={`aftercare-${num.toLowerCase()}`}
-          className="py-20 border-b border-(--line-soft)"
-          tabIndex={-1}
-        >
+        {/* ── Page hero ─────────────────────────────────────────────────── */}
+        <section className="pt-14 pb-16 border-b border-(--line-soft)">
           <div className={container}>
-            <div className="grid lg:grid-cols-[380px_540px] justify-between gap-16 mb-12">
-              <div>
-                <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
-                  {num} · {category}
-                </p>
-                <h2 className="font-nyght text-4xl lg:text-5xl leading-tight">
-                  {category}
-                </h2>
-              </div>
-              <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
-                {intro}
+            <nav aria-label="Breadcrumb" className="mb-10">
+              <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
+                <li>
+                  <a
+                    href="/"
+                    className="hover:text-(--accent) transition-colors"
+                  >
+                    Moxie
+                  </a>
+                </li>
+                <li aria-hidden="true">
+                  <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
+                </li>
+                <li>
+                  <span aria-current="page">Aftercare</span>
+                </li>
+              </ol>
+            </nav>
+
+            <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
+              <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
+                The work
+                <br />
+                doesn&apos;t stop{" "}
+                <em className="font-nyght-italic text-(--accent)">here.</em>
+              </h1>
+              <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
+                How you care for your lashes and brows at home has a direct
+                impact on how long your results last — and how your next
+                appointment goes. Find your service below.
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
-              {items.map(({ heading, body }) => (
-                <div key={heading} className="bg-(--background)/40 p-7 lg:p-8">
-                  <h3 className="font-nyght text-xl lg:text-2xl xl:text-3xl text-(--foreground) mb-3 text-balance">
-                    {heading}
-                  </h3>
-                  <p className="text-sm text-(--ink-soft) leading-relaxed text-pretty">
-                    {body}
-                  </p>
-                </div>
+            {/* Jump links */}
+            <div className="flex flex-wrap gap-3">
+              {aftercareGroups.map(({ num, category }) => (
+                <a
+                  key={num}
+                  href={`#aftercare-${num.toLowerCase()}`}
+                  className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border border-(--accent)/60 text-(--accent)/80 hover:text-(--accent) hover:border-(--line-soft) hover:bg-(--accent)/10 transition-colors"
+                >
+                  {category}
+                </a>
               ))}
             </div>
           </div>
         </section>
-      ))}
 
-      {/* ── Retail note ───────────────────────────────────────────────── */}
-      <section className="py-16 bg-(--bg-soft) border-b border-(--line-soft)">
-        <div className={container}>
-          <div className="grid lg:grid-cols-[380px_1fr] gap-16">
-            <div>
-              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
-                In studio
-              </p>
-              <h2 className="font-nyght text-4xl leading-tight">
-                Products we{" "}
-                <em className="font-nyght-italic text-(--accent)">carry.</em>
-              </h2>
+        {/* ── Aftercare sections ────────────────────────────────────────── */}
+        {aftercareGroups.map(({ num, category, intro, items }) => (
+          <section
+            key={num}
+            id={`aftercare-${num.toLowerCase()}`}
+            className="py-28 border-b border-(--line-soft)"
+            tabIndex={-1}
+          >
+            <div className={container}>
+              <div className="grid lg:grid-cols-[380px_540px] justify-between gap-16 mb-12">
+                <div>
+                  <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+                    {num} · {category}
+                  </p>
+                  <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
+                    {category}
+                  </h2>
+                </div>
+                <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
+                  {intro}
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
+                {items.map(({ heading, body }) => (
+                  <div
+                    key={heading}
+                    className="bg-(--background)/40 p-7 lg:p-8"
+                  >
+                    <h3 className="font-nyght text-xl md:text-2xl text-(--foreground) mb-3 text-balance">
+                      {heading}
+                    </h3>
+                    <p className="text-sm text-(--ink-soft) leading-relaxed text-pretty">
+                      {body}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="lg:self-center">
-              <p className="text-(--ink-soft) leading-relaxed mb-4">
-                We stock lash shampoo kits in studio for $20 — the same foam
-                cleanser we recommend for daily lash care. Clean lashes are the
-                single biggest factor in extension retention, and we&apos;d
-                rather sell you the right product than have you guess at the
-                drugstore.
+          </section>
+        ))}
+
+        {/* ── Retail note ───────────────────────────────────────────────── */}
+        <section className="py-16 bg-(--bg-soft) border-b border-(--line-soft)">
+          <div className={container}>
+            <div className="grid lg:grid-cols-[380px_1fr] gap-16">
+              <div>
+                <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+                  In studio
+                </p>
+                <h2 className="font-nyght text-4xl leading-tight">
+                  Products we{" "}
+                  <em className="font-nyght-italic text-(--accent)">carry.</em>
+                </h2>
+              </div>
+              <div className="lg:self-center">
+                <p className="text-(--ink-soft) leading-relaxed mb-4">
+                  We stock lash shampoo kits in studio for $20 — the same foam
+                  cleanser we recommend for daily lash care. Clean lashes are
+                  the single biggest factor in extension retention, and
+                  we&apos;d rather sell you the right product than have you
+                  guess at the drugstore.
+                </p>
+                <p className="text-(--ink-soft) leading-relaxed">
+                  We also carry a rotating selection of retail items — candles,
+                  tumblers, earrings, and a few other things worth browsing
+                  while you&apos;re in. Ask Jackie what&apos;s currently in
+                  stock.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Questions note ────────────────────────────────────────────── */}
+        <section className="py-16 bg-(--foreground)/90">
+          <div className={container}>
+            <div className="max-w-2xl">
+              <p className="font-nyght text-3xl lg:text-4xl text-(--background)/80 leading-snug mb-5">
+                Something doesn&apos;t look right?{" "}
+                <a
+                  href={siteConfig.contact.smsHref}
+                  className="font-nyght-italic text-(--accent) hover:underline underline-offset-4"
+                >
+                  Text us.
+                </a>
               </p>
-              <p className="text-(--ink-soft) leading-relaxed">
-                We also carry a rotating selection of retail items — candles,
-                tumblers, earrings, and a few other things worth browsing while
-                you&apos;re in. Ask Jackie what&apos;s currently in stock.
+              <p className="text-(--background) leading-relaxed">
+                If anything feels off in the first week after your appointment,
+                reach out before your next visit. Lash services come with a
+                complimentary adjustment window of 7 days — we&apos;d rather fix
+                it early than have you wait.
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Questions note ────────────────────────────────────────────── */}
-      <section className="py-16 bg-(--foreground)/90">
-        <div className={container}>
-          <div className="max-w-2xl">
-            <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-5">
-              Something doesn&apos;t look right?{" "}
-              <a
-                href={siteConfig.contact.smsHref}
-                className="font-nyght-italic text-(--accent) hover:underline underline-offset-4"
-              >
-                Text us.
-              </a>
-            </p>
-            <p className="text-(--background) leading-relaxed">
-              If anything feels off in the first week after your appointment,
-              reach out before your next visit. Lash services come with a
-              complimentary adjustment window of 7 days — we&apos;d rather fix
-              it early than have you wait.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Booking CTA ───────────────────────────────────────────────── */}
-      <Appointments context="visit" />
-    </main>
+        {/* ── Booking CTA ───────────────────────────────────────────────── */}
+        <Appointments context="visit" />
+      </main>
     </>
   );
 }

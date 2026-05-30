@@ -1,37 +1,18 @@
 "use client";
 
-/**
- * Ambient blob background — Three.js icosahedron with simplex-noise vertex
- * displacement. Loads lazily (dynamic import) so it never touches the critical
- * render path. CSS blur + opacity handle the visual softness; colors are
- * updated reactively when the theme class changes on <html>.
- */
-
 import { useEffect, useRef } from "react";
 import type { BufferGeometry, BufferAttribute } from "three";
 
 // ── Color palettes ──────────────────────────────────────────────────────────
 
 const COLORS = {
-  /**
-   * Light mode: pale blush tones — very close to the ivory-rose-50 background
-   * so the blob reads as a soft warmth rather than a distinct shape.
-   */
   light: {
-    primary: "rgb(242, 210, 188)",
-    emissive: "rgb(224, 183, 160)",
-    emissiveIntensity: 0.25,
-    secondary: "rgb(250, 228, 212)",
+    primary: "rgb(205, 177, 159)",
+    secondary: "rgb(185, 150, 130)",
   },
-  /**
-   * Dark mode: warmer, richer rose-gold from the prototype — the reduced
-   * canvas opacity (set in CSS) keeps it from overpowering the dark surface.
-   */
   dark: {
     primary: "rgb(231, 188, 156)",
-    emissive: "rgb(214, 158, 132)",
-    emissiveIntensity: 0.35,
-    secondary: "rgb(245, 220, 200)",
+    secondary: "rgb(214, 158, 132)",
   },
 } as const;
 
@@ -50,6 +31,7 @@ export default function Blob() {
 
     let rafId = 0;
     let disposed = false;
+    let running = false;
 
     void (async () => {
       // Dynamic import keeps Three.js out of the initial bundle entirely
@@ -62,7 +44,7 @@ export default function Blob() {
       // ── Renderer ──────────────────────────────────────────────────────────
       const renderer = new THREE.WebGLRenderer({
         canvas,
-        antialias: true,
+        antialias: false,
         alpha: true,
         powerPreference: "low-power",
       });
@@ -80,36 +62,24 @@ export default function Blob() {
       );
       camera.position.set(0, 0, 5.2);
 
-      // ── Lighting — warm key + cool fill ──────────────────────────────────
-      const keyLight = new THREE.DirectionalLight(0xffe2c8, 1.1);
-      keyLight.position.set(2, 1.5, 3);
-      scene.add(keyLight);
-
-      const fillLight = new THREE.DirectionalLight(0xb8d4ff, 0.55);
-      fillLight.position.set(-3, -1, 2);
-      scene.add(fillLight);
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.35));
-
       // ── Primary blob ──────────────────────────────────────────────────────
-      const geom = new THREE.IcosahedronGeometry(1.6, 5);
+      // Detail 3 = ~3,840 vertices vs detail 5 = ~61,440. The 72px CSS blur
+      // makes the difference invisible, but the CPU/GPU savings are ~16x.
+      const geom = new THREE.IcosahedronGeometry(1.6, 3);
       const baseVerts = new Float32Array(geom.attributes.position.array);
-      const mat = new THREE.MeshPhongMaterial({
-        shininess: 22,
-        flatShading: false,
+      // MeshBasicMaterial needs no normals or lights — eliminates computeVertexNormals()
+      // each frame and all GPU lighting math, both invisible at 72px blur.
+      const mat = new THREE.MeshBasicMaterial({
         transparent: true,
         opacity: 0.95,
       });
       const blob = new THREE.Mesh(geom, mat);
       scene.add(blob);
 
-      // cSpell:ignore Verts Phong flatShading
-
       // ── Secondary (accent) blob ───────────────────────────────────────────
       const geom2 = new THREE.IcosahedronGeometry(0.9, 3);
       const baseVerts2 = new Float32Array(geom2.attributes.position.array);
-      const mat2 = new THREE.MeshPhongMaterial({
-        shininess: 18,
+      const mat2 = new THREE.MeshBasicMaterial({
         transparent: true,
         opacity: 0.75,
       });
@@ -122,11 +92,7 @@ export default function Blob() {
       const syncColors = () => {
         const c = isDark() ? COLORS.dark : COLORS.light;
         mat.color.set(c.primary);
-        mat.emissive.set(c.emissive);
-        mat.emissiveIntensity = c.emissiveIntensity;
         mat2.color.set(c.secondary);
-        mat2.emissive.set(c.secondary);
-        mat2.emissiveIntensity = c.emissiveIntensity * 1.1;
       };
       syncColors();
 
@@ -164,7 +130,7 @@ export default function Blob() {
           arr[i + 2] = baseArr[i + 2] * k;
         }
         pos.needsUpdate = true;
-        geometry.computeVertexNormals();
+        // No computeVertexNormals() needed — MeshBasicMaterial doesn't use them
       }
 
       // ── Pointer parallax ─────────────────────────────────────────────────
@@ -204,10 +170,38 @@ export default function Blob() {
         blob2.rotation.y = t * 0.4;
 
         renderer.render(scene, camera);
-        // Under reduced-motion, render one frame then stop
         if (!reduced) rafId = requestAnimationFrame(loop);
       }
-      rafId = requestAnimationFrame(loop);
+
+      function startLoop() {
+        if (running || reduced) return;
+        running = true;
+        last = performance.now();
+        rafId = requestAnimationFrame(loop);
+      }
+
+      function stopLoop() {
+        running = false;
+        cancelAnimationFrame(rafId);
+      }
+
+      // Pause when the tab is hidden — no point burning GPU in the background
+      const onVisibilityChange = () => {
+        if (document.hidden) {
+          stopLoop();
+        } else {
+          startLoop();
+        }
+      };
+      document.addEventListener("visibilitychange", onVisibilityChange);
+
+      startLoop();
+      // Static frame under reduced-motion
+      if (reduced) {
+        deform(geom, baseVerts, 0, 1.0);
+        deform(geom2, baseVerts2, 0, 0.7);
+        renderer.render(scene, camera);
+      }
 
       // ── Resize ────────────────────────────────────────────────────────────
       const onResize = () => {
@@ -217,14 +211,18 @@ export default function Blob() {
       };
       window.addEventListener("resize", onResize);
 
-      // Stash teardown on the canvas so the outer cleanup can reach it
       (
         canvas as HTMLCanvasElement & { __blobCleanup?: () => void }
       ).__blobCleanup = () => {
         themeObserver.disconnect();
+        document.removeEventListener("visibilitychange", onVisibilityChange);
         window.removeEventListener("pointermove", onPointer);
         window.removeEventListener("resize", onResize);
-        cancelAnimationFrame(rafId);
+        stopLoop();
+        geom.dispose();
+        mat.dispose();
+        geom2.dispose();
+        mat2.dispose();
         renderer.dispose();
       };
     })();

@@ -140,7 +140,9 @@ export default function StyleGuide() {
         <p className="font-nyght-bold text-sm tracking-widest uppercase text-(--accent) mb-2">
           Moxie Beauty Studio
         </p>
-        <h1 className="font-nyght text-4xl lg:text-5xl">Style Guide</h1>
+        <h1 className="font-nyght text-4xl lg:text-5xl leading-tight">
+          Style Guide
+        </h1>
       </header>
 
       {/* ── Typography ─────────────────────────────────────────────── */}
@@ -149,8 +151,8 @@ export default function StyleGuide() {
           Typography
         </h2>
         <p className="text-sm text-(--foreground)/50 mb-12">
-          Nyght Serif renders optically smaller than equivalent sans-serif sizes.
-          All heading levels are scaled ~1 step larger to compensate.
+          Nyght Serif renders optically smaller than equivalent sans-serif
+          sizes. All heading levels are scaled ~1 step larger to compensate.
         </p>
 
         {/* Type scale specimens */}
@@ -167,10 +169,11 @@ export default function StyleGuide() {
                 </code>
               </div>
               <p
-                className={`${classes} ${gradient
-                  ? "bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent"
-                  : "text-(--foreground)"
-                  }`}
+                className={`${classes} ${
+                  gradient
+                    ? "bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent"
+                    : "text-(--foreground)"
+                }`}
               >
                 {sample}
               </p>
@@ -182,7 +185,10 @@ export default function StyleGuide() {
         <h3 className="font-sans font-bold text-lg mb-6">Font Families</h3>
         <div className="space-y-5">
           {fontFamilies.map(({ label, classes, sample }) => (
-            <div key={label} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
+            <div
+              key={label}
+              className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6"
+            >
               <span className="text-xs text-(--foreground)/40 sm:w-40 shrink-0 uppercase tracking-wide">
                 {label}
               </span>
