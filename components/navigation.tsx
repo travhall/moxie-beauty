@@ -118,7 +118,7 @@ export default function Navigation() {
 
       const newLeft = linkRect.left - navRect.left;
       const newWidth = linkRect.width;
-      const padY = 12;
+      const padY = 0;
       const top = linkRect.top - navRect.top - padY;
       const height = linkRect.height + padY * 2;
 
@@ -214,7 +214,7 @@ export default function Navigation() {
       <header
         className={`sticky max-w-335 mx-2 xl:mx-auto p-4 rounded-full top-4 z-50 transition-[background-color,border-color,box-shadow] duration-500 ${
           scrolled
-            ? "bg-(--background)/80 saturate-150 backdrop-blur-md border-b border-(--line-soft) shadow-[inset_0_1px_0_0_color-mix(in_oklab,var(--ivory-rose-50)_60%,transparent),0_6px_24px_-16px_color-mix(in_oklab,var(--midnite-800)_22%,transparent)]"
+            ? "bg-(--background)/80 backdrop-blur-xs backdrop-contrast-150 border-b border-(--line-soft) shadow-[inset_0_1px_0_0_color-mix(in_oklab,white_80%,transparent),inset_0_-1px_0_0_color-mix(in_oklab,var(--midnite-800)_10%,transparent)] dark:shadow-[inset_0_1px_0_0_color-mix(in_oklab,var(--ivory-rose-50)_60%,transparent),0_6px_24px_-16px_color-mix(in_oklab,var(--midnite-800)_22%,transparent)]"
             : "bg-transparent border-b border-transparent shadow-none"
         }`}
         style={{ "--nav-height": `${NAV_HEIGHT_PX}px` } as React.CSSProperties}
@@ -295,10 +295,11 @@ export default function Navigation() {
                     key={item.href}
                     href={item.href}
                     className={[
-                      "relative z-10 px-3 text-sm font-semibold tracking-[0.06em] no-underline transition-colors duration-250",
-                      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent) rounded-full",
+                      "relative z-10 px-3 py-2 text-sm font-semibold tracking-[0.06em] no-underline rounded-full",
+                      "transition-[color,background-color,box-shadow] duration-250",
+                      "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent)",
                       isActive
-                        ? "text-(--accent)"
+                        ? "text-(--accent) bg-[color-mix(in_oklab,var(--accent)_18%,var(--background))] shadow-[inset_0_1px_0_0_color-mix(in_oklab,white_60%,transparent),inset_0_-1px_0_0_color-mix(in_oklab,var(--midnite-800)_10%,transparent)] pointer-events-none"
                         : "text-(--ink-soft) hover:text-(--foreground)",
                     ].join(" ")}
                     aria-current={isActive ? "page" : undefined}

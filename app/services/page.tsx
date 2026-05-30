@@ -60,7 +60,7 @@ function ServiceCard({ num, name, desc, meta, variationId }: ServiceCardProps) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${name} — book this service (opens in new tab)`}
-      className="group flex items-start gap-5 py-7 border-b border-(--line-soft) no-underline hover:bg-(--bg-soft) px-4 -mx-4 rounded-xl transition-colors duration-300"
+      className="group flex items-start gap-5 py-7 border-b border-(--line-soft) no-underline px-4 -mx-4 rounded-xl hover:bg-[linear-gradient(to_right,transparent,var(--bg-soft)_15%,var(--bg-soft)_85%,transparent)]"
     >
       <span className="font-nyght-bold text-[11px] tracking-[0.25em] text-(--ink-mute) mt-1 min-w-5.5">
         {num}
@@ -314,7 +314,7 @@ export default async function ServicesPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-(--line-soft)">
               {[
                 { k: "Studio", v: "By appointment" },
                 {
@@ -406,7 +406,7 @@ export default async function ServicesPage() {
               <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/80 mb-6">
                 A note on the way we work
               </p>
-              <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-3xl">
+              <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-3xl text-pretty">
                 We&apos;d rather be{" "}
                 <span className="text-(--accent)">slow</span> &amp; right
                 <br />

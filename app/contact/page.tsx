@@ -152,7 +152,7 @@ export default function ContactPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-(--line-soft)">
               {[
                 { k: "Where", v: "Rochester, WI" },
                 { k: "Hours", v: siteConfig.hours.display },
