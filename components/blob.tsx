@@ -9,18 +9,24 @@ const COLORS = {
   light: {
     primary: "rgb(205, 177, 159)",
     secondary: "rgb(185, 150, 130)",
+    // Backdrop: very pale blush, nearly background — becomes a diffuse haze layer
+    backdrop: "rgb(238, 220, 210)",
   },
   dark: {
     primary: "rgb(231, 188, 156)",
     secondary: "rgb(214, 158, 132)",
+    backdrop: "rgb(195, 152, 126)",
   },
 } as const;
 
 // ── Animation constants ──────────────────────────────────────────────────────
 
-const SPEED = 0.0002;
-const NOISE_AMP = 0.32;
-const NOISE_FREQ = 1.15;
+// Slower speed → more languid, dreamlike drift
+const SPEED = 0.00014;
+// Higher amplitude → more expressive morphing
+const NOISE_AMP = 0.36;
+// Lower frequency → bigger, rounder undulations (cloudlike vs textured)
+const NOISE_FREQ = 0.75;
 
 export default function Blob() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -62,13 +68,27 @@ export default function Blob() {
       );
       camera.position.set(0, 0, 5.2);
 
+      // ── Backdrop blob ─────────────────────────────────────────────────────
+      // Large, nearly spherical, very slow — creates the atmospheric haze that
+      // the primary and secondary blobs float inside. Detail 2 = ~960 vertices,
+      // almost no deformation (ampScale 0.06 ≈ barely breathing).
+      const geom3 = new THREE.IcosahedronGeometry(2.8, 2);
+      const baseVerts3 = new Float32Array(geom3.attributes.position.array);
+      const mat3 = new THREE.MeshBasicMaterial({
+        transparent: true,
+        opacity: 0.38,
+      });
+      const blob3 = new THREE.Mesh(geom3, mat3);
+      blob3.position.set(-0.4, 0.3, -2.5);
+      scene.add(blob3);
+
       // ── Primary blob ──────────────────────────────────────────────────────
-      // Detail 3 = ~3,840 vertices vs detail 5 = ~61,440. The 72px CSS blur
-      // makes the difference invisible, but the CPU/GPU savings are ~16x.
+      // Detail 3 = ~3,840 vertices. The 90px CSS blur makes higher detail
+      // invisible, but the lower vertex count keeps CPU noise work fast.
       const geom = new THREE.IcosahedronGeometry(1.6, 3);
       const baseVerts = new Float32Array(geom.attributes.position.array);
-      // MeshBasicMaterial needs no normals or lights — eliminates computeVertexNormals()
-      // each frame and all GPU lighting math, both invisible at 72px blur.
+      // MeshBasicMaterial: no normals or lighting needed — eliminates
+      // computeVertexNormals() each frame, invisible at this blur radius.
       const mat = new THREE.MeshBasicMaterial({
         transparent: true,
         opacity: 0.95,
@@ -93,6 +113,7 @@ export default function Blob() {
         const c = isDark() ? COLORS.dark : COLORS.light;
         mat.color.set(c.primary);
         mat2.color.set(c.secondary);
+        mat3.color.set(c.backdrop);
       };
       syncColors();
 
@@ -156,6 +177,11 @@ export default function Blob() {
         last = now;
         t += dt * SPEED;
 
+        // Backdrop: barely deforms (0.06), independent time offset for variety
+        deform(geom3, baseVerts3, t * 0.55, 0.06);
+        blob3.rotation.x = t * 0.08;
+        blob3.rotation.y = t * 0.1;
+
         deform(geom, baseVerts, t, 1.0);
         deform(geom2, baseVerts2, t * 1.4, 0.7);
 
@@ -198,6 +224,7 @@ export default function Blob() {
       startLoop();
       // Static frame under reduced-motion
       if (reduced) {
+        deform(geom3, baseVerts3, 0, 0.06);
         deform(geom, baseVerts, 0, 1.0);
         deform(geom2, baseVerts2, 0, 0.7);
         renderer.render(scene, camera);
@@ -219,6 +246,8 @@ export default function Blob() {
         window.removeEventListener("pointermove", onPointer);
         window.removeEventListener("resize", onResize);
         stopLoop();
+        geom3.dispose();
+        mat3.dispose();
         geom.dispose();
         mat.dispose();
         geom2.dispose();
