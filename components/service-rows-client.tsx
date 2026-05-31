@@ -35,7 +35,7 @@ function ServiceRow({
       ].join(" ")}
     >
       {/* Service number */}
-      <span className="font-mono text-[11px] tracking-widest text-(--ink-mute) pt-1.5 shrink-0 tabular-nums">
+      <span className="font-mono text-[11px] tracking-widest text-(--ink-mute) pt-1.5 shrink-0 tabular-nums" aria-hidden="true">
         {num}
       </span>
 
