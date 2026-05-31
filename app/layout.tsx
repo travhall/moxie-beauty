@@ -7,7 +7,7 @@ import { ThemeProvider } from "../providers/theme-provider";
 import { BookingProvider } from "@/context/BookingContext";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import BlobLazy from "@/components/blob-lazy";
+import Blob from "@/components/blob";
 import { siteConfig } from "@/lib/site-config";
 
 const mulish = Mulish({
@@ -253,7 +253,7 @@ export default function RootLayout({
           Skip to content
         </a>
 
-        <BlobLazy />
+        <Blob />
         <div className="site-container">
           <ThemeProvider>
             <BookingProvider>
