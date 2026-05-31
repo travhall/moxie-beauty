@@ -6,6 +6,7 @@ import {
   formatDuration,
   lowestPrice,
   primaryDuration,
+  primaryVariationId,
   type SquareService,
 } from "@/lib/square";
 
@@ -112,7 +113,7 @@ export default async function Services() {
         name: svc.name,
         desc: svc.description,
         meta: buildMeta(svc),
-        variationId: svc.id,
+        variationId: primaryVariationId(svc.variations),
       }))
     : FALLBACK_SERVICES.map((s) => ({ ...s, variationId: null }));
 

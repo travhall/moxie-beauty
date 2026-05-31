@@ -9,6 +9,7 @@ import {
   formatDuration,
   lowestPrice,
   primaryDuration,
+  primaryVariationId,
   type SquareService,
 } from "@/lib/square";
 import { siteConfig } from "@/lib/site-config";
@@ -188,7 +189,7 @@ export default async function ServicesPage() {
       name: svc.name,
       desc: svc.description,
       meta: squareMeta(svc),
-      variationId: svc.id,
+      variationId: primaryVariationId(svc.variations),
     }));
   }
 
