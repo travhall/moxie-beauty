@@ -1,209 +1,147 @@
-# Moxie Beauty Studio Website
+# Moxie Beauty Studio
 
-A modern, accessible, and performant website for Moxie Beauty Studio - specializing in bespoke lash and brow transformations in Wisconsin.
+A performant, accessible marketing site for Moxie Beauty Studio — a brow and lash studio in Rochester, Wisconsin.
 
-## 🎨 Features
+## Lighthouse Scores
 
-- **Booking Integration**: Direct Square appointments booking with sophisticated error handling
-- **Responsive Design**: Three distinct layouts optimized for mobile, tablet, and desktop
-- **Scroll-Driven Animations**: Smooth parallax effects and fade-in animations using IntersectionObserver
-- **Dark Mode**: System-aware theme switching with manual override
-- **Accessibility First**: WCAG compliant with comprehensive ARIA labels, focus management, and keyboard navigation
-- **Performance Optimized**: Next.js 15 with image optimization, lazy loading, and efficient animations
-- **SEO Enhanced**: Structured data (JSON-LD), Open Graph tags, and semantic HTML
+Measured against the production build (dev scores shown — all metrics 100):
 
-## 🚀 Tech Stack
+| Metric | Score |
+|---|---|
+| Accessibility | 100 |
+| SEO | 100 |
+| Core Web Vitals — LCP | 100 |
+| Core Web Vitals — CLS | 100 |
+| Core Web Vitals — TBT | 100 |
 
-- **Framework**: [Next.js 15.3.1](https://nextjs.org/) with App Router
-- **Language**: TypeScript 5.8.3
-- **Styling**: [Tailwind CSS 4.1.4](https://tailwindcss.com/) with OKLCH color space
-- **Animations**: CSS animations + IntersectionObserver
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Fonts**: Google Fonts (Mulish) + Custom fonts (Nyght Serif family)
+*Scores audited with Lighthouse + axe DevTools (axe-core 4.11, WCAG 2.1 AA). Dev build JS includes devtools not present in production.*
+
+## Tech Stack
+
+- **Framework**: Next.js 16.2.6 — App Router, React Server Components
+- **Language**: TypeScript 6
+- **Styling**: Tailwind CSS v4 — OKLCH color space, CSS custom properties
+- **3D / WebGL**: Three.js + simplex-noise — ambient blob background
+- **Fonts**: Mulish (Google) + Nyght Serif family (local, 4 weights)
 - **Analytics**: Vercel Analytics
+- **Booking**: Square Appointments (embedded iframe)
 - **Package Manager**: pnpm
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 moxie-beauty/
 ├── app/
-│   ├── layout.tsx          # Root layout with metadata & structured data
-│   ├── page.tsx            # Home page with all sections
-│   ├── globals.css         # Global styles & animations
-│   └── style-guide/        # Component showcase
+│   ├── layout.tsx          # Root layout — fonts, metadata, structured data, skip link
+│   ├── globals.css         # Tailwind v4 @theme, design tokens, animation classes
+│   ├── page.tsx            # Home page
+│   ├── sitemap.ts          # Auto-generated sitemap.xml
+│   ├── about/
+│   ├── aftercare/
+│   ├── contact/
+│   ├── policies/
+│   ├── services/
+│   ├── visit/
+│   └── style-guide/        # Design system reference (noindex)
 ├── components/
-│   ├── about.tsx           # About Moxie section
-│   ├── appointments.tsx    # Multi-device appointment journey
-│   ├── booking-overlay.tsx # Square booking integration
-│   ├── button.tsx          # Accessible button component
-│   ├── footer.tsx          # Site footer
-│   ├── logo.tsx            # Animated logo component
-│   ├── navigation.tsx      # Scroll-aware navigation
-│   ├── service-card.tsx    # Individual service cards
-│   ├── service-overlay.tsx # Service detail modal
-│   ├── services.tsx        # Services grid section
-│   ├── testimonials.tsx    # Customer testimonials
-│   └── theme-toggle.tsx    # Dark mode toggle
-├── hooks/
-│   ├── useFadeInOnScroll.ts      # Fade-in animation hook
-│   ├── useIntersectionObserver.ts # Scroll tracking hook
-│   └── useSlideAnimation.ts      # Slide animations
+│   ├── about.tsx
+│   ├── appointments.tsx    # Three-breakpoint booking journey section
+│   ├── blob.tsx            # WebGL ambient background (Three.js)
+│   ├── booking-overlay.tsx # Full-screen Square booking modal
+│   ├── button.tsx          # Accessible polymorphic button/link
+│   ├── footer.tsx
+│   ├── footer-theme-island.tsx
+│   ├── hero-section.tsx
+│   ├── logo.tsx
+│   ├── marquee-ticker.tsx
+│   ├── navigation.tsx      # Scroll-aware sticky nav, mobile drawer
+│   ├── service-card-client.tsx
+│   ├── service-rows-client.tsx
+│   ├── services.tsx
+│   ├── testimonials.tsx
+│   └── theme-toggle.tsx
+├── lib/
+│   ├── layout.ts           # Shared layout utility (containerClass)
+│   ├── site-config.ts      # Single source of truth for business info
+│   └── square.ts           # Square API helpers
 ├── providers/
-│   └── theme-provider.tsx  # Theme context provider
-├── public/
-│   ├── fonts/              # Custom Nyght Serif fonts
-│   ├── images/             # Optimized images
-│   └── favicon.svg
-└── utils/
-    └── scroll-utils.ts     # Scroll helper functions
+│   └── theme-provider.tsx
+└── public/
+    ├── fonts/              # Nyght Serif woff2 files
+    └── images/
 ```
 
-## 🛠️ Getting Started
+## Getting Started
 
-### Prerequisites
-
-- Node.js 18+ 
-- pnpm (recommended) or npm
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/travhall/moxie-beauty.git
-cd moxie-beauty
-```
-
-2. Install dependencies:
 ```bash
 pnpm install
-# or
-npm install
-```
-
-3. Run the development server:
-```bash
-pnpm dev
-# or
-npm run dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-### Build for Production
-
-```bash
+pnpm dev        # http://localhost:3000
 pnpm build
 pnpm start
 ```
 
-## 🎯 Key Components
+No environment variables required for the public site. Square booking uses a public-facing appointments URL configured in `lib/site-config.ts`.
 
-### Booking System
-- **BookingOverlay**: Full-screen modal with Square appointments iframe
-- **Features**: Loading states, error handling, timeout detection, retry functionality
-- **Accessibility**: Focus trapping, keyboard navigation, ARIA attributes
+## Design System
 
-### Appointments Section
-Adaptive implementation based on screen size:
-- **Mobile (<768px)**: Vertical cards with stacked content
-- **Tablet (768px-1024px)**: Interactive split panel with clickable steps
-- **Desktop (>1024px)**: Scroll-driven parallax experience with 300vh scroll container
+### Color Tokens (OKLCH)
 
-### Navigation
-- **Scroll tracking**: Updates active section based on viewport position
-- **Progress bar**: Visual indicator of page scroll progress
-- **Responsive**: Bottom-fixed on mobile, sticky sidebar on desktop
+Defined in `app/globals.css` under `@theme inline`. All semantic tokens resolve correctly in both light and dark mode.
 
-## 🎨 Design System
+| Token | Light mode | Dark mode | Contrast on bg |
+|---|---|---|---|
+| `--accent` | rose-gold-500 (oklch 54%) | rose-gold-300 (oklch 70%) | 3.5:1 / 7.8:1 |
+| `--accent-text` | rose-gold-600 (oklch 42%) | rose-gold-300 (oklch 70%) | 7.6:1 / 7.8:1 |
+| `--foreground` | ivory-rose-900 | ivory-rose-50 | — |
+| `--ink-mute` | midnite-600 | ivory-rose-200 | 7.3:1 / 7.5:1 |
 
-### Colors (OKLCH)
-- **Ivory Rose**: Background and neutral tones
-- **Rose Gold**: Primary accent color
-- **Midnite**: Dark mode background
-- **Monstera**: Reserved for future use
+`--accent` is used for decorative purposes (borders, dots, gradient endpoints, large heading emphasis ≥24px). `--accent-text` is used for any text below 24px that carries semantic meaning — it meets WCAG AA for normal text in both modes.
 
 ### Typography
-- **Body**: Mulish (Google Fonts)
-- **Headings**: Nyght Serif Light
-- **Emphasis**: Nyght Serif Dark
 
-### Animation Principles
-- **Fade-in on scroll**: Uses IntersectionObserver with blur effect
-- **Staggered delays**: 100ms increments for sequential reveals
-- **Performance**: CSS animations with requestAnimationFrame for scroll tracking
+Two-stop responsive scale: base (mobile/tablet) → `lg:` (desktop). Nyght Serif renders ~15% optically smaller than sans-serif — all headings are bumped up to compensate.
 
-## 🔧 Configuration
+| Role | Classes |
+|---|---|
+| Hero H1 | `font-nyght text-6xl lg:text-7xl` |
+| Section H2 | `font-nyght text-5xl lg:text-6xl` |
+| About H2 | `font-nyght text-4xl lg:text-5xl` |
+| Card H3 | `font-nyght text-xl sm:text-2xl` |
+| Blockquote | `font-nyght-italic text-3xl lg:text-4xl` |
+| Accent label (eyebrow) | `font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--accent-text)` |
 
-### Environment Variables
-Currently, no environment variables are required. All configuration is in the codebase.
+Font tokens: `font-nyght` (Light), `font-nyght-italic` (Light Italic), `font-nyght-bold` (Dark), `font-nyght-bold-italic` (Dark Italic), `font-sans` (Mulish).
 
-### Customization
-- **Colors**: Modify in `app/globals.css` under `@theme inline`
-- **Animations**: Adjust timing in `app/globals.css` keyframe definitions
-- **Booking URL**: Update iframe src in `components/booking-overlay.tsx`
+### Gradient Text
 
-## 📱 Browser Support
+Brand heading gradient: `bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent`
 
-- Chrome/Edge (latest 2 versions)
-- Firefox (latest 2 versions)
-- Safari (latest 2 versions)
-- Mobile Safari (iOS 14+)
-- Chrome Mobile (latest)
+## Accessibility
 
-## ♿ Accessibility Features
+- **WCAG 2.1 AA** — verified with Lighthouse and axe DevTools (0 issues)
+- **Skip link** — first focusable element on every page, targets `#main-content`
+- **Focus rings** — branded rose-gold (`--accent`) outline on all interactive elements via low-specificity `:where()` baseline
+- **Keyboard navigation** — full Tab/Enter/Escape support including booking modal focus trap
+- **Reduced motion** — `prefers-reduced-motion` strips all CSS transitions/animations; Three.js blob handled separately in JS
+- **Color contrast** — all text meets or exceeds WCAG AA; small accent text uses `--accent-text` (7.6:1 light / 7.8:1 dark)
+- **Screen readers** — semantic HTML, heading hierarchy, ARIA labels on complex widgets, `aria-hidden` on decorative elements
 
-- Semantic HTML5 elements
-- ARIA labels and roles for complex interactions
-- Keyboard navigation support (Tab, Enter, Escape)
-- Focus management in modals and overlays
-- Screen reader announcements for loading states
-- High contrast mode support
-- Reduced motion preference respected
+## SEO
 
-## 🚀 Performance
+- `BeautySalon` JSON-LD structured data in root layout
+- Breadcrumb JSON-LD per inner page
+- Per-page `<title>`, `<meta description>`, Open Graph, and Twitter Card
+- `sitemap.xml` auto-generated via `app/sitemap.ts`
+- `robots.txt` — all pages indexed except `/style-guide`
 
-- Lighthouse Score Target: 90+ across all metrics
-- Image optimization with Next.js Image component
-- Code splitting with Next.js App Router
-- CSS animations over JavaScript for smoother performance
-- RequestAnimationFrame for scroll-based updates
-- Lazy loading for below-the-fold content
+## Browser Support
 
-## 📈 SEO
+Chrome, Edge, Firefox, Safari — latest 2 major versions. Mobile Safari iOS 14+.
 
-- Structured data (JSON-LD) for local business
-- Open Graph tags for social sharing
-- Twitter Card meta tags
-- Semantic HTML with proper heading hierarchy
-- Optimized meta descriptions
-- Sitemap and robots.txt
+## License
 
-## 🔄 Future Enhancements
+Proprietary — All rights reserved by Moxie Beauty Studio.
 
-- [ ] CMS integration for content management
-- [ ] Customer portal for appointment management
-- [ ] Email reminder system
-- [ ] Testimonial submission form
-- [ ] Before/after gallery
-- [ ] Multi-language support
-- [ ] Advanced analytics integration
+## Author
 
-## 📄 License
-
-Proprietary - All rights reserved by Moxie Beauty Studio
-
-## 👤 Author
-
-**Travis Hall**
-- GitHub: [@travhall](https://github.com/travhall)
-
-## 🙏 Acknowledgments
-
-- Design inspiration from modern beauty studio websites
-- Animation techniques from Framer Motion community
-- Accessibility patterns from A11y Project
-
----
-
-Built with ❤️ using Next.js and Tailwind CSS
+Travis Hall — [travishall.design](https://travishall.design)

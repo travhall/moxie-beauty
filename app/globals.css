@@ -68,6 +68,7 @@
   --line: color-mix(in oklab, var(--midnite-800) 12%, transparent);
   --line-soft: color-mix(in oklab, var(--midnite-800) 6%, transparent);
   --accent-soft: var(--rose-gold-300);
+  --accent-text: var(--rose-gold-600);
 
   /* Buttons — dark ink primary */
   --button: var(--rose-gold-800);
@@ -96,6 +97,7 @@
   --line: color-mix(in oklab, var(--ivory-rose-50) 14%, transparent);
   --line-soft: color-mix(in oklab, var(--ivory-rose-50) 7%, transparent);
   --accent-soft: var(--rose-gold-200);
+  --accent-text: var(--rose-gold-300);
 
   --button: var(--rose-gold-50);
   --button-foreground: var(--rose-gold-900);

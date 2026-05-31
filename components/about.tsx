@@ -111,7 +111,7 @@ export default function About() {
                 Jackie Schult
               </strong>
               . Jackie specializes in{" "}
-              <em className="italic font-bold text-(--accent)">
+              <em className="italic font-bold text-(--accent-text)">
                 eyelash extensions, lash lift and tint, brow lamination, and
                 microblading
               </em>
@@ -158,7 +158,7 @@ export default function About() {
 
             <div className="mt-9">
               <Button variant="ghost" href="/about" showArrow>
-                Read more
+                About Moxie
               </Button>
             </div>
           </div>

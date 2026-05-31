@@ -47,16 +47,16 @@ export default function Appointments({ context = "home" }: AppointmentsProps) {
       tabIndex={-1}
       aria-label="Book an appointment"
     >
-      <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--accent) mb-5">
+      <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--accent-text) mb-5">
         {eyebrow}
       </p>
       <h2 className="font-nyght text-5xl lg:text-6xl bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pb-2 mb-4 text-balance">
         {heading}
       </h2>
-      <p className="text-xl text-(--ink-soft) mb-12 text-balance max-w-xl mx-auto">
+      {/* <p className="text-xl text-(--ink-soft) mb-12 text-balance max-w-xl mx-auto">
         {siteConfig.hours.note} &nbsp;·&nbsp; Rochester, WI
-      </p>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      </p> */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
         <Button size="lg" showArrow onClick={() => openBooking()}>
           Book Your Appointment
         </Button>
