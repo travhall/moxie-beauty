@@ -4,9 +4,8 @@
     {
       "name": "moxie-beauty",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["dev"],
-      "port": 3001,
-      "autoPort": true
+      "runtimeArgs": ["dev", "--port", "3001"],
+      "port": 3001
     }
   ]
 }
