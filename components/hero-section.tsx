@@ -112,7 +112,7 @@ export default function HeroSection() {
                 className="border border-l-16 border-(--accent) object-cover z-0"
                 style={{ borderRadius: "inherit" }}
                 sizes="(max-width: 1280px) 380px, (max-width: 1536px) 440px, 480px"
-                quality={80}
+                quality={75}
                 priority={true}
                 fetchPriority="high"
                 loading="eager"
