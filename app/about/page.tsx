@@ -136,9 +136,9 @@ export default function AboutPage() {
         {/* ── Founder ───────────────────────────────────────────────────── */}
         <section className="py-20">
           <div className={container}>
-            <div className="grid md:grid-cols-[340px_1fr] gap-8 md:gap-x-12 md:gap-y-12 lg:gap-x-20 lg:gap-y-8">
+            <div className="grid md:grid-cols-[340px_1fr] gap-8 md:gap-x-12 md:gap-y-12 lg:gap-x-16 lg:gap-y-8">
               {/* Portrait — spans both text rows on desktop */}
-              <div className="lg:row-span-2">
+              <div className="lg:row-span-2 lg:ml-8">
                 <div
                   className="relative w-full max-w-85 rounded-t-[170px] rounded-b-2xl overflow-hidden border-l-8 border-b-2 border-(--accent) shadow-xl bg-(--accent)"
                   style={{ height: "400px" }}

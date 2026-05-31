@@ -9,17 +9,18 @@ import { siteConfig } from "@/lib/site-config";
 interface BookingOverlayProps {
   isOpen: boolean;
   onClose: () => void;
-  /** Optional service ID for pre-selecting a service in the booking flow */
+  /** Optional service ID — appended to booking URL to pre-select the service */
   serviceId?: string;
+  /** Optional service name — shown in the overlay header when pre-selecting */
+  serviceName?: string;
 }
 
 const BookingOverlay: React.FC<BookingOverlayProps> = ({
   isOpen,
   onClose,
   serviceId,
+  serviceName,
 }) => {
-  // Append variation ID to the base URL to pre-select the service.
-  // Square's hosted booking format: .../services/{variationId}
   const iframeSrc = serviceId
     ? `${siteConfig.bookingUrl}/${serviceId}`
     : siteConfig.bookingUrl;
@@ -161,9 +162,15 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
             className="hidden sm:block w-px h-5 bg-(--line)"
             aria-hidden="true"
           />
-          <p className="hidden sm:block text-[11px] font-medium tracking-[0.18em] uppercase text-(--ink-mute)">
-            Book an Appointment
-          </p>
+          {serviceName ? (
+            <p className="hidden sm:block text-sm font-medium text-(--foreground) truncate max-w-[280px]">
+              {serviceName}
+            </p>
+          ) : (
+            <p className="hidden sm:block text-[11px] font-medium tracking-[0.18em] uppercase text-(--ink-mute)">
+              Book an Appointment
+            </p>
+          )}
         </div>
 
         {/* Close */}

@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 import Appointments from "@/components/appointments";
 import MarqueeTicker from "@/components/marquee-ticker";
-import { siteConfig } from "@/lib/site-config";
+import ServiceCardClient from "@/components/service-card-client";
 import { containerClass } from "@/lib/layout";
-import DiagArrow from "@/components/icons/DiagArrow";
 import {
   getSquareServices,
   formatPrice,
   formatDuration,
   lowestPrice,
   primaryDuration,
-  primaryVariationId,
   type SquareService,
 } from "@/lib/square";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Our Services | Moxie Beauty Studio",
@@ -42,46 +41,6 @@ export const metadata: Metadata = {
   },
 };
 
-interface ServiceCardProps {
-  num: string;
-  name: string;
-  desc: string;
-  meta: string[];
-  variationId?: string | null;
-}
-
-function ServiceCard({ num, name, desc, meta, variationId }: ServiceCardProps) {
-  const href = variationId
-    ? `${siteConfig.bookingUrl}/${variationId}`
-    : siteConfig.bookingUrl;
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${name} — book this service (opens in new tab)`}
-      className="group flex items-start gap-5 py-7 border-b border-(--line-soft) no-underline px-4 -mx-4 rounded-xl hover:bg-[linear-gradient(to_right,transparent,var(--bg-soft)_15%,var(--bg-soft)_85%,transparent)]"
-    >
-      <span className="font-nyght-bold text-[11px] tracking-[0.25em] text-(--ink-mute) mt-1 min-w-5.5">
-        {num}
-      </span>
-      <div className="flex-1 min-w-0">
-        <h3 className="font-nyght text-2xl md:text-3xl text-(--foreground) mb-2 group-hover:text-(--accent) transition-colors duration-300">
-          {name}
-        </h3>
-        <p className="text-sm text-(--ink-soft) leading-relaxed mb-4">{desc}</p>
-        <div className="flex flex-wrap gap-x-5 gap-y-1 text-[12px] text-(--ink-mute)">
-          {meta.map((m, i) => (
-            <span key={i}>{m}</span>
-          ))}
-        </div>
-      </div>
-      <span className="text-(--ink-mute) group-hover:text-(--accent) transition-colors duration-300 mt-1 shrink-0">
-        <DiagArrow />
-      </span>
-    </a>
-  );
-}
 
 // ── Live service helpers ──────────────────────────────────────────────────────
 
@@ -267,11 +226,49 @@ export default async function ServicesPage() {
     ],
   };
 
+  // Build services JSON-LD from live data when available, fallback otherwise
+  const allCards = [...browCards, ...lashCards, ...extrasCards];
+  const servicesJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Services at Moxie Beauty Studio",
+    itemListElement: allCards.map((c, i) => {
+      const priceMatch = c.meta.find((m) => m.startsWith("From ") || m.startsWith("$"));
+      const price = priceMatch?.replace(/^From \$/, "").replace(/^\$/, "") ?? null;
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Service",
+          name: c.name,
+          description: c.desc,
+          provider: {
+            "@type": "BeautySalon",
+            name: siteConfig.name,
+            url: siteConfig.url,
+          },
+          ...(price && {
+            offers: {
+              "@type": "Offer",
+              price,
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+            },
+          }),
+        },
+      };
+    }),
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }}
       />
       <main>
         {/* ── Page hero ─────────────────────────────────────────────────── */}
@@ -382,7 +379,7 @@ export default async function ServicesPage() {
 
               <div className="divide-y-0">
                 {browCards.map((c) => (
-                  <ServiceCard
+                  <ServiceCardClient
                     key={c.num}
                     num={c.num}
                     name={c.name}
@@ -446,7 +443,7 @@ export default async function ServicesPage() {
 
               <div>
                 {lashCards.map((c) => (
-                  <ServiceCard
+                  <ServiceCardClient
                     key={c.num}
                     num={c.num}
                     name={c.name}
@@ -486,7 +483,7 @@ export default async function ServicesPage() {
 
               <div>
                 {extrasCards.map((c) => (
-                  <ServiceCard
+                  <ServiceCardClient
                     key={c.num}
                     num={c.num}
                     name={c.name}

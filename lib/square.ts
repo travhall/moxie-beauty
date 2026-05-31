@@ -179,5 +179,5 @@ const cacheEnv = process.env.SQUARE_ENVIRONMENT ?? "sandbox";
 export const getSquareServices = unstable_cache(
   fetchServicesRaw,
   [`square-services-${cacheEnv}`],
-  { revalidate: 3600 }
+  { revalidate: 3600, tags: ["square-services"] }
 );

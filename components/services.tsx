@@ -1,13 +1,11 @@
-import { siteConfig } from "@/lib/site-config";
 import Button from "./button";
-import DiagArrow from "./icons/DiagArrow";
+import ServiceRowsClient from "./service-rows-client";
 import {
   getSquareServices,
   formatPrice,
   formatDuration,
   lowestPrice,
   primaryDuration,
-  primaryVariationId,
   type SquareService,
 } from "@/lib/square";
 
@@ -94,79 +92,6 @@ function buildMeta(svc: SquareService) {
   return meta;
 }
 
-// ── Row component ─────────────────────────────────────────────────────────────
-
-interface ServiceRowProps {
-  num: string;
-  name: string;
-  desc: string;
-  meta: { label: string; value: string }[];
-  isOdd: boolean;
-  variationId: string | null;
-}
-
-function ServiceRow({
-  num,
-  name,
-  desc,
-  meta,
-  isOdd,
-  variationId,
-}: ServiceRowProps) {
-  const href = variationId
-    ? `${siteConfig.bookingUrl}?service_id=${variationId}`
-    : siteConfig.bookingUrl;
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${name} — book this service (opens in new tab)`}
-      className={[
-        "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground) no-underline transition-all duration-300",
-        "odd:hover:bg-linear-to-l odd:hover:from-(--bg-soft) odd:hover:to-transparent even:hover:bg-linear-to-r even:hover:from-(--bg-soft) even:hover:to-transparent",
-        isOdd ? "sm:border-r sm:border-(--line) sm:pr-15" : "sm:pl-10",
-      ].join(" ")}
-    >
-      {/* Service number */}
-      <span className="font-mono text-[11px] tracking-widest text-(--ink-mute) pt-1.5 shrink-0 tabular-nums">
-        {num}
-      </span>
-
-      {/* Name + description + meta */}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-all duration-300">
-          {name}
-        </h3>
-        <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch] text-pretty">
-          {desc}
-        </p>
-        <div className="flex gap-4 flex-wrap">
-          {meta.map(({ label, value }) => (
-            <span
-              key={label}
-              className="text-[11px] tracking-[0.18em] uppercase text-(--ink-mute)"
-            >
-              {label}{" "}
-              <strong className="text-(--foreground) font-medium ml-1">
-                {value}
-              </strong>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Diagonal arrow */}
-      <span
-        className="shrink-0 mt-1 w-9 h-9 rounded-full border border-(--line) flex items-center justify-center text-(--ink-soft) group-hover:border-(--accent) group-hover:text-(--accent) transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-        aria-hidden="true"
-      >
-        <DiagArrow />
-      </span>
-    </a>
-  );
-}
-
 // ── Section ───────────────────────────────────────────────────────────────────
 
 export default async function Services() {
@@ -187,7 +112,7 @@ export default async function Services() {
         name: svc.name,
         desc: svc.description,
         meta: buildMeta(svc),
-        variationId: primaryVariationId(svc.variations),
+        variationId: svc.id,
       }))
     : FALLBACK_SERVICES.map((s) => ({ ...s, variationId: null }));
 
@@ -226,19 +151,7 @@ export default async function Services() {
         </div>
 
         {/* ── Service rows — 2-col grid ───────────────────────────────── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line)">
-          {displayServices.map((svc, i) => (
-            <ServiceRow
-              key={svc.num}
-              num={svc.num}
-              name={svc.name}
-              desc={svc.desc}
-              meta={svc.meta}
-              isOdd={i % 2 === 0}
-              variationId={svc.variationId}
-            />
-          ))}
-        </div>
+        <ServiceRowsClient services={displayServices} />
 
         {/* ── Footer CTA ───────────────────────────────────────────────── */}
         <div className="mt-12">
