@@ -152,7 +152,7 @@ export default function ContactPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-(--line-soft)">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
               {[
                 { k: "Where", v: "Rochester, WI" },
                 { k: "Hours", v: siteConfig.hours.display },
@@ -193,7 +193,7 @@ export default function ContactPage() {
               href={siteConfig.address.mapsHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center justify-center rounded-3xl overflow-hidden border border-(--line) h-80 lg:h-110 bg-(--bg-soft)"
+              className="group relative flex items-center justify-center rounded-3xl overflow-hidden border border-b-8 border-(--line) h-80 lg:h-110 bg-(--bg-soft)"
               aria-label="Open map for Moxie Beauty Studio (opens in new tab)"
               style={{
                 backgroundImage:

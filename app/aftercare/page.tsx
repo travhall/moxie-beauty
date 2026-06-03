@@ -233,7 +233,7 @@ export default function AftercarePage() {
                 <a
                   key={num}
                   href={`#aftercare-${num.toLowerCase()}`}
-                  className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border border-(--accent)/60 text-(--accent)/80 hover:text-(--accent) hover:border-(--line-soft) hover:bg-(--accent)/10 transition-colors"
+                  className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border border-b-4 border-(--accent)/60 text-(--accent)/80 hover:text-(--accent) hover:border-(--line-soft) hover:bg-(--accent)/10 transition-colors"
                 >
                   {category}
                 </a>
@@ -265,7 +265,7 @@ export default function AftercarePage() {
                 </p>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
                 {items.map(({ heading, body }) => (
                   <div
                     key={heading}

@@ -7,13 +7,13 @@ import { containerClass } from "@/lib/layout";
 export const metadata: Metadata = {
   title: "Our Story | Moxie Beauty Studio",
   description:
-    "Meet Jackie and learn the story behind Moxie Beauty Studio — a one-chair brow and lash studio in Rochester, WI where artistry meets individuality.",
+    "Meet Jackie and learn the story behind Moxie Beauty Studio — a one-chair lash and brow studio in Rochester, WI where artistry meets individuality.",
   openGraph: {
     type: "website",
     url: "https://moxiebeautystudiowi.com/about",
     title: "Our Story | Moxie Beauty Studio",
     description:
-      "Meet Jackie and learn the story behind Moxie Beauty Studio — a one-chair brow and lash studio in Rochester, WI.",
+      "Meet Jackie and the story behind Moxie Beauty Studio — a one-chair lash and brow studio in Rochester, WI.",
     images: [
       {
         url: "/images/hero-img.jpg",
@@ -92,14 +92,15 @@ export default function AboutPage() {
                 <em className="font-nyght-italic text-(--accent)">eyes.</em>
               </h1>
               <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-                Moxie is a one-chair brow and lash studio in the village of
+                Moxie is a one-chair lash and brow studio in the village of
                 Rochester, Wisconsin. We opened in 2021 with a simple idea: that
                 this kind of work deserves time — and the people receiving it
                 deserve someone who actually cares.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-(--line-soft)">
+            {/* Fact strip */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
               {[
                 { k: "Founded", v: "2021" },
                 {
@@ -176,11 +177,12 @@ export default function AboutPage() {
                 </p>
                 <p className="text-(--ink-soft) mb-5 leading-relaxed">
                   She trained at The Beauty Room in Eau Claire, with additional
-                  specialty brow training in Chicago. As her client base grew,
-                  she realized she wasn&apos;t just building a business — she
-                  was building something intentional. Every detail at Moxie,
-                  from the way appointments are structured to the scents in the
-                  room, is chosen on purpose.
+                  specialty brow training in Chicago. As Moxie grew, so did
+                  Jackie&apos;s vision. What began as a passion for beauty
+                  evolved into a thoughtfully curated experience where every
+                  detail — from the services provided to the atmosphere of the
+                  studio — is designed with intention, comfort, and confidence
+                  in mind.
                 </p>
                 <p className="text-(--ink-soft) leading-relaxed">
                   Outside the studio, Jackie is a wife and mom to three kids who
@@ -208,7 +210,7 @@ export default function AboutPage() {
         {/* ── Pull quote ────────────────────────────────────────────────── */}
         <section className="py-12">
           <div className={container}>
-            <div className="relative bg-(--bg-soft) border border-(--line-soft) rounded-3xl px-10 py-14 lg:px-20 lg:py-20 overflow-hidden">
+            <div className="relative bg-(--bg-soft) border border-b-8 border-(--line-soft) rounded-3xl px-10 py-14 lg:px-20 lg:py-20 overflow-hidden">
               <span
                 className="absolute -top-6 left-8 font-nyght text-[160px] leading-none text-(--accent) opacity-15 select-none"
                 aria-hidden="true"
@@ -249,38 +251,37 @@ export default function AboutPage() {
                 </h2>
               </div>
               <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
-                Small choices, made the same way every appointment. They add up
-                to the way the studio feels — and to whether you&apos;d come
-                back.
+                Confidence looks different on everyone. That&apos;s why
+                everything we do is customized, intentional, and designed to
+                help you feel your best.
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
+            <div className="grid sm:grid-cols-2 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
               {[
                 {
                   num: "01",
                   heading: (
                     <span>
-                      One guest at a{" "}
+                      Personalized{" "}
                       <em className="font-nyght-italic text-(--accent)">
-                        time.
+                        attention.
                       </em>
                     </span>
                   ),
-                  body: "No double-booking, no rushed handoffs, no waiting room. Your hour is yours. We never overlap appointments — even by a few minutes — so the studio stays quiet.",
+                  body: "At Moxie, every service is approached with care, intention, and attention to detail. The focus is on creating a customized experience that never feels rushed and always feels personal.",
                 },
                 {
                   num: "02",
                   heading: (
                     <span>
-                      The consultation{" "}
+                      Beauty is never{" "}
                       <em className="font-nyght-italic text-(--accent)">
-                        comes
-                      </em>{" "}
-                      first.
+                        one-size-fits-all.
+                      </em>
                     </span>
                   ),
-                  body: "We map your features and talk through how you want to look before anything comes out. If a service isn't right for you that day, we'll say so — and suggest something that is.",
+                  body: "No two clients are the same, and no two services should be either. Every recommendation, lash set, brow service, and treatment is thoughtfully customized to your features, lifestyle, and goals.",
                 },
                 {
                   num: "03",
@@ -288,23 +289,23 @@ export default function AboutPage() {
                     <span>
                       Every detail is{" "}
                       <em className="font-nyght-italic text-(--accent)">
-                        chosen.
+                        intentional.
                       </em>
                     </span>
                   ),
-                  body: "The scents in the room, the mini fridge with cold drinks, the candy jars on the counter — none of it is accidental. A good appointment should feel like a good appointment from the moment you walk in.",
+                  body: "From the mini fridge stocked with cold drinks to the little touches throughout the studio, every detail is chosen to create an experience that feels comfortable, welcoming, and uniquely Moxie.",
                 },
                 {
                   num: "04",
                   heading: (
                     <span>
-                      Aftercare is part of the{" "}
+                      Confidence doesn&apos;t end at{" "}
                       <em className="font-nyght-italic text-(--accent)">
-                        work.
+                        checkout.
                       </em>
                     </span>
                   ),
-                  body: "You leave with a small card of instructions written for your specific service, and a number you can text if anything feels off in the first week.",
+                  body: "Beautiful results are only part of the experience. We believe in setting clients up for success with education, aftercare, and ongoing support long after the appointment is over.",
                 },
               ].map(({ num, heading, body }) => (
                 <div key={num} className="bg-(--background) p-8 lg:p-10">
@@ -326,13 +327,13 @@ export default function AboutPage() {
         {/* ── Marquee ───────────────────────────────────────────────────── */}
         <MarqueeTicker
           items={[
-            "slow work",
             "1:1 appointments",
             "est. 2021",
             "intentional by design",
             "brows & lashes",
             "rochester, wi",
             "5★ on google",
+            "beautiful & intentional",
           ]}
         />
 
@@ -353,10 +354,10 @@ export default function AboutPage() {
                 </h2>
               </div>
               <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
-                We&apos;re tucked into a 1908 mercantile building on the south
-                end of Front Street, with one north-facing window, soft Belgian
-                linen, and a warm, inviting vibe — a retreat from the world
-                outside.
+                Moxie was designed to feel like a breath of fresh air. Created
+                with comfort, confidence, and connection in mind, it&apos;s a
+                space where every detail serves a purpose — from the carefully
+                curated décor to the little touches clients have come to love.
               </p>
             </div>
 

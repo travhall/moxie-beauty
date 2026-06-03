@@ -18,7 +18,7 @@ export default function HeroSection() {
       aria-label="Hero section"
     >
       <div className="max-w-335 mx-auto px-10 max-[720px]:px-5.5 w-full relative z-20 py-20">
-        <div className="flex lg:flex-row-reverse items-start gap-16 xl:gap-24">
+        <div className="flex lg:flex-row-reverse items-center gap-16 xl:gap-24">
           {/* ── Copy ──────────────────────────────────────────────────── */}
           <div className="flex-1 min-w-0 max-w-180">
             {/* Eyebrow */}
@@ -27,24 +27,27 @@ export default function HeroSection() {
                 className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
                 aria-hidden="true"
               />
-              Brow &amp; Lash Studio · Rochester, WI
+              Lash &amp; Brow Studio · Rochester, WI
             </p>
 
             {/* Headline */}
             <h1 className="font-nyght text-(--foreground) text-5xl sm:text-6xl md:text-7xl my-4 lg:my-6 text-balance">
               Welcome to{" "}
               <span className="inline-block bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pr-2 pb-2">
-                Moxie Beauty <span className="hidden lg:inline">Studio</span>
+                Moxie
+                {/* Beauty <span className="hidden lg:inline">Studio</span> */}
               </span>
             </h1>
 
             {/* Body copy */}
-            <p className="text-pretty leading-relaxed max-w-[56ch] mb-10">
-              Where artistry meets individuality. Specializing in bespoke lash
-              and brow transformations, we craft personalized enhancements to
-              highlight your natural beauty. Let your confidence shine with
-              treatments designed for real life &mdash; and those extraordinary
-              moments.
+            <p className="text-pretty leading-relaxed max-w-[70ch] mb-10">
+              Beautiful and intentional. Moxie was created to be more than a
+              beauty studio — it&apos;s a space where you can relax, feel
+              genuinely cared for, and leave feeling like yourself. Every
+              service is customized, because beauty should never be
+              one-size-fits-all. Whether you&apos;re here for lashes, brows,
+              permanent makeup, or fine line tattooing, the goal is simple: to
+              help you feel effortlessly beautiful and completely you.
             </p>
 
             {/* CTA row */}

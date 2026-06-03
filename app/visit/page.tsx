@@ -100,7 +100,7 @@ export default function VisitPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-(--line-soft)">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
               {[
                 { k: "Booking", v: "By Square" },
                 { k: "Studio", v: siteConfig.hours.display },
@@ -147,15 +147,14 @@ export default function VisitPage() {
                   for yourself.
                 </h2>
                 <p className="text-(--ink-soft) leading-relaxed mb-5">
-                  Booking is handled through Square — choose a service, pick a
-                  time that works, and you&apos;ll receive a confirmation with
-                  gentle reminders as the date approaches. Same-day openings
-                  appear at the top.
+                  Booking is simple through Square. Choose your service, select
+                  a time that works for you, and you&apos;ll receive appointment
+                  confirmations and reminders leading up to your visit.
                 </p>
                 <p className="text-(--ink-soft) leading-relaxed">
-                  Not sure which service is right for you? Start with a
-                  complimentary first-visit consultation — 30 minutes, no
-                  service required.
+                  New to Moxie? If you&apos;re unsure which service is right for
+                  you, feel free to reach out — I&apos;m always happy to help
+                  guide you toward the best option for your goals.
                 </p>
               </div>
               <div
@@ -184,15 +183,14 @@ export default function VisitPage() {
                   </em>
                 </h2>
                 <p className="text-(--ink-soft) leading-relaxed mb-5">
-                  If you can, come with a clean face — no eye makeup, no heavy
-                  moisturizer near the brows or lashes. It&apos;s not required,
-                  just helpful. If you&apos;re coming from work, we have makeup
-                  remover wipes.
+                  A clean face is always helpful, especially for lash and brow
+                  services, but there&apos;s no need to overthink it. Moxie was
+                  designed to be a welcoming space where you can relax, unwind,
+                  and enjoy a little time for yourself.
                 </p>
                 <p className="text-(--ink-soft) leading-relaxed">
-                  Allow a few extra minutes to find parking on Front Street. And
-                  if you&apos;re nervous — that&apos;s normal. We&apos;ll talk
-                  through everything before anything happens.
+                  There&apos;s a complimentary parking lot directly in front of
+                  the studio — easy from the moment you arrive.
                 </p>
               </div>
               <div
@@ -229,7 +227,7 @@ export default function VisitPage() {
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-(--line-soft)">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
                 {[
                   {
                     service: "Lash Extensions",
@@ -260,10 +258,11 @@ export default function VisitPage() {
                   {
                     service: "Microblading",
                     items: [
-                      "A no-cost consultation is strongly advised before booking your full service",
-                      "We'll map your brow shape and select a pigment at the consult — not the day of",
-                      "Plan healing time into your schedule: 2 weeks of no swimming, sweating, or direct water contact",
-                      "A 6-week touch-up is required — factor this in when booking",
+                      "A consultation is recommended prior to booking your initial appointment to discuss your goals and determine if the service is right for you",
+                      "Brow shape, color selection, and treatment recommendations will be customized to your unique features and desired outcome",
+                      "Plan for approximately two weeks of healing following your appointment",
+                      "Swimming, excessive sweating, and direct water exposure should be avoided during healing — keep dry for the first 3 days",
+                      "A perfecting touch-up is recommended 6–8 weeks after your initial service for the best long-term results",
                     ],
                   },
                   {
@@ -276,12 +275,11 @@ export default function VisitPage() {
                     ],
                   },
                   {
-                    service: "All services",
+                    service: "All Services",
                     items: [
-                      "Arrive 5–10 minutes early; new clients should plan for 15 minutes",
-                      "Please come alone — there's no waiting space and the studio is a single chair",
-                      "No children during appointments; please arrange care in advance",
-                      "If you have sensitivities or allergies, let us know when you book",
+                      "Arrive a few minutes early, settle in, and make yourself comfortable",
+                      "To help maintain a calm and relaxing environment for all guests, we kindly ask that children not accompany you to your appointment",
+                      "If you have any allergies, sensitivities, or concerns, please let us know ahead of time so we can best accommodate your needs",
                     ],
                   },
                 ].map(({ service, items }) => (
@@ -323,15 +321,14 @@ export default function VisitPage() {
                   first.
                 </h2>
                 <p className="text-(--ink-soft) leading-relaxed mb-5">
-                  Every appointment starts with a mapping and a conversation.
-                  We&apos;ll look at your bone structure, talk through what you
-                  want to look like on a Monday and a Saturday, and only then
-                  start the actual service.
+                  Your comfort is always the priority. Whether you enjoy
+                  conversation, prefer a quiet appointment, or want to listen to
+                  your own music or podcast — your experience can be tailored to
+                  what feels best for you.
                 </p>
                 <p className="text-(--ink-soft) leading-relaxed">
-                  The studio is quiet and unhurried. There&apos;s usually tea,
-                  always music at low volume, and one chair — yours. We
-                  don&apos;t double-book.
+                  Relax, unwind, and enjoy a little time dedicated entirely to
+                  you.
                 </p>
               </div>
               <div
@@ -354,26 +351,27 @@ export default function VisitPage() {
                   04 · Aftercare
                 </p>
                 <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance mb-6">
-                  You leave with{" "}
-                  <em className="font-nyght-italic text-(--accent)">written</em>{" "}
-                  instructions.
+                  Aftercare{" "}
+                  <em className="font-nyght-italic text-(--accent)">
+                    matters.
+                  </em>
                 </h2>
                 <p className="text-(--ink-soft) leading-relaxed mb-5">
-                  Before you go, we&apos;ll walk through exactly how to care for
-                  your new brows or lashes at home. You&apos;ll get a small card
-                  of instructions specific to your service — not a generic
-                  printout.
+                  Beautiful results don&apos;t end when your appointment does.
+                  We&apos;ll make sure you know how to care for your lashes,
+                  brows, or permanent makeup — and we&apos;re always happy to
+                  answer questions along the way.
                 </p>
                 <p className="text-(--ink-soft) leading-relaxed">
-                  If anything feels off in the first week,{" "}
+                  If you have concerns after your appointment, don&apos;t
+                  hesitate to{" "}
                   <a
                     href={siteConfig.contact.smsHref}
                     className="text-(--foreground) hover:text-(--accent) transition-colors underline underline-offset-4"
                   >
-                    text us
+                    reach out
                   </a>
-                  . We&apos;d rather hear from you than have you wait until the
-                  next appointment.
+                  — we&apos;re here to help.
                 </p>
               </div>
               <div
@@ -412,14 +410,13 @@ export default function VisitPage() {
                   num: "01",
                   heading: (
                     <span>
-                      The{" "}
+                      Look for the{" "}
                       <em className="font-nyght-italic text-(--accent)">
-                        door
-                      </em>{" "}
-                      with the M.
+                        black door.
+                      </em>
                     </span>
                   ),
-                  body: "Front Street runs north-south through the village. Look for the small painted M — you'll know it when you see it.",
+                  body: "Front Street runs north-south through the village. We're at 402 S Front Street — look for the black door with the Moxie logo on the window.",
                   cta: {
                     label: "Get directions",
                     href: siteConfig.address.mapsHref,
@@ -429,13 +426,13 @@ export default function VisitPage() {
                   num: "02",
                   heading: (
                     <span>
-                      Free, on the{" "}
+                      Parking is{" "}
                       <em className="font-nyght-italic text-(--accent)">
-                        street.
+                        easy.
                       </em>
                     </span>
                   ),
-                  body: "Street parking is free and rarely full. There's also a small village lot half a block south, behind the post office.",
+                  body: "A complimentary parking lot is located directly in front of the studio, making your visit easy from the moment you arrive.",
                   cta: null,
                 },
                 {
@@ -448,7 +445,7 @@ export default function VisitPage() {
                       </em>
                     </span>
                   ),
-                  body: "Arrive with a clean face if you can. We have tea, water, and a small bench for jackets. Please come solo — no space to wait.",
+                  body: "Arriving with clean lashes or brows is always helpful, but not required. We'll have cold drinks, sweet treats, and everything you need for a relaxing appointment.",
                   cta: null,
                 },
               ].map(({ num, heading, body, cta }) => (
@@ -464,7 +461,7 @@ export default function VisitPage() {
                   <h3 className="font-nyght text-xl md:text-2xl text-(--background) mb-4 leading-snug">
                     {heading}
                   </h3>
-                  <p className="text-sm text-(--background) leading-relaxed mb-3">
+                  <p className="text-sm text-(--background) leading-relaxed mb-3 text-pretty">
                     {body}
                   </p>
                   {cta && (

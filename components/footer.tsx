@@ -93,7 +93,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-sm text-(--ink-soft) leading-relaxed max-w-70 mb-8">
-              A brow &amp; lash studio in Rochester, Wisconsin. By appointment
+              A lash &amp; brow studio in Rochester, Wisconsin. By appointment
               only.
             </p>
 

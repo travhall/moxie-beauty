@@ -42,7 +42,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 // ── Live service helpers ──────────────────────────────────────────────────────
 
 /** Build meta string array from a live Square service. */
@@ -88,72 +87,66 @@ function groupServices(services: SquareService[]) {
 const FALLBACK_BROW = [
   {
     num: "01",
-    name: "Signature Brow Shape",
-    desc: "Mapping, shaping with wax & precision tweezing, gentle trim and a finished groom. The foundation for every other brow service.",
-    meta: ["From $55", "45 min", "Every 3–4 wks"],
-  },
-  {
-    num: "02",
     name: "Brow Lamination & Shape",
-    desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint, and a precision shape.",
+    desc: "Beautifully lifted, fuller-looking brows designed to enhance your natural shape with an effortlessly polished finish.",
     meta: ["From $95", "75 min", "Lasts 6–8 wks"],
   },
   {
-    num: "03",
-    name: "Brow Tint & Shape",
-    desc: "A short, all-purpose visit. Soft tint matched to your hair, plus a shape — the easiest way to wake up looking finished.",
+    num: "02",
+    name: "Brow Tint & Sculpt",
+    desc: "A short, all-purpose visit. Soft tint matched to your hair, plus a sculpt — the easiest way to wake up looking finished.",
     meta: ["From $75", "45 min", "Lasts 3–4 wks"],
   },
   {
-    num: "04",
+    num: "03",
     name: "Microblading",
-    desc: "Semi-permanent, hair-stroke brows crafted to match your natural coloring and bone structure. Begins with a required consultation to map your ideal shape and walk through the healing process.",
-    meta: ["Consultation required", "Lasts 12–18 mo", "Touch-up at 6 wks"],
+    desc: "Semi-permanent, hair-stroke brows crafted to match your natural coloring and bone structure. Begins with a required consultation to discuss your goals and determine if the service is right for you.",
+    meta: ["Consultation required", "Lasts 12–18 mo", "Touch-up at 6–8 wks"],
   },
 ];
 
 const FALLBACK_LASH = [
   {
-    num: "05",
+    num: "04",
     name: "Signature Lash Set",
     desc: "Fully customized extensions hand-applied to your natural lashes — length, curl, and finish tailored to your eye shape and lifestyle. The look of great lashes, made to feel like yours.",
     meta: ["From $145", "120 min", "Fills from $70"],
   },
   {
-    num: "06",
+    num: "05",
     name: "Volume Lash Set",
     desc: "Hand-crafted fans of ultra-fine extensions for soft, even density with more dimension. Choose your level of drama — from a quiet lift to a deliberate full set.",
     meta: ["From $195", "150 min", "Fills from $95"],
   },
   {
-    num: "07",
+    num: "06",
     name: "Lash Lift & Tint",
-    desc: "A subtle curl from root to tip that makes your own lashes look longer and darker. Low maintenance, high impact — results last 6–8 weeks.",
+    desc: "A low-maintenance treatment that lifts, curls, and darkens your natural lashes for an effortlessly enhanced look.",
     meta: ["From $110", "60 min", "Lasts 6–8 wks"],
   },
 ];
 
 const FALLBACK_EXTRAS = [
   {
-    num: "09",
+    num: "07",
     name: "First-Visit Consult",
-    desc: "New here? Start with a 30-minute mapping & consultation. We'll plan a shape together and book the right services for you.",
+    desc: "New here? Start with a 30-minute consultation. We'll plan a service together and book the right appointment for you.",
     meta: ["Complimentary", "30 min", "In studio"],
   },
   {
-    num: "10",
+    num: "08",
     name: "Lash Removal",
-    desc: "Safe, gentle removal of extensions applied anywhere. No tugging, no damage to your natural lashes. Often paired with a lift.",
+    desc: "Safe, gentle removal of extensions applied anywhere. No tugging, no damage to your natural lashes.",
     meta: ["From $35", "30 min", "Walk-out clean"],
   },
   {
-    num: "11",
+    num: "09",
     name: "Lash Tint",
     desc: "A small visit, big difference — semi-permanent color that darkens the full length of your natural lashes for 4–6 weeks.",
     meta: ["From $45", "30 min", "Lasts 4–6 wks"],
   },
   {
-    num: "12",
+    num: "10",
     name: "Moxie Gift Card",
     desc: "A quietly thoughtful gift, in any amount. Delivered as a small card by mail, or by email the same day.",
     meta: ["$50+", "No expiry", "Mail or email"],
@@ -234,8 +227,11 @@ export default async function ServicesPage() {
     "@type": "ItemList",
     name: "Services at Moxie Beauty Studio",
     itemListElement: allCards.map((c, i) => {
-      const priceMatch = c.meta.find((m) => m.startsWith("From ") || m.startsWith("$"));
-      const price = priceMatch?.replace(/^From \$/, "").replace(/^\$/, "") ?? null;
+      const priceMatch = c.meta.find(
+        (m) => m.startsWith("From ") || m.startsWith("$"),
+      );
+      const price =
+        priceMatch?.replace(/^From \$/, "").replace(/^\$/, "") ?? null;
       return {
         "@type": "ListItem",
         position: i + 1,
@@ -304,7 +300,7 @@ export default async function ServicesPage() {
                 crafted with care.
               </h1>
               <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-                A focused list of brow and lash services — each one designed
+                A focused list of lash and brow services — each one designed
                 around the consultation we&apos;ll have before we begin. Prices
                 are starting points; final pricing reflects your shape, density,
                 and the time we spend together.
@@ -312,7 +308,7 @@ export default async function ServicesPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-(--line-soft)">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
               {[
                 { k: "Studio", v: "By appointment" },
                 {
@@ -404,12 +400,10 @@ export default async function ServicesPage() {
               <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/80 mb-6">
                 A note on the way we work
               </p>
-              <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-3xl text-pretty">
-                We&apos;d rather be{" "}
-                <span className="text-(--accent)">slow</span> &amp; right
-                <br />
-                than fast and full of{" "}
-                <span className="text-(--accent)">apologies.</span>
+              <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-3xl text-balance">
+                <span className="text-(--accent)">Beautiful.</span>{" "}
+                <span className="text-(--accent)">Intentional.</span> Never
+                one-size-fits-all.
               </p>
               <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)">
                 Jackie · founder · est. 2021

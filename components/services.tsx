@@ -17,7 +17,7 @@ const FALLBACK_SERVICES = [
   {
     num: "01",
     name: "Brow Lamination & Shape",
-    desc: "A gentle lift that sets brows in their fullest, most natural direction. Includes mapping, lamination, tint, and a precision shape.",
+    desc: "Beautifully lifted, fuller-looking brows designed to enhance your natural shape with an effortlessly polished finish.",
     meta: [
       { label: "From", value: "$95" },
       { label: "Duration", value: "75 min" },
@@ -61,13 +61,13 @@ const FALLBACK_SERVICES = [
     meta: [
       { label: "Consult", value: "Required" },
       { label: "Lasts", value: "12–18 mo" },
-      { label: "Touch-up", value: "6 wks" },
+      { label: "Touch-up", value: "6–8 wks" },
     ],
   },
   {
     num: "06",
     name: "First-Visit Consult",
-    desc: "New here? Start with a 30-minute mapping & consultation. We'll plan a shape together and book the right services for you.",
+    desc: "New here? Start with a 30-minute consultation. We'll plan a service together and book the right appointment for you.",
     meta: [
       { label: "Price", value: "Complimentary" },
       { label: "Duration", value: "30 min" },
