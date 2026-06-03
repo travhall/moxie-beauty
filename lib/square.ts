@@ -181,3 +181,28 @@ export const getSquareServices = unstable_cache(
   [`square-services-${cacheEnv}`],
   { revalidate: 3600, tags: ["square-services"] }
 );
+
+// ── Service grouping ──────────────────────────────────────────────────────────
+
+/**
+ * Group Square services into Brow / Lash / Extras buckets.
+ * Checks the Square category name first, falls back to keywords in the
+ * service name if no category is assigned.
+ */
+export function groupServices(services: SquareService[]) {
+  const brow: SquareService[] = [];
+  const lash: SquareService[] = [];
+  const extras: SquareService[] = [];
+
+  const BROW = /brow|eyebrow|microblade/i;
+  const LASH = /lash|volume|fill/i;
+
+  for (const svc of services) {
+    const signal = svc.categoryName || svc.name;
+    if (BROW.test(signal)) brow.push(svc);
+    else if (LASH.test(signal)) lash.push(svc);
+    else extras.push(svc);
+  }
+
+  return { brow, lash, extras };
+}

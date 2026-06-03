@@ -139,7 +139,7 @@ export default function AboutPage() {
           <div className={container}>
             <div className="grid md:grid-cols-[340px_1fr] gap-8 md:gap-x-12 md:gap-y-12 lg:gap-x-16 lg:gap-y-8">
               {/* Portrait — spans both text rows on desktop */}
-              <div className="lg:row-span-2 lg:ml-8">
+              <div className="lg:row-span-2 lg:ml-8 lg:mt-16">
                 <div
                   className="relative w-full max-w-85 rounded-t-[170px] rounded-b-2xl overflow-hidden border-l-8 border-b-2 border-(--accent) shadow-xl bg-(--accent)"
                   style={{ height: "400px" }}
@@ -304,6 +304,7 @@ export default function AboutPage() {
                         checkout.
                       </em>
                     </span>
+                    // cSpell:ignore doesn
                   ),
                   body: "Beautiful results are only part of the experience. We believe in setting clients up for success with education, aftercare, and ongoing support long after the appointment is over.",
                 },
@@ -357,7 +358,8 @@ export default function AboutPage() {
                 Moxie was designed to feel like a breath of fresh air. Created
                 with comfort, confidence, and connection in mind, it&apos;s a
                 space where every detail serves a purpose — from the carefully
-                curated décor to the little touches clients have come to love.
+                curated d&eacute;cor to the little touches clients have come to
+                love.
               </p>
             </div>
 

@@ -10,6 +10,7 @@ import {
   lowestPrice,
   primaryDuration,
   primaryVariationId,
+  groupServices,
   type SquareService,
 } from "@/lib/square";
 import { siteConfig } from "@/lib/site-config";
@@ -52,34 +53,6 @@ function squareMeta(svc: SquareService): string[] {
   meta.push(price != null ? `From ${formatPrice(price)}` : "Ask us");
   if (duration != null) meta.push(formatDuration(duration));
   return meta;
-}
-
-/**
- * Group live Square services into Brow / Lash / Extras buckets.
- *
- * Strategy: check the Square category name first. If it doesn't resolve,
- * fall back to matching keywords in the service name itself — useful when
- * services haven't been assigned to categories in Square yet.
- *
- * Brow keywords : brow, eyebrow, microblade
- * Lash keywords : lash, volume, fill  (checked after brow to avoid overlap)
- */
-function groupServices(services: SquareService[]) {
-  const brow: SquareService[] = [];
-  const lash: SquareService[] = [];
-  const extras: SquareService[] = [];
-
-  const BROW = /brow|eyebrow|microblade/i;
-  const LASH = /lash|volume|fill/i;
-
-  for (const svc of services) {
-    const signal = svc.categoryName || svc.name;
-    if (BROW.test(signal)) brow.push(svc);
-    else if (LASH.test(signal)) lash.push(svc);
-    else extras.push(svc);
-  }
-
-  return { brow, lash, extras };
 }
 
 // ── Hardcoded fallback data ───────────────────────────────────────────────────
@@ -354,7 +327,7 @@ export default async function ServicesPage() {
 
         {/* ── I · Brow ──────────────────────────────────────────────────── */}
         {browCards.length > 0 && (
-          <section className="py-20">
+          <section id="brow" className="py-20">
             <div className={container}>
               <div className="grid lg:grid-cols-[420px_540px] gap-4 justify-between mb-10">
                 <div>
@@ -414,7 +387,7 @@ export default async function ServicesPage() {
 
         {/* ── II · Lash ─────────────────────────────────────────────────── */}
         {lashCards.length > 0 && (
-          <section className="py-20">
+          <section id="lash" className="py-20">
             <div className={container}>
               <div className="grid lg:grid-cols-[420px_540px] gap-4 justify-between mb-10">
                 <div>
@@ -454,7 +427,7 @@ export default async function ServicesPage() {
 
         {/* ── III · Extras ──────────────────────────────────────────────── */}
         {extrasCards.length > 0 && (
-          <section className="pb-20">
+          <section id="extras" className="pb-20">
             <div className={container}>
               <div className="grid lg:grid-cols-[380px_1fr] gap-16 mb-10">
                 <div>

@@ -2,35 +2,20 @@ import Link from "next/link";
 import Logo from "./logo";
 import FooterThemeIsland from "./footer-theme-island";
 import { siteConfig } from "@/lib/site-config";
+import { getSquareServices, groupServices } from "@/lib/square";
 
-const footerLinks = {
-  services: [
-    { label: "Brow Lamination", href: "/services" },
-    { label: "Lash Extensions", href: "/services" },
-    { label: "Lash Lift & Tint", href: "/services" },
-    { label: "Microblading", href: "/services" },
-    { label: "Gift Cards", href: "/services" },
-  ],
-  studio: [
-    { label: "About Moxie", href: "/about" },
-    { label: "Your Visit", href: "/visit" },
-    { label: "Aftercare", href: "/aftercare" },
-    { label: "Policies", href: "/policies" },
-  ],
-  stayClose: [
-    {
-      label: "Instagram",
-      href: siteConfig.social.instagram.href,
-      external: true,
-    },
-    { label: "TikTok", href: siteConfig.social.tiktok.href, external: true },
-    {
-      label: "Facebook",
-      href: siteConfig.social.facebook.href,
-      external: true,
-    },
-  ],
-} as const;
+const studioLinks = [
+  { label: "About Moxie", href: "/about" },
+  { label: "Your Visit", href: "/visit" },
+  { label: "Aftercare", href: "/aftercare" },
+  { label: "Policies", href: "/policies" },
+] as const;
+
+const stayCloseLinks = [
+  { label: "Instagram", href: siteConfig.social.instagram.href, external: true },
+  { label: "TikTok", href: siteConfig.social.tiktok.href, external: true },
+  { label: "Facebook", href: siteConfig.social.facebook.href, external: true },
+] as const;
 
 function FooterCol({
   heading,
@@ -74,8 +59,36 @@ function FooterCol({
 
 const YEAR = new Date().getFullYear();
 
-export default function Footer() {
+export default async function Footer() {
   const year = YEAR;
+
+  // Derive service links from the same Square data as the services page.
+  // Uses the shared cache — no extra network request.
+  let serviceLinks: { label: string; href: string }[] = [];
+  try {
+    const services = await getSquareServices();
+    const { brow, lash, extras } = groupServices(services);
+    if (brow.length > 0) {
+      serviceLinks.push({ label: "Brow Services", href: "/services#brow" });
+      if (brow.some((s) => /microblade/i.test(s.name)))
+        serviceLinks.push({ label: "Microblading", href: "/services#brow" });
+    }
+    if (lash.length > 0) {
+      serviceLinks.push({ label: "Lash Extensions", href: "/services#lash" });
+      if (lash.some((s) => /lift/i.test(s.name)))
+        serviceLinks.push({ label: "Lash Lift & Tint", href: "/services#lash" });
+    }
+    if (extras.length > 0)
+      serviceLinks.push({ label: "Extras", href: "/services#extras" });
+  } catch {
+    // Square unavailable — fall back to the two sections we know exist
+    serviceLinks = [
+      { label: "Brow Services", href: "/services#brow" },
+      { label: "Microblading", href: "/services#brow" },
+      { label: "Lash Extensions", href: "/services#lash" },
+      { label: "Lash Lift & Tint", href: "/services#lash" },
+    ];
+  }
 
   return (
     <footer className="border-t border-(--line-soft) bg-(--background)/60">
@@ -102,9 +115,9 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          <FooterCol heading="Services" links={footerLinks.services} />
-          <FooterCol heading="Studio" links={footerLinks.studio} />
-          <FooterCol heading="Stay close" links={footerLinks.stayClose} />
+          <FooterCol heading="Services" links={serviceLinks} />
+          <FooterCol heading="Studio" links={studioLinks} />
+          <FooterCol heading="Stay close" links={stayCloseLinks} />
         </div>
 
         {/* ── Footer foot ─────────────────────────────────────────────── */}
