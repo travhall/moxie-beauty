@@ -316,9 +316,10 @@ export default function VisitPage() {
                   03 · During
                 </p>
                 <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance mb-6">
-                  The consultation{" "}
-                  <em className="font-nyght-italic text-(--accent)">comes</em>{" "}
-                  first.
+                  Your time,{" "}
+                  <em className="font-nyght-italic text-(--accent)">
+                    your way.
+                  </em>
                 </h2>
                 <p className="text-(--ink-soft) leading-relaxed mb-5">
                   Your comfort is always the priority. Whether you enjoy

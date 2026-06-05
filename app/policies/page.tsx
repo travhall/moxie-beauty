@@ -38,7 +38,7 @@ const policies = [
   {
     num: "02",
     heading: "No-Shows",
-    body: "Appointments missed without any notice may be charged 100% of the scheduled service fee to the card on file. We understand life happens — a quick text goes a long way.",
+    body: "Appointments missed without any notice may be charged 100% of the scheduled service fee to the card on file.",
   },
   {
     num: "03",
@@ -73,22 +73,12 @@ const policies = [
   {
     num: "09",
     heading: "Children",
-    body: "To keep the studio safe and relaxing for all clients, we ask that you make other arrangements for children while receiving services. The space is small and the work requires focus — we appreciate your understanding.",
+    body: "To ensure the safety of children and the enjoyment of all clients, we ask that parents or guardians make other arrangements for children while receiving services.",
   },
   {
     num: "10",
     heading: "Pricing",
-    body: "Prices are subject to change at any time. Final pricing reflects the time and work involved in your specific service — listed prices are starting points.",
-  },
-  {
-    num: "11",
-    heading: "Your Rights as a Client",
-    body: "You have the right to a clean, safe, and comfortable environment; to stop any treatment at any time for any reason; to be treated with consideration, dignity, and respect; to have your health information kept confidential; and to ask questions about your experience, products used, or our training and certifications.",
-  },
-  {
-    num: "12",
-    heading: "Privacy",
-    body: "We respect the privacy of every client. Information collected is used solely for establishing client profiles and service records. We do not share client information with third parties for any purpose.",
+    body: "Prices are subject to change at any time.",
   },
 ];
 
@@ -151,11 +141,41 @@ export default function PoliciesPage() {
                 <br />
                 to <em className="font-nyght-italic text-(--accent)">agree.</em>
               </h1>
-              <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-                These policies exist to protect your time and ours. They&apos;re
-                meant to be clear and fair — not fine print. If you have
-                questions about any of them, just ask before you book.
-              </p>
+              <div className="self-end space-y-6">
+                <p className="text-lg text-(--ink-soft) leading-relaxed text-pretty">
+                  At Moxie, we believe clear expectations create the best
+                  experience for everyone. These policies are simply here to
+                  help appointments run smoothly and respect the time of both
+                  our clients and artists.
+                </p>
+              </div>
+            </div>
+
+            {/* Download link */}
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/moxie_policies.pdf"
+                download="Moxie_Beauty_Studio_Client_Policies.pdf"
+                className="inline-flex items-center gap-2.5 font-nyght-bold text-[11px] tracking-[0.25em] uppercase text-(--foreground) border border-b-4 border-(--accent) rounded-full px-5 py-2.5 hover:border-(--accent) hover:text-(--accent) transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download &amp; Sign
+              </a>
             </div>
           </div>
         </section>
@@ -192,15 +212,14 @@ export default function PoliciesPage() {
                 A note from Jackie
               </p>
               <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-6">
-                I genuinely love what I do — and I want every visit to feel that
-                way for{" "}
-                <em className="font-nyght-italic text-(--accent)">you</em>, too.
+                Creating beautiful results is rewarding. Building relationships
+                with the people who trust me is what makes me truly{" "}
+                <em className="font-nyght-italic text-(--accent)">love</em> what
+                I do.
               </p>
-              <p className="text-(--background) leading-relaxed">
-                These policies keep the studio running smoothly so that when
-                you&apos;re in the chair, we can focus entirely on you. If
-                something ever feels off, reach out — I&apos;d rather hear about
-                it than have you leave wondering.
+              <p className="text-(--background)/80 leading-relaxed">
+                Beautiful experiences begin with mutual respect. Thank you for
+                taking the time to review our policies.
               </p>
             </div>
           </div>

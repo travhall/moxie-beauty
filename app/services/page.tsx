@@ -335,15 +335,19 @@ export default async function ServicesPage() {
                     I · Brow
                   </p>
                   <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
-                    For the{" "}
-                    <em className="font-nyght-italic text-(--accent)">shape</em>{" "}
-                    you were born with.
+                    Thoughtfully{" "}
+                    <em className="font-nyght-italic text-(--accent)">
+                      shaped.
+                    </em>{" "}
+                    Beautifully yours.
                   </h2>
                 </div>
                 <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed text-pretty">
-                  Brow design is part architecture, part observation. We map
-                  your bone structure, talk through how you want to look on a
-                  Monday and a Saturday, and only then pick up the tweezers.
+                  Whether you&apos;re looking for a fuller appearance, more
+                  definition, or simply a little extra polish, every brow
+                  service is thoughtfully customized to enhance your natural
+                  features and create a look that feels effortless, balanced,
+                  and uniquely you.
                 </p>
               </div>
 
@@ -395,17 +399,16 @@ export default async function ServicesPage() {
                     II · Lash
                   </p>
                   <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
-                    Lashes that look like{" "}
-                    <em className="font-nyght-italic text-(--accent)">
-                      yours,
-                    </em>{" "}
-                    only better.
+                    Customized for your{" "}
+                    <em className="font-nyght-italic text-(--accent)">eyes.</em>{" "}
+                    Designed for your life.
                   </h2>
                 </div>
                 <p className="text-(--ink-soft) lg:pt-14 lg:self-end leading-relaxed text-pretty">
-                  Hand-applied, customized to your eye shape, lifestyle, and how
-                  much you&apos;d like to feel them. Extensions that hold up in
-                  summer humidity and winter wool.
+                  Beautiful lashes should feel effortless. Every lash set is
+                  thoughtfully customized to your eye shape, natural lashes,
+                  lifestyle, and beauty goals to create a look that feels
+                  comfortable, flattering, and uniquely you.
                 </p>
               </div>
 

@@ -86,16 +86,13 @@ export default function AboutPage() {
 
             <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
               <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
-                Quiet hands,
+                More than
                 <br />
-                careful{" "}
-                <em className="font-nyght-italic text-(--accent)">eyes.</em>
+                <em className="font-nyght-italic text-(--accent)">beauty.</em>
               </h1>
               <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-                Moxie is a one-chair lash and brow studio in the village of
-                Rochester, Wisconsin. We opened in 2021 with a simple idea: that
-                this kind of work deserves time — and the people receiving it
-                deserve someone who actually cares.
+                Moxie was built on the belief that beauty services should feel
+                personal.
               </p>
             </div>
 
@@ -104,14 +101,14 @@ export default function AboutPage() {
               {[
                 { k: "Founded", v: "2021" },
                 {
-                  k: "Studio size",
+                  k: "Your appointment",
                   v: (
                     <span>
                       1<em className="font-nyght-italic">:</em>1, always
                     </span>
                   ),
                 },
-                { k: "Specialist", v: "Brows & Lashes" },
+                { k: "Specialist", v: "Lashes & Brows" },
                 {
                   k: "Reviews",
                   v: (
@@ -218,10 +215,9 @@ export default function AboutPage() {
                 &ldquo;
               </span>
               <blockquote className="relative font-nyght-italic text-3xl lg:text-4xl text-(--foreground) leading-snug max-w-2xl text-balance">
-                Brows and lashes should look like they{" "}
-                <em className="text-(--accent)">grew</em> that way
-                <em className="text-(--accent)">.</em> Only a little better than
-                the morning you happened to catch them at their best.
+                While beautiful results matter, what matters most is how clients
+                feel while they&apos;re{" "}
+                <em className="text-(--accent)">here.</em>
               </blockquote>
               <div className="flex items-center gap-3 mt-8">
                 <span
@@ -347,11 +343,10 @@ export default function AboutPage() {
                   The space
                 </p>
                 <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
-                  A small,{" "}
+                  A space designed with{" "}
                   <em className="font-nyght-italic text-(--accent)">
-                    light-filled
-                  </em>{" "}
-                  studio.
+                    intention.
+                  </em>
                 </h2>
               </div>
               <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
