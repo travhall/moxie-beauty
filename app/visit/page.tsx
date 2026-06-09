@@ -93,9 +93,9 @@ export default function VisitPage() {
                 <em className="font-nyght-italic text-(--accent)">finish.</em>
               </h1>
               <p className="text-lg text-(--ink-soft) leading-relaxed self-end text-pretty">
-                Every visit follows the same quiet rhythm — a consultation
-                first, then the work, then a few minutes to talk through
-                aftercare. Here&apos;s what to expect from the moment you book.
+                Every appointment is thoughtfully tailored to the service
+                you&apos;re receiving and the experience you prefer. Here&apos;s
+                what you can expect from booking to checkout.
               </p>
             </div>
 
@@ -105,7 +105,7 @@ export default function VisitPage() {
                 { k: "Booking", v: "By Square" },
                 { k: "Studio", v: siteConfig.hours.display },
                 {
-                  k: "First visit",
+                  k: "Consults",
                   v: <em className="font-nyght-italic">Complimentary</em>,
                 },
                 {
