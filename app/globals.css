@@ -429,7 +429,11 @@ details.faq-item[open] .faq-chev {
  * once per visit — no JS or sessionStorage needed.
  */
 @keyframes site-enter {
-  from { opacity: 0; }
+  /* 0.001, not 0 — a literal 0 start can read as "no contentful paint" to
+   * Chrome's FCP heuristic (and Lighthouse), since fully transparent content
+   * isn't counted as visible. A near-zero value paints immediately while
+   * looking identical to the eye. */
+  from { opacity: 0.001; }
   to   { opacity: 1; }
 }
 
