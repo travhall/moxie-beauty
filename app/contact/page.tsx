@@ -291,7 +291,7 @@ export default function ContactPage() {
                   ].map(({ day, abbr, open, tag }) => (
                     <div
                       key={day}
-                      className={`flex items-center justify-between border-b border-(--line-soft) py-4 gap-4 ${!open ? "opacity-40" : ""}`}
+                      className="flex items-center justify-between border-b border-(--line-soft) py-4 gap-4"
                     >
                       <div className="flex items-center gap-3">
                         <span className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--ink-mute) w-8">

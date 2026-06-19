@@ -400,7 +400,7 @@ export default function VisitPage() {
               </p>
               <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance text-(--background) mb-3">
                 402 S Front{" "}
-                <em className="font-nyght-italic text-(--accent)">Street,</em>{" "}
+                <em className="font-nyght-italic text-(--accent-soft)">Street,</em>{" "}
                 Rochester.
               </h2>
             </div>
@@ -412,7 +412,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Look for the{" "}
-                      <em className="font-nyght-italic text-(--accent)">
+                      <em className="font-nyght-italic text-(--accent-soft)">
                         black door.
                       </em>
                     </span>
@@ -428,7 +428,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Parking is{" "}
-                      <em className="font-nyght-italic text-(--accent)">
+                      <em className="font-nyght-italic text-(--accent-soft)">
                         easy.
                       </em>
                     </span>
@@ -441,7 +441,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Just{" "}
-                      <em className="font-nyght-italic text-(--accent)">
+                      <em className="font-nyght-italic text-(--accent-soft)">
                         yourself.
                       </em>
                     </span>
@@ -471,9 +471,9 @@ export default function VisitPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${cta.label} (opens in new tab)`}
-                      className="text-sm font-bold text-(--accent) hover:underline underline-offset-4"
+                      className="text-sm font-bold text-(--accent-soft) hover:underline underline-offset-4"
                     >
-                      {cta.label} ↗
+                      {cta.label} <span aria-hidden="true">↗</span>
                     </a>
                   )}
                 </div>
