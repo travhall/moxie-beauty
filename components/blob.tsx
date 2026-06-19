@@ -1,21 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { BufferGeometry, BufferAttribute } from "three";
 
-// ── Color palettes ──────────────────────────────────────────────────────────
+// ── Color palettes (hex — OGL's Color parser doesn't accept rgb() strings) ───
 
 const COLORS = {
   light: {
-    primary: "rgb(205, 177, 159)",
-    secondary: "rgb(185, 150, 130)",
+    primary: "#cdb19f",
+    secondary: "#b99682",
     // Backdrop: very pale blush, nearly background — becomes a diffuse haze layer
-    backdrop: "rgb(238, 220, 210)",
+    backdrop: "#eedcd2",
   },
   dark: {
-    primary: "rgb(231, 188, 156)",
-    secondary: "rgb(214, 158, 132)",
-    backdrop: "rgb(195, 152, 126)",
+    primary: "#e7bc9c",
+    secondary: "#d69e84",
+    backdrop: "#c3987e",
   },
 } as const;
 
@@ -27,6 +26,92 @@ const SPEED = 0.00014;
 const NOISE_AMP = 0.36;
 // Lower frequency → bigger, rounder undulations (cloudlike vs textured)
 const NOISE_FREQ = 0.75;
+
+// ── Minimal unlit shader — equivalent to a transparent MeshBasicMaterial ────
+
+const VERTEX = `
+  attribute vec3 position;
+  uniform mat4 modelViewMatrix;
+  uniform mat4 projectionMatrix;
+  void main() {
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const FRAGMENT = `
+  precision mediump float;
+  uniform vec3 uColor;
+  uniform float uOpacity;
+  void main() {
+    gl_FragColor = vec4(uColor, uOpacity);
+  }
+`;
+
+// ── Icosphere generator ──────────────────────────────────────────────────────
+// Ports three.js's IcosahedronGeometry subdivision (golden-ratio base +
+// midpoint subdivision normalized to the sphere) as flat, non-indexed
+// triangles — the deform() loop below treats every vertex independently, so
+// shared/indexed vertices buy nothing here.
+
+type Vec3Tuple = [number, number, number];
+
+function normalize(v: Vec3Tuple): Vec3Tuple {
+  const len = Math.hypot(v[0], v[1], v[2]);
+  return [v[0] / len, v[1] / len, v[2] / len];
+}
+
+function midpoint(a: Vec3Tuple, b: Vec3Tuple): Vec3Tuple {
+  return normalize([
+    (a[0] + b[0]) / 2,
+    (a[1] + b[1]) / 2,
+    (a[2] + b[2]) / 2,
+  ]);
+}
+
+function buildIcosphere(radius: number, detail: number): Float32Array {
+  const t = (1 + Math.sqrt(5)) / 2;
+  const baseVerts: Vec3Tuple[] = [
+    [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
+    [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
+    [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1],
+  ];
+  const faces: Vec3Tuple[] = [
+    [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
+    [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
+    [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
+    [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1],
+  ];
+
+  let triangles: [Vec3Tuple, Vec3Tuple, Vec3Tuple][] = faces.map(
+    ([a, b, c]) => [
+      normalize(baseVerts[a]),
+      normalize(baseVerts[b]),
+      normalize(baseVerts[c]),
+    ],
+  );
+
+  for (let d = 0; d < detail; d++) {
+    const next: typeof triangles = [];
+    for (const [a, b, c] of triangles) {
+      const ab = midpoint(a, b);
+      const bc = midpoint(b, c);
+      const ca = midpoint(c, a);
+      next.push([a, ab, ca], [ab, b, bc], [ca, bc, c], [ab, bc, ca]);
+    }
+    triangles = next;
+  }
+
+  const out = new Float32Array(triangles.length * 9);
+  let i = 0;
+  for (const [a, b, c] of triangles) {
+    for (const v of [a, b, c]) {
+      out[i++] = v[0] * radius;
+      out[i++] = v[1] * radius;
+      out[i++] = v[2] * radius;
+    }
+  }
+  return out;
+}
 
 export default function Blob() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -40,80 +125,81 @@ export default function Blob() {
     let running = false;
 
     void (async () => {
-      // Dynamic import keeps Three.js out of the initial bundle entirely
-      const [THREE, { createNoise4D }] = await Promise.all([
-        import("three"),
-        import("simplex-noise"),
-      ]);
+      // Dynamic import keeps OGL + simplex-noise out of the initial bundle
+      const [{ Renderer, Camera, Transform, Mesh, Geometry, Program, Color }, { createNoise4D }] =
+        await Promise.all([import("ogl"), import("simplex-noise")]);
       if (disposed) return;
 
       // ── Renderer ──────────────────────────────────────────────────────────
-      const renderer = new THREE.WebGLRenderer({
+      const renderer = new Renderer({
         canvas,
         antialias: false,
         alpha: true,
+        dpr: Math.min(window.devicePixelRatio, 1.5),
         powerPreference: "low-power",
       });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-      renderer.setSize(window.innerWidth, window.innerHeight, false);
-      renderer.setClearColor(0x000000, 0);
+      const gl = renderer.gl;
+      gl.clearColor(0, 0, 0, 0);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      // Renderer.setSize always writes inline width/height — clear it so the
+      // CSS class's 150vw/150vh oversized canvas (for the blur bleed) wins.
+      canvas.style.width = "";
+      canvas.style.height = "";
 
       // ── Scene & camera ────────────────────────────────────────────────────
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        45,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        100,
-      );
+      const scene = new Transform();
+      const camera = new Camera(gl, {
+        fov: 45,
+        aspect: window.innerWidth / window.innerHeight,
+        near: 0.1,
+        far: 100,
+      });
       camera.position.set(0, 0, 5.2);
+
+      function makeBlob(radius: number, detail: number, opacity: number) {
+        const baseVerts = buildIcosphere(radius, detail);
+        const positions = baseVerts.slice();
+        const geometry = new Geometry(gl, {
+          position: { size: 3, data: positions, usage: gl.DYNAMIC_DRAW },
+        });
+        const program = new Program(gl, {
+          vertex: VERTEX,
+          fragment: FRAGMENT,
+          uniforms: {
+            uColor: { value: new Color() },
+            uOpacity: { value: opacity },
+          },
+          transparent: true,
+          depthTest: true,
+        });
+        const mesh = new Mesh(gl, { geometry, program, frustumCulled: false });
+        mesh.setParent(scene);
+        return { mesh, geometry, program, baseVerts, positions };
+      }
 
       // ── Backdrop blob ─────────────────────────────────────────────────────
       // Large, nearly spherical, very slow — creates the atmospheric haze that
       // the primary and secondary blobs float inside. Detail 2 = ~960 vertices,
       // almost no deformation (ampScale 0.06 ≈ barely breathing).
-      const geom3 = new THREE.IcosahedronGeometry(2.8, 2);
-      const baseVerts3 = new Float32Array(geom3.attributes.position.array);
-      const mat3 = new THREE.MeshBasicMaterial({
-        transparent: true,
-        opacity: 0.38,
-      });
-      const blob3 = new THREE.Mesh(geom3, mat3);
-      blob3.position.set(-0.4, 0.3, -2.5);
-      scene.add(blob3);
+      const blob3 = makeBlob(2.8, 2, 0.38);
+      blob3.mesh.position.set(-0.4, 0.3, -2.5);
 
       // ── Primary blob ──────────────────────────────────────────────────────
       // Detail 3 = ~3,840 vertices. The 90px CSS blur makes higher detail
       // invisible, but the lower vertex count keeps CPU noise work fast.
-      const geom = new THREE.IcosahedronGeometry(1.6, 3);
-      const baseVerts = new Float32Array(geom.attributes.position.array);
-      // MeshBasicMaterial: no normals or lighting needed — eliminates
-      // computeVertexNormals() each frame, invisible at this blur radius.
-      const mat = new THREE.MeshBasicMaterial({
-        transparent: true,
-        opacity: 0.95,
-      });
-      const blob = new THREE.Mesh(geom, mat);
-      scene.add(blob);
+      const blob = makeBlob(1.6, 3, 0.95);
 
       // ── Secondary (accent) blob ───────────────────────────────────────────
-      const geom2 = new THREE.IcosahedronGeometry(0.9, 3);
-      const baseVerts2 = new Float32Array(geom2.attributes.position.array);
-      const mat2 = new THREE.MeshBasicMaterial({
-        transparent: true,
-        opacity: 0.75,
-      });
-      const blob2 = new THREE.Mesh(geom2, mat2);
-      blob2.position.set(2.2, -1.4, -1.8);
-      scene.add(blob2);
+      const blob2 = makeBlob(0.9, 3, 0.75);
+      blob2.mesh.position.set(2.2, -1.4, -1.8);
 
       // ── Theme-aware color sync ────────────────────────────────────────────
       const isDark = () => document.documentElement.classList.contains("dark");
       const syncColors = () => {
         const c = isDark() ? COLORS.dark : COLORS.light;
-        mat.color.set(c.primary);
-        mat2.color.set(c.secondary);
-        mat3.color.set(c.backdrop);
+        (blob.program.uniforms.uColor.value as InstanceType<typeof Color>).set(c.primary);
+        (blob2.program.uniforms.uColor.value as InstanceType<typeof Color>).set(c.secondary);
+        (blob3.program.uniforms.uColor.value as InstanceType<typeof Color>).set(c.backdrop);
       };
       syncColors();
 
@@ -125,33 +211,30 @@ export default function Blob() {
 
       // ── Noise & deformation ───────────────────────────────────────────────
       const noise4D = createNoise4D();
-      const tmp = new THREE.Vector3();
 
       function deform(
-        geometry: BufferGeometry,
-        baseArr: Float32Array,
+        target: { geometry: InstanceType<typeof Geometry>; baseVerts: Float32Array; positions: Float32Array },
         t: number,
         ampScale: number,
       ) {
-        const pos = geometry.attributes.position as BufferAttribute;
-        const arr = pos.array as Float32Array;
+        const { geometry, baseVerts, positions } = target;
         const amp = NOISE_AMP * ampScale;
 
-        for (let i = 0; i < arr.length; i += 3) {
-          tmp.set(baseArr[i], baseArr[i + 1], baseArr[i + 2]).normalize();
-          const n = noise4D(
-            tmp.x * NOISE_FREQ,
-            tmp.y * NOISE_FREQ,
-            tmp.z * NOISE_FREQ,
-            t,
-          );
+        for (let i = 0; i < positions.length; i += 3) {
+          const bx = baseVerts[i];
+          const by = baseVerts[i + 1];
+          const bz = baseVerts[i + 2];
+          const len = Math.hypot(bx, by, bz) || 1;
+          const nx = bx / len;
+          const ny = by / len;
+          const nz = bz / len;
+          const n = noise4D(nx * NOISE_FREQ, ny * NOISE_FREQ, nz * NOISE_FREQ, t);
           const k = 1 + n * amp;
-          arr[i] = baseArr[i] * k;
-          arr[i + 1] = baseArr[i + 1] * k;
-          arr[i + 2] = baseArr[i + 2] * k;
+          positions[i] = bx * k;
+          positions[i + 1] = by * k;
+          positions[i + 2] = bz * k;
         }
-        pos.needsUpdate = true;
-        // No computeVertexNormals() needed — MeshBasicMaterial doesn't use them
+        geometry.attributes.position.needsUpdate = true;
       }
 
       // ── Pointer parallax ─────────────────────────────────────────────────
@@ -178,24 +261,24 @@ export default function Blob() {
         t += dt * SPEED;
 
         // Backdrop: barely deforms (0.06), independent time offset for variety
-        deform(geom3, baseVerts3, t * 0.55, 0.06);
-        blob3.rotation.x = t * 0.08;
-        blob3.rotation.y = t * 0.1;
+        deform(blob3, t * 0.55, 0.06);
+        blob3.mesh.rotation.x = t * 0.08;
+        blob3.mesh.rotation.y = t * 0.1;
 
-        deform(geom, baseVerts, t, 1.0);
-        deform(geom2, baseVerts2, t * 1.4, 0.7);
+        deform(blob, t, 1.0);
+        deform(blob2, t * 1.4, 0.7);
 
-        blob.position.x = Math.sin(t * 0.6) * 0.5 + mx * 0.4;
-        blob.position.y = Math.cos(t * 0.4) * 0.35 - my * 0.3;
-        blob.rotation.x = t * 0.4;
-        blob.rotation.y = t * 0.55;
+        blob.mesh.position.x = Math.sin(t * 0.6) * 0.5 + mx * 0.4;
+        blob.mesh.position.y = Math.cos(t * 0.4) * 0.35 - my * 0.3;
+        blob.mesh.rotation.x = t * 0.4;
+        blob.mesh.rotation.y = t * 0.55;
 
-        blob2.position.x = 2.2 + Math.sin(t * 0.5 + 1.2) * 0.5;
-        blob2.position.y = -1.4 + Math.cos(t * 0.3 + 0.8) * 0.4;
-        blob2.rotation.x = t * -0.3;
-        blob2.rotation.y = t * 0.4;
+        blob2.mesh.position.x = 2.2 + Math.sin(t * 0.5 + 1.2) * 0.5;
+        blob2.mesh.position.y = -1.4 + Math.cos(t * 0.3 + 0.8) * 0.4;
+        blob2.mesh.rotation.x = t * -0.3;
+        blob2.mesh.rotation.y = t * 0.4;
 
-        renderer.render(scene, camera);
+        renderer.render({ scene, camera, frustumCull: false });
         if (!reduced) rafId = requestAnimationFrame(loop);
       }
 
@@ -224,17 +307,18 @@ export default function Blob() {
       startLoop();
       // Static frame under reduced-motion
       if (reduced) {
-        deform(geom3, baseVerts3, 0, 0.06);
-        deform(geom, baseVerts, 0, 1.0);
-        deform(geom2, baseVerts2, 0, 0.7);
-        renderer.render(scene, camera);
+        deform(blob3, 0, 0.06);
+        deform(blob, 0, 1.0);
+        deform(blob2, 0, 0.7);
+        renderer.render({ scene, camera, frustumCull: false });
       }
 
       // ── Resize ────────────────────────────────────────────────────────────
       const onResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight, false);
+        camera.perspective({ aspect: window.innerWidth / window.innerHeight });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        canvas.style.width = "";
+        canvas.style.height = "";
       };
       window.addEventListener("resize", onResize);
 
@@ -246,13 +330,12 @@ export default function Blob() {
         window.removeEventListener("pointermove", onPointer);
         window.removeEventListener("resize", onResize);
         stopLoop();
-        geom3.dispose();
-        mat3.dispose();
-        geom.dispose();
-        mat.dispose();
-        geom2.dispose();
-        mat2.dispose();
-        renderer.dispose();
+        blob3.geometry.remove();
+        blob3.program.remove();
+        blob.geometry.remove();
+        blob.program.remove();
+        blob2.geometry.remove();
+        blob2.program.remove();
       };
     })();
 
