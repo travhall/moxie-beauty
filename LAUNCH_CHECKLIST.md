@@ -1,5 +1,12 @@
 # Moxie Beauty Studio - Pre-Launch Checklist
 
+> **Status note**: the site has launched with real business information —
+> address, social links, and domain are live in `lib/site-config.ts` and
+> consumed by `app/layout.tsx`'s structured data. The remaining unchecked
+> items below are the genuinely outstanding ones: GPS coordinates, Search
+> Console verification, and the testing/marketing checklists, which are
+> operational tasks rather than code changes.
+
 ## ✅ Completed Items
 
 - [x] Structured data (JSON-LD) for local business SEO
@@ -17,26 +24,22 @@
 ### 1. Content Review & Customization
 
 #### Business Information (layout.tsx)
-- [ ] Update business address in structured data (currently generic "Wisconsin")
-- [ ] Add specific city and street address
+- [x] Update business address in structured data — ✅ Done, see `lib/site-config.ts`
+- [x] Add specific city and street address — ✅ Done, see `lib/site-config.ts`
 - [ ] Add GPS coordinates (latitude/longitude) for map integration
 - [ ] Update business hours if different from defaults (Mon-Fri 9-5)
-- [ ] Add social media URLs to structured data:
-  ```typescript
-  sameAs: [
-    "https://www.facebook.com/moxiebeautystudio",
-    "https://www.instagram.com/moxiebeautystudio",
-  ]
-  ```
-  
+- [x] Add social media URLs to structured data — ✅ Done, see `lib/site-config.ts`'s
+  `social` object and `app/layout.tsx`'s `sameAs` array
+
 #### SEO Verification
 - [ ] Add Google Search Console verification code
 - [ ] Add other search engine verification codes if needed
 - [ ] Update the verification section in `app/layout.tsx`
 
 #### Domain Configuration  
-- [ ] Ensure all URLs reference your actual domain
-- [ ] Update all instances of "https://moxiebeautystudiowi.com" if different
+- [x] Ensure all URLs reference your actual domain — ✅ Done, consistent
+  throughout `lib/site-config.ts` and `app/layout.tsx`
+- [x] Update all instances of "https://moxiebeautystudiowi.com" if different — ✅ Done
 - [ ] Configure domain DNS settings
 - [ ] Set up SSL certificate (should be automatic with Vercel)
 
@@ -168,19 +171,12 @@ Mobile:
 
 ### Immediate Updates in Code
 
-1. **Update Business Address** (app/layout.tsx, line ~90)
-```typescript
-address: {
-  "@type": "PostalAddress",
-  streetAddress: "123 Main Street",      // Add actual address
-  addressLocality: "Your City",          // Add city
-  addressRegion: "WI",                   // State abbreviation
-  postalCode: "12345",                   // Add ZIP
-  addressCountry: "US",
-},
-```
+1. **Business Address** — ✅ already applied; `app/layout.tsx`'s structured
+   data reads `streetAddress`/`addressLocality`/`addressRegion`/`postalCode`
+   from `lib/site-config.ts`'s real address, not a placeholder.
 
-2. **Add GPS Coordinates** (app/layout.tsx, line ~98)
+2. **Add GPS Coordinates** (app/layout.tsx, line ~98) — still open, no `geo`
+   field exists yet in the `BeautySalon` structured data block:
 ```typescript
 geo: {
   "@type": "GeoCoordinates",
@@ -189,14 +185,8 @@ geo: {
 },
 ```
 
-3. **Update Social Media** (app/layout.tsx, line ~111)
-```typescript
-sameAs: [
-  "https://www.facebook.com/your-actual-page",
-  "https://www.instagram.com/your-actual-handle",
-  // Add other social profiles
-],
-```
+3. **Social Media** — ✅ already applied; `app/layout.tsx`'s `sameAs` array
+   consumes the real handles from `lib/site-config.ts`'s `social` object.
 
 ## 📊 Analytics Goals to Track
 
