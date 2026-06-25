@@ -44,14 +44,15 @@ function isValidSignature(
 export async function POST(request: NextRequest) {
   const webhookKey = process.env.SQUARE_WEBHOOK_SIGNATURE_KEY;
 
-  // If no key is configured, log a warning but return 200 so Square stops retrying.
-  // Configure SQUARE_WEBHOOK_SIGNATURE_KEY in Vercel to enable full validation.
   if (!webhookKey) {
-    console.warn(
+    console.error(
       "[square/webhook] SQUARE_WEBHOOK_SIGNATURE_KEY is not set — " +
-      "skipping signature validation. Set this env var to enable secure webhooks."
+      "rejecting request. Configure this env var in Vercel to enable the webhook."
     );
-    return NextResponse.json({ ok: true, warning: "signature validation disabled" });
+    return NextResponse.json(
+      { error: "Webhook not configured" },
+      { status: 500 }
+    );
   }
 
   const rawBody = await request.text();
