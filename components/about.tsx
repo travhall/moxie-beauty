@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Button from "@/components/button";
 import profileImage from "@/public/images/jackie-profile.jpg";
-import lobbyImage from "@/public/images/moxie-lobby.jpg";
-import workImage from "@/public/images/jackie-working.jpg";
+import lobbyImage from "@/public/images/moxie-kiss.jpg";
+import neonImage from "@/public/images/moxie-neon.jpg";
 
 export default function About() {
   return (
@@ -81,7 +81,7 @@ export default function About() {
               }}
             >
               <Image
-                src={workImage}
+                src={neonImage}
                 alt="Jackie working on a brow appointment"
                 fill
                 className="object-cover object-top"
