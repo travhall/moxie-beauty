@@ -19,7 +19,7 @@ import { type NextRequest, NextResponse } from "next/server";
 // ── Signature validation ──────────────────────────────────────────────────────
 // Square signs each request with HMAC-SHA256(key, notificationUrl + body).
 
-function isValidSignature(
+export function isValidSignature(
   rawBody: string,
   signature: string,
   notificationUrl: string,
