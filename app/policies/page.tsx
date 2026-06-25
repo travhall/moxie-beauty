@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Appointments from "@/components/appointments";
+import Breadcrumbs from "@/components/breadcrumbs";
 import { containerClass } from "@/lib/layout";
 
 export const metadata: Metadata = {
@@ -84,56 +85,16 @@ const policies = [
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://moxiebeautystudiowi.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Studio Policies",
-      item: "https://moxiebeautystudiowi.com/policies",
-    },
-  ],
-};
-
 export default function PoliciesPage() {
   const container = containerClass;
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
       <main>
         {/* ── Page hero ─────────────────────────────────────────────────── */}
         <section className="pt-14 pb-16 border-b border-(--line-soft)">
           <div className={container}>
-            <nav aria-label="Breadcrumb" className="mb-10">
-              <ol className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-(--ink-mute)">
-                <li>
-                  <a
-                    href="/"
-                    className="hover:text-(--accent) transition-colors"
-                  >
-                    Moxie
-                  </a>
-                </li>
-                <li aria-hidden="true">
-                  <span className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) mx-1" />
-                </li>
-                <li>
-                  <span aria-current="page">Studio Policies</span>
-                </li>
-              </ol>
-            </nav>
+            <Breadcrumbs page="Studio Policies" href="/policies" />
 
             <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
               <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">

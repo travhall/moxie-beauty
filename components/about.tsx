@@ -61,7 +61,7 @@ export default function About() {
             >
               <Image
                 src={lobbyImage}
-                alt="Moxie Beauty Studio interior"
+                alt="Poster in the Moxie lobby"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 35vw, 22vw"
@@ -82,7 +82,7 @@ export default function About() {
             >
               <Image
                 src={neonImage}
-                alt="Jackie working on a brow appointment"
+                alt="Neon sign at Moxie that reads 'You're like really pretty'"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 1024px) 30vw, 18vw"
