@@ -15,6 +15,12 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
+import { siteConfig } from "@/lib/site-config";
+
+// Square signs against the exact notification URL configured in the
+// Developer Console, not whatever the request happens to report — use the
+// same fixed value here instead of trusting request.url.
+const NOTIFICATION_URL = `${siteConfig.url}/api/square/webhook`;
 
 // ── Signature validation ──────────────────────────────────────────────────────
 // Square signs each request with HMAC-SHA256(key, notificationUrl + body).
@@ -62,7 +68,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Missing signature header" }, { status: 401 });
   }
 
-  if (!isValidSignature(rawBody, signature, request.url, webhookKey)) {
+  if (!isValidSignature(rawBody, signature, NOTIFICATION_URL, webhookKey)) {
     console.warn("[square/webhook] Invalid signature — request rejected");
     return NextResponse.json({ error: "Invalid signature" }, { status: 403 });
   }
