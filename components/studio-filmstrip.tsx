@@ -3,20 +3,27 @@
 import { useCallback, useState } from "react";
 import Image from "next/image";
 
-const IMAGES = [
-  { src: "/images/moxie-about-lobby.jpg", alt: "The Moxie studio lobby" },
-  { src: "/images/moxie-home-room-two.jpg", alt: "A Moxie treatment room" },
-  { src: "/images/moxie-about-room-one.jpg", alt: "The Moxie studio" },
-  {
-    src: "/images/moxie-about-posters.jpg",
-    alt: "Artwork inside Moxie Beauty Studio",
-  },
-  { src: "/images/rooms.jpg", alt: "The Moxie studio interior" },
-];
+export interface FilmstripImage {
+  src: string;
+  alt: string;
+  /** Intrinsic pixel width of the source file — used to compute aspect ratio. */
+  width: number;
+  /** Intrinsic pixel height of the source file — used to compute aspect ratio. */
+  height: number;
+}
+
+export interface StudioFilmstripProps {
+  images: FilmstripImage[];
+  /** Accessible name for the scrollable region. */
+  ariaLabel?: string;
+}
 
 const EDGE_THRESHOLD = 4;
 
-export default function StudioFilmstrip() {
+export default function StudioFilmstrip({
+  images,
+  ariaLabel = "Photo gallery",
+}: StudioFilmstripProps) {
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
 
@@ -49,12 +56,12 @@ export default function StudioFilmstrip() {
         ref={containerRef}
         onScroll={(e) => updateEdges(e.currentTarget)}
         role="region"
-        aria-label="Studio photo gallery"
+        aria-label={ariaLabel}
         tabIndex={0}
         className="flex gap-4 overflow-x-auto snap-x snap-mandatory pt-2 pb-10 pr-10 -mx-1 px-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent)"
         style={{ WebkitMaskImage: maskImage, maskImage }}
       >
-        {IMAGES.map(({ src, alt }) => (
+        {images.map(({ src, alt }) => (
           <div
             key={src}
             className="relative shrink-0 w-64 sm:w-80 h-80 sm:h-96 snap-start overflow-hidden rounded-2xl border border-b-8 border-(--accent) shadow-xl"
