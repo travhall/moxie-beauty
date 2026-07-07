@@ -30,6 +30,11 @@ export const siteConfig = {
     /** Short form used in tight spaces (mobile drawer, etc.) */
     short: "402 S Front Street, Rochester WI",
     mapsHref: "https://maps.google.com/?q=402+S+Front+St+Rochester+WI+53167",
+    /** Decimal degrees — used in structured data and the contact-page map. */
+    geo: {
+      lat: 42.7402,
+      lng: -88.2229,
+    },
   },
 
   /**
