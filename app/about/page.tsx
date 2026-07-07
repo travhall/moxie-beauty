@@ -321,7 +321,16 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <StudioFilmstrip />
+          <StudioFilmstrip
+            ariaLabel="Studio photo gallery"
+            images={[
+              { src: "/images/moxie-about-lobby.jpg", alt: "The Moxie studio lobby", width: 800, height: 800 },
+              { src: "/images/moxie-home-room-two.jpg", alt: "A Moxie treatment room", width: 600, height: 800 },
+              { src: "/images/moxie-about-room-one.jpg", alt: "The Moxie studio", width: 800, height: 800 },
+              { src: "/images/moxie-about-posters.jpg", alt: "Artwork inside Moxie Beauty Studio", width: 800, height: 800 },
+              { src: "/images/rooms.jpg", alt: "The Moxie studio interior", width: 600, height: 800 },
+            ]}
+          />
         </section>
 
         {/* ── Booking CTA ───────────────────────────────────────────────── */}
