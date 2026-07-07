@@ -18,7 +18,7 @@ Measured against the production build (dev scores shown — all metrics 100):
 
 ## Tech Stack
 
-- **Framework**: Next.js 16.2.6 — App Router, React Server Components
+- **Framework**: Next.js 16.2.9 — App Router, React Server Components
 - **Language**: TypeScript 6
 - **Styling**: Tailwind CSS v4 — OKLCH color space, CSS custom properties
 - **3D / WebGL**: Three.js + simplex-noise — ambient blob background
@@ -80,7 +80,24 @@ pnpm build
 pnpm start
 ```
 
-No environment variables required for the public site. Square booking uses a public-facing appointments URL configured in `lib/site-config.ts`.
+The public marketing pages need no environment variables — the Square
+booking flow uses a public-facing appointments URL configured in
+`lib/site-config.ts`. The Square **webhook** endpoint
+(`app/api/square/webhook/route.ts`) does require configuration in
+production; see `.env.example` for the full list. It fails closed
+(rejects requests) if `SQUARE_WEBHOOK_SIGNATURE_KEY` is unset, so set
+these in your Vercel project's Environment Variables before relying on
+webhook-driven behavior:
+
+| Variable | Used by |
+|---|---|
+| `SQUARE_ENVIRONMENT` | `lib/square.ts` — `"sandbox"` or `"production"` |
+| `SQUARE_ACCESS_TOKEN` | `lib/square.ts` — Square API client |
+| `SQUARE_LOCATION_ID` | `lib/square.ts` |
+| `SQUARE_WEBHOOK_SIGNATURE_KEY` | `app/api/square/webhook/route.ts` — required, fails closed if unset |
+| `NEXT_PUBLIC_SQUARE_APP_ID` | client-side Square SDK config |
+| `NEXT_PUBLIC_SQUARE_LOCATION_ID` | client-side Square SDK config |
+| `NEXT_PUBLIC_GOOGLE_MAPS_KEY` | optional — `components/map.tsx`, see `docs/google-maps-setup.md` |
 
 ## Design System
 
