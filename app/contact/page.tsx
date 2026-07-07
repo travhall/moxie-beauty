@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
 import MarqueeTicker from "@/components/marquee-ticker";
+import Map from "@/components/map";
 import { siteConfig } from "@/lib/site-config";
 import { containerClass } from "@/lib/layout";
 import DiagArrow from "@/components/icons/DiagArrow";
@@ -50,6 +51,53 @@ const PlusIcon = () => (
     />
   </svg>
 );
+
+function MapPlaceholder() {
+  return (
+    <a
+      href={siteConfig.address.mapsHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative flex items-center justify-center rounded-3xl overflow-hidden border border-b-8 border-(--line) h-80 lg:h-110 bg-(--bg-soft)"
+      aria-label="Open map for Moxie Beauty Studio (opens in new tab)"
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(0deg, var(--line-soft) 0, var(--line-soft) 1px, transparent 1px, transparent 48px), repeating-linear-gradient(90deg, var(--line-soft) 0, var(--line-soft) 1px, transparent 1px, transparent 48px)",
+      }}
+    >
+      <span
+        aria-hidden="true"
+        className="absolute top-4 left-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium"
+      >
+        42.74° N · Lat
+      </span>
+      <span
+        aria-hidden="true"
+        className="absolute top-4 right-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium"
+      >
+        88.22° W · Long
+      </span>
+      <span
+        aria-hidden="true"
+        className="absolute bottom-4 left-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium"
+      >
+        N ↑
+      </span>
+      <span
+        aria-hidden="true"
+        className="absolute bottom-4 right-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium group-hover:text-(--accent) transition-colors"
+      >
+        Get directions ↗
+      </span>
+      <div className="flex flex-col items-center gap-2">
+        <div className="w-5 h-5 rounded-full bg-(--accent) shadow-[0_0_0_6px_color-mix(in_oklab,var(--accent)_20%,transparent)] animate-pulse" />
+        <span className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase text-(--foreground) bg-(--background) px-3 py-1 rounded-full border border-(--line-soft)">
+          Moxie · 402 S Front St
+        </span>
+      </div>
+    </a>
+  );
+}
 
 /* ── FAQ data ───────────────────────────────────────────────────────────── */
 const faqItems = [
@@ -147,51 +195,20 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ── Map placeholder ───────────────────────────────────────────── */}
+        {/* ── Map ───────────────────────────────────────────────────────── */}
         <section className="py-8">
           <div className={container}>
-            <a
-              href={siteConfig.address.mapsHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative flex items-center justify-center rounded-3xl overflow-hidden border border-b-8 border-(--line) h-80 lg:h-110 bg-(--bg-soft)"
-              aria-label="Open map for Moxie Beauty Studio (opens in new tab)"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(0deg, var(--line-soft) 0, var(--line-soft) 1px, transparent 1px, transparent 48px), repeating-linear-gradient(90deg, var(--line-soft) 0, var(--line-soft) 1px, transparent 1px, transparent 48px)",
-              }}
-            >
-              <span
-                aria-hidden="true"
-                className="absolute top-4 left-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium"
-              >
-                42.74° N · Lat
-              </span>
-              <span
-                aria-hidden="true"
-                className="absolute top-4 right-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium"
-              >
-                88.22° W · Long
-              </span>
-              <span
-                aria-hidden="true"
-                className="absolute bottom-4 left-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium"
-              >
-                N ↑
-              </span>
-              <span
-                aria-hidden="true"
-                className="absolute bottom-4 right-5 text-[10px] tracking-[0.2em] uppercase text-(--ink-mute) font-medium group-hover:text-(--accent) transition-colors"
-              >
-                Get directions ↗
-              </span>
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-5 h-5 rounded-full bg-(--accent) shadow-[0_0_0_6px_color-mix(in_oklab,var(--accent)_20%,transparent)] animate-pulse" />
-                <span className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase text-(--foreground) bg-(--background) px-3 py-1 rounded-full border border-(--line-soft)">
-                  Moxie · 402 S Front St
-                </span>
-              </div>
-            </a>
+            {process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ? (
+              <Map
+                apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
+                lat={42.7402}
+                lng={-88.2229}
+                label={`${siteConfig.name} · ${siteConfig.address.street}`}
+                fallback={<MapPlaceholder />}
+              />
+            ) : (
+              <MapPlaceholder />
+            )}
           </div>
         </section>
 
