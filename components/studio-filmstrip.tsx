@@ -7,7 +7,10 @@ const IMAGES = [
   { src: "/images/moxie-about-lobby.jpg", alt: "The Moxie studio lobby" },
   { src: "/images/moxie-home-room-two.jpg", alt: "A Moxie treatment room" },
   { src: "/images/moxie-about-room-one.jpg", alt: "The Moxie studio" },
-  { src: "/images/moxie-about-posters.jpg", alt: "Artwork inside Moxie Beauty Studio" },
+  {
+    src: "/images/moxie-about-posters.jpg",
+    alt: "Artwork inside Moxie Beauty Studio",
+  },
   { src: "/images/rooms.jpg", alt: "The Moxie studio interior" },
 ];
 
@@ -27,7 +30,7 @@ export default function StudioFilmstrip() {
     (el: HTMLDivElement | null) => {
       if (el) updateEdges(el);
     },
-    [updateEdges]
+    [updateEdges],
   );
 
   // Fade edges only once there's actually more content to reveal in that
@@ -41,14 +44,14 @@ export default function StudioFilmstrip() {
   const maskImage = `linear-gradient(to right, ${stops.join(", ")})`;
 
   return (
-    <div className="ml-[max(2.5rem,calc((100vw-1340px)/2+2.5rem))] max-[720px]:ml-[1.375rem]">
+    <div className="ml-[max(2.5rem,calc((100vw-1340px)/2+2.5rem))] max-[720px]:ml-5.5">
       <div
         ref={containerRef}
         onScroll={(e) => updateEdges(e.currentTarget)}
         role="region"
         aria-label="Studio photo gallery"
         tabIndex={0}
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pt-2 pb-10 pr-10 -mx-1 px-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent)"
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pt-2 pb-10 pr-10 -mx-1 px-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent)"
         style={{ WebkitMaskImage: maskImage, maskImage }}
       >
         {IMAGES.map(({ src, alt }) => (

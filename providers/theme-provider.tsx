@@ -13,13 +13,17 @@ const ThemeContext = createContext<{
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  // Lazy-initialized from the DOM: a blocking inline script in <head> already
+  // applies the "dark" class before hydration, so this reads the real value
+  // instead of defaulting to "light" and correcting itself in an effect.
+  const [theme, setTheme] = useState<Theme>(() =>
+    typeof document !== "undefined" &&
+    document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light",
+  );
 
   useEffect(() => {
-    // Read initial theme
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
-
     // Listen for system preference changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {

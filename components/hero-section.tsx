@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import HeroImg from "@/public/images/hero-img.jpg";
 import Button from "@/components/button";
 import { useBooking } from "@/context/BookingContext";
@@ -74,23 +73,23 @@ export default function HeroSection() {
                 <p className="text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) font-medium mb-1">
                   Call
                 </p>
-                <Link
+                <a
                   href={siteConfig.contact.phoneHref}
                   className="font-nyght text-[19px] text-(--foreground) no-underline hover:text-(--accent) transition-colors rounded-full"
                 >
                   {siteConfig.contact.phone}
-                </Link>
+                </a>
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) font-medium mb-1">
                   Email
                 </p>
-                <Link
+                <a
                   href={siteConfig.contact.emailHref}
                   className="font-nyght text-[19px] text-(--foreground) no-underline hover:text-(--accent) transition-colors rounded-full"
                 >
                   {siteConfig.contact.email}
-                </Link>
+                </a>
               </div>
             </div>
           </div>

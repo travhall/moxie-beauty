@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import Button from "./button";
@@ -48,18 +48,27 @@ export default function Navigation() {
   const isNavActive = (item: NavItem) => pathname.startsWith(item.href);
 
   // Close drawer when navigation commits — so the drawer closes to reveal the
-  // incoming page rather than the outgoing one
-  useEffect(() => {
+  // incoming page rather than the outgoing one. Adjusted during render (the
+  // React-endorsed pattern for "reset state when a value changes") by comparing
+  // against the previous pathname held in state, which avoids calling setState
+  // synchronously inside an effect and the resulting cascading renders.
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setMenuOpen(false);
-  }, [pathname]);
+  }
 
   // Transparent-at-top effect: fade in background + shadow on scroll
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
-    onScroll(); // sync immediately on mount
+    // Sync initial state without calling setState synchronously in the effect body
+    const raf = requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   // ── Gooey desktop nav blob ─────────────────────────────────────────────────
@@ -340,7 +349,7 @@ export default function Navigation() {
                   className={`block w-4.5 h-[1.5px] rounded-sm bg-(--foreground) transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`}
                 />
                 <span
-                  className={`block w-4.5 h-[1.5px] rounded-sm bg-(--foreground) origin-center transition-transform duration-350 ${menuOpen ? "-translate-y-[6.5px] -rotate-45" : ""}`}
+                  className={`block w-4.5 h-[1.5px] rounded-sm bg-(--foreground) origin-center transition-transform duration-350 ${menuOpen ? "translate-y-[-6.5px] -rotate-45" : ""}`}
                 />
               </button>
             </div>

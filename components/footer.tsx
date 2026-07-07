@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Logo from "./logo";
 import FooterThemeIsland from "./footer-theme-island";
 import { siteConfig } from "@/lib/site-config";

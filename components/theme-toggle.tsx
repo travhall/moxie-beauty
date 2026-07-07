@@ -1,7 +1,18 @@
 "use client";
 
 import { useTheme } from "@/providers/theme-provider";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
+
+// SSR-safe "has this mounted on the client yet" flag — avoids a setState
+// call inside a useEffect body just to force a post-hydration re-render.
+const noopSubscribe = () => () => {};
+function useMounted() {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
+}
 
 // ── Inline icons ─────────────────────────────────────────────────────────────
 // Kept as local components so we don't pull in a full icon library for two glyphs.
@@ -69,14 +80,10 @@ function SparkleIcon({ className }: { className?: string }) {
 
 export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const [squishing, setSquishing] = useState(false);
   // Prevent stacked clicks from re-triggering during animation
   const animating = useRef(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const toggle = () => {
     if (animating.current) return;

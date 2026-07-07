@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Mulish } from "next/font/google";
 import localFont from "next/font/local";
+import { ViewTransitions } from "next-view-transitions";
 import "./globals.css";
 import { ThemeProvider } from "../providers/theme-provider";
 import { BookingProvider } from "@/context/BookingContext";
@@ -129,12 +130,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+    <ViewTransitions>
+      <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+        <head>
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
               try {
                 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                   document.documentElement.classList.add('dark')
@@ -143,131 +145,132 @@ export default function RootLayout({
                 }
               } catch {}
             `,
-          }}
-        />
-        {/* Structured Data for Local Business */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BeautySalon",
-              name: siteConfig.name,
-              image: `${siteConfig.url}/images/hero-img.jpg`,
-              "@id": siteConfig.url,
-              url: siteConfig.url,
-              telephone: siteConfig.contact.phone,
-              email: siteConfig.contact.email,
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: siteConfig.address.street,
-                addressLocality: siteConfig.address.city,
-                addressRegion: siteConfig.address.state,
-                postalCode: siteConfig.address.zip,
-                addressCountry: siteConfig.address.country,
-              },
-              priceRange: "$$",
-              openingHoursSpecification: [
-                {
-                  "@type": "OpeningHoursSpecification",
-                  dayOfWeek: [
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                  ],
-                  opens: "10:00",
-                  closes: "19:00",
+            }}
+          />
+          {/* Structured Data for Local Business */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BeautySalon",
+                name: siteConfig.name,
+                image: `${siteConfig.url}/images/hero-img.jpg`,
+                "@id": siteConfig.url,
+                url: siteConfig.url,
+                telephone: siteConfig.contact.phone,
+                email: siteConfig.contact.email,
+                address: {
+                  "@type": "PostalAddress",
+                  streetAddress: siteConfig.address.street,
+                  addressLocality: siteConfig.address.city,
+                  addressRegion: siteConfig.address.state,
+                  postalCode: siteConfig.address.zip,
+                  addressCountry: siteConfig.address.country,
                 },
-              ],
-              sameAs: [
-                siteConfig.social.instagram.href,
-                siteConfig.social.facebook.href,
-                siteConfig.social.tiktok.href,
-              ],
-              hasOfferingCatalog: {
-                "@type": "OfferingCatalog",
-                name: "Beauty Services",
-                itemListElement: [
+                priceRange: "$$",
+                openingHoursSpecification: [
                   {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Signature Lash Extensions",
-                      description:
-                        "Fully customized hand-applied lash extensions tailored to your eye shape and lifestyle",
-                    },
-                  },
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Volume Lash Extensions",
-                      description:
-                        "Hand-crafted fans of ultra-fine extensions for soft, even density",
-                    },
-                  },
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Lash Lift & Tint",
-                      description:
-                        "Natural lash curl and tint for a low-maintenance, mascara-free look",
-                    },
-                  },
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Microblading",
-                      description:
-                        "Semi-permanent brow enhancement with natural hair-like strokes, lasting 12–18 months",
-                    },
-                  },
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Brow Lamination & Tint",
-                      description:
-                        "Fluffy, brushed-up brows with tint for definition lasting 6–8 weeks",
-                    },
+                    "@type": "OpeningHoursSpecification",
+                    dayOfWeek: [
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday",
+                    ],
+                    opens: "10:00",
+                    closes: "19:00",
                   },
                 ],
-              },
-            }),
-          }}
-        />
-      </head>
-      <body
-        className={`${mulish.variable} ${nyghtLight.variable} ${nyghtLightItalic.variable} ${nyghtDark.variable} ${nyghtDarkItalic.variable} antialiased relative`}
-        id="top"
-      >
-        {/* Skip-to-content — first focusable element on every page (WCAG 2.4.1) */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-99999 focus:px-5 focus:py-2.5 focus:rounded-full focus:bg-(--background) focus:text-(--foreground) focus:border focus:border-(--accent) focus:text-sm focus:font-medium focus:shadow-md focus:outline-2 focus:outline-(--accent)"
+                sameAs: [
+                  siteConfig.social.instagram.href,
+                  siteConfig.social.facebook.href,
+                  siteConfig.social.tiktok.href,
+                ],
+                hasOfferingCatalog: {
+                  "@type": "OfferingCatalog",
+                  name: "Beauty Services",
+                  itemListElement: [
+                    {
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: "Signature Lash Extensions",
+                        description:
+                          "Fully customized hand-applied lash extensions tailored to your eye shape and lifestyle",
+                      },
+                    },
+                    {
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: "Volume Lash Extensions",
+                        description:
+                          "Hand-crafted fans of ultra-fine extensions for soft, even density",
+                      },
+                    },
+                    {
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: "Lash Lift & Tint",
+                        description:
+                          "Natural lash curl and tint for a low-maintenance, mascara-free look",
+                      },
+                    },
+                    {
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: "Microblading",
+                        description:
+                          "Semi-permanent brow enhancement with natural hair-like strokes, lasting 12–18 months",
+                      },
+                    },
+                    {
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: "Brow Lamination & Tint",
+                        description:
+                          "Fluffy, brushed-up brows with tint for definition lasting 6–8 weeks",
+                      },
+                    },
+                  ],
+                },
+              }),
+            }}
+          />
+        </head>
+        <body
+          className={`${mulish.variable} ${nyghtLight.variable} ${nyghtLightItalic.variable} ${nyghtDark.variable} ${nyghtDarkItalic.variable} antialiased relative`}
+          id="top"
         >
-          Skip to content
-        </a>
+          {/* Skip-to-content — first focusable element on every page (WCAG 2.4.1) */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-99999 focus:px-5 focus:py-2.5 focus:rounded-full focus:bg-(--background) focus:text-(--foreground) focus:border focus:border-(--accent) focus:text-sm focus:font-medium focus:shadow-md focus:outline-2 focus:outline-(--accent)"
+          >
+            Skip to content
+          </a>
 
-        <Blob />
-        <div className="site-container">
-          <ThemeProvider>
-            <BookingProvider>
-              <Navigation />
-              {/* Skip-link target — tabIndex={-1} allows programmatic focus */}
-              <div id="main-content" tabIndex={-1} className="outline-none">
-                {children}
-              </div>
-              <Analytics />
-              <Footer />
-            </BookingProvider>
-          </ThemeProvider>
-        </div>
-      </body>
-    </html>
+          <Blob />
+          <div className="site-container">
+            <ThemeProvider>
+              <BookingProvider>
+                <Navigation />
+                {/* Skip-link target — tabIndex={-1} allows programmatic focus */}
+                <div id="main-content" tabIndex={-1} className="outline-none">
+                  {children}
+                </div>
+                <Analytics />
+                <Footer />
+              </BookingProvider>
+            </ThemeProvider>
+          </div>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

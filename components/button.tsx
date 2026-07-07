@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "next-view-transitions";
 
 export type ButtonVariant = "default" | "outline" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -105,6 +106,22 @@ export const Button = React.forwardRef<
     );
 
     if (href) {
+      // Internal routes go through next-view-transitions' Link so navigating
+      // between pages picks up the site-wide fade; external/tel/mailto links
+      // stay plain anchors.
+      if (href.startsWith("/")) {
+        return (
+          <Link
+            href={href}
+            className={cls}
+            aria-label={ariaLabel}
+            {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+          >
+            {content}
+          </Link>
+        );
+      }
+
       return (
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}

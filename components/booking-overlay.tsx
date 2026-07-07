@@ -35,18 +35,29 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
 
   // ── Mount / unmount with animation ────────────────────────────────────────
-  useEffect(() => {
+  // Reset transient state as soon as `isOpen` changes, during render rather
+  // than in an effect (React's "adjusting state when a prop changes"
+  // pattern) — avoids an extra setState-in-effect render cascade.
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
     if (isOpen) {
       setIsLoading(true);
       setHasError(false);
       setShouldRender(true);
+    } else if (shouldRender) {
+      setIsVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
       // Defer visibility so CSS transition fires after DOM insertion
       const t = requestAnimationFrame(() => setIsVisible(true));
       return () => cancelAnimationFrame(t);
     } else if (shouldRender) {
-      setIsVisible(false);
       const t = setTimeout(() => setShouldRender(false), 350);
       return () => clearTimeout(t);
     }
