@@ -168,6 +168,11 @@ export default function RootLayout({
                   postalCode: siteConfig.address.zip,
                   addressCountry: siteConfig.address.country,
                 },
+                geo: {
+                  "@type": "GeoCoordinates",
+                  latitude: siteConfig.address.geo.lat,
+                  longitude: siteConfig.address.geo.lng,
+                },
                 priceRange: "$$",
                 openingHoursSpecification: [
                   {
