@@ -1,12 +1,20 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV !== "production";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://maps.googleapis.com",
+  // eval() is required by Next.js/Turbopack in dev mode (HMR, stack-trace
+  // reconstruction) but never used in production builds — only relax
+  // script-src for it locally. Vercel Analytics' debug script is likewise
+  // dev-only: in production it's served same-origin via the /_vercel/
+  // insights/ rewrite, but in dev it loads directly from
+  // va.vercel-scripts.com.
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""} https://maps.googleapis.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://*.googleusercontent.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://maps.googleapis.com",
+  `connect-src 'self' https://maps.googleapis.com${isDev ? " https://va.vercel-scripts.com" : ""}`,
   "frame-src https://book.squareup.com",
   "object-src 'none'",
   "base-uri 'self'",
