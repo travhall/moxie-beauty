@@ -1,9 +1,8 @@
 // components/about.tsx
 import Image from "next/image";
 import Button from "@/components/button";
-import profileImage from "@/public/images/jackie-profile.jpg";
-import lobbyImage from "@/public/images/moxie-kiss.jpg";
-import neonImage from "@/public/images/moxie-neon.jpg";
+import homeImageOne from "@/public/images/jackie-profile.jpg";
+import homeImageTwo from "@/public/images/moxie-home-room-two.jpg";
 
 export default function About() {
   return (
@@ -15,78 +14,60 @@ export default function About() {
     >
       <div className="max-w-335 mx-auto px-10 max-[720px]:px-5.5">
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 xl:gap-24 items-center">
-          {/* ── Gallery mosaic ─────────────────────────────────────────── */}
+          {/* ── Offset duo ─────────────────────────────────────────────── */}
           <div
             aria-hidden="true"
+            className="relative"
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.1fr",
-              gridTemplateRows: "1fr 1fr",
-              gap: "14px",
-              aspectRatio: "5 / 6",
-              width: "100%",
+              aspectRatio: "4 / 5",
+              width: "82%",
+              marginBottom: "12%",
+              marginRight: "12%",
             }}
           >
-            {/* gal-a: Jackie portrait — arched top-left corner */}
+            {/* Large image — studio interior, arched top-left corner */}
             <div
+              className="absolute inset-0 overflow-hidden"
               style={{
-                gridArea: "1 / 1",
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "120px 14px 14px 14px",
-                border: "1px solid var(--accent)",
-                borderLeftWidth: "8px",
+                borderRadius: "140px 16px 16px 16px",
+                borderStyle: "solid",
+                borderColor: "var(--accent)",
+                borderWidth: "1px 1px 1px 8px",
               }}
             >
               <Image
-                src={profileImage}
+                src={homeImageTwo}
+                alt="Interior of Moxie Beauty Studio treatment rooms"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 50vw, 25vw"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+
+            {/* Small inset image — Jackie portrait, tucked over bottom-right corner */}
+            <div
+              className="absolute overflow-hidden shadow-xl"
+              style={{
+                right: "-12%",
+                bottom: "-12%",
+                width: "48%",
+                aspectRatio: "4 / 5",
+                borderRadius: "16px",
+                borderStyle: "solid",
+                borderColor: "var(--accent)",
+                borderWidth: "1px 1px 8px 1px",
+              }}
+            >
+              <Image
+                src={homeImageOne}
                 alt="Jackie Schult, founder of Moxie Beauty Studio"
                 fill
                 className="object-cover object-top"
-                sizes="(max-width: 1024px) 30vw, 18vw"
+                sizes="(max-width: 1024px) 27vw, 14vw"
                 loading="lazy"
-              />
-            </div>
-
-            {/* gal-b: Studio interior — tall right tile, arched bottom-right corner */}
-            <div
-              style={{
-                gridArea: "1 / 2 / 3 / 3",
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "14px 14px 220px 14px",
-                border: "1px solid var(--accent)",
-                borderRightWidth: "8px",
-              }}
-            >
-              <Image
-                src={lobbyImage}
-                alt="Poster in the Moxie lobby"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 35vw, 22vw"
-                loading="lazy"
-              />
-            </div>
-
-            {/* gal-c: Jackie at work — arched bottom-left corner */}
-            <div
-              style={{
-                gridArea: "2 / 1",
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "14px 14px 14px 120px",
-                border: "1px solid var(--accent)",
-                borderLeftWidth: "8px",
-              }}
-            >
-              <Image
-                src={neonImage}
-                alt="Neon sign at Moxie that reads 'You're like really pretty'"
-                fill
-                className="object-cover object-top"
-                sizes="(max-width: 1024px) 30vw, 18vw"
-                loading="lazy"
+                unoptimized
               />
             </div>
           </div>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
 import MarqueeTicker from "@/components/marquee-ticker";
+import StudioFilmstrip from "@/components/studio-filmstrip";
 import { containerClass } from "@/lib/layout";
 
 export const metadata: Metadata = {
@@ -318,40 +319,9 @@ export default function AboutPage() {
                 love.
               </p>
             </div>
-
-            {/* Mosaic grid */}
-            <div className="grid grid-cols-6 grid-rows-[280px_180px] gap-3 rounded-3xl">
-              {/* Tile 1: lobby photo — wide */}
-              <div className="col-span-6 sm:col-span-3 row-span-2 relative overflow-hidden rounded-sm rounded-l-2xl border border-l-8 border-(--accent) shadow-xl">
-                <Image
-                  src="/images/moxie-lobby.jpg"
-                  alt="The Moxie studio"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Tile 2: placeholder — top right */}
-              <div
-                aria-hidden="true"
-                className="col-span-6 sm:col-span-3 row-span-1 bg-(--bg-soft) border flex items-end p-5 relative overflow-hidden rounded-sm rounded-tr-2xl border-r-8 border-(--accent) shadow-xl"
-              >
-                <span className="font-nyght-bold text-[9px] tracking-[0.25em] uppercase text-(--ink-mute)">
-                  [ Studio · service chair detail ]
-                </span>
-              </div>
-
-              {/* Tile 3: placeholder — bottom right */}
-              <div
-                aria-hidden="true"
-                className="col-span-6 sm:col-span-3 row-span-1 bg-(--bg-soft) border flex items-end p-5 relative overflow-hidden rounded-sm rounded-br-2xl border-r-8 border-(--accent) shadow-xl"
-              >
-                <span className="font-nyght-bold text-[9px] tracking-[0.25em] uppercase text-(--ink-mute)">
-                  [ Botanical · north window ]
-                </span>
-              </div>
-            </div>
           </div>
+
+          <StudioFilmstrip />
         </section>
 
         {/* ── Booking CTA ───────────────────────────────────────────────── */}

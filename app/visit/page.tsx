@@ -123,8 +123,8 @@ export default function VisitPage() {
                 style={{ borderRadius: "16px 48px 16px 48px" }}
               >
                 <Image
-                  src="/images/appt-img4.jpg"
-                  alt="Booking your appointment"
+                  src="/images/moxie-visit-flowers.jpg"
+                  alt="Preparing for your appointment"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
@@ -159,11 +159,11 @@ export default function VisitPage() {
                 style={{ borderRadius: "48px 16px 48px 16px" }}
               >
                 <Image
-                  src="/images/appt-img2.jpg"
-                  alt="Preparing for your appointment"
+                  src="/images/moxie-visit-neon.jpg"
+                  alt="Interior of Moxie Beauty Studio, with a Vermeer print on the wall"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
               </div>
             </div>
@@ -298,11 +298,11 @@ export default function VisitPage() {
                 style={{ borderRadius: "16px 48px 16px 48px" }}
               >
                 <Image
-                  src="/images/appt-img.jpg"
+                  src="/images/moxie-visit-vermeer.jpg"
                   alt="During your appointment"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
               </div>
             </div>
@@ -341,11 +341,11 @@ export default function VisitPage() {
                 style={{ borderRadius: "16px 48px 16px 48px" }}
               >
                 <Image
-                  src="/images/appt-img3.jpg"
+                  src="/images/moxie-visit-plot.jpg"
                   alt="Aftercare instructions"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
               </div>
             </div>
@@ -361,7 +361,9 @@ export default function VisitPage() {
               </p>
               <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance text-(--background) mb-3">
                 402 S Front{" "}
-                <em className="font-nyght-italic text-(--accent-soft)">Street,</em>{" "}
+                <em className="font-nyght-italic text-(--accent-soft)">
+                  Street,
+                </em>{" "}
                 Rochester.
               </h2>
             </div>

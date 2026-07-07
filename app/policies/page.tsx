@@ -172,7 +172,7 @@ export default function PoliciesPage() {
               <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
                 A note from Jackie
               </p>
-              <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-6">
+              <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-6 text-balance">
                 Creating beautiful results is rewarding. Building relationships
                 with the people who trust me is what makes me truly{" "}
                 <em className="font-nyght-italic text-(--accent)">love</em> what
