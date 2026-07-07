@@ -61,18 +61,18 @@ export default function StudioFilmstrip({
         className="flex gap-4 overflow-x-auto snap-x snap-mandatory pt-2 pb-10 pr-10 -mx-1 px-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent)"
         style={{ WebkitMaskImage: maskImage, maskImage }}
       >
-        {images.map(({ src, alt }) => (
+        {images.map(({ src, alt, width, height }) => (
           <div
             key={src}
-            className="relative shrink-0 w-64 sm:w-80 h-80 sm:h-96 snap-start overflow-hidden rounded-2xl border border-b-8 border-(--accent) shadow-xl"
+            className="relative shrink-0 h-80 sm:h-96 min-w-[16rem] sm:min-w-[20rem] max-w-[26rem] sm:max-w-[30rem] snap-start overflow-hidden rounded-2xl border border-b-8 border-(--accent) shadow-xl"
+            style={{ aspectRatio: `${width} / ${height}` }}
           >
             <Image
               src={src}
               alt={alt}
               fill
               className="object-cover object-center"
-              sizes="(max-width: 640px) 256px, 320px"
-              unoptimized
+              sizes="(max-width: 640px) 416px, 480px"
             />
           </div>
         ))}
