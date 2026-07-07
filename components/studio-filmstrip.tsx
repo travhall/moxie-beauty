@@ -20,6 +20,17 @@ export interface StudioFilmstripProps {
 
 const EDGE_THRESHOLD = 4;
 
+export function computeScrollEdges(
+  scrollLeft: number,
+  scrollWidth: number,
+  clientWidth: number,
+): { atStart: boolean; atEnd: boolean } {
+  return {
+    atStart: scrollLeft <= EDGE_THRESHOLD,
+    atEnd: scrollLeft + clientWidth >= scrollWidth - EDGE_THRESHOLD,
+  };
+}
+
 export default function StudioFilmstrip({
   images,
   ariaLabel = "Photo gallery",
@@ -30,8 +41,9 @@ export default function StudioFilmstrip({
 
   const updateEdges = useCallback((el: HTMLDivElement) => {
     const { scrollLeft, scrollWidth, clientWidth } = el;
-    setAtStart(scrollLeft <= EDGE_THRESHOLD);
-    setAtEnd(scrollLeft + clientWidth >= scrollWidth - EDGE_THRESHOLD);
+    const { atStart, atEnd } = computeScrollEdges(scrollLeft, scrollWidth, clientWidth);
+    setAtStart(atStart);
+    setAtEnd(atEnd);
   }, []);
 
   const handleScroll = useCallback(
