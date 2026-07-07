@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 
 export interface FilmstripImage {
@@ -26,12 +26,25 @@ export default function StudioFilmstrip({
 }: StudioFilmstripProps) {
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const rafRef = useRef<number | null>(null);
 
   const updateEdges = useCallback((el: HTMLDivElement) => {
     const { scrollLeft, scrollWidth, clientWidth } = el;
     setAtStart(scrollLeft <= EDGE_THRESHOLD);
     setAtEnd(scrollLeft + clientWidth >= scrollWidth - EDGE_THRESHOLD);
   }, []);
+
+  const handleScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const el = e.currentTarget;
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        updateEdges(el);
+      });
+    },
+    [updateEdges],
+  );
 
   const containerRef = useCallback(
     (el: HTMLDivElement | null) => {
@@ -54,7 +67,7 @@ export default function StudioFilmstrip({
     <div className="ml-[max(2.5rem,calc((100vw-1340px)/2+2.5rem))] max-[720px]:ml-5.5">
       <div
         ref={containerRef}
-        onScroll={(e) => updateEdges(e.currentTarget)}
+        onScroll={handleScroll}
         role="region"
         aria-label={ariaLabel}
         tabIndex={0}
