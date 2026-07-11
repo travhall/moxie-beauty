@@ -133,7 +133,7 @@
 }
 
 .dark .blob-canvas {
-  filter: blur(100px) saturate(1.05);
+  filter: blur(72px) saturate(1.05);
   opacity: 0.22;
 }
 
@@ -433,8 +433,12 @@ details.faq-item[open] .faq-chev {
    * Chrome's FCP heuristic (and Lighthouse), since fully transparent content
    * isn't counted as visible. A near-zero value paints immediately while
    * looking identical to the eye. */
-  from { opacity: 0.001; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0.001;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 body {

@@ -2,7 +2,8 @@
 import Image from "next/image";
 import Button from "@/components/button";
 import homeImageOne from "@/public/images/jackie-profile.jpg";
-import homeImageTwo from "@/public/images/moxie-home-room-two.jpg";
+import homeImageTwo from "@/public/images/moxie-home-room-one.jpg";
+import homeImageThree from "@/public/images/moxie-home-room-two.jpg";
 
 export default function About() {
   return (
@@ -13,31 +14,17 @@ export default function About() {
       className="py-32 lg:py-40 border-t border-(--line-soft)"
     >
       <div className="max-w-335 mx-auto px-10 max-[720px]:px-5.5">
-        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 xl:gap-24 items-center">
+        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
           {/* ── Offset duo ─────────────────────────────────────────────── */}
           <div
             aria-hidden="true"
-            className="relative"
-            style={{
-              aspectRatio: "4 / 5",
-              width: "82%",
-              marginBottom: "12%",
-              marginRight: "12%",
-            }}
+            className="relative aspect-4/5 w-[90%] max-w-140 mx-auto lg:mx-0"
           >
-            {/* Large image — studio interior, arched top-left corner */}
-            <div
-              className="absolute inset-0 overflow-hidden"
-              style={{
-                borderRadius: "140px 16px 16px 16px",
-                borderStyle: "solid",
-                borderColor: "var(--accent)",
-                borderWidth: "1px 1px 1px 8px",
-              }}
-            >
+            {/* Large image — studio interior */}
+            <div className="absolute inset-0 overflow-hidden rounded-xl lg:rounded-[64px] border border-l-8 border-(--accent) shadow-xl">
               <Image
                 src={homeImageTwo}
-                alt="Interior of Moxie Beauty Studio treatment rooms"
+                alt="Interior of one of Moxie Beauty Studio's treatment rooms"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 50vw, 25vw"
@@ -47,24 +34,25 @@ export default function About() {
             </div>
 
             {/* Small inset image — Jackie portrait, tucked over bottom-right corner */}
-            <div
-              className="absolute overflow-hidden shadow-xl"
-              style={{
-                right: "-12%",
-                bottom: "-12%",
-                width: "48%",
-                aspectRatio: "4 / 5",
-                borderRadius: "16px",
-                borderStyle: "solid",
-                borderColor: "var(--accent)",
-                borderWidth: "1px 1px 8px 1px",
-              }}
-            >
+            <div className="absolute aspect-3/4.5 w-1/2 -bottom-12 -right-6 overflow-hidden border border-r-8 border-(--accent) rounded-xl lg:rounded-2xl lg:rounded-br-[48px] z-10 shadow-xl">
               <Image
                 src={homeImageOne}
                 alt="Jackie Schult, founder of Moxie Beauty Studio"
                 fill
-                className="object-cover object-top"
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 27vw, 14vw"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+
+            {/* Small inset image — Jackie portrait, tucked over bottom-right corner */}
+            <div className="absolute aspect-4/3 w-2/3 -bottom-4 -left-6 overflow-hidden border border-l-8 border-(--accent) rounded-xl lg:rounded-2xl lg:rounded-bl-[64px] shadow-xl">
+              <Image
+                src={homeImageThree}
+                alt="Interior of another one of Moxie Beauty Studio's treatment rooms"
+                fill
+                className="object-cover object-center"
                 sizes="(max-width: 1024px) 27vw, 14vw"
                 loading="lazy"
                 unoptimized

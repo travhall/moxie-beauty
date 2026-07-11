@@ -99,17 +99,10 @@ export default function HeroSection() {
             className="hidden lg:block shrink-0 w-1/2 max-w-120"
             aria-hidden="true"
           >
-            <div
-              className="relative w-full border border-(--line-soft) shadow-xl"
-              style={{
-                aspectRatio: "4 / 5",
-                borderRadius: "32px 32px 32px 240px",
-                overflow: "hidden",
-              }}
-            >
+            <div className="aspect-4/5 relative overflow-hidden w-full border border-(--line-soft) rounded-4xl rounded-bl-[240px] shadow-xl">
               <Image
                 src={HeroImg}
-                alt="Close up of a woman's face. She has amazing lashes."
+                alt="Close up of a woman's face, who has amazing lashes."
                 fill
                 className="border border-l-16 border-(--accent) object-cover z-0"
                 style={{ borderRadius: "inherit" }}

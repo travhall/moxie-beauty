@@ -35,7 +35,10 @@ moxie-beauty/
 │   ├── layout.tsx          # Root layout — fonts, metadata, structured data, skip link
 │   ├── globals.css         # Tailwind v4 @theme, design tokens, animation classes
 │   ├── page.tsx            # Home page
+│   ├── error.tsx           # Branded error boundary
+│   ├── not-found.tsx       # Branded 404 page
 │   ├── sitemap.ts          # Auto-generated sitemap.xml
+│   ├── api/square/webhook/ # Square catalog webhook (HMAC-verified)
 │   ├── about/
 │   ├── aftercare/
 │   ├── contact/
@@ -46,30 +49,54 @@ moxie-beauty/
 ├── components/
 │   ├── about.tsx
 │   ├── appointments.tsx    # Three-breakpoint booking journey section
-│   ├── blob.tsx            # WebGL ambient background (Three.js)
-│   ├── booking-overlay.tsx # Full-screen Square booking modal
-│   ├── button.tsx          # Accessible polymorphic button/link
+│   ├── blob.tsx             # WebGL ambient background (Three.js)
+│   ├── booking-overlay.tsx  # Full-screen Square booking modal
+│   ├── breadcrumbs.tsx      # Per-page breadcrumb nav + JSON-LD
+│   ├── button.tsx           # Accessible polymorphic button/link
 │   ├── footer.tsx
 │   ├── footer-theme-island.tsx
 │   ├── hero-section.tsx
+│   ├── icons/
 │   ├── logo.tsx
+│   ├── map.tsx              # Google Maps embed
 │   ├── marquee-ticker.tsx
-│   ├── navigation.tsx      # Scroll-aware sticky nav, mobile drawer
+│   ├── navigation.tsx       # Scroll-aware sticky nav, mobile drawer
 │   ├── service-card-client.tsx
 │   ├── service-rows-client.tsx
 │   ├── services.tsx
+│   ├── studio-filmstrip.tsx
 │   ├── testimonials.tsx
 │   └── theme-toggle.tsx
+├── context/
+│   └── BookingContext.tsx  # Shared booking-overlay open/close state
 ├── lib/
 │   ├── layout.ts           # Shared layout utility (containerClass)
 │   ├── site-config.ts      # Single source of truth for business info
 │   └── square.ts           # Square API helpers
 ├── providers/
 │   └── theme-provider.tsx
+├── scripts/
+│   └── sync-catalog-to-sandbox.ts  # pnpm sync-sandbox
 └── public/
     ├── fonts/              # Nyght Serif woff2 files
     └── images/
 ```
+
+## Testing
+
+Unit tests cover pure, logic-bearing functions only — no component rendering
+or DOM testing is set up (`vitest.config.ts` runs in a plain Node
+environment).
+
+```bash
+pnpm test
+```
+
+| File | Covers |
+|---|---|
+| `app/api/square/webhook/route.test.ts` | Webhook HMAC signature validation |
+| `lib/square.test.ts` | Price/duration formatting, service grouping |
+| `components/studio-filmstrip.test.ts` | Scroll-edge detection for the fade mask |
 
 ## Getting Started
 

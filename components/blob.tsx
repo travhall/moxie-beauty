@@ -61,25 +61,46 @@ function normalize(v: Vec3Tuple): Vec3Tuple {
 }
 
 function midpoint(a: Vec3Tuple, b: Vec3Tuple): Vec3Tuple {
-  return normalize([
-    (a[0] + b[0]) / 2,
-    (a[1] + b[1]) / 2,
-    (a[2] + b[2]) / 2,
-  ]);
+  return normalize([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2]);
 }
 
 function buildIcosphere(radius: number, detail: number): Float32Array {
   const t = (1 + Math.sqrt(5)) / 2;
   const baseVerts: Vec3Tuple[] = [
-    [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
-    [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
-    [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1],
+    [-1, t, 0],
+    [1, t, 0],
+    [-1, -t, 0],
+    [1, -t, 0],
+    [0, -1, t],
+    [0, 1, t],
+    [0, -1, -t],
+    [0, 1, -t],
+    [t, 0, -1],
+    [t, 0, 1],
+    [-t, 0, -1],
+    [-t, 0, 1],
   ];
   const faces: Vec3Tuple[] = [
-    [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
-    [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
-    [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
-    [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1],
+    [0, 11, 5],
+    [0, 5, 1],
+    [0, 1, 7],
+    [0, 7, 10],
+    [0, 10, 11],
+    [1, 5, 9],
+    [5, 11, 4],
+    [11, 10, 2],
+    [10, 7, 6],
+    [7, 1, 8],
+    [3, 9, 4],
+    [3, 4, 2],
+    [3, 2, 6],
+    [3, 6, 8],
+    [3, 8, 9],
+    [4, 9, 5],
+    [2, 4, 11],
+    [6, 2, 10],
+    [8, 6, 7],
+    [9, 8, 1],
   ];
 
   let triangles: [Vec3Tuple, Vec3Tuple, Vec3Tuple][] = faces.map(
@@ -126,8 +147,10 @@ export default function Blob() {
 
     void (async () => {
       // Dynamic import keeps OGL + simplex-noise out of the initial bundle
-      const [{ Renderer, Camera, Transform, Mesh, Geometry, Program, Color }, { createNoise4D }] =
-        await Promise.all([import("ogl"), import("simplex-noise")]);
+      const [
+        { Renderer, Camera, Transform, Mesh, Geometry, Program, Color },
+        { createNoise4D },
+      ] = await Promise.all([import("ogl"), import("simplex-noise")]);
       if (disposed) return;
 
       // ── Renderer ──────────────────────────────────────────────────────────
@@ -185,7 +208,7 @@ export default function Blob() {
       blob3.mesh.position.set(-0.4, 0.3, -2.5);
 
       // ── Primary blob ──────────────────────────────────────────────────────
-      // Detail 3 = ~3,840 vertices. The 90px CSS blur makes higher detail
+      // Detail 3 = ~3,840 vertices. The 72px CSS blur makes higher detail
       // invisible, but the lower vertex count keeps CPU noise work fast.
       const blob = makeBlob(1.6, 3, 0.95);
 
@@ -197,9 +220,15 @@ export default function Blob() {
       const isDark = () => document.documentElement.classList.contains("dark");
       const syncColors = () => {
         const c = isDark() ? COLORS.dark : COLORS.light;
-        (blob.program.uniforms.uColor.value as InstanceType<typeof Color>).set(c.primary);
-        (blob2.program.uniforms.uColor.value as InstanceType<typeof Color>).set(c.secondary);
-        (blob3.program.uniforms.uColor.value as InstanceType<typeof Color>).set(c.backdrop);
+        (blob.program.uniforms.uColor.value as InstanceType<typeof Color>).set(
+          c.primary,
+        );
+        (blob2.program.uniforms.uColor.value as InstanceType<typeof Color>).set(
+          c.secondary,
+        );
+        (blob3.program.uniforms.uColor.value as InstanceType<typeof Color>).set(
+          c.backdrop,
+        );
       };
       syncColors();
 
@@ -213,7 +242,11 @@ export default function Blob() {
       const noise4D = createNoise4D();
 
       function deform(
-        target: { geometry: InstanceType<typeof Geometry>; baseVerts: Float32Array; positions: Float32Array },
+        target: {
+          geometry: InstanceType<typeof Geometry>;
+          baseVerts: Float32Array;
+          positions: Float32Array;
+        },
         t: number,
         ampScale: number,
       ) {
@@ -228,7 +261,12 @@ export default function Blob() {
           const nx = bx / len;
           const ny = by / len;
           const nz = bz / len;
-          const n = noise4D(nx * NOISE_FREQ, ny * NOISE_FREQ, nz * NOISE_FREQ, t);
+          const n = noise4D(
+            nx * NOISE_FREQ,
+            ny * NOISE_FREQ,
+            nz * NOISE_FREQ,
+            t,
+          );
           const k = 1 + n * amp;
           positions[i] = bx * k;
           positions[i + 1] = by * k;
