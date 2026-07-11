@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
+import FactStrip from "@/components/fact-strip";
 import MarqueeTicker from "@/components/marquee-ticker";
 import Map from "@/components/map";
 import { siteConfig } from "@/lib/site-config";
@@ -161,8 +162,9 @@ export default function ContactPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
-              {[
+            <FactStrip
+              size="sm"
+              items={[
                 { k: "Where", v: "Rochester, WI" },
                 { k: "Hours", v: siteConfig.hours.display },
                 {
@@ -181,17 +183,8 @@ export default function ContactPage() {
                     </span>
                   ),
                 },
-              ].map(({ k, v }) => (
-                <div key={k} className="bg-(--background) px-7 py-5">
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) font-medium mb-1">
-                    {k}
-                  </p>
-                  <p className="font-nyght text-[20px] text-(--foreground) leading-snug">
-                    {v}
-                  </p>
-                </div>
-              ))}
-            </div>
+              ]}
+            />
           </div>
         </section>
 

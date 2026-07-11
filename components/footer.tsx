@@ -2,7 +2,7 @@ import { Link } from "next-view-transitions";
 import Logo from "./logo";
 import FooterThemeIsland from "./footer-theme-island";
 import { siteConfig } from "@/lib/site-config";
-import { getSquareServices, groupServices } from "@/lib/square";
+import { getSquareServicesSafe, groupServices } from "@/lib/square";
 
 const studioLinks = [
   { label: "About Moxie", href: "/about" },
@@ -65,8 +65,8 @@ export default async function Footer() {
   // Derive service links from the same Square data as the services page.
   // Uses the shared cache — no extra network request.
   let serviceLinks: { label: string; href: string }[] = [];
-  try {
-    const services = await getSquareServices();
+  const services = await getSquareServicesSafe();
+  if (services) {
     const { brow, lash, extras } = groupServices(services);
     if (brow.length > 0) {
       serviceLinks.push({ label: "Brow Services", href: "/services#brow" });
@@ -80,7 +80,7 @@ export default async function Footer() {
     }
     if (extras.length > 0)
       serviceLinks.push({ label: "Extras", href: "/services#extras" });
-  } catch {
+  } else {
     // Square unavailable — fall back to the two sections we know exist
     serviceLinks = [
       { label: "Brow Services", href: "/services#brow" },

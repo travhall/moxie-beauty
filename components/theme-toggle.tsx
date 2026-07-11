@@ -84,16 +84,26 @@ export default function ThemeSwitch() {
   const [squishing, setSquishing] = useState(false);
   // Prevent stacked clicks from re-triggering during animation
   const animating = useRef(false);
+  const squishTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const onSquishEnd = () => {
+    if (squishTimeout.current) clearTimeout(squishTimeout.current);
+    setSquishing(false);
+    animating.current = false;
+  };
 
   const toggle = () => {
     if (animating.current) return;
+    setTheme(theme === "dark" ? "light" : "dark");
+    // Reduced-motion users get no squish keyframe (see globals.css), so there's
+    // no animationend to wait for — skip the lock entirely rather than get stuck.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     animating.current = true;
     setSquishing(true);
-    setTheme(theme === "dark" ? "light" : "dark");
-    setTimeout(() => {
-      setSquishing(false);
-      animating.current = false;
-    }, 560);
+    // Safety net: CSS animations don't progress while the tab is backgrounded,
+    // so animationend can be delayed indefinitely — this guarantees the toggle
+    // unlocks either way. Not tied to the exact keyframe duration.
+    squishTimeout.current = setTimeout(onSquishEnd, 700);
   };
 
   // SSR placeholder — same dimensions so layout doesn't shift
@@ -146,6 +156,7 @@ export default function ThemeSwitch() {
       >
         {/* ── Thumb inner: handles squish animation & visual styling ─────── */}
         <span
+          onAnimationEnd={onSquishEnd}
           className={[
             "flex h-full w-full items-center justify-center rounded-full",
             // Ivory face — always light so it pops off both track colors

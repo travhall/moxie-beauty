@@ -182,6 +182,15 @@ export const getSquareServices = unstable_cache(
   { revalidate: 3600, tags: ["square-services"] }
 );
 
+/** Same as getSquareServices, but returns null instead of throwing on failure. */
+export async function getSquareServicesSafe(): Promise<SquareService[] | null> {
+  try {
+    return await getSquareServices();
+  } catch {
+    return null;
+  }
+}
+
 // ── Service grouping ──────────────────────────────────────────────────────────
 
 /**

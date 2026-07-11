@@ -37,23 +37,11 @@ export const siteConfig = {
     },
   },
 
-  /**
-   * Provisional hours — update when confirmed with Jackie.
-   * The schedule array drives the Visit page layout; add/remove rows as needed.
-   */
+  /** Provisional hours — update when confirmed with Jackie. */
   hours: {
     /** Human-readable summary for nav drawer and hero meta */
     display: "By Appointment Only",
     note: "Tue – Sat",
-    schedule: [
-      { day: "Monday", hours: null }, // closed
-      { day: "Tuesday", hours: "10 AM – 7 PM" },
-      { day: "Wednesday", hours: "10 AM – 7 PM" },
-      { day: "Thursday", hours: "10 AM – 7 PM" },
-      { day: "Friday", hours: "10 AM – 7 PM" },
-      { day: "Saturday", hours: "10 AM – 7 PM" },
-      { day: "Sunday", hours: null }, // closed
-    ],
   },
 
   social: {
@@ -75,5 +63,3 @@ export const siteConfig = {
   bookingUrl:
     "https://book.squareup.com/appointments/anzl660330wful/location/LHZ09SDE51Z6W/services",
 } as const;
-
-export type SiteConfig = typeof siteConfig;

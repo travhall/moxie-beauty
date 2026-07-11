@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Appointments from "@/components/appointments";
 import MarqueeTicker from "@/components/marquee-ticker";
 import Breadcrumbs from "@/components/breadcrumbs";
+import FactStrip from "@/components/fact-strip";
 import ServiceCardClient from "@/components/service-card-client";
 import { containerClass } from "@/lib/layout";
 import {
-  getSquareServices,
+  getSquareServicesSafe,
   formatPrice,
   formatDuration,
   lowestPrice,
@@ -139,14 +140,10 @@ export default async function ServicesPage() {
     extras: [] as SquareService[],
   };
   let useLive = false;
-  try {
-    const live = await getSquareServices();
-    if (live.length > 0) {
-      groups = groupServices(live);
-      useLive = true;
-    }
-  } catch {
-    // Fall through to hardcoded data
+  const live = await getSquareServicesSafe();
+  if (live && live.length > 0) {
+    groups = groupServices(live);
+    useLive = true;
   }
 
   // Build per-section card arrays — live data if available, otherwise fallback
@@ -241,8 +238,8 @@ export default async function ServicesPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
-              {[
+            <FactStrip
+              items={[
                 { k: "Studio", v: "By appointment" },
                 {
                   k: "Sessions",
@@ -257,17 +254,8 @@ export default async function ServicesPage() {
                   k: "First visit",
                   v: <em className="font-nyght-italic">Complimentary</em>,
                 },
-              ].map(({ k, v }) => (
-                <div key={k} className="bg-(--background) px-7 py-5">
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) font-medium mb-1">
-                    {k}
-                  </p>
-                  <p className="font-nyght text-[22px] text-(--foreground)">
-                    {v}
-                  </p>
-                </div>
-              ))}
-            </div>
+              ]}
+            />
           </div>
         </section>
 

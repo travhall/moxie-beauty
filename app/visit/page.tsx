@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
+import FactStrip from "@/components/fact-strip";
 import { siteConfig } from "@/lib/site-config";
 import { containerClass } from "@/lib/layout";
 
@@ -61,8 +62,9 @@ export default function VisitPage() {
             </div>
 
             {/* Fact strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
-              {[
+            <FactStrip
+              size="sm"
+              items={[
                 { k: "Booking", v: "By Square" },
                 { k: "Studio", v: siteConfig.hours.display },
                 {
@@ -77,17 +79,8 @@ export default function VisitPage() {
                     </span>
                   ),
                 },
-              ].map(({ k, v }) => (
-                <div key={k} className="bg-(--background) px-7 py-5">
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-(--ink-mute) font-medium mb-1">
-                    {k}
-                  </p>
-                  <p className="font-nyght text-[20px] text-(--foreground) leading-snug">
-                    {v}
-                  </p>
-                </div>
-              ))}
-            </div>
+              ]}
+            />
           </div>
         </section>
 

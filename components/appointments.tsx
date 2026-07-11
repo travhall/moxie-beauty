@@ -53,9 +53,6 @@ export default function Appointments({ context = "home" }: AppointmentsProps) {
       <h2 className="font-nyght text-5xl lg:text-6xl bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pb-2 mb-4 text-balance">
         {heading}
       </h2>
-      {/* <p className="text-xl text-(--ink-soft) mb-12 text-balance max-w-xl mx-auto">
-        {siteConfig.hours.note} &nbsp;·&nbsp; Rochester, WI
-      </p> */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
         <Button size="lg" showArrow onClick={() => openBooking()}>
           Book Your Appointment

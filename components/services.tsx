@@ -1,7 +1,7 @@
 import Button from "./button";
 import ServiceRowsClient from "./service-rows-client";
 import {
-  getSquareServices,
+  getSquareServicesSafe,
   formatPrice,
   formatDuration,
   lowestPrice,
@@ -97,13 +97,7 @@ function buildMeta(svc: SquareService) {
 
 export default async function Services() {
   // Attempt to load live services from Square
-  let liveServices: SquareService[] = [];
-  try {
-    liveServices = await getSquareServices();
-  } catch {
-    // API unavailable — fall through to fallback
-  }
-
+  const liveServices = (await getSquareServicesSafe()) ?? [];
   const useLive = liveServices.length > 0;
 
   // First 6 live services, or hardcoded fallback
