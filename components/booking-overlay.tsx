@@ -296,7 +296,11 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
           ref={iframeRef}
           src={iframeSrc}
           title="Book an appointment at Moxie Beauty Studio"
-          className="w-full h-full border-0"
+          className={[
+            "w-full h-full border-0",
+            "transition-opacity duration-500 ease-out",
+            isLoading && !hasError ? "opacity-0" : "opacity-100",
+          ].join(" ")}
           sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation-by-user-activation"
           allow="payment"
           loading="eager"

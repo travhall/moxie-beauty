@@ -150,7 +150,7 @@ export default function ThemeSwitch() {
         className={[
           "absolute top-0.5 h-5.5 w-5.5",
           // Spring position transition
-          "transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+          "transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
           isDark ? "translate-x-7.5" : "translate-x-0.5",
         ].join(" ")}
       >

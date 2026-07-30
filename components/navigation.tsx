@@ -223,7 +223,7 @@ export default function Navigation() {
       <header
         className={`sticky max-w-335 mx-2 xl:mx-auto p-4 rounded-full top-4 z-50 transition-[background-color,border-color,box-shadow] duration-500 ${
           scrolled
-            ? "bg-(--background)/80 backdrop-blur-xs backdrop-contrast-150 border-b border-(--line-soft) shadow-[inset_0_1px_0_0_color-mix(in_oklab,white_80%,transparent),inset_0_-1px_0_0_color-mix(in_oklab,var(--midnite-800)_10%,transparent)] dark:shadow-[inset_0_1px_0_0_color-mix(in_oklab,var(--ivory-rose-50)_60%,transparent),0_6px_24px_-16px_color-mix(in_oklab,var(--midnite-800)_22%,transparent)]"
+            ? "bg-(--background)/92 backdrop-blur-md backdrop-contrast-150 border-b border-(--line-soft) shadow-[inset_0_1px_0_0_color-mix(in_oklab,white_80%,transparent),inset_0_-1px_0_0_color-mix(in_oklab,var(--midnite-800)_10%,transparent)] dark:shadow-[inset_0_1px_0_0_color-mix(in_oklab,var(--ivory-rose-50)_60%,transparent),0_6px_24px_-16px_color-mix(in_oklab,var(--midnite-800)_22%,transparent)]"
             : "bg-transparent border-b border-transparent shadow-none"
         }`}
         style={{ "--nav-height": `${NAV_HEIGHT_PX}px` } as React.CSSProperties}

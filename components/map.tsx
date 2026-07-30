@@ -71,7 +71,7 @@ export default function Map({ apiKey, lat, lng, label, fallback }: MapProps) {
         ref={containerRef}
         role="img"
         aria-label={`Map showing the location of ${label}`}
-        className="rounded-3xl overflow-hidden border border-b-8 border-(--line) h-80 lg:h-110"
+        className="rounded-3xl overflow-hidden border border-(--line) h-80 lg:h-110"
       />
     </>
   );

@@ -23,9 +23,25 @@ export default function HeroSection() {
             {/* Eyebrow */}
             <p className="flex items-center gap-3 font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-6">
               <span
-                className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
+                className="hidden lg:inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
                 aria-hidden="true"
               />
+              <span className="lg:hidden relative w-20 h-20 shrink-0 rounded-full overflow-hidden ring-2 ring-(--accent)">
+                <Image
+                  src={HeroImg}
+                  alt=""
+                  fill
+                  aria-hidden="true"
+                  className="object-cover"
+                  sizes="80px"
+                  quality={70}
+                  priority
+                  fetchPriority="high"
+                  loading="eager"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,L3CFkh^300%LD*W.~BxG00xZ?aNG"
+                />
+              </span>
               Lash &amp; Brow Studio · Rochester, WI
             </p>
 
@@ -49,7 +65,7 @@ export default function HeroSection() {
             </p>
 
             {/* CTA row */}
-            <div className="flex flex-wrap gap-3 mb-10">
+            <div className="flex flex-wrap items-center gap-6 mb-10">
               <Button size="lg" showArrow onClick={() => openBooking()}>
                 Make an Appointment
               </Button>

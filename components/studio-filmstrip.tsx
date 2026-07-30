@@ -93,7 +93,7 @@ export default function StudioFilmstrip({
         {images.map(({ src, alt, width, height }) => (
           <div
             key={src}
-            className="relative shrink-0 h-80 sm:h-96 min-w-[16rem] sm:min-w-[20rem] max-w-104 sm:max-w-120 snap-start overflow-hidden rounded-2xl border border-b-8 border-(--accent) shadow-xl"
+            className="relative shrink-0 h-80 sm:h-96 min-w-[16rem] sm:min-w-[20rem] max-w-104 sm:max-w-120 snap-start overflow-hidden rounded-2xl border border-(--line-soft) shadow-xl"
             style={{ aspectRatio: `${width} / ${height}` }}
           >
             <Image
