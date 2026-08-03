@@ -178,7 +178,7 @@ export default function PoliciesPage() {
                 <em className="font-nyght-italic text-(--accent)">love</em> what
                 I do.
               </p>
-              <p className="text-(--background)/80 leading-relaxed">
+              <p className="text-(--background)/80 leading-relaxed lg:text-balance">
                 Beautiful experiences begin with mutual respect. Thank you for
                 taking the time to review our policies.
               </p>
