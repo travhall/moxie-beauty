@@ -312,6 +312,7 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
           loading="eager"
           onLoad={handleIframeLoad}
           onError={handleIframeError}
+          id="booking-iframe"
         />
       </div>
     </div>

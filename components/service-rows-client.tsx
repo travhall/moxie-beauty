@@ -29,8 +29,8 @@ function ServiceRow({
       className={[
         "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground)",
         "w-full text-left cursor-pointer bg-transparent transition-all duration-300",
-        "odd:hover:bg-linear-to-l odd:hover:from-(--bg-soft) odd:hover:to-transparent",
-        "even:hover:bg-linear-to-r even:hover:from-(--bg-soft) even:hover:to-transparent",
+        "lg:odd:hover:bg-linear-to-l lg:odd:hover:from-(--bg-soft) lg:odd:hover:to-transparent",
+        "lg:even:hover:bg-linear-to-r lg:even:hover:from-(--bg-soft) lg:even:hover:to-transparent",
         isOdd ? "sm:border-r  " : "sm:pl-10",
       ].join(" ")}
     >

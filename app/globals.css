@@ -528,20 +528,18 @@ details.faq-item[open] .faq-chev {
   flex-shrink: 0;
 }
 
-/* cSpell:ignore faq-chev */
-
 /* ---------- Branded focus baseline ---------- */
 /*
- * Provides the rose-gold accent focus ring for every interactive element that
- * doesn't already have an explicit focus-visible Tailwind class.
- *
- * Specificity is intentionally low via :where() — only (0,1,0) from the
- * :focus-visible pseudo-class. Any Tailwind focus-visible:* utility compiles
- * to a class + pseudo-class selector (0,2,0), so it always wins wherever an
- * explicit style is set (Button, nav links, hamburger, toggles, etc.).
- * This rule is purely a safety-net for bare <a>, raw <button>, and <summary>
- * elements that have no component-level focus treatment.
- */
+* Provides the rose-gold accent focus ring for every interactive element that
+* doesn't already have an explicit focus-visible Tailwind class.
+*
+* Specificity is intentionally low via :where() — only (0,1,0) from the
+* :focus-visible pseudo-class. Any Tailwind focus-visible:* utility compiles
+* to a class + pseudo-class selector (0,2,0), so it always wins wherever an
+* explicit style is set (Button, nav links, hamburger, toggles, etc.).
+* This rule is purely a safety-net for bare <a>, raw <button>, and <summary>
+* elements that have no component-level focus treatment.
+* cSpell:ignore faq-chev */
 :where(a, button, summary):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
