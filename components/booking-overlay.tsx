@@ -106,14 +106,20 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
     const onTab = (e: KeyboardEvent) => {
       if (e.key !== "Tab") return;
       const els = overlay.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])',
       );
       const first = els[0];
       const last = els[els.length - 1];
       if (e.shiftKey) {
-        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
       } else {
-        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -148,11 +154,9 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
       aria-modal="true"
       aria-label="Book an appointment"
       className={[
-        "fixed inset-0 z-[9999] flex flex-col bg-(--background)",
+        "fixed inset-0 z-9999 flex flex-col bg-(--background)",
         "transition-[opacity,transform] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]",
-        isVisible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-4",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
       ].join(" ")}
     >
       {/* ── Header bar ──────────────────────────────────────────────────── */}
@@ -161,9 +165,7 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
           "shrink-0 flex items-center justify-between h-16 px-5 border-b border-(--line-soft)",
           "bg-(--background)/95 backdrop-blur-sm",
           "transition-[opacity,transform] duration-350 delay-75 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          isVisible
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-2",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2",
         ].join(" ")}
       >
         {/* Brand */}
@@ -174,7 +176,7 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
             aria-hidden="true"
           />
           {serviceName ? (
-            <p className="hidden sm:block text-sm font-medium text-(--foreground) truncate max-w-[280px]">
+            <p className="hidden sm:block text-sm font-medium text-(--foreground) truncate max-w-70">
               {serviceName}
             </p>
           ) : (
@@ -202,9 +204,7 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
         className={[
           "relative flex-1 min-h-0",
           "transition-[opacity,transform] duration-350 delay-100 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          isVisible
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-3",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3",
         ].join(" ")}
       >
         {/* Loading state */}
@@ -225,7 +225,7 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
                 />
               ))}
             </div>
-            <p className="text-sm text-(--ink-mute) tracking-[0.1em]">
+            <p className="text-sm text-(--ink-mute) tracking-widest">
               Opening booking&hellip;
             </p>
           </div>
@@ -250,11 +250,17 @@ const BookingOverlay: React.FC<BookingOverlayProps> = ({
                 <p className="text-sm text-(--ink-soft) leading-relaxed">
                   The booking page didn&rsquo;t load — this is usually a slow
                   connection or a temporary issue with Square.
+                  {/* cSpell:ignore couldn didn */}
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 w-full">
-                <Button size="md" onClick={handleRetry} className="flex-1" showArrow={false}>
+                <Button
+                  size="md"
+                  onClick={handleRetry}
+                  className="flex-1"
+                  showArrow={false}
+                >
                   <RefreshCw size={14} aria-hidden="true" />
                   Try again
                 </Button>

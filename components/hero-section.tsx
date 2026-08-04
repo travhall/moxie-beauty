@@ -46,7 +46,7 @@ export default function HeroSection() {
             </p>
 
             {/* Headline */}
-            <h1 className="font-nyght text-(--foreground) text-5xl sm:text-6xl md:text-7xl my-4 lg:my-6 text-balance">
+            <h1 className="font-nyght text-(--foreground) text-6xl lg:text-7xl  my-4 lg:my-6 text-balance">
               Welcome to{" "}
               <span className="inline-block bg-linear-to-r from-(--foreground) to-(--accent) bg-clip-text text-transparent pr-2 pb-2">
                 Moxie

@@ -318,7 +318,7 @@ export default async function ServicesPage() {
         {/* ── Price ribbon — shown when at least one adjacent section exists ── */}
         {(browCards.length > 0 || lashCards.length > 0) && (
           <section
-            className="py-20 bg-(--foreground) dark:bg-(--foreground)/80"
+            className="py-20 bg-(--foreground) dark:bg-(--foreground)/80 z-50 relative"
             aria-label="A note on the way we work"
           >
             <div className={container}>

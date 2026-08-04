@@ -102,7 +102,7 @@ export default function ThemeSwitch() {
     setSquishing(true);
     // Safety net: CSS animations don't progress while the tab is backgrounded,
     // so animationend can be delayed indefinitely — this guarantees the toggle
-    // unlocks either way. Not tied to the exact keyframe duration.
+    // unlocks either way. Not tied to the exact keyframe duration. cSpell:ignore backgrounded
     squishTimeout.current = setTimeout(onSquishEnd, 700);
   };
 
@@ -127,7 +127,7 @@ export default function ThemeSwitch() {
         // Focus
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent)",
         // Track fill
-        isDark ? "bg-(--midnite-800)" : "bg-(--ivory-rose-100)",
+        isDark ? "bg-(--midnite-600)" : "bg-(--ivory-rose-100)",
         // Smooth everything
         "transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
       ].join(" ")}
@@ -150,7 +150,7 @@ export default function ThemeSwitch() {
         className={[
           "absolute top-0.5 h-5.5 w-5.5",
           // Spring position transition
-          "transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+          "transition-transform duration-300 ease-in-out",
           isDark ? "translate-x-7.5" : "translate-x-0.5",
         ].join(" ")}
       >

@@ -73,6 +73,14 @@
   /* Buttons — dark ink primary */
   --button: var(--rose-gold-800);
   --button-foreground: var(--rose-gold-50);
+
+  /* Mesh gradient palette — one step lighter than the raw rose-gold ramp so
+     the darkest stop doesn't read as a hard, pronounced shape against the
+     pale background (readability/a11y: keep the wash subtle, not a blob). */
+  --mesh-0: var(--ivory-rose-50);
+  --mesh-1: var(--ivory-rose-100);
+  --mesh-2: var(--ivory-rose-200);
+  --mesh-3: var(--rose-gold-50);
 }
 
 @layer utilities {
@@ -101,6 +109,14 @@
 
   --button: var(--rose-gold-50);
   --button-foreground: var(--rose-gold-900);
+
+  /* Mesh gradient palette — one step darker than the raw rose-gold ramp so
+     the lightest stops don't glow against the dark surface (same
+     readability/a11y reasoning as the light-mode ramp above, mirrored). */
+  --mesh-0: var(--ivory-rose-700);
+  --mesh-1: var(--ivory-rose-800);
+  --mesh-2: var(--ivory-rose-900);
+  --mesh-3: var(--rose-gold-800);
 }
 
 /* ---------- Ambient blob canvas ---------- */
@@ -113,6 +129,21 @@
  * Dark mode: lower opacity but lighter shape colors, boosted saturation —
  * the shapes need to glow against the dark surface, not blend into it.
  */
+.mesh-gradient-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.8s ease;
+}
+
+/* .dark .mesh-gradient-canvas {
+  opacity: 0.5;
+} */
+
 .blob-canvas {
   position: fixed;
   inset: 0;
@@ -543,7 +574,7 @@ body {
 /*
  * Native View Transitions (same-document) for App Router navigations, wired
  * via next-view-transitions. Only the root crossfade is used — no per-element
- * view-transition-name — so this stays a subtle fade, not a dramatic morph.
+ * view-transition-name — so this stays a subtle fade, not a dramatic morph. cSpell:ignore navigations crossfade
  */
 ::view-transition-old(root),
 ::view-transition-new(root) {

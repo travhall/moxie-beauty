@@ -18,10 +18,11 @@ export default function Error({
           </p>
           <h1 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6 text-balance">
             That didn&apos;t load right.
+            {/* cSpell:ignore didn */}
           </h1>
           <p className="max-w-[60ch] mb-10 text-pretty">
-            An unexpected error occurred. You can try again, or head back to
-            the homepage.
+            An unexpected error occurred. You can try again, or head back to the
+            homepage.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button size="lg" showArrow onClick={() => reset()}>

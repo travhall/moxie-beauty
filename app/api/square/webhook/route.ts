@@ -29,17 +29,14 @@ export function isValidSignature(
   rawBody: string,
   signature: string,
   notificationUrl: string,
-  key: string
+  key: string,
 ): boolean {
   try {
     const hmac = createHmac("sha256", key);
     hmac.update(notificationUrl + rawBody);
     const expected = hmac.digest("base64");
     // Use timing-safe comparison to prevent timing attacks
-    return timingSafeEqual(
-      Buffer.from(signature),
-      Buffer.from(expected)
-    );
+    return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
   } catch {
     return false;
   }
@@ -53,11 +50,11 @@ export async function POST(request: NextRequest) {
   if (!webhookKey) {
     console.error(
       "[square/webhook] SQUARE_WEBHOOK_SIGNATURE_KEY is not set — " +
-      "rejecting request. Configure this env var in Vercel to enable the webhook."
+        "rejecting request. Configure this env var in Vercel to enable the webhook.",
     );
     return NextResponse.json(
       { error: "Webhook not configured" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -65,7 +62,10 @@ export async function POST(request: NextRequest) {
   const signature = request.headers.get("x-square-hmacsha256-signature") ?? "";
 
   if (!signature) {
-    return NextResponse.json({ error: "Missing signature header" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Missing signature header" },
+      { status: 401 },
+    );
   }
 
   if (!isValidSignature(rawBody, signature, NOTIFICATION_URL, webhookKey)) {
@@ -81,10 +81,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  // Revalidate services cache when the catalog changes
+  // Revalidate services cache when the catalog changes cSpell:ignore hmacsha
   if (event.type === "catalog.version.updated") {
     revalidateTag("square-services", "default");
-    console.log("[square/webhook] catalog.version.updated — revalidated square-services");
+    console.log(
+      "[square/webhook] catalog.version.updated — revalidated square-services",
+    );
   }
 
   return NextResponse.json({ ok: true });

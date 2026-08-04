@@ -226,7 +226,7 @@ export default function AftercarePage() {
                 </p>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
                 {items.map(({ heading, body }) => (
                   <div
                     key={heading}
@@ -278,7 +278,7 @@ export default function AftercarePage() {
         </section>
 
         {/* ── Questions note ────────────────────────────────────────────── */}
-        <section className="py-16 bg-(--foreground)/90">
+        <section className="py-16 bg-(--foreground)/90 z-50 relative">
           <div className={container}>
             <div className="max-w-2xl">
               <p className="font-nyght text-3xl lg:text-4xl text-(--background)/80 leading-snug mb-5">

@@ -17,10 +17,11 @@ export default function NotFound() {
           </p>
           <h1 className="font-nyght text-4xl lg:text-5xl leading-tight mb-6 text-balance">
             We couldn&apos;t find that page.
+            {/* cSpell:ignore couldn */}
           </h1>
           <p className="max-w-[60ch] mb-10 text-pretty">
-            The page you&apos;re looking for may have moved or no longer
-            exists. Here are a couple of places to pick back up.
+            The page you&apos;re looking for may have moved or no longer exists.
+            Here are a couple of places to pick back up.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button size="lg" showArrow href="/">

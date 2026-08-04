@@ -12,7 +12,7 @@
  *   .env             → sandbox SQUARE_ACCESS_TOKEN
  *   .env.production  → production SQUARE_ACCESS_TOKEN
  *
- * No changes are made to Production — it is read-only here.
+ * No changes are made to Production — it is read-only here. cSpell:ignore categor upserting
  */
 
 import { SquareClient, SquareEnvironment } from "square";
@@ -40,7 +40,10 @@ function loadEnvFile(path: string): Record<string, string> {
       if (eq === -1) continue;
       const key = line.slice(0, eq).trim();
       // Strip optional surrounding quotes from values
-      const val = line.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+      const val = line
+        .slice(eq + 1)
+        .trim()
+        .replace(/^["']|["']$/g, "");
       vars[key] = val;
     }
   } catch {
@@ -80,7 +83,7 @@ const sandboxClient = new SquareClient({
 
 /** Collect all pages from a catalog.list() paginator into a flat array. */
 async function collectAll(
-  page: AsyncIterable<CatalogObject>
+  page: AsyncIterable<CatalogObject>,
 ): Promise<CatalogObject[]> {
   const results: CatalogObject[] = [];
   for await (const obj of page) results.push(obj);
@@ -106,7 +109,9 @@ async function main() {
     collectAll(await prodClient.catalog.list({ types: "CATEGORY" })),
   ]);
 
-  log(`    ${prodItems.length} service(s), ${prodCategories.length} categor${prodCategories.length === 1 ? "y" : "ies"} found`);
+  log(
+    `    ${prodItems.length} service(s), ${prodCategories.length} categor${prodCategories.length === 1 ? "y" : "ies"} found`,
+  );
 
   if (prodItems.length === 0) {
     log("\n⚠️   No APPOINTMENTS_SERVICE items found in Production. Exiting.");
@@ -125,15 +130,17 @@ async function main() {
   const sandboxItemByName = new Map<string, AnyObj>(
     (existingSandboxItems as AnyObj[])
       .filter((o) => o.type === "ITEM" && o.itemData?.name && o.id)
-      .map((o) => [o.itemData.name as string, o])
+      .map((o) => [o.itemData.name as string, o]),
   );
   const sandboxCatByName = new Map<string, string>(
     (existingSandboxCats as AnyObj[])
       .filter((o) => o.type === "CATEGORY" && o.categoryData?.name && o.id)
-      .map((o) => [o.categoryData.name as string, o.id as string])
+      .map((o) => [o.categoryData.name as string, o.id as string]),
   );
 
-  log(`    ${sandboxItemByName.size} existing item(s), ${sandboxCatByName.size} existing categor${sandboxCatByName.size === 1 ? "y" : "ies"}`);
+  log(
+    `    ${sandboxItemByName.size} existing item(s), ${sandboxCatByName.size} existing categor${sandboxCatByName.size === 1 ? "y" : "ies"}`,
+  );
 
   // ── 3. Build batch upsert payload ───────────────────────────────────────────
   log("\n🛠   Building batch upsert…");
@@ -145,7 +152,7 @@ async function main() {
     (prodItems as AnyObj[])
       .filter((o) => o.type === "ITEM")
       .map((o) => o.itemData?.categoryId)
-      .filter(Boolean) as string[]
+      .filter(Boolean) as string[],
   );
 
   // prod category ID → sandbox ID (real or temp)
@@ -191,20 +198,23 @@ async function main() {
 
     // Rebuild variations — use real sandbox variation IDs for existing items so
     // Square accepts the update; fall back to '#'-prefixed temp IDs for new ones.
-    const existingVariations: AnyObj[] = existingObj?.itemData?.variations ?? [];
+    const existingVariations: AnyObj[] =
+      existingObj?.itemData?.variations ?? [];
     const variations = ((item.variations ?? []) as AnyObj[])
       .filter((v) => v.type === "ITEM_VARIATION" && v.itemVariationData)
       .map((v, vi) => {
         const existingVar =
           existingVariations.find(
             (ev: AnyObj) =>
-              ev.itemVariationData?.name === v.itemVariationData.name
+              ev.itemVariationData?.name === v.itemVariationData.name,
           ) ?? existingVariations[vi];
         const varId = existingVar?.id ?? `#${sandboxId}_var_${vi}`;
         return {
           type: "ITEM_VARIATION" as const,
           id: varId,
-          ...(existingVar?.version !== undefined && { version: existingVar.version }),
+          ...(existingVar?.version !== undefined && {
+            version: existingVar.version,
+          }),
           itemVariationData: {
             name: v.itemVariationData.name,
             pricingType: v.itemVariationData.pricingType,
@@ -218,7 +228,9 @@ async function main() {
     objects.push({
       type: "ITEM",
       id: sandboxId,
-      ...(existingObj?.version !== undefined && { version: existingObj.version }),
+      ...(existingObj?.version !== undefined && {
+        version: existingObj.version,
+      }),
       itemData: {
         name,
         description: (item.description ?? undefined) as string | undefined,
@@ -239,7 +251,9 @@ async function main() {
   }
 
   // ── 5. Upsert to Sandbox ────────────────────────────────────────────────────
-  log(`\n🚀  Upserting ${objects.length} object(s) in ${batches.length} batch(es)…`);
+  log(
+    `\n🚀  Upserting ${objects.length} object(s) in ${batches.length} batch(es)…`,
+  );
 
   for (let i = 0; i < batches.length; i++) {
     const idempotencyKey = `sync-${Date.now()}-batch-${i}`;
@@ -256,7 +270,9 @@ async function main() {
       }
     } else {
       const created = result.idMappings?.length ?? 0;
-      log(`    Batch ${i + 1}: ✓  (${created} ID mapping${created === 1 ? "" : "s"})`);
+      log(
+        `    Batch ${i + 1}: ✓  (${created} ID mapping${created === 1 ? "" : "s"})`,
+      );
     }
   }
 

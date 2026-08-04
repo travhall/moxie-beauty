@@ -14,30 +14,42 @@ const notificationUrl = `${siteConfig.url}/api/square/webhook`;
 const rawBody = JSON.stringify({ type: "catalog.version.updated" });
 
 function sign(url: string, body: string, signingKey: string): string {
-  return createHmac("sha256", signingKey).update(url + body).digest("base64");
+  return createHmac("sha256", signingKey)
+    .update(url + body)
+    .digest("base64");
 }
 
 function makeRequest(body: string, signature?: string): NextRequest {
   const headers: HeadersInit = {};
-  if (signature !== undefined) headers["x-square-hmacsha256-signature"] = signature;
+  if (signature !== undefined)
+    headers["x-square-hmacsha256-signature"] = signature;
   return new NextRequest(notificationUrl, { method: "POST", headers, body });
 }
 
 describe("isValidSignature", () => {
   it("returns true for a correctly computed signature", () => {
     const signature = sign(notificationUrl, rawBody, key);
-    expect(isValidSignature(rawBody, signature, notificationUrl, key)).toBe(true);
+    expect(isValidSignature(rawBody, signature, notificationUrl, key)).toBe(
+      true,
+    );
   });
 
   it("returns false when signed with a different key", () => {
     const signature = sign(notificationUrl, rawBody, "wrong-key");
-    expect(isValidSignature(rawBody, signature, notificationUrl, key)).toBe(false);
+    expect(isValidSignature(rawBody, signature, notificationUrl, key)).toBe(
+      false,
+    );
   });
 
   it("returns false when the raw body is tampered with", () => {
     const signature = sign(notificationUrl, rawBody, key);
-    const tamperedBody = JSON.stringify({ type: "catalog.version.updated", extra: true });
-    expect(isValidSignature(tamperedBody, signature, notificationUrl, key)).toBe(false);
+    const tamperedBody = JSON.stringify({
+      type: "catalog.version.updated",
+      extra: true,
+    });
+    expect(
+      isValidSignature(tamperedBody, signature, notificationUrl, key),
+    ).toBe(false);
   });
 
   it("returns false when the notification URL differs from what was signed", () => {
@@ -47,7 +59,9 @@ describe("isValidSignature", () => {
   });
 
   it("returns false (not throw) for a malformed, non-matching-length signature", () => {
-    expect(isValidSignature(rawBody, "not-a-valid-base64-sig", notificationUrl, key)).toBe(false);
+    expect(
+      isValidSignature(rawBody, "not-a-valid-base64-sig", notificationUrl, key),
+    ).toBe(false);
   });
 
   it("validates against the fixed siteConfig.url-derived notification URL regardless of request.url", () => {
@@ -55,8 +69,10 @@ describe("isValidSignature", () => {
     // Whatever request.url happened to be (e.g. a different host/port locally,
     // or with a trailing slash/query string), the route always signs against
     // the fixed NOTIFICATION_URL constant — simulate that by validating with
-    // the same fixed URL rather than any request-derived value.
-    expect(isValidSignature(rawBody, signature, notificationUrl, key)).toBe(true);
+    // the same fixed URL rather than any request-derived value. cSpell:ignore hmacsha
+    expect(isValidSignature(rawBody, signature, notificationUrl, key)).toBe(
+      true,
+    );
   });
 });
 
@@ -69,14 +85,17 @@ describe("POST /api/square/webhook", () => {
   });
 
   afterEach(() => {
-    if (originalKey === undefined) delete process.env.SQUARE_WEBHOOK_SIGNATURE_KEY;
+    if (originalKey === undefined)
+      delete process.env.SQUARE_WEBHOOK_SIGNATURE_KEY;
     else process.env.SQUARE_WEBHOOK_SIGNATURE_KEY = originalKey;
   });
 
   it("returns 500 when SQUARE_WEBHOOK_SIGNATURE_KEY is not set", async () => {
     delete process.env.SQUARE_WEBHOOK_SIGNATURE_KEY;
     const { POST } = await import("./route");
-    const res = await POST(makeRequest(rawBody, sign(notificationUrl, rawBody, key)));
+    const res = await POST(
+      makeRequest(rawBody, sign(notificationUrl, rawBody, key)),
+    );
     expect(res.status).toBe(500);
   });
 
@@ -101,7 +120,9 @@ describe("POST /api/square/webhook", () => {
 
   it("revalidates square-services on catalog.version.updated", async () => {
     const { POST } = await import("./route");
-    const res = await POST(makeRequest(rawBody, sign(notificationUrl, rawBody, key)));
+    const res = await POST(
+      makeRequest(rawBody, sign(notificationUrl, rawBody, key)),
+    );
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true });
     expect(revalidateTag).toHaveBeenCalledWith("square-services", "default");

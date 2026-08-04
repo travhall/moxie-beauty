@@ -182,7 +182,7 @@ export default function VisitPage() {
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
                 {[
                   {
                     service: "Lash Extensions",
@@ -347,7 +347,7 @@ export default function VisitPage() {
         </section>
 
         {/* ── Arrival ───────────────────────────────────────────────────── */}
-        <section className="py-16 bg-(--foreground) dark:bg-(--foreground)/80 border-t border-(--line-soft)">
+        <section className="py-16 bg-(--foreground)/90 border-t border-(--line-soft) z-50 relative">
           <div className={container}>
             <div className="mb-12">
               <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">

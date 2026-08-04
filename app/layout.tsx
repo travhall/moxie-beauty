@@ -8,7 +8,8 @@ import { ThemeProvider } from "../providers/theme-provider";
 import { BookingProvider } from "@/context/BookingContext";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import Blob from "@/components/blob";
+// import Blob from "@/components/blob";
+import MeshGradient from "@/components/mesh-gradient";
 import { siteConfig } from "@/lib/site-config";
 
 const mulish = Mulish({
@@ -255,7 +256,8 @@ export default function RootLayout({
             Skip to content
           </a>
 
-          <Blob />
+          <MeshGradient />
+          {/* <Blob /> — swapped out temporarily to compare against the WebGL mesh gradient */}
           <div className="site-container">
             <ThemeProvider>
               <BookingProvider>
