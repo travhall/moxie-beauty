@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  next-view-transitions@0.3.5: 2a0a3f09d8c3155fdfb156f9accaaa554cdb7080b3767142745b142f9ed2010d
+
 importers:
 
   .:
@@ -22,7 +25,7 @@ importers:
         version: 16.2.9(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       next-view-transitions:
         specifier: ^0.3.5
-        version: 0.3.5(next@16.2.9(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 0.3.5(patch_hash=2a0a3f09d8c3155fdfb156f9accaaa554cdb7080b3767142745b142f9ed2010d)(next@16.2.9(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       postcss:
         specifier: ^8.5.15
         version: 8.5.15
@@ -4475,7 +4478,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-view-transitions@0.3.5(next@16.2.9(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  next-view-transitions@0.3.5(patch_hash=2a0a3f09d8c3155fdfb156f9accaaa554cdb7080b3767142745b142f9ed2010d)(next@16.2.9(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       next: 16.2.9(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react: 19.2.7

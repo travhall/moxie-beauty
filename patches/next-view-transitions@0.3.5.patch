@@ -1,0 +1,24 @@
+diff --git a/dist/index.js b/dist/index.js
+index 41ba06885ed234bc14ef6790ae9f023e3ee4886e..66420ab15a097a848369be6945d426f898c5539e 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -42,6 +42,19 @@ function useBrowserNativeTransitions() {
+                     return pendingViewTransition;
+                 });
+             });
++            // Patched: safety-net resolve. The effect further down only
++            // resolves this transition when pathname or hash actually
++            // change on a later render. If a popstate fires without either
++            // ending up different (e.g. a same-URL history entry), nothing
++            // else ever resolves it, and it sits open until the browser's
++            // own internal View Transition timeout (~4s in Chromium)
++            // force-aborts it with an uncaught "Transition was aborted
++            // because of timeout in DOM update" error. Resolving
++            // proactively at 2s avoids that timeout ever firing. Calling
++            // an already-resolved promise's resolver again is a no-op, so
++            // this does nothing when the real effect resolves it first
++            // (the normal case).
++            setTimeout(pendingViewTransitionResolve, 2000);
+             setCurrentViewTransition([
+                 pendingStartViewTransition,
+                 pendingViewTransitionResolve
