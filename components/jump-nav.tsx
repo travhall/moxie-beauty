@@ -16,13 +16,19 @@ function useMounted() {
   );
 }
 
-export interface AftercareJumpNavGroup {
-  num: string;
-  category: string;
+export interface JumpNavItem {
+  /** Id of the target section this link jumps to (no leading "#"). */
+  id: string;
+  /** Large decorative marker rendered behind the label (e.g. a numeral). */
+  marker: string;
+  /** Visible link text. */
+  label: string;
 }
 
-export interface AftercareJumpNavProps {
-  groups: AftercareJumpNavGroup[];
+export interface JumpNavProps {
+  items: JumpNavItem[];
+  /** Accessible name for the <nav> landmark. */
+  ariaLabel: string;
 }
 
 interface ObservedEntry {
@@ -50,15 +56,14 @@ export function pickActiveId(
 
 const BACK_TO_TOP_THRESHOLD_PX = 600;
 
-export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
+export default function JumpNav({ items, ariaLabel }: JumpNavProps) {
   const mounted = useMounted();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    const ids = groups.map(({ num }) => `aftercare-${num.toLowerCase()}`);
-    const sections = ids
-      .map((id) => document.getElementById(id))
+    const sections = items
+      .map(({ id }) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
 
     if (sections.length === 0) return;
@@ -86,7 +91,7 @@ export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
 
     sections.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [groups]);
+  }, [items]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -106,13 +111,12 @@ export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
 
   return (
     <>
-      <nav aria-label="Aftercare sections">
+      <nav aria-label={ariaLabel}>
         <ul className="flex flex-col md:flex-row md:flex-wrap py-2 list-none [&>li:first-child>a]:md:pl-0">
-          {groups.map(({ num, category }) => {
-            const id = `aftercare-${num.toLowerCase()}`;
+          {items.map(({ id, marker, label }) => {
             const isActive = activeId === id;
             return (
-              <li key={num}>
+              <li key={id}>
                 <a
                   href={`#${id}`}
                   aria-current={isActive ? "location" : undefined}
@@ -126,7 +130,7 @@ export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
                         : "text-(--rose-gold-100) dark:text-(--rose-gold-800) group-hover:text-(--accent-soft)/60"
                     }`}
                   >
-                    {num}
+                    {marker}
                   </span>
                   <span
                     className={`relative z-10 font-sans font-semibold text-xs tracking-[0.14em] uppercase transition-colors ${
@@ -135,7 +139,7 @@ export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
                         : "text-(--ink-mute) group-hover:text-(--foreground)"
                     }`}
                   >
-                    {category}
+                    {label}
                   </span>
                 </a>
               </li>

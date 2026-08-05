@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AftercareJumpNav from "@/components/aftercare-jump-nav";
+import JumpNav from "@/components/jump-nav";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { containerClass } from "@/lib/layout";
@@ -192,12 +192,14 @@ export default function AftercarePage() {
         </section>
 
         {/* Jump links */}
-        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-24 lg:top-22 relative z-60">
+        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-24 lg:top-21 relative z-60">
           <div className={container}>
-            <AftercareJumpNav
-              groups={aftercareGroups.map(({ num, category }) => ({
-                num,
-                category,
+            <JumpNav
+              ariaLabel="Aftercare sections"
+              items={aftercareGroups.map(({ num, category }) => ({
+                id: `aftercare-${num.toLowerCase()}`,
+                marker: num,
+                label: category,
               }))}
             />
           </div>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pickActiveId } from "./aftercare-jump-nav";
+import { pickActiveId } from "./jump-nav";
 
 describe("pickActiveId", () => {
   it("returns the previous id when nothing is intersecting", () => {
