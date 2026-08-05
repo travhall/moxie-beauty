@@ -55,6 +55,10 @@ export function pickActiveId(
 }
 
 const BACK_TO_TOP_THRESHOLD_PX = 600;
+// Matches the IntersectionObserver's rootMargin top inset below — the band
+// where a section is considered "current" starts 160px down from the
+// viewport top (clearing the sticky header + this nav).
+const TOP_ACTIVATION_OFFSET_PX = 160;
 
 export default function JumpNav({ items, ariaLabel }: JumpNavProps) {
   const mounted = useMounted();
@@ -86,7 +90,10 @@ export default function JumpNav({ items, ariaLabel }: JumpNavProps) {
       // stops counting it once it's scrolled past the upper 40% of the
       // viewport — keeps exactly one section active at a time instead of
       // flickering between two when they're both partially visible.
-      { rootMargin: "-160px 0px -60% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+      {
+        rootMargin: `-${TOP_ACTIVATION_OFFSET_PX}px 0px -60% 0px`,
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      },
     );
 
     sections.forEach((el) => observer.observe(el));
@@ -94,13 +101,30 @@ export default function JumpNav({ items, ariaLabel }: JumpNavProps) {
   }, [items]);
 
   useEffect(() => {
+    const firstId = items[0]?.id;
+    const firstSection = firstId ? document.getElementById(firstId) : null;
+
     const onScroll = () => {
       setShowBackToTop(window.scrollY > BACK_TO_TOP_THRESHOLD_PX);
+      // IntersectionObserver only fires when a section's intersection
+      // state changes, and pickActiveId deliberately keeps the previous
+      // active id when nothing is currently intersecting (to avoid
+      // flickering between sections). That means once you scroll back up
+      // past the first section entirely, there's nothing left to hand
+      // activation off to, and it stays "stuck" on the first section
+      // forever. This clears it explicitly once we're above the band
+      // where the first section would start counting as active.
+      if (
+        firstSection &&
+        firstSection.getBoundingClientRect().top > TOP_ACTIVATION_OFFSET_PX
+      ) {
+        setActiveId(null);
+      }
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [items]);
 
   const scrollToTop = () => {
     const reducedMotion = window.matchMedia(
