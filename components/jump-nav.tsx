@@ -115,12 +115,15 @@ export default function JumpNav({ items, ariaLabel }: JumpNavProps) {
         <ul className="flex flex-col md:flex-row md:flex-wrap py-2 list-none [&>li:first-child>a]:md:pl-0">
           {items.map(({ id, marker, label }) => {
             const isActive = activeId === id;
+            const isDimmed = activeId !== null && !isActive;
             return (
               <li key={id}>
                 <a
                   href={`#${id}`}
                   aria-current={isActive ? "location" : undefined}
-                  className="group relative flex items-center overflow-hidden py-4 px-6 text-(--foreground) hover:text-(--accent) transition-colors"
+                  className={`group relative flex items-center overflow-hidden py-4 px-6 text-(--foreground) hover:text-(--accent) transition-[color,opacity] duration-300 hover:opacity-100 ${
+                    isDimmed ? "opacity-45" : "opacity-100"
+                  }`}
                 >
                   <span
                     aria-hidden="true"
