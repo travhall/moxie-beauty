@@ -1,6 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
+
+// SSR-safe "has this mounted on the client yet" flag — needed because the
+// back-to-top button is rendered via a portal into document.body, which
+// doesn't exist during server rendering. Same pattern as ThemeSwitch's
+// useMounted in components/theme-toggle.tsx.
+const noopSubscribe = () => () => {};
+function useMounted() {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
+}
 
 export interface AftercareJumpNavGroup {
   num: string;
@@ -37,6 +51,7 @@ export function pickActiveId(
 const BACK_TO_TOP_THRESHOLD_PX = 600;
 
 export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
+  const mounted = useMounted();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -92,68 +107,72 @@ export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
   return (
     <>
       <nav aria-label="Aftercare sections">
-      <ul className="flex flex-col md:flex-row md:flex-wrap py-2 list-none [&>li:first-child>a]:md:pl-0">
-        {groups.map(({ num, category }) => {
-          const id = `aftercare-${num.toLowerCase()}`;
-          const isActive = activeId === id;
-          return (
-            <li key={num}>
-              <a
-                href={`#${id}`}
-                aria-current={isActive ? "location" : undefined}
-                className="group relative flex items-center overflow-hidden py-4 px-6 text-(--foreground) hover:text-(--accent) transition-colors"
-              >
-                <span
-                  aria-hidden="true"
-                  className={`font-nyght-italic absolute top-1/2 -translate-y-[52%] text-[48px] leading-none z-0 transition-all ${
-                    isActive
-                      ? "text-(--accent-soft)/60"
-                      : "text-(--rose-gold-100) dark:text-(--rose-gold-800) group-hover:text-(--accent-soft)/60"
-                  }`}
+        <ul className="flex flex-col md:flex-row md:flex-wrap py-2 list-none [&>li:first-child>a]:md:pl-0">
+          {groups.map(({ num, category }) => {
+            const id = `aftercare-${num.toLowerCase()}`;
+            const isActive = activeId === id;
+            return (
+              <li key={num}>
+                <a
+                  href={`#${id}`}
+                  aria-current={isActive ? "location" : undefined}
+                  className="group relative flex items-center overflow-hidden py-4 px-6 text-(--foreground) hover:text-(--accent) transition-colors"
                 >
-                  {num}
-                </span>
-                <span
-                  className={`relative z-10 font-sans font-semibold text-xs tracking-[0.14em] uppercase transition-colors ${
-                    isActive
-                      ? "text-(--foreground)"
-                      : "text-(--ink-mute) group-hover:text-(--foreground)"
-                  }`}
-                >
-                  {category}
-                </span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+                  <span
+                    aria-hidden="true"
+                    className={`font-nyght-italic absolute top-1/2 -translate-y-[52%] text-[48px] leading-none z-0 transition-all ${
+                      isActive
+                        ? "text-(--accent-soft)/60"
+                        : "text-(--rose-gold-100) dark:text-(--rose-gold-800) group-hover:text-(--accent-soft)/60"
+                    }`}
+                  >
+                    {num}
+                  </span>
+                  <span
+                    className={`relative z-10 font-sans font-semibold text-xs tracking-[0.14em] uppercase transition-colors ${
+                      isActive
+                        ? "text-(--foreground)"
+                        : "text-(--ink-mute) group-hover:text-(--foreground)"
+                    }`}
+                  >
+                    {category}
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
-      <button
-        type="button"
-        onClick={scrollToTop}
-        aria-label="Back to top"
-        className={`md:hidden fixed bottom-6 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-(--line-soft) bg-(--background)/90 backdrop-blur-md text-(--foreground) shadow-lg transition-opacity duration-300 ${
-          showBackToTop
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M8 13V3M8 3L3 8M8 3L13 8"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+      {mounted &&
+        createPortal(
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className={`md:hidden fixed bottom-6 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-(--line-soft) bg-(--background)/90 backdrop-blur-md text-(--foreground) shadow-lg transition-opacity duration-300 ${
+              showBackToTop
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 13V3M8 3L3 8M8 3L13 8"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>,
+          document.body,
+        )}
     </>
   );
 }
