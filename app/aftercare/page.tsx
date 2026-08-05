@@ -170,7 +170,7 @@ export default function AftercarePage() {
     <>
       <main>
         {/* ── Page hero ─────────────────────────────────────────────────── */}
-        <section className="pt-14 pb-16 border-b border-(--line-soft)">
+        <section className="pt-14 border-b border-(--line-soft)">
           <div className={container}>
             <Breadcrumbs page="Aftercare" href="/aftercare" />
 
@@ -187,16 +187,28 @@ export default function AftercarePage() {
                 appointment goes. Find your service below.
               </p>
             </div>
+          </div>
+        </section>
 
-            {/* Jump links */}
-            <div className="flex flex-wrap gap-3">
+        {/* Jump links */}
+        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) lg:sticky lg:top-20 relative z-60">
+          <div className={container}>
+            <div className="flex flex-col lg:flex-row lg:flex-wrap py-2">
               {aftercareGroups.map(({ num, category }) => (
                 <a
                   key={num}
                   href={`#aftercare-${num.toLowerCase()}`}
-                  className="font-nyght-bold text-[11px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border border-b-4 border-(--accent)/60 text-(--accent)/80 hover:text-(--accent) hover:border-(--line-soft) hover:bg-(--accent)/10 transition-colors"
+                  className="group relative flex items-center overflow-hidden py-4 px-6 lg:first-of-type:pl-0 text-(--foreground) hover:text-(--accent) transition-colors"
                 >
-                  {category}
+                  <span
+                    aria-hidden="true"
+                    className="font-nyght-italic absolute top-1/2 -translate-y-[52%] text-[48px] leading-none text-(--rose-gold-100) dark:text-(--rose-gold-800) z-0 group-hover:text-(--accent-soft)/60 transition-all"
+                  >
+                    {num}
+                  </span>
+                  <span className="relative z-10 font-sans font-semibold text-xs tracking-[0.14em] uppercase text-(--ink-mute) group-hover:text-(--foreground) transition-colors">
+                    {category}
+                  </span>
                 </a>
               ))}
             </div>
@@ -208,7 +220,7 @@ export default function AftercarePage() {
           <section
             key={num}
             id={`aftercare-${num.toLowerCase()}`}
-            className="py-28 border-b border-(--line-soft)"
+            className="py-44 border-b border-(--line-soft)"
             tabIndex={-1}
           >
             <div className={container}>
@@ -278,10 +290,10 @@ export default function AftercarePage() {
         </section>
 
         {/* ── Questions note ────────────────────────────────────────────── */}
-        <section className="py-16 bg-(--foreground)/90 z-50 relative">
+        <section className="py-16 bg-(--foreground) z-50 relative">
           <div className={container}>
             <div className="max-w-2xl">
-              <p className="font-nyght text-3xl lg:text-4xl text-(--background)/80 leading-snug mb-5">
+              <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-5">
                 Something doesn&apos;t look right?{" "}
                 <a
                   href={siteConfig.contact.smsHref}

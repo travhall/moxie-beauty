@@ -13,10 +13,13 @@ export interface ButtonProps extends Omit<
   size?: ButtonSize;
   /** Renders an animated CSS arrow after the label */
   showArrow?: boolean;
+  /** Icon rendered before the label */
+  icon?: React.ReactNode;
   /** When provided, renders as an <a> element instead of <button> */
   href?: string;
   target?: string;
   rel?: string;
+  download?: string;
   className?: string;
   isLoading?: boolean;
   ariaLabel?: string;
@@ -84,6 +87,7 @@ export const Button = React.forwardRef<
       variant = "default",
       size = "md",
       showArrow = false,
+      icon,
       href,
       target,
       rel,
@@ -100,6 +104,7 @@ export const Button = React.forwardRef<
       <Spinner />
     ) : (
       <>
+        {icon}
         {children}
         {showArrow && <Arrow />}
       </>

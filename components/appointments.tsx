@@ -43,7 +43,7 @@ export default function Appointments({ context = "home" }: AppointmentsProps) {
   return (
     <section
       id="Appointments"
-      className="w-full bg-(--bg-soft)/90 border-y border-(--line-soft) px-6 py-24 text-center"
+      className="w-full bg-(--bg-soft) border-y border-(--line-soft) px-6 py-24 text-center"
       tabIndex={-1}
       aria-label="Book an appointment"
     >

@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
-@theme inline {
+/* Theme toggle sets .dark on <html> (see providers/theme-provider.tsx).
+   Without this, Tailwind's dark: variant defaults to prefers-color-scheme,
+   which ignores the in-app toggle entirely. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
   --ivory-rose-50: oklch(97.12% 0.0074 29.23);
   --ivory-rose-100: oklch(87.86% 0.0174 29.23);
   --ivory-rose-200: oklch(73.42% 0.0358 29.23);
@@ -36,7 +41,50 @@
   --midnite-800: oklch(14.84% 0.0024 48.79);
   --midnite-900: oklch(8.48% 0.0024 48.79);
   --color-midnite: var(--midnite-500);
+}
 
+/* Lightning CSS strips custom properties that are never referenced via
+   var() anywhere in the compiled output. The style-guide swatch grid only
+   reaches these shades through a JS template string, which the compiler
+   can't see, so most of the ramp gets pruned as dead code. This keeps the
+   full ramp alive by giving every shade one real, visible consumer. cSpell:ignore keepalive */
+.color-ramp-keepalive {
+  background-image: linear-gradient(
+    to right,
+    var(--ivory-rose-50),
+    var(--ivory-rose-100),
+    var(--ivory-rose-200),
+    var(--ivory-rose-300),
+    var(--ivory-rose-400),
+    var(--ivory-rose-500),
+    var(--ivory-rose-600),
+    var(--ivory-rose-700),
+    var(--ivory-rose-800),
+    var(--ivory-rose-900),
+    var(--rose-gold-50),
+    var(--rose-gold-100),
+    var(--rose-gold-200),
+    var(--rose-gold-300),
+    var(--rose-gold-400),
+    var(--rose-gold-500),
+    var(--rose-gold-600),
+    var(--rose-gold-700),
+    var(--rose-gold-800),
+    var(--rose-gold-900),
+    var(--midnite-50),
+    var(--midnite-100),
+    var(--midnite-200),
+    var(--midnite-300),
+    var(--midnite-400),
+    var(--midnite-500),
+    var(--midnite-600),
+    var(--midnite-700),
+    var(--midnite-800),
+    var(--midnite-900)
+  );
+}
+
+@theme inline {
   --font-sans: var(--font-mulish, "Mulish", sans-serif);
   --font-nyght: var(--font-nyght-light, "Nyght Light", "serif");
   --font-nyght-italic: var(

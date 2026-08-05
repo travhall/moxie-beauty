@@ -1,6 +1,7 @@
 import { Link } from "next-view-transitions";
 import Logo from "./logo";
 import FooterThemeIsland from "./footer-theme-island";
+import DiagArrow from "./icons/DiagArrow";
 import { siteConfig } from "@/lib/site-config";
 import { getSquareServicesSafe, groupServices } from "@/lib/square";
 
@@ -38,9 +39,10 @@ function FooterCol({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${label} (opens in new tab)`}
-                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200 rounded-full"
+                className="inline-flex items-center gap-1.5 text-sm text-(--ink-soft) no-underline hover:text-(--accent) hover:underline underline-offset-4 transition-colors duration-200 rounded-full"
               >
                 {label}
+                <DiagArrow size={10} />
               </a>
             ) : (
               <Link
@@ -133,7 +135,7 @@ export default async function Footer() {
               href="https://travishall.design"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-(--ink-mute) hover:text-(--accent) transition-colors duration-200 rounded-full"
+              className="text-(--ink-mute) hover:text-(--accent) hover:underline underline-offset-4 transition-colors duration-200 rounded-full"
             >
               travishall.design
             </a>

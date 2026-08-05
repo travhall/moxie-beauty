@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
+import Button from "@/components/button";
+import DownloadIcon from "@/components/icons/DownloadIcon";
 import { containerClass } from "@/lib/layout";
 
 export const metadata: Metadata = {
@@ -96,7 +98,7 @@ export default function PoliciesPage() {
           <div className={container}>
             <Breadcrumbs page="Studio Policies" href="/policies" />
 
-            <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10 mb-16">
+            <div className="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_540px] gap-10">
               <h1 className="font-nyght text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
                 Let&apos;s agree
                 <br />
@@ -109,35 +111,28 @@ export default function PoliciesPage() {
                   help appointments run smoothly and respect the time of both
                   our clients and artists.
                 </p>
+                <Button
+                  href="/moxie_policies.pdf"
+                  download="Moxie_Beauty_Studio_Client_Policies.pdf"
+                  variant="outline"
+                  icon={<DownloadIcon />}
+                >
+                  Download &amp; Sign
+                </Button>
               </div>
             </div>
 
             {/* Download link */}
-            <div className="flex flex-wrap gap-3">
-              <a
+            {/* <div className="mt-6">
+              <Button
                 href="/moxie_policies.pdf"
                 download="Moxie_Beauty_Studio_Client_Policies.pdf"
-                className="inline-flex items-center gap-2.5 font-nyght-bold text-[11px] tracking-[0.25em] uppercase text-(--foreground) border border-b-4 border-(--accent) rounded-full px-5 py-2.5 hover:border-(--accent) hover:text-(--accent) transition-colors"
+                variant="outline"
+                icon={<DownloadIcon />}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
                 Download &amp; Sign
-              </a>
-            </div>
+              </Button>
+            </div> */}
           </div>
         </section>
 
@@ -166,7 +161,7 @@ export default function PoliciesPage() {
         </section>
 
         {/* ── Closing note ──────────────────────────────────────────────── */}
-        <section className="py-16 bg-(--foreground) dark:bg-(--foreground)/80">
+        <section className="py-16 bg-(--foreground) dark:bg-(--foreground)/80 z-50 relative">
           <div className={container}>
             <div className="max-w-2xl">
               <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">

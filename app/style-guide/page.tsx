@@ -1,6 +1,8 @@
 "use client";
 
 import Button from "@/components/button";
+import DiagArrow from "@/components/icons/DiagArrow";
+import DownloadIcon from "@/components/icons/DownloadIcon";
 
 // ─── Type Scale ───────────────────────────────────────────────────────────────
 
@@ -131,6 +133,13 @@ const palettes = [
 
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 
+// ─── Icons ────────────────────────────────────────────────────────────────────
+
+const icons = [
+  { name: "DiagArrow", usage: "External links, booking CTAs", Icon: DiagArrow },
+  { name: "DownloadIcon", usage: "File download actions", Icon: DownloadIcon },
+];
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StyleGuide() {
@@ -203,6 +212,9 @@ export default function StyleGuide() {
         <h2 className="font-sans font-bold text-2xl mb-8 text-(--accent)">
           Color Palette
         </h2>
+        {/* Keeps every shade compiled into the CSS output — see the comment
+            on .color-ramp-keepalive in globals.css. */}
+        <div className="color-ramp-keepalive h-0 overflow-hidden" aria-hidden="true" />
         <div className="space-y-8">
           {palettes.map(({ name, token, darkFrom }) => (
             <div key={name}>
@@ -267,6 +279,27 @@ export default function StyleGuide() {
                 <Button variant={variant} disabled>
                   Disabled
                 </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Icons ──────────────────────────────────────────────────── */}
+      <section>
+        <h2 className="font-sans font-bold text-2xl mb-8 text-(--accent)">
+          Icons
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {icons.map(({ name, usage, Icon }) => (
+            <div
+              key={name}
+              className="flex flex-col items-center gap-3 border border-(--accent)/15 rounded-lg p-6"
+            >
+              <Icon size={24} />
+              <div className="text-center">
+                <p className="font-sans font-semibold text-xs">{name}</p>
+                <p className="text-xs text-(--foreground)/40">{usage}</p>
               </div>
             </div>
           ))}

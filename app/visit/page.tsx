@@ -347,7 +347,7 @@ export default function VisitPage() {
         </section>
 
         {/* ── Arrival ───────────────────────────────────────────────────── */}
-        <section className="py-16 bg-(--foreground)/90 border-t border-(--line-soft) z-50 relative">
+        <section className="py-16 bg-(--foreground) border-t border-(--line-soft) z-50 relative">
           <div className={container}>
             <div className="mb-12">
               <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
