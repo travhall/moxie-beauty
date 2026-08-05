@@ -223,6 +223,7 @@ export default function AftercarePage() {
           <section
             key={num}
             id={`aftercare-${num.toLowerCase()}`}
+            aria-labelledby={`aftercare-${num.toLowerCase()}-heading`}
             className="py-44 border-b border-(--line-soft)"
             tabIndex={-1}
           >
@@ -232,7 +233,10 @@ export default function AftercarePage() {
                   <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                     {num} · {category}
                   </p>
-                  <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
+                  <h2
+                    id={`aftercare-${num.toLowerCase()}-heading`}
+                    className="font-nyght text-4xl md:text-5xl leading-tight text-balance"
+                  >
                     {category}
                   </h2>
                 </div>
