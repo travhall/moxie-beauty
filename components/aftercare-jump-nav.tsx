@@ -34,8 +34,11 @@ export function pickActiveId(
   ).id;
 }
 
+const BACK_TO_TOP_THRESHOLD_PX = 600;
+
 export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     const ids = groups.map(({ num }) => `aftercare-${num.toLowerCase()}`);
@@ -70,9 +73,26 @@ export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
     return () => observer.disconnect();
   }, [groups]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      setShowBackToTop(window.scrollY > BACK_TO_TOP_THRESHOLD_PX);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+  };
+
   return (
-    <nav aria-label="Aftercare sections">
-      <ul className="flex flex-col lg:flex-row lg:flex-wrap py-2 list-none [&>li:first-child>a]:lg:pl-0">
+    <>
+      <nav aria-label="Aftercare sections">
+      <ul className="flex flex-col md:flex-row md:flex-wrap py-2 list-none [&>li:first-child>a]:md:pl-0">
         {groups.map(({ num, category }) => {
           const id = `aftercare-${num.toLowerCase()}`;
           const isActive = activeId === id;
@@ -107,6 +127,33 @@ export default function AftercareJumpNav({ groups }: AftercareJumpNavProps) {
           );
         })}
       </ul>
-    </nav>
+      </nav>
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label="Back to top"
+        className={`md:hidden fixed bottom-6 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-(--line-soft) bg-(--background)/90 backdrop-blur-md text-(--foreground) shadow-lg transition-opacity duration-300 ${
+          showBackToTop
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M8 13V3M8 3L3 8M8 3L13 8"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+    </>
   );
 }
