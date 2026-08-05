@@ -192,10 +192,13 @@ export default function AftercarePage() {
         </section>
 
         {/* Jump links */}
-        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-20 relative z-60">
+        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-24 lg:top-22 relative z-60">
           <div className={container}>
             <AftercareJumpNav
-              groups={aftercareGroups.map(({ num, category }) => ({ num, category }))}
+              groups={aftercareGroups.map(({ num, category }) => ({
+                num,
+                category,
+              }))}
             />
           </div>
         </section>
