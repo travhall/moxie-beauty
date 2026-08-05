@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AftercareJumpNav from "@/components/aftercare-jump-nav";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { containerClass } from "@/lib/layout";
@@ -193,28 +194,9 @@ export default function AftercarePage() {
         {/* Jump links */}
         <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) lg:sticky lg:top-20 relative z-60">
           <div className={container}>
-            <nav aria-label="Aftercare sections">
-              <ul className="flex flex-col lg:flex-row lg:flex-wrap py-2 list-none [&>li:first-child>a]:lg:pl-0">
-                {aftercareGroups.map(({ num, category }) => (
-                  <li key={num}>
-                    <a
-                      href={`#aftercare-${num.toLowerCase()}`}
-                      className="group relative flex items-center overflow-hidden py-4 px-6 text-(--foreground) hover:text-(--accent) transition-colors"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="font-nyght-italic absolute top-1/2 -translate-y-[52%] text-[48px] leading-none text-(--rose-gold-100) dark:text-(--rose-gold-800) z-0 group-hover:text-(--accent-soft)/60 transition-all"
-                      >
-                        {num}
-                      </span>
-                      <span className="relative z-10 font-sans font-semibold text-xs tracking-[0.14em] uppercase text-(--ink-mute) group-hover:text-(--foreground) transition-colors">
-                        {category}
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <AftercareJumpNav
+              groups={aftercareGroups.map(({ num, category }) => ({ num, category }))}
+            />
           </div>
         </section>
 
