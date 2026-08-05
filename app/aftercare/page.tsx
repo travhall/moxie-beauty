@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AftercareJumpNav from "@/components/aftercare-jump-nav";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { containerClass } from "@/lib/layout";
@@ -191,27 +192,11 @@ export default function AftercarePage() {
         </section>
 
         {/* Jump links */}
-        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) lg:sticky lg:top-20 relative z-60">
+        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-20 relative z-60">
           <div className={container}>
-            <div className="flex flex-col lg:flex-row lg:flex-wrap py-2">
-              {aftercareGroups.map(({ num, category }) => (
-                <a
-                  key={num}
-                  href={`#aftercare-${num.toLowerCase()}`}
-                  className="group relative flex items-center overflow-hidden py-4 px-6 lg:first-of-type:pl-0 text-(--foreground) hover:text-(--accent) transition-colors"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="font-nyght-italic absolute top-1/2 -translate-y-[52%] text-[48px] leading-none text-(--rose-gold-100) dark:text-(--rose-gold-800) z-0 group-hover:text-(--accent-soft)/60 transition-all"
-                  >
-                    {num}
-                  </span>
-                  <span className="relative z-10 font-sans font-semibold text-xs tracking-[0.14em] uppercase text-(--ink-mute) group-hover:text-(--foreground) transition-colors">
-                    {category}
-                  </span>
-                </a>
-              ))}
-            </div>
+            <AftercareJumpNav
+              groups={aftercareGroups.map(({ num, category }) => ({ num, category }))}
+            />
           </div>
         </section>
 
@@ -220,6 +205,7 @@ export default function AftercarePage() {
           <section
             key={num}
             id={`aftercare-${num.toLowerCase()}`}
+            aria-labelledby={`aftercare-${num.toLowerCase()}-heading`}
             className="py-44 border-b border-(--line-soft)"
             tabIndex={-1}
           >
@@ -229,7 +215,10 @@ export default function AftercarePage() {
                   <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
                     {num} · {category}
                   </p>
-                  <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance">
+                  <h2
+                    id={`aftercare-${num.toLowerCase()}-heading`}
+                    className="font-nyght text-4xl md:text-5xl leading-tight text-balance"
+                  >
                     {category}
                   </h2>
                 </div>
