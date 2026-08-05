@@ -191,65 +191,72 @@ export default function AftercarePage() {
           </div>
         </section>
 
-        {/* Jump links */}
-        <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-24 lg:top-21 relative z-60">
-          <div className={container}>
-            <JumpNav
-              ariaLabel="Aftercare sections"
-              items={aftercareGroups.map(({ num, category }) => ({
-                id: `aftercare-${num.toLowerCase()}`,
-                marker: num,
-                label: category,
-              }))}
-            />
-          </div>
-        </section>
-
-        {/* ── Aftercare sections ────────────────────────────────────────── */}
-        {aftercareGroups.map(({ num, category, intro, items }) => (
-          <section
-            key={num}
-            id={`aftercare-${num.toLowerCase()}`}
-            aria-labelledby={`aftercare-${num.toLowerCase()}-heading`}
-            className="py-44 border-b border-(--line-soft)"
-            tabIndex={-1}
-          >
+        {/* Jump nav + sections share this wrapper so the sticky nav's
+            containing block ends exactly at the bottom of the last
+            section — position:sticky can't stick past its own parent's
+            edge, so the nav naturally scrolls away with it instead of
+            staying pinned over the Retail/Questions/Booking content below. */}
+        <div className="relative">
+          {/* Jump links */}
+          <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-24 lg:top-21 relative z-60">
             <div className={container}>
-              <div className="grid lg:grid-cols-[380px_540px] justify-between gap-16 mb-12">
-                <div>
-                  <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
-                    {num} · {category}
-                  </p>
-                  <h2
-                    id={`aftercare-${num.toLowerCase()}-heading`}
-                    className="font-nyght text-4xl md:text-5xl leading-tight text-balance"
-                  >
-                    {category}
-                  </h2>
-                </div>
-                <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
-                  {intro}
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
-                {items.map(({ heading, body }) => (
-                  <div
-                    key={heading}
-                    className="bg-(--background)/40 p-7 lg:p-8"
-                  >
-                    <h3 className="font-nyght text-xl md:text-2xl text-(--foreground) mb-3 text-balance">
-                      {heading}
-                    </h3>
-                    <p className="text-sm text-(--ink-soft) leading-relaxed text-pretty">
-                      {body}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <JumpNav
+                ariaLabel="Aftercare sections"
+                items={aftercareGroups.map(({ num, category }) => ({
+                  id: `aftercare-${num.toLowerCase()}`,
+                  marker: num,
+                  label: category,
+                }))}
+              />
             </div>
           </section>
-        ))}
+
+          {/* ── Aftercare sections ──────────────────────────────────────── */}
+          {aftercareGroups.map(({ num, category, intro, items }) => (
+            <section
+              key={num}
+              id={`aftercare-${num.toLowerCase()}`}
+              aria-labelledby={`aftercare-${num.toLowerCase()}-heading`}
+              className="py-44 border-b border-(--line-soft)"
+              tabIndex={-1}
+            >
+              <div className={container}>
+                <div className="grid lg:grid-cols-[380px_540px] justify-between gap-16 mb-12">
+                  <div>
+                    <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-4">
+                      {num} · {category}
+                    </p>
+                    <h2
+                      id={`aftercare-${num.toLowerCase()}-heading`}
+                      className="font-nyght text-4xl md:text-5xl leading-tight text-balance"
+                    >
+                      {category}
+                    </h2>
+                  </div>
+                  <p className="text-(--ink-soft) lg:pt-12 lg:self-end leading-relaxed">
+                    {intro}
+                  </p>
+                </div>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
+                  {items.map(({ heading, body }) => (
+                    <div
+                      key={heading}
+                      className="bg-(--background)/40 p-7 lg:p-8"
+                    >
+                      <h3 className="font-nyght text-xl md:text-2xl text-(--foreground) mb-3 text-balance">
+                        {heading}
+                      </h3>
+                      <p className="text-sm text-(--ink-soft) leading-relaxed text-pretty">
+                        {body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          ))}
+        </div>
 
         {/* ── Retail note ───────────────────────────────────────────────── */}
         <section className="py-16 bg-(--bg-soft) border-b border-(--line-soft)">
