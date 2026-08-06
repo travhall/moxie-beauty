@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pickActiveId } from "./jump-nav";
+import { pickActiveId, TOP_ACTIVATION_OFFSET_PX } from "./jump-nav";
 
 describe("pickActiveId", () => {
   it("returns the previous id when nothing is intersecting", () => {
@@ -38,5 +38,16 @@ describe("pickActiveId", () => {
       { id: "b", isIntersecting: true, intersectionRatio: 0.5 },
     ];
     expect(pickActiveId(entries, null)).toBe("a");
+  });
+});
+
+describe("TOP_ACTIVATION_OFFSET_PX", () => {
+  it("stays in sync with the hardcoded header offsets it approximates", () => {
+    // This constant is hand-tuned against two other hardcoded layout
+    // values (see the comment on the constant's declaration in
+    // jump-nav.tsx). This test doesn't verify the visual result — it
+    // exists so changing this number requires touching this test,
+    // which points back to the comment and the two files to re-check.
+    expect(TOP_ACTIVATION_OFFSET_PX).toBe(160);
   });
 });
