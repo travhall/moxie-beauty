@@ -9,71 +9,15 @@ import {
   primaryVariationId,
   type SquareService,
 } from "@/lib/square";
+import { FALLBACK_SERVICES } from "@/lib/fallback-services";
 
-// ── Fallback data ─────────────────────────────────────────────────────────────
-// Shown if Square API is unavailable or returns no services.
-
-const FALLBACK_SERVICES = [
-  {
-    num: "01",
-    name: "Brow Lamination & Shape",
-    desc: "Beautifully lifted, fuller-looking brows designed to enhance your natural shape with an effortlessly polished finish.",
-    meta: [
-      { label: "From", value: "$95" },
-      { label: "Duration", value: "75 min" },
-      { label: "Lasts", value: "6–8 wks" },
-    ],
-  },
-  {
-    num: "02",
-    name: "Signature Lash Set",
-    desc: "Fully customized extensions hand-applied to your natural lashes — length, curl, and finish tailored to your eye shape and lifestyle.",
-    meta: [
-      { label: "From", value: "$145" },
-      { label: "Duration", value: "120 min" },
-      { label: "Fills", value: "from $70" },
-    ],
-  },
-  {
-    num: "03",
-    name: "Volume Lash Set",
-    desc: "Hand-crafted fans of ultra-fine extensions for soft, even density with more dimension. Choose your level of drama.",
-    meta: [
-      { label: "From", value: "$195" },
-      { label: "Duration", value: "150 min" },
-      { label: "Fills", value: "from $95" },
-    ],
-  },
-  {
-    num: "04",
-    name: "Lash Lift & Tint",
-    desc: "A subtle curl from root to tip that makes your own lashes look longer and darker. Low maintenance, high impact.",
-    meta: [
-      { label: "From", value: "$110" },
-      { label: "Duration", value: "60 min" },
-      { label: "Lasts", value: "6–8 wks" },
-    ],
-  },
-  {
-    num: "05",
-    name: "Microblading",
-    desc: "Semi-permanent, hair-stroke brows matched to your natural coloring and bone structure. Starts with a required consultation.",
-    meta: [
-      { label: "Consult", value: "Required" },
-      { label: "Lasts", value: "12–18 mo" },
-      { label: "Touch-up", value: "6–8 wks" },
-    ],
-  },
-  {
-    num: "06",
-    name: "First-Visit Consult",
-    desc: "New here? Start with a 30-minute consultation. We'll plan a service together and book the right appointment for you.",
-    meta: [
-      { label: "Price", value: "Complimentary" },
-      { label: "Duration", value: "30 min" },
-      { label: "Where", value: "In studio" },
-    ],
-  },
+const TEASER_SERVICE_IDS = [
+  "brow-lamination-shape",
+  "signature-lash-set",
+  "volume-lash-set",
+  "lash-lift-tint",
+  "microblading",
+  "first-visit-consult",
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -101,6 +45,18 @@ export default async function Services() {
   const useLive = liveServices.length > 0;
 
   // First 6 live services, or hardcoded fallback
+  const fallbackDisplayServices = TEASER_SERVICE_IDS.map((id, i) => {
+    const svc = FALLBACK_SERVICES.find((s) => s.id === id);
+    if (!svc) throw new Error(`Unknown fallback service id: ${id}`);
+    return {
+      num: String(i + 1).padStart(2, "0"),
+      name: svc.name,
+      desc: svc.teaserDesc ?? svc.desc,
+      meta: svc.teaserMeta ?? [],
+      variationId: null,
+    };
+  });
+
   const displayServices = useLive
     ? liveServices.slice(0, 6).map((svc, i) => ({
         num: String(i + 1).padStart(2, "0"),
@@ -109,7 +65,7 @@ export default async function Services() {
         meta: buildMeta(svc),
         variationId: primaryVariationId(svc.variations),
       }))
-    : FALLBACK_SERVICES.map((s) => ({ ...s, variationId: null }));
+    : fallbackDisplayServices;
 
   return (
     <section
