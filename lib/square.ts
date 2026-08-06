@@ -186,7 +186,11 @@ export const getSquareServices = unstable_cache(
 export async function getSquareServicesSafe(): Promise<SquareService[] | null> {
   try {
     return await getSquareServices();
-  } catch {
+  } catch (error) {
+    console.error(
+      "[square] Failed to fetch live services — falling back to hardcoded catalog data.",
+      error,
+    );
     return null;
   }
 }
