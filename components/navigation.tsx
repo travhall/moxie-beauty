@@ -15,8 +15,6 @@ interface NavItem {
   href: string;
 }
 
-const NAV_HEIGHT_PX = 78;
-
 export default function Navigation() {
   const { openBooking } = useBooking();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -226,7 +224,6 @@ export default function Navigation() {
             ? "bg-(--background)/92 backdrop-blur-md backdrop-contrast-150 border-b border-(--line-soft) shadow-[inset_0_1px_0_0_color-mix(in_oklab,white_80%,transparent),inset_0_-1px_0_0_color-mix(in_oklab,var(--midnite-800)_10%,transparent)] dark:shadow-[inset_0_1px_0_0_color-mix(in_oklab,var(--ivory-rose-50)_60%,transparent),0_6px_24px_-16px_color-mix(in_oklab,var(--midnite-800)_22%,transparent)]"
             : "bg-transparent border-b border-transparent shadow-none"
         }`}
-        style={{ "--nav-height": `${NAV_HEIGHT_PX}px` } as React.CSSProperties}
       >
         <div className="">
           <div className="flex items-center justify-between">
