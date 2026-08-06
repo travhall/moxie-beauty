@@ -49,7 +49,6 @@ moxie-beauty/
 ├── components/
 │   ├── about.tsx
 │   ├── appointments.tsx    # Three-breakpoint booking journey section
-│   ├── blob.tsx             # WebGL ambient background (Three.js)
 │   ├── booking-overlay.tsx  # Full-screen Square booking modal
 │   ├── breadcrumbs.tsx      # Per-page breadcrumb nav + JSON-LD
 │   ├── button.tsx           # Accessible polymorphic button/link
@@ -60,12 +59,12 @@ moxie-beauty/
 │   ├── logo.tsx
 │   ├── map.tsx              # Google Maps embed
 │   ├── marquee-ticker.tsx
+│   ├── mesh-gradient.tsx    # Hand-rolled WebGL ambient background (raw WebGL1, no shader library)
 │   ├── navigation.tsx       # Scroll-aware sticky nav, mobile drawer
 │   ├── service-card-client.tsx
 │   ├── service-rows-client.tsx
 │   ├── services.tsx
 │   ├── studio-filmstrip.tsx
-│   ├── testimonials.tsx
 │   └── theme-toggle.tsx
 ├── context/
 │   └── BookingContext.tsx  # Shared booking-overlay open/close state
@@ -166,7 +165,7 @@ Brand heading gradient: `bg-linear-to-r from-(--foreground) to-(--accent) bg-cli
 - **Skip link** — first focusable element on every page, targets `#main-content`
 - **Focus rings** — branded rose-gold (`--accent`) outline on all interactive elements via low-specificity `:where()` baseline
 - **Keyboard navigation** — full Tab/Enter/Escape support including booking modal focus trap
-- **Reduced motion** — `prefers-reduced-motion` strips all CSS transitions/animations; Three.js blob handled separately in JS
+- **Reduced motion** — `prefers-reduced-motion` strips all CSS transitions/animations; the ambient mesh-gradient background (`components/mesh-gradient.tsx`) checks the same media query in JS and falls back to a static single frame
 - **Color contrast** — all text meets or exceeds WCAG AA; small accent text uses `--accent-text` (7.6:1 light / 7.8:1 dark)
 - **Screen readers** — semantic HTML, heading hierarchy, ARIA labels on complex widgets, `aria-hidden` on decorative elements
 
