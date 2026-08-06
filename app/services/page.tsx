@@ -16,6 +16,10 @@ import {
   type SquareService,
 } from "@/lib/square";
 import { siteConfig } from "@/lib/site-config";
+import {
+  FALLBACK_SERVICES,
+  type FallbackService,
+} from "@/lib/fallback-services";
 
 export const metadata: Metadata = {
   title: "Our Services | Moxie Beauty Studio",
@@ -57,77 +61,6 @@ function squareMeta(svc: SquareService): string[] {
   return meta;
 }
 
-// ── Hardcoded fallback data ───────────────────────────────────────────────────
-
-const FALLBACK_BROW = [
-  {
-    num: "01",
-    name: "Brow Lamination & Shape",
-    desc: "Beautifully lifted, fuller-looking brows designed to enhance your natural shape with an effortlessly polished finish.",
-    meta: ["From $95", "75 min", "Lasts 6–8 wks"],
-  },
-  {
-    num: "02",
-    name: "Brow Tint & Sculpt",
-    desc: "A short, all-purpose visit. Soft tint matched to your hair, plus a sculpt — the easiest way to wake up looking finished.",
-    meta: ["From $75", "45 min", "Lasts 3–4 wks"],
-  },
-  {
-    num: "03",
-    name: "Microblading",
-    desc: "Semi-permanent, hair-stroke brows crafted to match your natural coloring and bone structure. Begins with a required consultation to discuss your goals and determine if the service is right for you.",
-    meta: ["Consultation required", "Lasts 12–18 mo", "Touch-up at 6–8 wks"],
-  },
-];
-
-const FALLBACK_LASH = [
-  {
-    num: "04",
-    name: "Signature Lash Set",
-    desc: "Fully customized extensions hand-applied to your natural lashes — length, curl, and finish tailored to your eye shape and lifestyle. The look of great lashes, made to feel like yours.",
-    meta: ["From $145", "120 min", "Fills from $70"],
-  },
-  {
-    num: "05",
-    name: "Volume Lash Set",
-    desc: "Hand-crafted fans of ultra-fine extensions for soft, even density with more dimension. Choose your level of drama — from a quiet lift to a deliberate full set.",
-    meta: ["From $195", "150 min", "Fills from $95"],
-  },
-  {
-    num: "06",
-    name: "Lash Lift & Tint",
-    desc: "A low-maintenance treatment that lifts, curls, and darkens your natural lashes for an effortlessly enhanced look.",
-    meta: ["From $110", "60 min", "Lasts 6–8 wks"],
-  },
-];
-
-const FALLBACK_EXTRAS = [
-  {
-    num: "07",
-    name: "First-Visit Consult",
-    desc: "New here? Start with a 30-minute consultation. We'll plan a service together and book the right appointment for you.",
-    meta: ["Complimentary", "30 min", "In studio"],
-  },
-  {
-    num: "08",
-    name: "Lash Removal",
-    desc: "Safe, gentle removal of extensions applied anywhere. No tugging, no damage to your natural lashes.",
-    meta: ["From $35", "30 min", "Walk-out clean"],
-  },
-  {
-    num: "09",
-    name: "Lash Tint",
-    desc: "A small visit, big difference — semi-permanent color that darkens the full length of your natural lashes for 4–6 weeks.",
-    meta: ["From $45", "30 min", "Lasts 4–6 wks"],
-  },
-  {
-    num: "10",
-    name: "Moxie Gift Card",
-    desc: "A quietly thoughtful gift, in any amount. Delivered as a small card by mail, or by email the same day.",
-    meta: ["$50+", "No expiry", "Mail or email"],
-  },
-];
-
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
 export default async function ServicesPage() {
@@ -159,18 +92,27 @@ export default async function ServicesPage() {
 
   // cSpell:ignore svcs
 
-  const fallbackWithId = (arr: typeof FALLBACK_BROW) =>
-    arr.map((c) => ({ ...c, variationId: null }));
+  const fallbackCards = (
+    category: FallbackService["category"],
+    startNum: number,
+  ) =>
+    FALLBACK_SERVICES.filter((s) => s.category === category).map((s, i) => ({
+      num: String(startNum + i).padStart(2, "0"),
+      name: s.name,
+      desc: s.desc,
+      meta: s.cardMeta,
+      variationId: null,
+    }));
 
   const browCards = useLive
     ? liveCards(groups.brow, 1)
-    : fallbackWithId(FALLBACK_BROW);
+    : fallbackCards("brow", 1);
   const lashCards = useLive
     ? liveCards(groups.lash, browCards.length + 1)
-    : fallbackWithId(FALLBACK_LASH);
+    : fallbackCards("lash", browCards.length + 1);
   const extrasCards = useLive
     ? liveCards(groups.extras, browCards.length + lashCards.length + 1)
-    : fallbackWithId(FALLBACK_EXTRAS);
+    : fallbackCards("extras", browCards.length + lashCards.length + 1);
 
   // Build services JSON-LD from live data when available, fallback otherwise
   const allCards = [...browCards, ...lashCards, ...extrasCards];
