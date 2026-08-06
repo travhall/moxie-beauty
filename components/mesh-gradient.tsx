@@ -3,8 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Hand-rolled WebGL mesh gradient — comparison prototype for the CSS blob
- * layer (components/blob.tsx). No shader package: raw WebGL1 context, a
+ * Hand-rolled WebGL mesh gradient. No shader package: raw WebGL1 context, a
  * fullscreen triangle, and an inlined simplex-noise domain warp. Colors are
  * read from the site's CSS custom properties at runtime (via a 1x1 canvas
  * readback, which resolves oklch() the same way the browser paints it) so
