@@ -256,7 +256,6 @@ export default function RootLayout({
           </a>
 
           <MeshGradient />
-          {/* <Blob /> — swapped out temporarily to compare against the WebGL mesh gradient */}
           <div className="site-container">
             <ThemeProvider>
               <BookingProvider>

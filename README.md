@@ -21,7 +21,7 @@ Measured against the production build (dev scores shown — all metrics 100):
 - **Framework**: Next.js 16.2.9 — App Router, React Server Components
 - **Language**: TypeScript 6
 - **Styling**: Tailwind CSS v4 — OKLCH color space, CSS custom properties
-- **3D / WebGL**: Three.js + simplex-noise — ambient blob background
+- **Ambient background**: Hand-rolled WebGL mesh gradient (`components/mesh-gradient.tsx`) — raw WebGL1, no Three.js or other shader library, inlined simplex-noise domain warp
 - **Fonts**: Mulish (Google) + Nyght Serif family (local, 4 weights)
 - **Analytics**: Vercel Analytics
 - **Booking**: Square Appointments (embedded iframe)

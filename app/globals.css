@@ -412,7 +412,7 @@ body.menu-open {
   white-space: nowrap;
   animation: marquee 30s linear infinite;
   font-family: var(--font-nyght-italic);
-  font-size: clamp(24px, 2vw, 32px);
+  font-size: clamp(16px, 2vw, 24px);
   font-style: italic;
   color: var(--ink-soft);
   letter-spacing: 0.05em;
