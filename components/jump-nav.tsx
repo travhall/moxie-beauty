@@ -58,7 +58,17 @@ const BACK_TO_TOP_THRESHOLD_PX = 600;
 // Matches the IntersectionObserver's rootMargin top inset below — the band
 // where a section is considered "current" starts 160px down from the
 // viewport top (clearing the sticky header + this nav).
-const TOP_ACTIVATION_OFFSET_PX = 160;
+//
+// This number is NOT derived from anything — it's a hand-tuned estimate of
+// two other hardcoded layout values that live elsewhere. If either changes,
+// re-tune this constant and re-run the manual check below:
+//   - components/navigation.tsx: the global <header>'s `top-4` sticky offset
+//   - app/aftercare/page.tsx: the jump-nav wrapper's `md:top-24 lg:top-21`
+//     sticky offset (this page is currently the only consumer of JumpNav)
+// Manual check: scroll to just above the first jump target's activation
+// point and confirm the active link switches within ~1 section-height of
+// where the section visually starts clearing the sticky header stack.
+export const TOP_ACTIVATION_OFFSET_PX = 160;
 
 export default function JumpNav({ items, ariaLabel }: JumpNavProps) {
   const mounted = useMounted();

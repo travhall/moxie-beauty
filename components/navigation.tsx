@@ -218,6 +218,10 @@ export default function Navigation() {
   return (
     <>
       {/* ── Sticky header ─────────────────────────────────────────────── */}
+      {/* NOTE: this header's `top-4` sticky offset (and its rendered height) is
+          one of two values components/jump-nav.tsx's TOP_ACTIVATION_OFFSET_PX
+          hand-approximates. If you resize or reposition this header, see the
+          comment on that constant. */}
       <header
         className={`sticky max-w-335 mx-2 xl:mx-auto p-4 rounded-full top-4 z-80 transition-[background-color,border-color,box-shadow] duration-500 ${
           scrolled

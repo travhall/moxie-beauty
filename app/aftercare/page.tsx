@@ -195,7 +195,12 @@ export default function AftercarePage() {
             containing block ends exactly at the bottom of the last
             section — position:sticky can't stick past its own parent's
             edge, so the nav naturally scrolls away with it instead of
-            staying pinned over the Retail/Questions/Booking content below. */}
+            staying pinned over the Retail/Questions/Booking content below.
+
+            NOTE: this section's `md:top-24 lg:top-21` sticky offset is one of
+            two values components/jump-nav.tsx's TOP_ACTIVATION_OFFSET_PX
+            hand-approximates. If you change this offset, see the comment on
+            that constant. */}
         <div className="relative">
           {/* Jump links */}
           <section className="bg-(--background)/90 backdrop-blur-md border-b border-(--line-soft) md:sticky md:top-24 lg:top-21 relative z-60">
