@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import {
   formatPrice,
   formatDuration,
@@ -6,6 +6,7 @@ import {
   primaryDuration,
   primaryVariationId,
   groupServices,
+  getSquareServicesSafe,
   type ServiceVariation,
   type SquareService,
 } from "./square";
@@ -133,5 +134,21 @@ describe("groupServices", () => {
   it("falls back to the service name when categoryName is empty", () => {
     const svc = makeService({ categoryName: "", name: "Microblade touch-up" });
     expect(groupServices([svc])).toEqual({ brow: [svc], lash: [], extras: [] });
+  });
+});
+
+describe("getSquareServicesSafe", () => {
+  it("logs and returns null instead of throwing when the fetch fails", async () => {
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    const result = await getSquareServicesSafe();
+
+    expect(result).toBeNull();
+    expect(errorSpy).toHaveBeenCalledWith(
+      expect.stringContaining("[square]"),
+      expect.anything(),
+    );
+
+    errorSpy.mockRestore();
   });
 });
