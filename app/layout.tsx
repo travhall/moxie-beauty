@@ -8,7 +8,6 @@ import { ThemeProvider } from "../providers/theme-provider";
 import { BookingProvider } from "@/context/BookingContext";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-// import Blob from "@/components/blob";
 import MeshGradient from "@/components/mesh-gradient";
 import { siteConfig } from "@/lib/site-config";
 
