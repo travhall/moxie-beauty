@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import JumpNav from "@/components/jump-nav";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
+import DiagArrow from "@/components/icons/DiagArrow";
 import { containerClass } from "@/lib/layout";
 import { siteConfig } from "@/lib/site-config";
 
@@ -305,7 +306,10 @@ export default function AftercarePage() {
                   href={siteConfig.contact.smsHref}
                   className="font-nyght-italic text-(--accent) hover:underline underline-offset-4"
                 >
-                  Text us <span aria-hidden="true">↗</span>
+                  Text us{" "}
+                  <span className="inline-flex align-middle">
+                    <DiagArrow size={16} />
+                  </span>
                 </a>
               </p>
               <p className="text-(--background) leading-relaxed">

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Appointments from "@/components/appointments";
 import Breadcrumbs from "@/components/breadcrumbs";
 import FactStrip from "@/components/fact-strip";
+import DiagArrow from "@/components/icons/DiagArrow";
 import { siteConfig } from "@/lib/site-config";
 import { containerClass } from "@/lib/layout";
 
@@ -430,7 +431,10 @@ export default function VisitPage() {
                       aria-label={`${cta.label} (opens in new tab)`}
                       className="text-sm font-bold text-(--rose-gold-300) dark:text-(--rose-gold-500) hover:underline underline-offset-4"
                     >
-                      {cta.label} <span aria-hidden="true">↗</span>
+                      {cta.label}{" "}
+                      <span className="inline-flex align-middle">
+                        <DiagArrow size={13} />
+                      </span>
                     </a>
                   )}
                 </div>

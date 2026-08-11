@@ -46,7 +46,10 @@ const variants: Record<ButtonVariant, string> = {
 function Arrow() {
   return (
     <span className="btn-arrow" aria-hidden="true">
-      <span className="btn-arrow-shaft" />
+      <span className="btn-arrow-shaft">
+        <span className="btn-arrow-bar" />
+        <span className="btn-arrow-head" />
+      </span>
     </span>
   );
 }

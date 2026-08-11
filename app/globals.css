@@ -319,6 +319,16 @@ body {
   pointer-events: none;
 }
 
+/* ---------- Global focus-visible fallback ---------- */
+/* Component-level focus-visible utilities (button.tsx's --button ring, nav's
+   -offset-4) win by specificity; this only fills plain links/buttons that
+   don't declare their own. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ---------- Button arrow ---------- */
 .btn-arrow {
   display: inline-flex;
@@ -327,26 +337,46 @@ body {
 }
 .btn-arrow-shaft {
   display: inline-block;
+  width: 22px;
+  height: 1px;
+  position: relative;
+}
+.btn-arrow-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 14px;
   height: 1px;
   background: currentColor;
-  position: relative;
-  transition: width 0.3s ease;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
-.btn-arrow-shaft::after {
-  content: "";
+.btn-arrow-head {
   position: absolute;
-  right: -1px;
+  left: 8px;
   top: -3px;
+  width: 7px;
+  height: 7px;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+.btn-arrow-head::after {
+  content: "";
+  display: block;
   width: 7px;
   height: 7px;
   border-top: 1.5px solid currentColor;
   border-right: 1.5px solid currentColor;
   transform: rotate(45deg);
 }
-button:hover .btn-arrow-shaft,
-a:hover .btn-arrow-shaft {
-  width: 22px;
+button:hover .btn-arrow-bar,
+a:hover .btn-arrow-bar {
+  transform: scaleX(1.5714);
+}
+button:hover .btn-arrow-head,
+a:hover .btn-arrow-head {
+  transform: translateX(8px);
 }
 
 /* ---------- Mobile nav drawer ---------- */
