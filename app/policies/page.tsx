@@ -161,19 +161,21 @@ export default function PoliciesPage() {
         </section>
 
         {/* ── Closing note ──────────────────────────────────────────────── */}
-        <section className="py-16 bg-(--foreground) dark:bg-(--foreground)/80 z-50 relative">
+        <section className="py-16 bg-(--foreground) z-50 relative">
           <div className={container}>
             <div className="max-w-2xl">
-              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
+              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background) mb-4">
                 A note from Jackie
               </p>
               <p className="font-nyght text-3xl lg:text-4xl text-(--background) leading-snug mb-6 text-balance">
                 Creating beautiful results is rewarding. Building relationships
                 with the people who trust me is what makes me truly{" "}
-                <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">love</em> what
-                I do.
+                <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-500)">
+                  love
+                </em>{" "}
+                what I do.
               </p>
-              <p className="text-(--background)/80 leading-relaxed lg:text-balance">
+              <p className="text-(--background) leading-relaxed lg:text-balance">
                 Beautiful experiences begin with mutual respect. Thank you for
                 taking the time to review our policies.
               </p>

@@ -207,7 +207,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-px bg-(--line-soft) rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
+            <div className="grid sm:grid-cols-2 gap-px bg-(--line-soft)/80 rounded-2xl overflow-hidden border border-b-8 border-(--line-soft)">
               {[
                 {
                   num: "01",

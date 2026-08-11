@@ -347,15 +347,15 @@ export default function VisitPage() {
         </section>
 
         {/* ── Arrival ───────────────────────────────────────────────────── */}
-        <section className="py-16 bg-(--foreground) dark:bg-(--foreground)/80 border-t border-(--line-soft) z-50 relative">
+        <section className="py-16 bg-(--foreground) dark:bg-(--foreground) border-t border-(--line-soft) z-50 relative">
           <div className={container}>
             <div className="mb-12">
-              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background)/80 mb-4">
+              <p className="font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--background) mb-4">
                 Finding us
               </p>
               <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance text-(--background) mb-3">
                 402 S Front{" "}
-                <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
+                <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-500)">
                   Street,
                 </em>{" "}
                 Rochester.
@@ -369,7 +369,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Look for the{" "}
-                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
+                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-500)">
                         black door.
                       </em>
                     </span>
@@ -385,7 +385,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Parking is{" "}
-                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
+                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-500)">
                         easy.
                       </em>
                     </span>
@@ -398,7 +398,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Just{" "}
-                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
+                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-500)">
                         yourself.
                       </em>
                     </span>
@@ -408,7 +408,7 @@ export default function VisitPage() {
                 },
               ].map(({ num, heading, body, cta }) => (
                 <div key={num}>
-                  <p className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--background)/80 mb-4">
+                  <p className="font-nyght-bold text-[10px] tracking-[0.25em] uppercase text-(--background) mb-4">
                     {num} ·{" "}
                     {num === "01"
                       ? "Finding us"
@@ -428,7 +428,7 @@ export default function VisitPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${cta.label} (opens in new tab)`}
-                      className="text-sm font-bold text-(--rose-gold-300) dark:text-(--rose-gold-600) hover:underline underline-offset-4"
+                      className="text-sm font-bold text-(--rose-gold-300) dark:text-(--rose-gold-500) hover:underline underline-offset-4"
                     >
                       {cta.label} <span aria-hidden="true">↗</span>
                     </a>

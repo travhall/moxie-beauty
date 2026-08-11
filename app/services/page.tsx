@@ -260,17 +260,21 @@ export default async function ServicesPage() {
         {/* ── Price ribbon — shown when at least one adjacent section exists ── */}
         {(browCards.length > 0 || lashCards.length > 0) && (
           <section
-            className="py-20 bg-(--foreground) dark:bg-(--foreground)/80 z-50 relative"
+            className="py-20 bg-(--foreground) z-50 relative"
             aria-label="A note on the way we work"
           >
             <div className={container}>
-              <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background)/80 mb-6">
+              <p className="font-nyght-bold text-[10px] tracking-[0.3em] uppercase text-(--background) mb-6">
                 A note on the way we work
               </p>
               <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-3xl text-balance">
-                <span className="text-(--rose-gold-300) dark:text-(--rose-gold-600)">Beautiful.</span>{" "}
-                <span className="text-(--rose-gold-300) dark:text-(--rose-gold-600)">Intentional.</span> Never
-                one-size-fits-all.
+                <span className="text-(--rose-gold-300) dark:text-(--rose-gold-500)">
+                  Beautiful.
+                </span>{" "}
+                <span className="text-(--rose-gold-300) dark:text-(--rose-gold-500)">
+                  Intentional.
+                </span>{" "}
+                Never one-size-fits-all.
               </p>
               <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)">
                 Jackie · founder · est. 2021
