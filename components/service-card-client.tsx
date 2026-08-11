@@ -25,7 +25,7 @@ export default function ServiceCardClient({
       type="button"
       onClick={() => openBooking(variationId ?? undefined, name)}
       aria-label={`Book ${name}`}
-      className="group flex items-start gap-5 py-7 border-b border-(--line-soft) w-full text-left cursor-pointer bg-transparent px-4 -mx-4 rounded-xl hover:bg-[linear-gradient(to_right,transparent,var(--bg-soft)_15%,var(--bg-soft)_85%,transparent)] transition-all duration-300 opacity-100 group-hover/list:opacity-80 hover:opacity-100"
+      className="group flex items-start gap-5 py-7 border-b border-(--line-soft) w-full text-left cursor-pointer bg-transparent px-4 -mx-4 rounded-xl hover:bg-[linear-gradient(to_right,transparent,var(--bg-soft)_15%,var(--bg-soft)_85%,transparent)] transition-all duration-300 group-hover/list:opacity-80 hover:opacity-100!"
     >
       <span
         className="font-nyght-bold text-[11px] tracking-[0.25em] text-(--ink-mute) mt-1 min-w-5.5"

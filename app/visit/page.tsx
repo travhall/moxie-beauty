@@ -355,7 +355,7 @@ export default function VisitPage() {
               </p>
               <h2 className="font-nyght text-4xl md:text-5xl leading-tight text-balance text-(--background) mb-3">
                 402 S Front{" "}
-                <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-700)">
+                <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
                   Street,
                 </em>{" "}
                 Rochester.
@@ -369,7 +369,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Look for the{" "}
-                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-700)">
+                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
                         black door.
                       </em>
                     </span>
@@ -385,7 +385,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Parking is{" "}
-                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-700)">
+                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
                         easy.
                       </em>
                     </span>
@@ -398,7 +398,7 @@ export default function VisitPage() {
                   heading: (
                     <span>
                       Just{" "}
-                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-700)">
+                      <em className="font-nyght-italic text-(--rose-gold-300) dark:text-(--rose-gold-600)">
                         yourself.
                       </em>
                     </span>
@@ -428,7 +428,7 @@ export default function VisitPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${cta.label} (opens in new tab)`}
-                      className="text-sm font-bold text-(--rose-gold-300) dark:text-(--rose-gold-800) hover:underline underline-offset-4"
+                      className="text-sm font-bold text-(--rose-gold-300) dark:text-(--rose-gold-600) hover:underline underline-offset-4"
                     >
                       {cta.label} <span aria-hidden="true">↗</span>
                     </a>
