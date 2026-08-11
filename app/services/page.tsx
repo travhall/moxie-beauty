@@ -3,7 +3,7 @@ import Appointments from "@/components/appointments";
 import MarqueeTicker from "@/components/marquee-ticker";
 import Breadcrumbs from "@/components/breadcrumbs";
 import FactStrip from "@/components/fact-strip";
-import ServiceCardList from "@/components/service-card-list";
+import ServiceCardClient from "@/components/service-card-client";
 import { containerClass } from "@/lib/layout";
 import {
   getSquareServicesSafe,
@@ -241,7 +241,18 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <ServiceCardList cards={browCards} />
+              <div className="divide-y-0 service-hover-fade">
+                {browCards.map((c) => (
+                  <ServiceCardClient
+                    key={c.num}
+                    num={c.num}
+                    name={c.name}
+                    desc={c.desc}
+                    meta={c.meta}
+                    variationId={c.variationId}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         )}
@@ -291,7 +302,18 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <ServiceCardList cards={lashCards} />
+              <div className="service-hover-fade">
+                {lashCards.map((c) => (
+                  <ServiceCardClient
+                    key={c.num}
+                    num={c.num}
+                    name={c.name}
+                    desc={c.desc}
+                    meta={c.meta}
+                    variationId={c.variationId}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         )}
@@ -320,7 +342,18 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <ServiceCardList cards={extrasCards} />
+              <div className="service-hover-fade">
+                {extrasCards.map((c) => (
+                  <ServiceCardClient
+                    key={c.num}
+                    num={c.num}
+                    name={c.name}
+                    desc={c.desc}
+                    meta={c.meta}
+                    variationId={c.variationId}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         )}

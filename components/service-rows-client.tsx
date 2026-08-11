@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useBooking } from "@/context/BookingContext";
 import DiagArrow from "./icons/DiagArrow";
 
@@ -19,23 +18,14 @@ function ServiceRow({
   meta,
   variationId,
   isOdd,
-  faded,
-  onHoverStart,
-}: ServiceRowData & {
-  isOdd: boolean;
-  faded: boolean;
-  onHoverStart: () => void;
-}) {
+}: ServiceRowData & { isOdd: boolean }) {
   const { openBooking } = useBooking();
 
   return (
     <button
       type="button"
       onClick={() => openBooking(variationId ?? undefined, name)}
-      onMouseEnter={onHoverStart}
-      onFocus={onHoverStart}
       aria-label={`Book ${name}`}
-      style={{ opacity: faded ? 0.8 : 1 }}
       className={[
         "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground)",
         "w-full text-left cursor-pointer bg-transparent transition-all duration-300",
@@ -91,21 +81,10 @@ export default function ServiceRowsClient({
 }: {
   services: ServiceRowData[];
 }) {
-  const [hovered, setHovered] = useState<string | null>(null);
-
   return (
-    <div
-      className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line)"
-      onMouseLeave={() => setHovered(null)}
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line) service-hover-fade">
       {services.map((svc, i) => (
-        <ServiceRow
-          key={svc.num}
-          {...svc}
-          isOdd={i % 2 === 0}
-          faded={hovered !== null && hovered !== svc.num}
-          onHoverStart={() => setHovered(svc.num)}
-        />
+        <ServiceRow key={svc.num} {...svc} isOdd={i % 2 === 0} />
       ))}
     </div>
   );
