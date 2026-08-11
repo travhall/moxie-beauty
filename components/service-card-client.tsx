@@ -17,15 +17,20 @@ export default function ServiceCardClient({
   desc,
   meta,
   variationId,
-}: ServiceCardData) {
+  faded = false,
+  onHoverStart,
+}: ServiceCardData & { faded?: boolean; onHoverStart?: () => void }) {
   const { openBooking } = useBooking();
 
   return (
     <button
       type="button"
       onClick={() => openBooking(variationId ?? undefined, name)}
+      onMouseEnter={onHoverStart}
+      onFocus={onHoverStart}
       aria-label={`Book ${name}`}
-      className="group flex items-start gap-5 py-7 border-b border-(--line-soft) w-full text-left cursor-pointer bg-transparent px-4 -mx-4 rounded-xl hover:bg-[linear-gradient(to_right,transparent,var(--bg-soft)_15%,var(--bg-soft)_85%,transparent)] transition-all duration-300 group-hover/list:opacity-80 hover:opacity-100!"
+      style={{ opacity: faded ? 0.8 : 1 }}
+      className="group flex items-start gap-5 py-7 border-b border-(--line-soft) w-full text-left cursor-pointer bg-transparent px-4 -mx-4 rounded-xl hover:bg-[linear-gradient(to_right,transparent,var(--bg-soft)_15%,var(--bg-soft)_85%,transparent)] transition-all duration-300"
     >
       <span
         className="font-nyght-bold text-[11px] tracking-[0.25em] text-(--ink-mute) mt-1 min-w-5.5"

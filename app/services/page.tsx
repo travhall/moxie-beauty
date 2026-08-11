@@ -3,7 +3,7 @@ import Appointments from "@/components/appointments";
 import MarqueeTicker from "@/components/marquee-ticker";
 import Breadcrumbs from "@/components/breadcrumbs";
 import FactStrip from "@/components/fact-strip";
-import ServiceCardClient from "@/components/service-card-client";
+import ServiceCardList from "@/components/service-card-list";
 import { containerClass } from "@/lib/layout";
 import {
   getSquareServicesSafe,
@@ -241,18 +241,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="divide-y-0 group/list">
-                {browCards.map((c) => (
-                  <ServiceCardClient
-                    key={c.num}
-                    num={c.num}
-                    name={c.name}
-                    desc={c.desc}
-                    meta={c.meta}
-                    variationId={c.variationId}
-                  />
-                ))}
-              </div>
+              <ServiceCardList cards={browCards} />
             </div>
           </section>
         )}
@@ -302,18 +291,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="group/list">
-                {lashCards.map((c) => (
-                  <ServiceCardClient
-                    key={c.num}
-                    num={c.num}
-                    name={c.name}
-                    desc={c.desc}
-                    meta={c.meta}
-                    variationId={c.variationId}
-                  />
-                ))}
-              </div>
+              <ServiceCardList cards={lashCards} />
             </div>
           </section>
         )}
@@ -342,18 +320,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="group/list">
-                {extrasCards.map((c) => (
-                  <ServiceCardClient
-                    key={c.num}
-                    num={c.num}
-                    name={c.name}
-                    desc={c.desc}
-                    meta={c.meta}
-                    variationId={c.variationId}
-                  />
-                ))}
-              </div>
+              <ServiceCardList cards={extrasCards} />
             </div>
           </section>
         )}

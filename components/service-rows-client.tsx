@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useBooking } from "@/context/BookingContext";
 import DiagArrow from "./icons/DiagArrow";
 
@@ -18,21 +19,29 @@ function ServiceRow({
   meta,
   variationId,
   isOdd,
-}: ServiceRowData & { isOdd: boolean }) {
+  faded,
+  onHoverStart,
+}: ServiceRowData & {
+  isOdd: boolean;
+  faded: boolean;
+  onHoverStart: () => void;
+}) {
   const { openBooking } = useBooking();
 
   return (
     <button
       type="button"
       onClick={() => openBooking(variationId ?? undefined, name)}
+      onMouseEnter={onHoverStart}
+      onFocus={onHoverStart}
       aria-label={`Book ${name}`}
+      style={{ opacity: faded ? 0.8 : 1 }}
       className={[
         "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground)",
         "w-full text-left cursor-pointer bg-transparent transition-all duration-300",
         "lg:odd:hover:bg-linear-to-l lg:odd:hover:from-(--bg-soft) lg:odd:hover:to-transparent",
         "lg:even:hover:bg-linear-to-r lg:even:hover:from-(--bg-soft) lg:even:hover:to-transparent",
         isOdd ? "sm:border-r sm:pr-10" : "sm:pl-10",
-        "group-hover/list:opacity-80 hover:opacity-100!",
       ].join(" ")}
     >
       {/* Service number */}
@@ -82,10 +91,21 @@ export default function ServiceRowsClient({
 }: {
   services: ServiceRowData[];
 }) {
+  const [hovered, setHovered] = useState<string | null>(null);
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line) group/list">
+    <div
+      className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line)"
+      onMouseLeave={() => setHovered(null)}
+    >
       {services.map((svc, i) => (
-        <ServiceRow key={svc.num} {...svc} isOdd={i % 2 === 0} />
+        <ServiceRow
+          key={svc.num}
+          {...svc}
+          isOdd={i % 2 === 0}
+          faded={hovered !== null && hovered !== svc.num}
+          onHoverStart={() => setHovered(svc.num)}
+        />
       ))}
     </div>
   );
