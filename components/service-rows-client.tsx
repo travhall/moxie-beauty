@@ -31,7 +31,7 @@ function ServiceRow({
         "w-full text-left cursor-pointer bg-transparent transition-all duration-300",
         "lg:odd:hover:bg-linear-to-l lg:odd:hover:from-(--bg-soft) lg:odd:hover:to-transparent",
         "lg:even:hover:bg-linear-to-r lg:even:hover:from-(--bg-soft) lg:even:hover:to-transparent",
-        isOdd ? "sm:border-r  " : "sm:pl-10",
+        isOdd ? "sm:border-r sm:pr-10" : "sm:pl-10",
         "opacity-100 group-hover/list:opacity-80 hover:opacity-100",
       ].join(" ")}
     >
