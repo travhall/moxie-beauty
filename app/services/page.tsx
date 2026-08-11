@@ -241,7 +241,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div className="divide-y-0">
+              <div className="divide-y-0 group/list">
                 {browCards.map((c) => (
                   <ServiceCardClient
                     key={c.num}
@@ -302,7 +302,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div>
+              <div className="group/list">
                 {lashCards.map((c) => (
                   <ServiceCardClient
                     key={c.num}
@@ -342,7 +342,7 @@ export default async function ServicesPage() {
                 </p>
               </div>
 
-              <div>
+              <div className="group/list">
                 {extrasCards.map((c) => (
                   <ServiceCardClient
                     key={c.num}
