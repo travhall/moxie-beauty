@@ -305,7 +305,7 @@ export default function AftercarePage() {
                   href={siteConfig.contact.smsHref}
                   className="font-nyght-italic text-(--accent) hover:underline underline-offset-4"
                 >
-                  Text us.
+                  Text us <span aria-hidden="true">↗</span>
                 </a>
               </p>
               <p className="text-(--background) leading-relaxed">

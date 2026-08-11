@@ -126,7 +126,7 @@ export default function About() {
             </div>
 
             <div className="mt-9">
-              <Button variant="ghost" href="/about" showArrow>
+              <Button variant="outline" href="/about" showArrow>
                 The Moxie Story
               </Button>
             </div>

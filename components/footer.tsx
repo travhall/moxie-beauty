@@ -47,7 +47,7 @@ function FooterCol({
             ) : (
               <Link
                 href={href}
-                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) transition-colors duration-200 rounded-full"
+                className="text-sm text-(--ink-soft) no-underline hover:text-(--accent) hover:underline underline-offset-4 transition-colors duration-200 rounded-full"
               >
                 {label}
               </Link>

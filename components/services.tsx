@@ -89,7 +89,8 @@ export default async function Services() {
               What we{" "}
               <span className="font-nyght-italic text-(--accent)">do</span>
               ,
-              <br className="hidden lg:block" /> beautifully &amp; intentionally.
+              <br className="hidden lg:block" /> beautifully &amp;
+              intentionally.
             </h2>
           </div>
           <p className="text-[17px] leading-relaxed text-(--ink-soft) max-w-[56ch] justify-self-end">
@@ -106,7 +107,7 @@ export default async function Services() {
 
         {/* ── Footer CTA ───────────────────────────────────────────────── */}
         <div className="mt-12">
-          <Button variant="ghost" href="/services" showArrow>
+          <Button variant="outline" href="/services" showArrow>
             View All Services
           </Button>
         </div>
