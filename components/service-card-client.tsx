@@ -51,7 +51,10 @@ export default function ServiceCardClient({
           ))}
         </div>
       </div>
-      <span className="text-(--ink-mute) group-hover:text-(--accent) transition-all duration-300 mt-1 shrink-0">
+      <span
+        className="shrink-0 mt-1 w-9 h-9 rounded-full border border-(--line) flex items-center justify-center text-(--ink-mute) group-hover:border-(--accent) group-hover:text-(--accent) transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+        aria-hidden="true"
+      >
         <DiagArrow />
       </span>
     </button>
