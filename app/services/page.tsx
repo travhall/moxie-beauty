@@ -268,8 +268,8 @@ export default async function ServicesPage() {
                 A note on the way we work
               </p>
               <p className="font-nyght-italic text-[clamp(32px,5vw,64px)] text-(--background) leading-tight max-w-3xl text-balance">
-                <span className="text-(--accent)">Beautiful.</span>{" "}
-                <span className="text-(--accent)">Intentional.</span> Never
+                <span className="text-(--rose-gold-300) dark:text-(--rose-gold-700)">Beautiful.</span>{" "}
+                <span className="text-(--rose-gold-300) dark:text-(--rose-gold-700)">Intentional.</span> Never
                 one-size-fits-all.
               </p>
               <p className="mt-8 text-[12px] tracking-[0.2em] uppercase text-(--background)">
