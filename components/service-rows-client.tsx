@@ -32,6 +32,7 @@ function ServiceRow({
         "lg:odd:hover:bg-linear-to-l lg:odd:hover:from-(--bg-soft) lg:odd:hover:to-transparent",
         "lg:even:hover:bg-linear-to-r lg:even:hover:from-(--bg-soft) lg:even:hover:to-transparent",
         isOdd ? "sm:border-r  " : "sm:pl-10",
+        "opacity-100 group-hover/list:opacity-80 hover:opacity-100",
       ].join(" ")}
     >
       {/* Service number */}
@@ -82,7 +83,7 @@ export default function ServiceRowsClient({
   services: ServiceRowData[];
 }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line)">
+    <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-(--line) group/list">
       {services.map((svc, i) => (
         <ServiceRow key={svc.num} {...svc} isOdd={i % 2 === 0} />
       ))}
