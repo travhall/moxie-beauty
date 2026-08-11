@@ -446,7 +446,7 @@ details.faq-item[open] .faq-chev {
   transition: opacity 0.3s ease;
 }
 .service-hover-fade:has(> *:hover) > *:not(:hover) {
-  opacity: 0.35;
+  opacity: 0.25;
 }
 .faq-chev {
   transition: transform 0.3s ease;
