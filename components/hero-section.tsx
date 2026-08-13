@@ -17,31 +17,37 @@ export default function HeroSection() {
       aria-label="Hero section"
     >
       <div className="max-w-335 mx-auto px-10 max-[720px]:px-5.5 w-full relative z-20 py-20">
-        <div className="flex lg:flex-row-reverse items-center gap-16 xl:gap-24">
+        <div className="flex flex-col lg:flex-row-reverse items-center gap-10 lg:gap-16 xl:gap-24">
+          {/* ── Mobile/tablet hero image — hidden at lg, where the larger
+              side-by-side image below takes over ───────────────────────── */}
+          <div
+            className="lg:hidden w-full aspect-4/3 relative overflow-hidden rounded-4xl rounded-b-[64px] border border-(--line-soft) shadow-xl"
+            aria-hidden="true"
+          >
+            <Image
+              src={HeroImg}
+              alt=""
+              fill
+              className="border border-l-8 border-(--accent) object-cover z-0"
+              style={{ borderRadius: "inherit" }}
+              sizes="100vw"
+              quality={75}
+              priority
+              fetchPriority="high"
+              loading="eager"
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,L3CFkh^300%LD*W.~BxG00xZ?aNG"
+            />
+          </div>
+
           {/* ── Copy ──────────────────────────────────────────────────── */}
           <div className="flex-1 min-w-0 max-w-180">
             {/* Eyebrow */}
             <p className="flex items-center gap-3 font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) mb-6">
               <span
-                className="hidden lg:inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
+                className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
                 aria-hidden="true"
               />
-              <span className="lg:hidden relative w-20 h-20 shrink-0 rounded-full overflow-hidden ring-2 ring-(--accent)">
-                <Image
-                  src={HeroImg}
-                  alt=""
-                  fill
-                  aria-hidden="true"
-                  className="object-cover"
-                  sizes="80px"
-                  quality={70}
-                  priority
-                  fetchPriority="high"
-                  loading="eager"
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,L3CFkh^300%LD*W.~BxG00xZ?aNG"
-                />
-              </span>
               Lash &amp; Brow Studio · Rochester, WI
             </p>
 
@@ -53,8 +59,13 @@ export default function HeroSection() {
               </span>
             </h1>
 
-            {/* Body copy */}
-            <p className="text-pretty leading-relaxed max-w-[70ch] mb-10">
+            {/* Body copy — shorter on mobile so the CTA sits closer to the
+                fold; full version returns at lg alongside the side image */}
+            <p className="lg:hidden text-pretty leading-relaxed max-w-[70ch] mb-10">
+              Beautiful and intentional — a space to relax, feel genuinely
+              cared for, and leave feeling completely you.
+            </p>
+            <p className="hidden lg:block text-pretty leading-relaxed max-w-[70ch] mb-10">
               Beautiful and intentional. Moxie was created to be more than a
               beauty studio — it&apos;s a space where you can relax, feel
               genuinely cared for, and leave feeling like yourself. Every

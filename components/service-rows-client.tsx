@@ -21,6 +21,17 @@ function ServiceRow({
 }: ServiceRowData & { isOdd: boolean }) {
   const { openBooking } = useBooking();
 
+  // A trailing "(Most Popular)"-style tag lives in the Square catalog name
+  // itself (no separate "featured" field is available through the API), so
+  // it's pulled out here and rendered as a real badge instead of plain text.
+  // Parenthetical suffixes that contain a digit (e.g. "(15-21 Days)",
+  // "(Up to 14 Days)") are duration info, not a promo tag — leave those in
+  // the title untouched.
+  const badgeMatch = name.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
+  const badgeCandidate = badgeMatch ? badgeMatch[2] : null;
+  const badge = badgeCandidate && !/\d/.test(badgeCandidate) ? badgeCandidate : null;
+  const displayName = badge ? badgeMatch![1] : name;
+
   return (
     <button
       type="button"
@@ -44,8 +55,13 @@ function ServiceRow({
 
       {/* Name + description + meta */}
       <div className="flex-1 min-w-0">
+        {badge && (
+          <span className="inline-block mb-2.5 px-2.5 py-1 rounded-full bg-(--accent)/15 text-(--accent) text-[10px] font-nyght-bold tracking-[0.15em] uppercase">
+            {badge}
+          </span>
+        )}
         <h3 className="font-nyght text-[26px] lg:text-[30px] leading-tight text-(--foreground) mb-2.5 group-hover:text-(--accent) transition-all duration-300">
-          {name}
+          {displayName}
         </h3>
         <p className="text-sm leading-relaxed text-(--ink-soft) mb-4 max-w-[46ch] text-pretty">
           {desc}
