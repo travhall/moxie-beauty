@@ -14,25 +14,25 @@ interface BookingContextType {
 
 const BookingContext = createContext<BookingContextType | null>(null);
 
-export function BookingProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [serviceId, setServiceId] = useState<string | undefined>(undefined);
-  const [serviceName, setServiceName] = useState<string | undefined>(undefined);
+type BookingState =
+  | { open: false }
+  | { open: true; serviceId?: string; serviceName?: string };
 
-  const openBooking = (id?: string, name?: string) => {
-    setServiceId(id);
-    setServiceName(name);
-    setIsOpen(true);
+export function BookingProvider({ children }: { children: ReactNode }) {
+  const [booking, setBooking] = useState<BookingState>({ open: false });
+
+  const openBooking = (serviceId?: string, serviceName?: string) => {
+    setBooking({ open: true, serviceId, serviceName });
   };
 
   return (
     <BookingContext.Provider value={{ openBooking }}>
       {children}
       <BookingOverlay
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        serviceId={serviceId}
-        serviceName={serviceName}
+        isOpen={booking.open}
+        onClose={() => setBooking({ open: false })}
+        serviceId={booking.open ? booking.serviceId : undefined}
+        serviceName={booking.open ? booking.serviceName : undefined}
       />
     </BookingContext.Provider>
   );

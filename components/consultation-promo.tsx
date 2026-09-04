@@ -1,12 +1,7 @@
-"use client";
-
-import Button from "./button";
-import { useBooking } from "@/context/BookingContext";
+import BookingButton from "@/components/booking-button";
 import { containerClass } from "@/lib/layout";
 
 export default function ConsultationPromo() {
-  const { openBooking } = useBooking();
-
   return (
     <section
       className="py-8 border-b border-(--line-soft) bg-(--bg-soft)"
@@ -22,9 +17,9 @@ export default function ConsultationPromo() {
             your goals before we begin — no service needs to be picked ahead
             of time.
           </p>
-          <Button size="sm" variant="outline" onClick={() => openBooking()}>
+          <BookingButton size="sm" variant="outline">
             Get Started
-          </Button>
+          </BookingButton>
         </div>
       </div>
     </section>

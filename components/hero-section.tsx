@@ -1,14 +1,10 @@
-"use client";
-
 import Image from "next/image";
 import HeroImg from "@/public/images/hero-img.jpg";
 import Button from "@/components/button";
-import { useBooking } from "@/context/BookingContext";
+import BookingButton from "@/components/booking-button";
 import { siteConfig } from "@/lib/site-config";
 
 export default function HeroSection() {
-  const { openBooking } = useBooking();
-
   return (
     <section
       className="relative min-h-[90vh] flex items-start overflow-hidden"
@@ -22,10 +18,6 @@ export default function HeroSection() {
           <div className="flex-1 min-w-0 max-w-180">
             {/* Eyebrow */}
             <p className="flex items-center gap-3 font-nyght-bold text-[11px] tracking-[0.32em] uppercase text-(--ink-mute) text-balance mb-6">
-              <span
-                className="inline-block w-1.25 h-1.25 rounded-full bg-(--accent) shrink-0"
-                aria-hidden="true"
-              />
               Lash &amp; Brow Studio · Rochester, WI
             </p>
 
@@ -55,9 +47,9 @@ export default function HeroSection() {
 
             {/* CTA row */}
             <div className="flex flex-wrap items-center gap-6 mb-10">
-              <Button size="lg" showArrow onClick={() => openBooking()}>
+              <BookingButton size="lg" showArrow>
                 Make an Appointment
-              </Button>
+              </BookingButton>
               <Button variant="ghost" size="lg" href="/services">
                 Explore Services
               </Button>
@@ -114,7 +106,6 @@ export default function HeroSection() {
                 quality={75}
                 priority={true}
                 fetchPriority="high"
-                loading="eager"
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,L3CFkh^300%LD*W.~BxG00xZ?aNG"
               />

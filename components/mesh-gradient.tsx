@@ -91,8 +91,9 @@ function compileShader(
   gl: WebGLRenderingContext,
   type: number,
   source: string,
-): WebGLShader {
-  const shader = gl.createShader(type)!;
+): WebGLShader | null {
+  const shader = gl.createShader(type);
+  if (!shader) return null;
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
@@ -113,7 +114,8 @@ function resolveColor(varName: string): [number, number, number] {
   const probe = document.createElement("canvas");
   probe.width = 1;
   probe.height = 1;
-  const ctx = probe.getContext("2d")!;
+  const ctx = probe.getContext("2d");
+  if (!ctx) return [0, 0, 0];
   ctx.fillStyle = raw;
   ctx.fillRect(0, 0, 1, 1);
   const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
@@ -138,7 +140,9 @@ export default function MeshGradient() {
       gl.FRAGMENT_SHADER,
       FRAGMENT_SHADER,
     );
-    const program = gl.createProgram()!;
+    if (!vertexShader || !fragmentShader) return;
+    const program = gl.createProgram();
+    if (!program) return;
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);

@@ -1,7 +1,5 @@
-"use client";
-
 import Button from "./button";
-import { useBooking } from "@/context/BookingContext";
+import BookingButton from "@/components/booking-button";
 import { siteConfig } from "@/lib/site-config";
 
 type AppointmentContext = "home" | "services" | "about" | "visit" | "contact";
@@ -37,7 +35,6 @@ const ctaContent: Record<
 };
 
 export default function Appointments({ context = "home" }: AppointmentsProps) {
-  const { openBooking } = useBooking();
   const { eyebrow, heading } = ctaContent[context];
 
   return (
@@ -54,9 +51,9 @@ export default function Appointments({ context = "home" }: AppointmentsProps) {
         {heading}
       </h2>
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-        <Button size="lg" showArrow onClick={() => openBooking()}>
+        <BookingButton size="lg" showArrow>
           Book Your Appointment
-        </Button>
+        </BookingButton>
         <Button size="lg" variant="ghost" href={siteConfig.contact.phoneHref}>
           {siteConfig.contact.phone}
         </Button>

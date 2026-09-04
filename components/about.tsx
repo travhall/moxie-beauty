@@ -29,7 +29,6 @@ export default function About() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 loading="lazy"
-                unoptimized
               />
             </div>
 
@@ -42,7 +41,6 @@ export default function About() {
                 className="object-cover object-center"
                 sizes="(max-width: 1024px) 27vw, 14vw"
                 loading="lazy"
-                unoptimized
               />
             </div>
 
@@ -55,7 +53,6 @@ export default function About() {
                 className="object-cover object-center"
                 sizes="(max-width: 1024px) 27vw, 14vw"
                 loading="lazy"
-                unoptimized
               />
             </div>
           </div>
