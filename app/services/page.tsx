@@ -4,7 +4,6 @@ import MarqueeTicker from "@/components/marquee-ticker";
 import Breadcrumbs from "@/components/breadcrumbs";
 import FactStrip from "@/components/fact-strip";
 import ServiceCardClient from "@/components/service-card-client";
-// import ConsultationPromo from "@/components/consultation-promo";
 import { containerClass } from "@/lib/layout";
 import {
   getSquareServicesSafe,
@@ -201,9 +200,6 @@ export default async function ServicesPage() {
             />
           </div>
         </section>
-
-        {/* ── New-here consultation promo ──────────────────────────────── */}
-        {/* <ConsultationPromo /> */}
 
         {/* ── Marquee ───────────────────────────────────────────────────── */}
         <MarqueeTicker

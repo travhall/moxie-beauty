@@ -15,16 +15,16 @@ interface NavItem {
   href: string;
 }
 
+const NAV_ITEMS: NavItem[] = [
+  { name: "Our Services", href: "/services" },
+  { name: "Your Visit", href: "/visit" },
+  { name: "Our Story", href: "/about" },
+  { name: "Contact", href: "/contact" },
+];
+
 export default function Navigation() {
   const { openBooking } = useBooking();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const navItems: NavItem[] = [
-    { name: "Our Services", href: "/services" },
-    { name: "Your Visit", href: "/visit" },
-    { name: "Our Story", href: "/about" },
-    { name: "Contact", href: "/contact" },
-  ];
 
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -298,7 +298,7 @@ export default function Navigation() {
               </div>
 
               {/* Nav links */}
-              {navItems.map((item) => {
+              {NAV_ITEMS.map((item) => {
                 const isActive = isNavActive(item);
                 return (
                   <Link
@@ -371,7 +371,7 @@ export default function Navigation() {
         <div className="px-8 pt-32 flex flex-col">
           {/* Big display links */}
           <nav aria-label="Mobile navigation">
-            {navItems.map((item, index) => {
+            {NAV_ITEMS.map((item, index) => {
               const isActive = isNavActive(item);
               return (
                 <Link

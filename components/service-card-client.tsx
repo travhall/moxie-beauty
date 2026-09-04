@@ -2,6 +2,7 @@
 
 import { useBooking } from "@/context/BookingContext";
 import DiagArrow from "./icons/DiagArrow";
+import { parseBadge } from "@/lib/parse-badge";
 
 export interface ServiceCardData {
   num: string;
@@ -20,16 +21,7 @@ export default function ServiceCardClient({
 }: ServiceCardData) {
   const { openBooking } = useBooking();
 
-  // A trailing "(Most Popular)"-style tag lives in the Square catalog name
-  // itself (no separate "featured" field is available through the API), so
-  // it's pulled out here and rendered as a real badge instead of plain text.
-  // Parenthetical suffixes that contain a digit (e.g. "(15-21 Days)",
-  // "(Up to 14 Days)") are duration info, not a promo tag — leave those in
-  // the title untouched.
-  const badgeMatch = name.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
-  const badgeCandidate = badgeMatch ? badgeMatch[2] : null;
-  const badge = badgeCandidate && !/\d/.test(badgeCandidate) ? badgeCandidate : null;
-  const displayName = badge ? badgeMatch![1] : name;
+  const { badge, displayName } = parseBadge(name);
 
   return (
     <button
