@@ -187,9 +187,24 @@ export async function getSquareServicesSafe(): Promise<SquareService[] | null> {
   try {
     return await getSquareServices();
   } catch (error) {
+    const err = error as {
+      message?: string;
+      statusCode?: number;
+      errors?: unknown;
+      cause?: unknown;
+    };
     console.error(
       "[square] Failed to fetch live services — falling back to hardcoded catalog data.",
-      error,
+      JSON.stringify(
+        {
+          message: err?.message,
+          statusCode: err?.statusCode,
+          errors: err?.errors,
+          cause: err?.cause,
+        },
+        null,
+        2,
+      ),
     );
     return null;
   }
