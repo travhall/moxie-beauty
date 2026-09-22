@@ -62,7 +62,7 @@ export default function Map({ apiKey, lat, lng, label, fallback }: MapProps) {
   return (
     <>
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&loading=async`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${apiKey}`}
         strategy="afterInteractive"
         onLoad={() => setStatus("ready")}
         onError={() => setStatus("error")}

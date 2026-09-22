@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import { Mulish } from "next/font/google";
 import localFont from "next/font/local";
 import { ViewTransitions } from "next-view-transitions";
@@ -266,7 +265,6 @@ export default function RootLayout({
                 <div id="main-content" tabIndex={-1} className="outline-none">
                   {children}
                 </div>
-                <Analytics />
                 <Footer />
               </BookingProvider>
             </ThemeProvider>
