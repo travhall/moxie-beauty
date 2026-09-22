@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 
-const MAP_STYLES: google.maps.MapTypeStyle[] = [
+const DARK_STYLES: google.maps.MapTypeStyle[] = [
   { elementType: "geometry", stylers: [{ color: "#1a0a08" }] },
   { elementType: "labels.text.fill", stylers: [{ color: "#d4b896" }] },
   { elementType: "labels.text.stroke", stylers: [{ color: "#1a0a08" }] },
@@ -30,6 +30,32 @@ const MAP_STYLES: google.maps.MapTypeStyle[] = [
   },
 ];
 
+const LIGHT_STYLES: google.maps.MapTypeStyle[] = [
+  { elementType: "geometry", stylers: [{ color: "#f5ede6" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#5c3d2e" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#f5ede6" }] },
+  {
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [{ color: "#e8d5c4" }],
+  },
+  {
+    featureType: "road",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#8b5a3c" }],
+  },
+  {
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [{ color: "#c4d4e0" }],
+  },
+  {
+    featureType: "poi.park",
+    elementType: "geometry",
+    stylers: [{ color: "#d8e8ce" }],
+  },
+];
+
 interface MapProps {
   apiKey: string;
   lat: number;
@@ -39,8 +65,13 @@ interface MapProps {
   fallback: React.ReactNode;
 }
 
+function isDark() {
+  return document.documentElement.classList.contains("dark");
+}
+
 export default function Map({ apiKey, lat, lng, label, fallback }: MapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<google.maps.Map | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
     "loading",
   );
@@ -50,11 +81,23 @@ export default function Map({ apiKey, lat, lng, label, fallback }: MapProps) {
     const map = new google.maps.Map(containerRef.current, {
       center: { lat, lng },
       zoom: 15,
-      styles: MAP_STYLES,
+      styles: isDark() ? DARK_STYLES : LIGHT_STYLES,
       disableDefaultUI: true,
       zoomControl: true,
     });
     new google.maps.Marker({ position: { lat, lng }, map, title: label });
+    mapRef.current = map;
+
+    const observer = new MutationObserver(() => {
+      mapRef.current?.setOptions({
+        styles: isDark() ? DARK_STYLES : LIGHT_STYLES,
+      });
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
   }, [status, lat, lng, label]);
 
   if (status === "error") return <>{fallback}</>;
