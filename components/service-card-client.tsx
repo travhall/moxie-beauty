@@ -27,7 +27,6 @@ export default function ServiceCardClient({
     <button
       type="button"
       onClick={() => openBooking(variationId ?? undefined, name)}
-      aria-label={`Book ${name}`}
       className="group flex items-start gap-5 py-7 border-b border-(--line-soft) w-full text-left cursor-pointer bg-transparent px-4 -mx-4 rounded-xl hover:bg-[linear-gradient(to_right,transparent,var(--bg-soft)_15%,var(--bg-soft)_85%,transparent)] transition-all duration-300"
     >
       <span
@@ -36,9 +35,10 @@ export default function ServiceCardClient({
       >
         {num}
       </span>
+      <span className="sr-only">Book </span>
       <div className="flex-1 min-w-0">
         {badge && (
-          <span className="inline-block mb-2 px-2.5 py-1 rounded-full bg-(--accent)/15 text-(--accent) text-[10px] font-nyght-bold tracking-[0.15em] uppercase">
+          <span className="inline-block mb-2 px-2.5 py-1 rounded-full bg-(--accent)/15 text-(--accent-text) text-[10px] font-nyght-bold tracking-[0.15em] uppercase">
             {badge}
           </span>
         )}
