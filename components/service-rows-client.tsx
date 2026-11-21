@@ -28,7 +28,6 @@ function ServiceRow({
     <button
       type="button"
       onClick={() => openBooking(variationId ?? undefined, name)}
-      aria-label={`Book ${name}`}
       className={[
         "group flex gap-7 items-start border-b border-(--line) py-9 text-(--foreground)",
         "w-full text-left cursor-pointer bg-transparent transition-all duration-300",
@@ -46,9 +45,10 @@ function ServiceRow({
       </span>
 
       {/* Name + description + meta */}
+      <span className="sr-only">Book </span>
       <div className="flex-1 min-w-0">
         {badge && (
-          <span className="inline-block mb-2.5 px-2.5 py-1 rounded-full bg-(--accent)/15 text-(--accent) text-[10px] font-nyght-bold tracking-[0.15em] uppercase">
+          <span className="inline-block mb-2.5 px-2.5 py-1 rounded-full bg-(--accent)/15 text-(--accent-text) text-[10px] font-nyght-bold tracking-[0.15em] uppercase">
             {badge}
           </span>
         )}
